@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://p33w1llwyou3"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_2ub6x"]
+data = PackedVector3Array(-1.5, 1, 1, 1.5, 1, 1, -1.5, -1, 1, 1.5, 1, 1, 1.5, -1, 1, -1.5, -1, 1, 1.5, 1, -1, -1.5, 1, -1, 1.5, -1, -1, -1.5, 1, -1, -1.5, -1, -1, 1.5, -1, -1, 1.5, 1, 1, 1.5, 1, -1, 1.5, -1, 1, 1.5, 1, -1, 1.5, -1, -1, 1.5, -1, 1, -1.5, 1, -1, -1.5, 1, 1, -1.5, -1, -1, -1.5, 1, 1, -1.5, -1, 1, -1.5, -1, -1, 1.5, 1, 1, -1.5, 1, 1, 1.5, 1, -1, -1.5, 1, 1, -1.5, 1, -1, 1.5, 1, -1, -1.5, -1, 1, 1.5, -1, 1, -1.5, -1, -1, 1.5, -1, 1, 1.5, -1, -1, -1.5, -1, -1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sht5i"]
+size = Vector3(3, 2, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gmvgx"]
+albedo_color = Color(0.25181645, 0.99999994, 0.955208, 1)
+
+[node name="research_table" type="StaticBody3D" unique_id=1786656130 groups=["interactable"]]
+collision_layer = 17
+collision_mask = 17
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1732224634]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("ConcavePolygonShape3D_2ub6x")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1778001708]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("BoxMesh_sht5i")
+surface_material_override/0 = SubResource("StandardMaterial3D_gmvgx")

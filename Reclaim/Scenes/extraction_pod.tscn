@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://c08otjhflwli2"]
+
+[ext_resource type="Script" uid="uid://cylk3rgeiwoin" path="res://Scripts/extraction_pod.gd" id="1_1jnoh"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_s88e6"]
+data = PackedVector3Array(-1, 1.5, 1, 1, 1.5, 1, -1, -1.5, 1, 1, 1.5, 1, 1, -1.5, 1, -1, -1.5, 1, 1, 1.5, -1, -1, 1.5, -1, 1, -1.5, -1, -1, 1.5, -1, -1, -1.5, -1, 1, -1.5, -1, 1, 1.5, 1, 1, 1.5, -1, 1, -1.5, 1, 1, 1.5, -1, 1, -1.5, -1, 1, -1.5, 1, -1, 1.5, -1, -1, 1.5, 1, -1, -1.5, -1, -1, 1.5, 1, -1, -1.5, 1, -1, -1.5, -1, 1, 1.5, 1, -1, 1.5, 1, 1, 1.5, -1, -1, 1.5, 1, -1, 1.5, -1, 1, 1.5, -1, -1, -1.5, 1, 1, -1.5, 1, -1, -1.5, -1, 1, -1.5, 1, 1, -1.5, -1, -1, -1.5, -1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sht5i"]
+size = Vector3(2, 3, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gmvgx"]
+albedo_color = Color(0.28118682, 0.28118688, 0.28118682, 1)
+
+[node name="extraction_pod" type="StaticBody3D" unique_id=1786656130 groups=["interactable"]]
+collision_layer = 17
+collision_mask = 17
+script = ExtResource("1_1jnoh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1609859238]
+transform = Transform3D(0.9999996, 0.00077972515, -0.00048514424, -0.00077950873, 0.9999996, 0.00042610476, 0.0004854919, -0.0004257086, 0.99999976, 0, 1.5, 0)
+shape = SubResource("ConcavePolygonShape3D_s88e6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1778001708]
+transform = Transform3D(0.9999996, 0.00077972515, -0.00048514424, -0.00077950873, 0.9999996, 0.00042610476, 0.0004854919, -0.0004257086, 0.99999976, 0, 1.5, 0)
+mesh = SubResource("BoxMesh_sht5i")
+surface_material_override/0 = SubResource("StandardMaterial3D_gmvgx")

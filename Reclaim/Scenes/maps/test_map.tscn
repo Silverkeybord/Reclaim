@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://cqn8sm0p8sfug"]
+
+[ext_resource type="Texture2D" uid="uid://b31irr6awo2x4" path="res://Textures and Materials/maps/basic floor.png" id="1_yiw8y"]
+[ext_resource type="PackedScene" uid="uid://dwm2mxns3x5wt" path="res://Scenes/player/player.tscn" id="2_3x14o"]
+[ext_resource type="PackedScene" uid="uid://cm7cq456gvpot" path="res://Scenes/crafting_table.tscn" id="3_vd8et"]
+[ext_resource type="PackedScene" uid="uid://p33w1llwyou3" path="res://Scenes/research_table.tscn" id="4_cj7di"]
+[ext_resource type="PackedScene" uid="uid://c08otjhflwli2" path="res://Scenes/extraction_pod.tscn" id="5_cj7di"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_orl8w"]
+size = Vector3(50, 1, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8xpg0"]
+albedo_texture = ExtResource("1_yiw8y")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_phepx"]
+data = PackedVector3Array(-25, 0.5, 25, 25, 0.5, 25, -25, -0.5, 25, 25, 0.5, 25, 25, -0.5, 25, -25, -0.5, 25, 25, 0.5, -25, -25, 0.5, -25, 25, -0.5, -25, -25, 0.5, -25, -25, -0.5, -25, 25, -0.5, -25, 25, 0.5, 25, 25, 0.5, -25, 25, -0.5, 25, 25, 0.5, -25, 25, -0.5, -25, 25, -0.5, 25, -25, 0.5, -25, -25, 0.5, 25, -25, -0.5, -25, -25, 0.5, 25, -25, -0.5, 25, -25, -0.5, -25, 25, 0.5, 25, -25, 0.5, 25, 25, 0.5, -25, -25, 0.5, 25, -25, 0.5, -25, 25, 0.5, -25, -25, -0.5, 25, 25, -0.5, 25, -25, -0.5, -25, 25, -0.5, 25, 25, -0.5, -25, -25, -0.5, -25)
+
+[sub_resource type="Environment" id="Environment_gbc2j"]
+background_mode = 1
+background_color = Color(0.20784314, 0.69803923, 0.69803923, 1)
+background_energy_multiplier = 1.5
+ambient_light_source = 3
+ambient_light_color = Color(0.7652138, 0.7652139, 0.7652138, 1)
+
+[node name="Test_map" type="Node3D" unique_id=811214151]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2007745717]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("BoxMesh_orl8w")
+surface_material_override/0 = SubResource("StandardMaterial3D_8xpg0")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=834112872]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=542656642]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("ConcavePolygonShape3D_phepx")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1983044584]
+environment = SubResource("Environment_gbc2j")
+
+[node name="CharacterBody3D" parent="." unique_id=961430667 instance=ExtResource("2_3x14o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.18858194, 1.1671264, -0.18684006)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=173165138]
+transform = Transform3D(1, 0, 0, 0, -0.43659762, 0.89965683, 0, -0.89965683, -0.43659762, 0, 16.854122, -9.246473)
+
+[node name="crafting_table" parent="." unique_id=1786656130 instance=ExtResource("3_vd8et")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05308914, 0, 9.738712)
+
+[node name="research_table" parent="." unique_id=793525787 instance=ExtResource("4_cj7di")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.42885685, 0, -9.830658)
+
+[node name="extraction_pod" parent="." unique_id=1936142484 instance=ExtResource("5_cj7di")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.612347, 0.0012050183, -0.5684519)
