@@ -1,7 +1,10 @@
 [gd_scene format=3 uid="uid://dh6oadn2aghxi"]
 
 [ext_resource type="PackedScene" uid="uid://dwm2mxns3x5wt" path="res://Scenes/player/player.tscn" id="2_2kokt"]
-[ext_resource type="ArrayMesh" uid="uid://betgxv6brd4yn" path="res://Scenes/map_mesh_res/remote_island.res" id="2_w1fyg"]
+[ext_resource type="Texture2D" uid="uid://cd60ogaogyo3n" path="res://Textures and Materials/maps/4 blur.png" id="2_cm411"]
+[ext_resource type="PackedScene" uid="uid://c08otjhflwli2" path="res://Scenes/extraction_pod.tscn" id="4_5wxe1"]
+[ext_resource type="Texture2D" uid="uid://b31irr6awo2x4" path="res://Textures and Materials/maps/basic floor.png" id="4_cm411"]
+[ext_resource type="PackedScene" uid="uid://crcipf2r035mw" path="res://Scenes/turrets/turret_grid.tscn" id="5_cm411"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_er87e"]
 size = Vector2(1000, 1000)
@@ -9,40 +12,104 @@ size = Vector2(1000, 1000)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2kokt"]
 albedo_color = Color(0.16078432, 0.6627451, 1, 1)
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w1fyg"]
-sky_top_color = Color(0.19281116, 0.76302844, 1, 1)
-sky_horizon_color = Color(1, 0.87495553, 0.71780086, 1)
-sky_curve = 0.058843907
-ground_bottom_color = Color(0.20392157, 0.7882353, 1, 1)
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_5wxe1"]
+data = PackedVector3Array(-50, 2, 50, 50, 2, 50, -50, -2, 50, 50, 2, 50, 50, -2, 50, -50, -2, 50, 50, 2, -50, -50, 2, -50, 50, -2, -50, -50, 2, -50, -50, -2, -50, 50, -2, -50, 50, 2, 50, 50, 2, -50, 50, -2, 50, 50, 2, -50, 50, -2, -50, 50, -2, 50, -50, 2, -50, -50, 2, 50, -50, -2, -50, -50, 2, 50, -50, -2, 50, -50, -2, -50, 50, 2, 50, -50, 2, 50, 50, 2, -50, -50, 2, 50, -50, 2, -50, 50, 2, -50, -50, -2, 50, 50, -2, 50, -50, -2, -50, 50, -2, 50, 50, -2, -50, -50, -2, -50)
 
-[sub_resource type="Sky" id="Sky_5wxe1"]
-sky_material = SubResource("ProceduralSkyMaterial_w1fyg")
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_cm411"]
+data = PackedVector3Array(-55, 1, 55, 55, 1, 55, -55, -1, 55, 55, 1, 55, 55, -1, 55, -55, -1, 55, 55, 1, -55, -55, 1, -55, 55, -1, -55, -55, 1, -55, -55, -1, -55, 55, -1, -55, 55, 1, 55, 55, 1, -55, 55, -1, 55, 55, 1, -55, 55, -1, -55, 55, -1, 55, -55, 1, -55, -55, 1, 55, -55, -1, -55, -55, 1, 55, -55, -1, 55, -55, -1, -55, 55, 1, 55, -55, 1, 55, 55, 1, -55, -55, 1, 55, -55, 1, -55, 55, 1, -55, -55, -1, 55, 55, -1, 55, -55, -1, -55, 55, -1, 55, 55, -1, -55, -55, -1, -55)
 
-[sub_resource type="Environment" id="Environment_w1fyg"]
-background_mode = 2
-sky = SubResource("Sky_5wxe1")
-ambient_light_color = Color(0.20784314, 0.67058825, 1, 1)
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_dncc7"]
+data = PackedVector3Array(-100, 2, 100, 100, 2, 100, -100, -2, 100, 100, 2, 100, 100, -2, 100, -100, -2, 100, 100, 2, -100, -100, 2, -100, 100, -2, -100, -100, 2, -100, -100, -2, -100, 100, -2, -100, 100, 2, 100, 100, 2, -100, 100, -2, 100, 100, 2, -100, 100, -2, -100, 100, -2, 100, -100, 2, -100, -100, 2, 100, -100, -2, -100, -100, 2, 100, -100, -2, 100, -100, -2, -100, 100, 2, 100, -100, 2, 100, 100, 2, -100, -100, 2, 100, -100, 2, -100, 100, 2, -100, -100, -2, 100, 100, -2, 100, -100, -2, -100, 100, -2, 100, 100, -2, -100, -100, -2, -100)
+
+[sub_resource type="BoxMesh" id="BoxMesh_dncc7"]
+size = Vector3(100, 4, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cm411"]
+albedo_texture = ExtResource("2_cm411")
+uv1_scale = Vector3(0.25, 0.25, 0.25)
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_nic26"]
+size = Vector3(110, 2, 110)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7wlnk"]
+size = Vector3(200, 4, 200)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0k5vl"]
+albedo_color = Color(1, 1, 0.6039216, 1)
+albedo_texture = ExtResource("4_cm411")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+
+[sub_resource type="Environment" id="Environment_5wxe1"]
+background_mode = 1
+background_color = Color(0.23921569, 0.7764706, 1, 1)
+ambient_light_source = 3
+ambient_light_color = Color(1, 1, 1, 1)
 fog_enabled = true
 fog_mode = 1
-fog_light_color = Color(0.15686275, 0.72156864, 1, 1)
+fog_light_color = Color(0.40784314, 0.8980392, 0.91764706, 1)
 fog_density = 1.0
+fog_sky_affect = 0.893
 
 [node name="remote_island" type="Node3D" unique_id=1949576147]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=940970385]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+[node name="map" type="Node" parent="." unique_id=1321206802]
+
+[node name="water" type="MeshInstance3D" parent="map" unique_id=940970385]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6, 0)
 mesh = SubResource("PlaneMesh_er87e")
 surface_material_override/0 = SubResource("StandardMaterial3D_2kokt")
+metadata/_edit_lock_ = true
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1250274259]
-environment = SubResource("Environment_w1fyg")
+[node name="extraction_pod" parent="map" unique_id=1786656130 instance=ExtResource("4_5wxe1")]
+metadata/_edit_lock_ = true
+
+[node name="floor" type="StaticBody3D" parent="map" unique_id=526321324]
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="map/floor" unique_id=860566644]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.661, -2, 1.641)
+shape = SubResource("ConcavePolygonShape3D_5wxe1")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="map/floor" unique_id=1017728323]
+transform = Transform3D(0.81915206, 0, 0.57357645, 0, 1, 0, -0.57357645, 0, 0.81915206, 0, -3, 0)
+shape = SubResource("ConcavePolygonShape3D_cm411")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="map/floor" unique_id=596078606]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6, 0)
+shape = SubResource("ConcavePolygonShape3D_dncc7")
+metadata/_edit_lock_ = true
+
+[node name="CSGBox3D" type="MeshInstance3D" parent="map/floor" unique_id=425240111]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.8046956, -1.9183426, 1.3059494)
+mesh = SubResource("BoxMesh_dncc7")
+surface_material_override/0 = SubResource("StandardMaterial3D_cm411")
+metadata/_edit_lock_ = true
+
+[node name="CSGBox3D3" type="MeshInstance3D" parent="map/floor" unique_id=1114615282]
+transform = Transform3D(0.81915206, 0, 0.57357645, 0, 1, 0, -0.57357645, 0, 0.81915206, 0.14369583, -2.9183426, -0.33505058)
+mesh = SubResource("BoxMesh_nic26")
+surface_material_override/0 = SubResource("StandardMaterial3D_cm411")
+metadata/_edit_lock_ = true
+
+[node name="CSGBox3D2" type="MeshInstance3D" parent="map/floor" unique_id=1901947122]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6, 0)
+mesh = SubResource("BoxMesh_7wlnk")
+surface_material_override/0 = SubResource("StandardMaterial3D_0k5vl")
+metadata/_edit_lock_ = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="map" unique_id=1822254416]
+transform = Transform3D(1, 0, 0, 0, -0.50794435, 0.86138994, 0, -0.86138994, -0.50794435, 0, 25.034416, -10.411585)
+sky_mode = 1
+metadata/_edit_lock_ = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="map" unique_id=1594097371]
+environment = SubResource("Environment_5wxe1")
 
 [node name="CharacterBody3D" parent="." unique_id=961430667 instance=ExtResource("2_2kokt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.166895, 5.821204, -1.0871319)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.938994, 0)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1822254416]
-transform = Transform3D(1, 0, 0, 0, -0.50794435, 0.86138994, 0, -0.86138994, -0.50794435, 0, 33.246136, -12.30377)
-
-[node name="RemoteIsland" type="MeshInstance3D" parent="." unique_id=1096593746]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
-mesh = ExtResource("2_w1fyg")
+[node name="turret_grid" parent="." unique_id=1489577349 instance=ExtResource("5_cm411")]

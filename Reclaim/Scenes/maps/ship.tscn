@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dwm2mxns3x5wt" path="res://Scenes/player/player.tscn" id="1_m75ec"]
 [ext_resource type="PackedScene" uid="uid://cm7cq456gvpot" path="res://Scenes/crafting_table.tscn" id="2_f0cws"]
 [ext_resource type="PackedScene" uid="uid://p33w1llwyou3" path="res://Scenes/research_table.tscn" id="3_w1oif"]
-[ext_resource type="PackedScene" uid="uid://c08otjhflwli2" path="res://Scenes/extraction_pod.tscn" id="4_uxsw2"]
+[ext_resource type="PackedScene" uid="uid://br62cm1gllm1" path="res://Scenes/deploy_pod.tscn" id="4_m75ec"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_m75ec"]
 _surfaces = [{
@@ -22,6 +22,7 @@ data = PackedVector3Array(-20, -1, -10, 20, -1, -10, -20, 19, -10, -20, -1, -10,
 [node name="ship" type="Node3D" unique_id=965132915]
 
 [node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="." unique_id=1907386961]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.009134293, 0.009200096, -0.027325988)
 mesh = SubResource("ArrayMesh_m75ec")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="CSGBakedMeshInstance3D" unique_id=1604979033]
@@ -43,5 +44,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2590008, 0, 7.7612762)
 [node name="research_table" parent="." unique_id=2099294027 instance=ExtResource("3_w1oif")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25725937, 0, -7.802432)
 
-[node name="extraction_pod" parent="." unique_id=842062698 instance=ExtResource("4_uxsw2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.156237, 0, 0.68372726)
+[node name="deploy_pod" parent="." unique_id=1373262889 groups=["interactable"] instance=ExtResource("4_m75ec")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, 0)

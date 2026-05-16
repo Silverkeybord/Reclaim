@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://dtiq7x2mf21b0"]
+
+[ext_resource type="PackedScene" uid="uid://1ducx04kvn43" path="res://Scenes/mesh_scenes/turret_base_mesh.tscn" id="1_soqyp"]
+
+[node name="tower_base" type="Node3D" unique_id=809151429]
+
+[node name="Untitled" parent="." unique_id=1292368497 instance=ExtResource("1_soqyp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="atachment_point" type="Marker3D" parent="." unique_id=1315721410]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)

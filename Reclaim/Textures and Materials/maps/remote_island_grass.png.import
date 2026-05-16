@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://585dwseisnxj"
-path.s3tc="res://.godot/imported/remote_island_grass_texture.png-4286be2f2de8090b6c69934c27118eb1.s3tc.ctex"
+uid="uid://cietgpnwshhbo"
+path.s3tc="res://.godot/imported/remote_island_grass.png-0691e3e0e52d249d5aefc41e2fc4f275.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Textures and Materials/maps/remote_island_grass_texture.png"
-dest_files=["res://.godot/imported/remote_island_grass_texture.png-4286be2f2de8090b6c69934c27118eb1.s3tc.ctex"]
+source_file="res://Textures and Materials/maps/remote_island_grass.png"
+dest_files=["res://.godot/imported/remote_island_grass.png-0691e3e0e52d249d5aefc41e2fc4f275.s3tc.ctex"]
 
 [params]
 

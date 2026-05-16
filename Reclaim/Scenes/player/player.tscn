@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dwm2mxns3x5wt"]
 
 [ext_resource type="Script" uid="uid://c22fbxy7wkp70" path="res://Scripts/player/player.gd" id="1_eo61r"]
+[ext_resource type="PackedScene" uid="uid://3hi5wymcupw7" path="res://Scenes/turrets/turret_holagram.tscn" id="2_6upyo"]
 [ext_resource type="Script" uid="uid://dev5omns2mu5y" path="res://Scripts/player/camera_control.gd" id="2_mxepk"]
 [ext_resource type="Texture2D" uid="uid://b0sbhjjkojgb0" path="res://2D assets/interact_reticle.png" id="3_mxepk"]
 [ext_resource type="Texture2D" uid="uid://inmkey4p4wca" path="res://2D assets/normal_redicle.png" id="4_e41v5"]
@@ -17,10 +18,12 @@ size = Vector3(0.9, 0.9, 0.9)
 transparency = 1
 albedo_color = Color(0.8117647, 0.8117647, 0.8117647, 0.44313726)
 
-[node name="CharacterBody3D" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "sight_ray")]
+[node name="CharacterBody3D" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "sight_ray", "place_overlay")]
 script = ExtResource("1_eo61r")
 interact_overlay = NodePath("interact_overlay")
 sight_ray = NodePath("SpringArm3D/RayCast3D")
+turret_holagram_scene = ExtResource("2_6upyo")
+place_overlay = NodePath("place_overlay")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=125637870]
 shape = SubResource("BoxShape3D_e41v5")
@@ -48,6 +51,7 @@ current = true
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
 target_position = Vector3(0, -150, 0)
 collision_mask = 31
+collide_with_areas = true
 
 [node name="normal_reticle" type="TextureRect" parent="." unique_id=1247984658]
 anchors_preset = 8
@@ -99,11 +103,74 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -27.5
-offset_top = 20.5
-offset_right = 27.5
-offset_bottom = 43.5
+offset_left = -54.5
+offset_top = 21.5
+offset_right = 54.5
+offset_bottom = 44.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("5_ca0mu")
 text = "E to interact"
+
+[node name="place_overlay" type="Control" parent="." unique_id=159735907]
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="interact_reticle" type="TextureRect" parent="place_overlay" unique_id=1375775932]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.5
+offset_top = -23.0
+offset_right = 25.5
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.7853982
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("3_mxepk")
+stretch_mode = 3
+
+[node name="interact_reticle2" type="TextureRect" parent="place_overlay" unique_id=1711736982]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.5
+offset_top = -23.0
+offset_right = 25.5
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.7853982
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("3_mxepk")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="place_overlay" unique_id=370554443]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -41.5
+offset_top = 20.5
+offset_right = 41.5
+offset_bottom = 43.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_ca0mu")
+text = "E to Place"

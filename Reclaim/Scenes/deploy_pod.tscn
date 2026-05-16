@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://br62cm1gllm1"]
+
+[ext_resource type="Script" uid="uid://slvp6i1ygea6" path="res://Scripts/deploy_pod.gd" id="1_5c0cb"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wn3eb"]
+size = Vector3(2, 3, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5c0cb"]
+size = Vector3(2, 3, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_udrd7"]
+albedo_color = Color(0.4726752, 0.4726752, 0.4726752, 1)
+
+[node name="deploy_pod" type="StaticBody3D" unique_id=1373262889]
+script = ExtResource("1_5c0cb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=976071402]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("BoxShape3D_wn3eb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1440844394]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+mesh = SubResource("BoxMesh_5c0cb")
+surface_material_override/0 = SubResource("StandardMaterial3D_udrd7")
