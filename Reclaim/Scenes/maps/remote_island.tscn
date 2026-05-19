@@ -2,9 +2,12 @@
 
 [ext_resource type="PackedScene" uid="uid://dwm2mxns3x5wt" path="res://Scenes/player/player.tscn" id="2_2kokt"]
 [ext_resource type="Texture2D" uid="uid://cd60ogaogyo3n" path="res://Textures and Materials/maps/4 blur.png" id="2_cm411"]
-[ext_resource type="PackedScene" uid="uid://c08otjhflwli2" path="res://Scenes/extraction_pod.tscn" id="4_5wxe1"]
+[ext_resource type="PackedScene" uid="uid://c08otjhflwli2" path="res://Scenes/maps/extraction_pod.tscn" id="4_5wxe1"]
 [ext_resource type="Texture2D" uid="uid://b31irr6awo2x4" path="res://Textures and Materials/maps/basic floor.png" id="4_cm411"]
+[ext_resource type="Environment" uid="uid://dm5if30giejut" path="res://Other assets/enviroments/remote_island.tres" id="4_dncc7"]
 [ext_resource type="PackedScene" uid="uid://crcipf2r035mw" path="res://Scenes/turrets/turret_grid.tscn" id="5_cm411"]
+[ext_resource type="PackedScene" uid="uid://bsspjwwk4bvma" path="res://Scenes/enemies/enemy.tscn" id="6_dncc7"]
+[ext_resource type="PackedScene" uid="uid://b5bywo714ymes" path="res://Scenes/enemies/enemy_spawner.tscn" id="7_8ty32"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_er87e"]
 size = Vector2(1000, 1000)
@@ -12,13 +15,16 @@ size = Vector2(1000, 1000)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2kokt"]
 albedo_color = Color(0.16078432, 0.6627451, 1, 1)
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_5wxe1"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_nic26"]
 data = PackedVector3Array(-50, 2, 50, 50, 2, 50, -50, -2, 50, 50, 2, 50, 50, -2, 50, -50, -2, 50, 50, 2, -50, -50, 2, -50, 50, -2, -50, -50, 2, -50, -50, -2, -50, 50, -2, -50, 50, 2, 50, 50, 2, -50, 50, -2, 50, 50, 2, -50, 50, -2, -50, 50, -2, 50, -50, 2, -50, -50, 2, 50, -50, -2, -50, -50, 2, 50, -50, -2, 50, -50, -2, -50, 50, 2, 50, -50, 2, 50, 50, 2, -50, -50, 2, 50, -50, 2, -50, 50, 2, -50, -50, -2, 50, 50, -2, 50, -50, -2, -50, 50, -2, 50, 50, -2, -50, -50, -2, -50)
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_cm411"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_7wlnk"]
 data = PackedVector3Array(-55, 1, 55, 55, 1, 55, -55, -1, 55, 55, 1, 55, 55, -1, 55, -55, -1, 55, 55, 1, -55, -55, 1, -55, 55, -1, -55, -55, 1, -55, -55, -1, -55, 55, -1, -55, 55, 1, 55, 55, 1, -55, 55, -1, 55, 55, 1, -55, 55, -1, -55, 55, -1, 55, -55, 1, -55, -55, 1, 55, -55, -1, -55, -55, 1, 55, -55, -1, 55, -55, -1, -55, 55, 1, 55, -55, 1, 55, 55, 1, -55, -55, 1, 55, -55, 1, -55, 55, 1, -55, -55, -1, 55, 55, -1, 55, -55, -1, -55, 55, -1, 55, 55, -1, -55, -55, -1, -55)
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_dncc7"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_0k5vl"]
+data = PackedVector3Array(-100, 2, 100, 100, 2, 100, -100, -2, 100, 100, 2, 100, 100, -2, 100, -100, -2, 100, 100, 2, -100, -100, 2, -100, 100, -2, -100, -100, 2, -100, -100, -2, -100, 100, -2, -100, 100, 2, 100, 100, 2, -100, 100, -2, 100, 100, 2, -100, 100, -2, -100, 100, -2, 100, -100, 2, -100, -100, 2, 100, -100, -2, -100, -100, 2, 100, -100, -2, 100, -100, -2, -100, 100, 2, 100, -100, 2, 100, 100, 2, -100, -100, 2, 100, -100, 2, -100, 100, 2, -100, -100, -2, 100, 100, -2, 100, -100, -2, -100, 100, -2, 100, 100, -2, -100, -100, -2, -100)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_5vu5m"]
 data = PackedVector3Array(-100, 2, 100, 100, 2, 100, -100, -2, 100, 100, 2, 100, 100, -2, 100, -100, -2, 100, 100, 2, -100, -100, 2, -100, 100, -2, -100, -100, 2, -100, -100, -2, -100, 100, -2, -100, 100, 2, 100, 100, 2, -100, 100, -2, 100, 100, 2, -100, 100, -2, -100, 100, -2, 100, -100, 2, -100, -100, 2, 100, -100, -2, -100, -100, 2, 100, -100, -2, 100, -100, -2, -100, 100, 2, 100, -100, 2, 100, 100, 2, -100, -100, 2, 100, -100, 2, -100, 100, 2, -100, -100, -2, 100, 100, -2, 100, -100, -2, -100, 100, -2, 100, 100, -2, -100, -100, -2, -100)
 
 [sub_resource type="BoxMesh" id="BoxMesh_dncc7"]
@@ -41,16 +47,17 @@ albedo_texture = ExtResource("4_cm411")
 uv1_scale = Vector3(0.5, 0.5, 0.5)
 uv1_triplanar = true
 
-[sub_resource type="Environment" id="Environment_5wxe1"]
-background_mode = 1
-background_color = Color(0.23921569, 0.7764706, 1, 1)
-ambient_light_source = 3
-ambient_light_color = Color(1, 1, 1, 1)
-fog_enabled = true
-fog_mode = 1
-fog_light_color = Color(0.40784314, 0.8980392, 0.91764706, 1)
-fog_density = 1.0
-fog_sky_affect = 0.893
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_8ty32"]
+data = PackedVector3Array(-74.6329, -29.575298, -74.6329, -105.5469, -29.575298, 0, -81.928696, -29.575298, 0, -74.6329, -29.575298, -74.6329, -81.928696, -29.575298, 0, -57.9324, -29.575298, -57.932297, -74.6329, -29.575298, -74.6329, -74.6329, 29.575298, -74.6329, -105.5469, -29.575298, 0, -74.6329, -29.575298, -74.6329, -57.9324, -29.575298, -57.932297, 0, -29.575298, -105.5469, 0, -29.575298, -105.5469, -57.9324, -29.575298, -57.932297, 0, -29.575298, -81.928696, -74.6329, -29.575298, -74.6329, 0, -29.575298, -105.5469, 0, 29.575298, -105.5469, -105.5469, -29.575298, 0, -74.6329, -29.575298, 74.6329, -81.928696, -29.575298, 0, -74.6329, -29.575298, 74.6329, -57.932297, -29.575298, 57.932297, -81.928696, -29.575298, 0, -105.5469, -29.575298, 0, -105.5469, 29.575298, 0, -74.6329, -29.575298, 74.6329, -74.6329, -29.575298, 74.6329, 0, -29.575298, 81.928696, -57.932297, -29.575298, 57.932297, -74.6329, -29.575298, 74.6329, 0, -29.575298, 105.5469, 0, -29.575298, 81.928696, -74.6329, -29.575298, 74.6329, -74.6329, 29.575298, 74.6329, 0, -29.575298, 105.5469, -105.5469, -29.575298, 0, -74.6329, 29.575298, -74.6329, -105.5469, 29.575298, 0, -74.6329, 29.575298, -74.6329, -57.9324, 29.575298, -57.932297, -105.5469, 29.575298, 0, -105.5469, 29.575298, 0, -57.9324, 29.575298, -57.932297, -81.928696, 29.575298, 0, -74.6329, -29.575298, -74.6329, 0, 29.575298, -105.5469, -74.6329, 29.575298, -74.6329, -74.6329, 29.575298, -74.6329, 0, 29.575298, -105.5469, -57.9324, 29.575298, -57.932297, 0, 29.575298, -105.5469, 0, 29.575298, -81.928696, -57.9324, 29.575298, -57.932297, -74.6329, -29.575298, 74.6329, -105.5469, 29.575298, 0, -74.6329, 29.575298, 74.6329, -105.5469, 29.575298, 0, -81.928696, 29.575298, 0, -74.6329, 29.575298, 74.6329, -74.6329, 29.575298, 74.6329, -81.928696, 29.575298, 0, -57.932297, 29.575298, 57.932297, 0, -29.575298, 105.5469, -74.6329, 29.575298, 74.6329, 0, 29.575298, 105.5469, -74.6329, 29.575298, 74.6329, -57.932297, 29.575298, 57.932297, 0, 29.575298, 81.928696, -74.6329, 29.575298, 74.6329, 0, 29.575298, 81.928696, 0, 29.575298, 105.5469, 0, -29.575298, -105.5469, 0, -29.575298, -81.928696, 74.6329, -29.575298, -74.6329, 74.6329, -29.575298, -74.6329, 0, -29.575298, -81.928696, 57.932297, -29.575298, -57.9324, 0, -29.575298, -105.5469, 74.6329, -29.575298, -74.6329, 74.6329, 29.575298, -74.6329, 74.6329, -29.575298, -74.6329, 57.932297, -29.575298, -57.9324, 81.928696, -29.575298, 0, 74.6329, -29.575298, -74.6329, 81.928696, -29.575298, 0, 105.5469, -29.575298, 0, 74.6329, -29.575298, -74.6329, 105.5469, -29.575298, 0, 105.5469, 29.575298, 0, 0, -29.575298, 105.5469, 74.6329, -29.575298, 74.6329, 0, -29.575298, 81.928696, 74.6329, -29.575298, 74.6329, 57.932297, -29.575298, 57.932297, 0, -29.575298, 81.928696, 0, -29.575298, 105.5469, 0, 29.575298, 105.5469, 74.6329, -29.575298, 74.6329, 105.5469, -29.575298, 0, 81.928696, -29.575298, 0, 57.932297, -29.575298, 57.932297, 105.5469, -29.575298, 0, 57.932297, -29.575298, 57.932297, 74.6329, -29.575298, 74.6329, 105.5469, -29.575298, 0, 74.6329, -29.575298, 74.6329, 74.6329, 29.575298, 74.6329, 0, -29.575298, -105.5469, 74.6329, 29.575298, -74.6329, 0, 29.575298, -105.5469, 0, 29.575298, -105.5469, 74.6329, 29.575298, -74.6329, 0, 29.575298, -81.928696, 74.6329, 29.575298, -74.6329, 57.932297, 29.575298, -57.9324, 0, 29.575298, -81.928696, 74.6329, -29.575298, -74.6329, 105.5469, 29.575298, 0, 74.6329, 29.575298, -74.6329, 74.6329, 29.575298, -74.6329, 81.928696, 29.575298, 0, 57.932297, 29.575298, -57.9324, 74.6329, 29.575298, -74.6329, 105.5469, 29.575298, 0, 81.928696, 29.575298, 0, 0, 29.575298, 105.5469, 74.6329, 29.575298, 74.6329, 74.6329, -29.575298, 74.6329, 0, 29.575298, 105.5469, 0, 29.575298, 81.928696, 74.6329, 29.575298, 74.6329, 74.6329, 29.575298, 74.6329, 0, 29.575298, 81.928696, 57.932297, 29.575298, 57.932297, 105.5469, -29.575298, 0, 74.6329, 29.575298, 74.6329, 105.5469, 29.575298, 0, 105.5469, 29.575298, 0, 57.932297, 29.575298, 57.932297, 81.928696, 29.575298, 0, 105.5469, 29.575298, 0, 74.6329, 29.575298, 74.6329, 57.932297, 29.575298, 57.932297, -81.928696, -29.575298, 0, -57.9324, 29.575298, -57.932297, -57.9324, -29.575298, -57.932297, -57.9324, -29.575298, -57.932297, 0, 29.575298, -81.928696, 0, -29.575298, -81.928696, -57.932297, -29.575298, 57.932297, -81.928696, 29.575298, 0, -81.928696, -29.575298, 0, 0, -29.575298, 81.928696, -57.932297, 29.575298, 57.932297, -57.932297, -29.575298, 57.932297, -57.9324, 29.575298, -57.932297, -81.928696, -29.575298, 0, -81.928696, 29.575298, 0, 0, 29.575298, -81.928696, -57.9324, -29.575298, -57.932297, -57.9324, 29.575298, -57.932297, -57.932297, -29.575298, 57.932297, -57.932297, 29.575298, 57.932297, -81.928696, 29.575298, 0, -57.932297, 29.575298, 57.932297, 0, -29.575298, 81.928696, 0, 29.575298, 81.928696, 0, -29.575298, -81.928696, 57.932297, 29.575298, -57.9324, 57.932297, -29.575298, -57.9324, 57.932297, -29.575298, -57.9324, 81.928696, 29.575298, 0, 81.928696, -29.575298, 0, 0, -29.575298, 81.928696, 57.932297, -29.575298, 57.932297, 0, 29.575298, 81.928696, 81.928696, -29.575298, 0, 57.932297, 29.575298, 57.932297, 57.932297, -29.575298, 57.932297, 0, -29.575298, -81.928696, 0, 29.575298, -81.928696, 57.932297, 29.575298, -57.9324, 81.928696, 29.575298, 0, 57.932297, -29.575298, -57.9324, 57.932297, 29.575298, -57.9324, 57.932297, -29.575298, 57.932297, 57.932297, 29.575298, 57.932297, 0, 29.575298, 81.928696, 57.932297, 29.575298, 57.932297, 81.928696, -29.575298, 0, 81.928696, 29.575298, 0)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nic26"]
+size = Vector3(100, 6.434326, 1.6206055)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7wlnk"]
+size = Vector3(50.723633, 1, 3.2668457)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0k5vl"]
+size = Vector3(3.4036865, 3.2978516, 1)
 
 [node name="remote_island" type="Node3D" unique_id=1949576147]
 
@@ -68,35 +75,46 @@ metadata/_edit_lock_ = true
 [node name="floor" type="StaticBody3D" parent="map" unique_id=526321324]
 metadata/_edit_lock_ = true
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="map/floor" unique_id=860566644]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.661, -2, 1.641)
-shape = SubResource("ConcavePolygonShape3D_5wxe1")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="map/floor" unique_id=2079884731]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.805, -2, 1.306)
+shape = SubResource("ConcavePolygonShape3D_nic26")
 metadata/_edit_lock_ = true
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="map/floor" unique_id=1017728323]
-transform = Transform3D(0.81915206, 0, 0.57357645, 0, 1, 0, -0.57357645, 0, 0.81915206, 0, -3, 0)
-shape = SubResource("ConcavePolygonShape3D_cm411")
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="map/floor" unique_id=624445102]
+transform = Transform3D(0.81915206, 0, 0.57357645, 0, 1, 0, -0.57357645, 0, 0.81915206, 0.144, -3, -0.335)
+shape = SubResource("ConcavePolygonShape3D_7wlnk")
 metadata/_edit_lock_ = true
 
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="map/floor" unique_id=596078606]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6, 0)
-shape = SubResource("ConcavePolygonShape3D_dncc7")
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="map/floor" unique_id=1688518945]
+transform = Transform3D(1, 0, 0, 0, 0.9999999, 0, 0, 0, 1, 0.067, -6, 0.898)
+shape = SubResource("ConcavePolygonShape3D_0k5vl")
 metadata/_edit_lock_ = true
 
-[node name="CSGBox3D" type="MeshInstance3D" parent="map/floor" unique_id=425240111]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.8046956, -1.9183426, 1.3059494)
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="map/floor" unique_id=1028061139]
+transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, 0.067, -7, 0.898)
+shape = SubResource("ConcavePolygonShape3D_5vu5m")
+metadata/_edit_lock_ = true
+
+[node name="grass" type="MeshInstance3D" parent="map/floor" unique_id=425240111]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.805, -2, 1.306)
 mesh = SubResource("BoxMesh_dncc7")
 surface_material_override/0 = SubResource("StandardMaterial3D_cm411")
 metadata/_edit_lock_ = true
 
-[node name="CSGBox3D3" type="MeshInstance3D" parent="map/floor" unique_id=1114615282]
-transform = Transform3D(0.81915206, 0, 0.57357645, 0, 1, 0, -0.57357645, 0, 0.81915206, 0.14369583, -2.9183426, -0.33505058)
+[node name="grass2" type="MeshInstance3D" parent="map/floor" unique_id=1114615282]
+transform = Transform3D(0.81915206, 0, 0.57357645, 0, 1, 0, -0.57357645, 0, 0.81915206, 0.144, -3, -0.335)
 mesh = SubResource("BoxMesh_nic26")
 surface_material_override/0 = SubResource("StandardMaterial3D_cm411")
 metadata/_edit_lock_ = true
 
-[node name="CSGBox3D2" type="MeshInstance3D" parent="map/floor" unique_id=1901947122]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6, 0)
+[node name="sand" type="MeshInstance3D" parent="map/floor" unique_id=1901947122]
+transform = Transform3D(1, 0, 0, 0, 0.9999999, 0, 0, 0, 1, 0.067, -6, 0.898)
+mesh = SubResource("BoxMesh_7wlnk")
+surface_material_override/0 = SubResource("StandardMaterial3D_0k5vl")
+metadata/_edit_lock_ = true
+
+[node name="sand2" type="MeshInstance3D" parent="map/floor" unique_id=1801803687]
+transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, 0.067, -7, 0.898)
 mesh = SubResource("BoxMesh_7wlnk")
 surface_material_override/0 = SubResource("StandardMaterial3D_0k5vl")
 metadata/_edit_lock_ = true
@@ -107,9 +125,376 @@ sky_mode = 1
 metadata/_edit_lock_ = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="map" unique_id=1594097371]
-environment = SubResource("Environment_5wxe1")
+environment = ExtResource("4_dncc7")
+
+[node name="player_barrier" type="StaticBody3D" parent="map" unique_id=1069759614]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.963074, 0)
+visible = false
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="map/player_barrier" unique_id=108042571]
+shape = SubResource("ConcavePolygonShape3D_8ty32")
+
+[node name="turret_grid" parent="map" unique_id=1489577349 instance=ExtResource("5_cm411")]
 
 [node name="CharacterBody3D" parent="." unique_id=961430667 instance=ExtResource("2_2kokt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.938994, 0)
 
-[node name="turret_grid" parent="." unique_id=1489577349 instance=ExtResource("5_cm411")]
+[node name="enemy_spawner" parent="." unique_id=51836272 node_paths=PackedStringArray("spawn_markers", "extraction_pod") instance=ExtResource("7_8ty32")]
+spawn_markers = NodePath("../spawn_markers")
+extraction_pod = NodePath("../map/extraction_pod")
+map = "remote_island"
+spawn_rate = 5
+
+[node name="spawn_markers" type="Node" parent="." unique_id=1301469332]
+
+[node name="Marker3D" type="Marker3D" parent="spawn_markers" unique_id=889616448]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 90)
+
+[node name="Marker3D3" type="Marker3D" parent="spawn_markers" unique_id=596874140]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90, 0, 0)
+
+[node name="Marker3D4" type="Marker3D" parent="spawn_markers" unique_id=166271002]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -90, 0, 0)
+
+[node name="Marker3D2" type="Marker3D" parent="spawn_markers" unique_id=991813210]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -90)
+
+[node name="enemy_only_path" type="StaticBody3D" parent="." unique_id=108596090]
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="enemy_only_path" unique_id=1549380381]
+transform = Transform3D(1, 0, 0, 0, 0.6910842, -0.72277415, 0, 0.72277415, 0.6910842, 7.444828, -2.801922, -50.45534)
+shape = SubResource("BoxShape3D_nic26")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="enemy_only_path" unique_id=1460039863]
+transform = Transform3D(0.81915194, -0.40557978, 0.4055798, 0, 0.7071067, 0.7071067, -0.57357645, -0.5792281, 0.5792279, -7.579359, -3.5098858, -63.050056)
+shape = SubResource("BoxShape3D_7wlnk")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="enemy_only_path" unique_id=335709857]
+transform = Transform3D(0.5735764, 0.5792281, -0.5792279, 0, 0.70710665, 0.70710665, 0.81915194, -0.40557972, 0.40557975, 28.787218, -3.5098858, -56.733265)
+shape = SubResource("BoxShape3D_7wlnk")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="enemy_only_path" unique_id=1128137135]
+transform = Transform3D(1, 0, 0, 0, 0.6873791, -0.7262988, 0, 0.7262988, 0.6873791, 13.651631, -3.4868546, -77.84124)
+shape = SubResource("BoxShape3D_0k5vl")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="enemy_only_path" unique_id=1698510699]
+transform = Transform3D(-4.371139e-08, 0.72277415, 0.6910842, 0, 0.6910842, -0.72277415, -1, -3.1593462e-08, -3.020825e-08, -43.965446, -2.801922, 1.5288415)
+shape = SubResource("BoxShape3D_nic26")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="enemy_only_path" unique_id=124922208]
+transform = Transform3D(-0.5735765, -0.5792281, 0.5792279, 0, 0.7071067, 0.7071067, -0.81915194, 0.4055798, -0.40557984, -62.850056, -3.5098858, 7.579362)
+shape = SubResource("BoxShape3D_7wlnk")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape3D7" type="CollisionShape3D" parent="enemy_only_path" unique_id=2042980354]
+transform = Transform3D(0.81915194, -0.40557975, 0.40557978, 0, 0.70710665, 0.70710665, -0.57357645, -0.5792281, 0.5792279, -56.533264, -3.5098858, -28.787216)
+shape = SubResource("BoxShape3D_7wlnk")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape3D8" type="CollisionShape3D" parent="enemy_only_path" unique_id=1841466621]
+transform = Transform3D(-4.371139e-08, 0.7262988, 0.6873791, 0, 0.6873791, -0.7262988, -1, -3.174753e-08, -3.0046294e-08, -77.64124, -3.4868546, -13.651628)
+shape = SubResource("BoxShape3D_0k5vl")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape3D9" type="CollisionShape3D" parent="enemy_only_path" unique_id=883813401]
+transform = Transform3D(-1, 6.3186924e-08, 6.04165e-08, 0, 0.6910842, -0.72277415, -8.742278e-08, -0.72277415, -0.6910842, 8.555168, -2.801922, 53.078796)
+shape = SubResource("BoxShape3D_nic26")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape3D10" type="CollisionShape3D" parent="enemy_only_path" unique_id=1468824819]
+transform = Transform3D(-0.819152, 0.40557972, -0.40557975, 0, 0.7071067, 0.7071067, 0.5735764, 0.57922816, -0.579228, 7.8835554, -3.5098858, 62.76454)
+shape = SubResource("BoxShape3D_7wlnk")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape3D11" type="CollisionShape3D" parent="enemy_only_path" unique_id=1055582396]
+transform = Transform3D(-0.57357633, -0.57922816, 0.579228, 0, 0.70710665, 0.70710665, -0.819152, 0.40557966, -0.4055797, -28.483013, -3.5098858, 56.447746)
+shape = SubResource("BoxShape3D_7wlnk")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape3D12" type="CollisionShape3D" parent="enemy_only_path" unique_id=417683332]
+transform = Transform3D(-1, 6.349506e-08, 6.009259e-08, 0, 0.6873791, -0.7262988, -8.742278e-08, -0.7262988, -0.6873791, -13.347433, -3.4868546, 77.555725)
+shape = SubResource("BoxShape3D_0k5vl")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape3D13" type="CollisionShape3D" parent="enemy_only_path" unique_id=1489719099]
+transform = Transform3D(-4.371139e-08, -0.72277415, -0.6910842, 0, 0.6910842, -0.72277415, 1, -3.1593462e-08, -3.020825e-08, 59.609642, -2.801922, 1.3127418)
+shape = SubResource("BoxShape3D_nic26")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape3D14" type="CollisionShape3D" parent="enemy_only_path" unique_id=331659670]
+transform = Transform3D(0.57357645, 0.57922816, -0.579228, 0, 0.7071067, 0.7071067, 0.819152, -0.40557975, 0.40557978, 62.837303, -3.5098858, -8.156479)
+shape = SubResource("BoxShape3D_7wlnk")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape3D15" type="CollisionShape3D" parent="enemy_only_path" unique_id=186766443]
+transform = Transform3D(-0.819152, 0.4055797, -0.40557972, 0, 0.70710665, 0.70710665, 0.5735764, 0.57922816, -0.579228, 56.520515, -3.5098858, 28.210098)
+shape = SubResource("BoxShape3D_7wlnk")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape3D16" type="CollisionShape3D" parent="enemy_only_path" unique_id=1715597316]
+transform = Transform3D(-4.371139e-08, -0.7262988, -0.6873791, 0, 0.6873791, -0.7262988, 1, -3.174753e-08, -3.0046294e-08, 77.628494, -3.4868546, 13.0745125)
+shape = SubResource("BoxShape3D_0k5vl")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="enemy" parent="." unique_id=1676880902 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.35876, -1.5470595, 94.63938)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy2" parent="." unique_id=241965160 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.35876, -1.5470595, 91.91086)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy3" parent="." unique_id=1554112467 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.853497, -1.5470595, 94.63938)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy4" parent="." unique_id=844840472 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.853497, -1.5470595, 91.91086)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy5" parent="." unique_id=1106177291 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.410542, -1.5470595, 94.63938)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy6" parent="." unique_id=573768689 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.410542, -1.5470595, 91.91086)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy7" parent="." unique_id=1662294188 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.90528, -1.5470595, 94.63938)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy8" parent="." unique_id=229135194 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.90528, -1.5470595, 91.91086)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy9" parent="." unique_id=1098244190 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9750795, -1.5470595, 94.63938)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy10" parent="." unique_id=1584898400 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9750795, -1.5470595, 91.91086)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy11" parent="." unique_id=528448428 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.469816, -1.5470595, 94.63938)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy12" parent="." unique_id=1262234091 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.469816, -1.5470595, 91.91086)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy13" parent="." unique_id=1404380667 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.026861, -1.5470595, 94.63938)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy14" parent="." unique_id=344011630 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.026861, -1.5470595, 91.91086)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy15" parent="." unique_id=363448923 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.521599, -1.5470595, 94.63938)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy16" parent="." unique_id=1457144551 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.521599, -1.5470595, 91.91086)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy17" parent="." unique_id=928258205 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.35876, -1.5470595, 89.00631)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy18" parent="." unique_id=722783205 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.35876, -1.5470595, 86.27779)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy19" parent="." unique_id=2113931979 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.853497, -1.5470595, 89.00631)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy20" parent="." unique_id=514699103 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.853497, -1.5470595, 86.27779)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy21" parent="." unique_id=986064857 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.410542, -1.5470595, 89.00631)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy22" parent="." unique_id=729809111 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.410542, -1.5470595, 86.27779)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy23" parent="." unique_id=7407746 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.90528, -1.5470595, 89.00631)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy24" parent="." unique_id=1285218634 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.90528, -1.5470595, 86.27779)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy25" parent="." unique_id=1246316026 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9750795, -1.5470595, 89.00631)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy26" parent="." unique_id=581622626 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9750795, -1.5470595, 86.27779)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy27" parent="." unique_id=974480434 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.469816, -1.5470595, 89.00631)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy28" parent="." unique_id=2040705049 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.469816, -1.5470595, 86.27779)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy29" parent="." unique_id=61807550 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.026861, -1.5470595, 89.00631)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy30" parent="." unique_id=1661745578 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.026861, -1.5470595, 86.27779)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy31" parent="." unique_id=1132473549 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.521599, -1.5470595, 89.00631)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy32" parent="." unique_id=1800002376 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.521599, -1.5470595, 86.27779)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy33" parent="." unique_id=1910408672 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.35876, -3.447454, 94.63938)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy34" parent="." unique_id=1437159296 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.35876, -3.447454, 91.91086)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy35" parent="." unique_id=453886743 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.853497, -3.447454, 94.63938)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy36" parent="." unique_id=737833535 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.853497, -3.447454, 91.91086)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy37" parent="." unique_id=1548576689 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.410542, -3.447454, 94.63938)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy38" parent="." unique_id=1752006618 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.410542, -3.447454, 91.91086)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy39" parent="." unique_id=710815396 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.90528, -3.447454, 94.63938)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy40" parent="." unique_id=1897036826 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.90528, -3.447454, 91.91086)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy41" parent="." unique_id=1395987791 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9750795, -3.447454, 94.63938)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy42" parent="." unique_id=1570253175 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9750795, -3.447454, 91.91086)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy43" parent="." unique_id=650807217 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.469816, -3.447454, 94.63938)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy44" parent="." unique_id=1530501123 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.469816, -3.447454, 91.91086)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy45" parent="." unique_id=1548051233 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.026861, -3.447454, 94.63938)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy46" parent="." unique_id=2048218444 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.026861, -3.447454, 91.91086)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy47" parent="." unique_id=240766999 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.521599, -3.447454, 94.63938)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy48" parent="." unique_id=65453270 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.521599, -3.447454, 91.91086)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy49" parent="." unique_id=320991518 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.35876, -3.447454, 89.00631)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy50" parent="." unique_id=1002686652 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.35876, -3.447454, 86.27779)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy51" parent="." unique_id=923683590 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.853497, -3.447454, 89.00631)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy52" parent="." unique_id=1430791618 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.853497, -3.447454, 86.27779)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy53" parent="." unique_id=1961244966 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.410542, -3.447454, 89.00631)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy54" parent="." unique_id=474185903 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.410542, -3.447454, 86.27779)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy55" parent="." unique_id=1803306285 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.90528, -3.447454, 89.00631)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy56" parent="." unique_id=1933028567 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.90528, -3.447454, 86.27779)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy57" parent="." unique_id=2065361327 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9750795, -3.447454, 89.00631)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy58" parent="." unique_id=1980552244 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9750795, -3.447454, 86.27779)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy59" parent="." unique_id=369041736 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.469816, -3.447454, 89.00631)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy60" parent="." unique_id=1635189741 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.469816, -3.447454, 86.27779)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy61" parent="." unique_id=338120347 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.026861, -3.447454, 89.00631)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy62" parent="." unique_id=724362181 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.026861, -3.447454, 86.27779)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy63" parent="." unique_id=591615637 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.521599, -3.447454, 89.00631)
+extraction_pod = NodePath("../map/extraction_pod")
+
+[node name="enemy64" parent="." unique_id=2104714673 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("6_dncc7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.521599, -3.447454, 86.27779)
+extraction_pod = NodePath("../map/extraction_pod")

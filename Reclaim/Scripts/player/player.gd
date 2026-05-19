@@ -30,7 +30,7 @@ func _physics_process(delta: float) -> void:
 	velocity.z = direction.z * move_speed
 	
 	if not is_on_floor():
-		velocity.y -= gravity * delta
+		velocity.y -= Global.GRAVITY * delta
 	else:
 		velocity.y = 0.0
 	
@@ -89,6 +89,14 @@ func _build_mode_handeling(ray_collider : Node) -> void:
 			turret_holagram.global_position = ray_collider.turret_origin_point.global_position
 			turret_holagram.valid_position = true
 			place_overlay.visible = true
+			
+			if Input.is_action_just_pressed("shoot"):
+				ray_collider.current_turret = "basic"
+				ray_collider.place_selected_turret()
+				#Global.build_mode = false
+				#turret_holagram.queue_free()
+				#place_overlay.visible = false
+			
 		else:
 			turret_holagram.global_position = sight_ray.get_collision_point()
 			turret_holagram.valid_position = false

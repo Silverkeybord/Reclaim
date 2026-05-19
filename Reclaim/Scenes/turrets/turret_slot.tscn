@@ -23,9 +23,9 @@ material_override = ExtResource("1_2v88f")
 mesh = SubResource("BoxMesh_awi3e")
 surface_material_override/0 = ExtResource("2_awi3e")
 
-[node name="turret_origin_point" type="Marker3D" parent="." unique_id=295025494]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=855550473]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 shape = SubResource("ConcavePolygonShape3D_uuoed")
+
+[node name="turret_origin_point" type="Marker3D" parent="." unique_id=295025494]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

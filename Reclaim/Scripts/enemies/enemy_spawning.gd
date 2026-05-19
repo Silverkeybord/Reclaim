@@ -7,7 +7,8 @@ const MAX_SPAWN_DISTANCE := 100
 @export var spawn_timer : Timer
 
 @export_group("map info")
-@export var spawn_nodes : Marker3D
+@export var spawn_markers : Node
+@export var extraction_pod : Node3D
 @export var map : String
 @export var difficulty : int
 @export var spawn_rate : int
@@ -17,8 +18,3 @@ const MAX_SPAWN_DISTANCE := 100
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass

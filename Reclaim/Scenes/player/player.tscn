@@ -19,6 +19,7 @@ transparency = 1
 albedo_color = Color(0.8117647, 0.8117647, 0.8117647, 0.44313726)
 
 [node name="CharacterBody3D" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "sight_ray", "place_overlay")]
+collision_mask = 15
 script = ExtResource("1_eo61r")
 interact_overlay = NodePath("interact_overlay")
 sight_ray = NodePath("SpringArm3D/RayCast3D")
@@ -50,7 +51,7 @@ current = true
 [node name="RayCast3D" type="RayCast3D" parent="SpringArm3D" unique_id=49309072]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
 target_position = Vector3(0, -150, 0)
-collision_mask = 31
+collision_mask = 29
 collide_with_areas = true
 
 [node name="normal_reticle" type="TextureRect" parent="." unique_id=1247984658]
@@ -70,6 +71,7 @@ texture = ExtResource("4_e41v5")
 stretch_mode = 3
 
 [node name="interact_overlay" type="Control" parent="." unique_id=828996024]
+visible = false
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -173,4 +175,4 @@ offset_bottom = 43.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("5_ca0mu")
-text = "E to Place"
+text = "click to Place"

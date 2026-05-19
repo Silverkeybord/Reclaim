@@ -1,9 +1,9 @@
 [gd_scene format=4 uid="uid://cykue4k22xfxa"]
 
 [ext_resource type="PackedScene" uid="uid://dwm2mxns3x5wt" path="res://Scenes/player/player.tscn" id="1_m75ec"]
-[ext_resource type="PackedScene" uid="uid://cm7cq456gvpot" path="res://Scenes/crafting_table.tscn" id="2_f0cws"]
-[ext_resource type="PackedScene" uid="uid://p33w1llwyou3" path="res://Scenes/research_table.tscn" id="3_w1oif"]
-[ext_resource type="PackedScene" uid="uid://br62cm1gllm1" path="res://Scenes/deploy_pod.tscn" id="4_m75ec"]
+[ext_resource type="PackedScene" uid="uid://cm7cq456gvpot" path="res://Scenes/ship/crafting_table.tscn" id="2_f0cws"]
+[ext_resource type="PackedScene" uid="uid://p33w1llwyou3" path="res://Scenes/ship/research_table.tscn" id="3_w1oif"]
+[ext_resource type="PackedScene" uid="uid://br62cm1gllm1" path="res://Scenes/ship/deploy_pod.tscn" id="4_m75ec"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_m75ec"]
 _surfaces = [{

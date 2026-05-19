@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://dcu7uussd5i41"]
+
+[ext_resource type="Script" uid="uid://b5m6w72ttc6t6" path="res://Scripts/turrets/T1/basic.gd" id="1_q23d6"]
+[ext_resource type="PackedScene" uid="uid://c22ups1xaq3y4" path="res://Scenes/turrets/bullet_trail.tscn" id="2_uprog"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_h2pfq"]
+size = Vector3(3.5, 3, 3.5)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_q23d6"]
+data = PackedVector3Array(-1.75, 1.5, 1.75, 1.75, 1.5, 1.75, -1.75, -1.5, 1.75, 1.75, 1.5, 1.75, 1.75, -1.5, 1.75, -1.75, -1.5, 1.75, 1.75, 1.5, -1.75, -1.75, 1.5, -1.75, 1.75, -1.5, -1.75, -1.75, 1.5, -1.75, -1.75, -1.5, -1.75, 1.75, -1.5, -1.75, 1.75, 1.5, 1.75, 1.75, 1.5, -1.75, 1.75, -1.5, 1.75, 1.75, 1.5, -1.75, 1.75, -1.5, -1.75, 1.75, -1.5, 1.75, -1.75, 1.5, -1.75, -1.75, 1.5, 1.75, -1.75, -1.5, -1.75, -1.75, 1.5, 1.75, -1.75, -1.5, 1.75, -1.75, -1.5, -1.75, 1.75, 1.5, 1.75, -1.75, 1.5, 1.75, 1.75, 1.5, -1.75, -1.75, 1.5, 1.75, -1.75, 1.5, -1.75, 1.75, 1.5, -1.75, -1.75, -1.5, 1.75, 1.75, -1.5, 1.75, -1.75, -1.5, -1.75, 1.75, -1.5, 1.75, 1.75, -1.5, -1.75, -1.75, -1.5, -1.75)
+
+[sub_resource type="BoxMesh" id="BoxMesh_2utbc"]
+size = Vector3(2, 1.5, 2)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_uprog"]
+data = PackedVector3Array(-1, 0.75, 1, 1, 0.75, 1, -1, -0.75, 1, 1, 0.75, 1, 1, -0.75, 1, -1, -0.75, 1, 1, 0.75, -1, -1, 0.75, -1, 1, -0.75, -1, -1, 0.75, -1, -1, -0.75, -1, 1, -0.75, -1, 1, 0.75, 1, 1, 0.75, -1, 1, -0.75, 1, 1, 0.75, -1, 1, -0.75, -1, 1, -0.75, 1, -1, 0.75, -1, -1, 0.75, 1, -1, -0.75, -1, -1, 0.75, 1, -1, -0.75, 1, -1, -0.75, -1, 1, 0.75, 1, -1, 0.75, 1, 1, 0.75, -1, -1, 0.75, 1, -1, 0.75, -1, 1, 0.75, -1, -1, -0.75, 1, 1, -0.75, 1, -1, -0.75, -1, 1, -0.75, 1, 1, -0.75, -1, -1, -0.75, -1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_q4ebr"]
+size = Vector3(1, 1, 2)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_5kt17"]
+data = PackedVector3Array(-0.5, 0.5, 1, 0.5, 0.5, 1, -0.5, -0.5, 1, 0.5, 0.5, 1, 0.5, -0.5, 1, -0.5, -0.5, 1, 0.5, 0.5, -1, -0.5, 0.5, -1, 0.5, -0.5, -1, -0.5, 0.5, -1, -0.5, -0.5, -1, 0.5, -0.5, -1, 0.5, 0.5, 1, 0.5, 0.5, -1, 0.5, -0.5, 1, 0.5, 0.5, -1, 0.5, -0.5, -1, 0.5, -0.5, 1, -0.5, 0.5, -1, -0.5, 0.5, 1, -0.5, -0.5, -1, -0.5, 0.5, 1, -0.5, -0.5, 1, -0.5, -0.5, -1, 0.5, 0.5, 1, -0.5, 0.5, 1, 0.5, 0.5, -1, -0.5, 0.5, 1, -0.5, 0.5, -1, 0.5, 0.5, -1, -0.5, -0.5, 1, 0.5, -0.5, 1, -0.5, -0.5, -1, 0.5, -0.5, 1, 0.5, -0.5, -1, -0.5, -0.5, -1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_uprog"]
+height = 8.0
+radius = 25.0
+
+[node name="basic" type="StaticBody3D" unique_id=88525916 node_paths=PackedStringArray("turret_piviot_point", "turret_gun", "bullet_spawn", "cooldown_timer", "turret_range_coll")]
+script = ExtResource("1_q23d6")
+turret_piviot_point = NodePath("head_piviot_point")
+turret_gun = NodePath("head_piviot_point/gun")
+bullet_spawn = NodePath("head_piviot_point/gun/bullet_spawn")
+cooldown_timer = NodePath("cool_down_timer")
+turret_range_coll = NodePath("turret_range_area/turret_range_coll")
+bullet_trail_scene = ExtResource("2_uprog")
+
+[node name="body" type="MeshInstance3D" parent="." unique_id=1853312379]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+mesh = SubResource("BoxMesh_h2pfq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1602904139]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("ConcavePolygonShape3D_q23d6")
+
+[node name="head_piviot_point" type="StaticBody3D" parent="." unique_id=851992263]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+
+[node name="head" type="MeshInstance3D" parent="head_piviot_point" unique_id=1519841278]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 4.371139e-08, 0.75, 0)
+mesh = SubResource("BoxMesh_2utbc")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="head_piviot_point" unique_id=748854766]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 4.371139e-08, 0.75, 0)
+shape = SubResource("ConcavePolygonShape3D_uprog")
+
+[node name="gun" type="MeshInstance3D" parent="head_piviot_point" unique_id=1786086648]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -4.371139e-08, 0.75, -1)
+mesh = SubResource("BoxMesh_q4ebr")
+
+[node name="bullet_spawn" type="Marker3D" parent="head_piviot_point/gun" unique_id=1963288427]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.742277e-08, 0, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="head_piviot_point" unique_id=927745990]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -4.371139e-08, 0.75, -1)
+shape = SubResource("ConcavePolygonShape3D_5kt17")
+
+[node name="turret_range_area" type="Area3D" parent="." unique_id=1900284662]
+collision_layer = 2
+collision_mask = 8
+
+[node name="turret_range_coll" type="CollisionShape3D" parent="turret_range_area" unique_id=1099292850]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+shape = SubResource("CylinderShape3D_uprog")
+
+[node name="cool_down_timer" type="Timer" parent="." unique_id=177401779]
+
+[connection signal="body_entered" from="turret_range_area" to="." method="_on_turret_range_area_body_entered"]
+[connection signal="body_exited" from="turret_range_area" to="." method="_on_turret_range_area_body_exited"]
+[connection signal="timeout" from="cool_down_timer" to="." method="_on_cool_down_timer_timeout"]

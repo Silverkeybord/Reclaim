@@ -28,7 +28,8 @@ folder_colors={
 "res://Scenes/": "blue",
 "res://Scripts/": "gray",
 "res://Sounds/": "green",
-"res://Textures and Materials/": "yellow"
+"res://Textures and Materials/": "yellow",
+"res://data/": "teal"
 }
 
 [global_group]

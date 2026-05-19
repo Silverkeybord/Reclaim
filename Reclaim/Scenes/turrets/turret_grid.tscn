@@ -10,166 +10,166 @@ script = ExtResource("1_7rygc")
 visible = false
 
 [node name="turret_slot2" parent="level1" unique_id=2141199729 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 20)
 
 [node name="turret_slot18" parent="level1" unique_id=1418142515 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0)
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, 20, 0, 0)
 
 [node name="turret_slot27" parent="level1" unique_id=1381639680 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 1.7484556e-06, 0, -20)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7484556e-06, 0, -20)
 
 [node name="turret_slot38" parent="level1" unique_id=2091723212 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -20, 0, -1.7484556e-06)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, 0, -1.7484556e-06)
 
 [node name="level2" type="Node3D" parent="." unique_id=428904798]
 visible = false
 
 [node name="turret_slot12" parent="level2" unique_id=1551101696 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 15)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 15, 0, 15)
 
 [node name="turret_slot23" parent="level2" unique_id=61712220 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -15)
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, 15, 0, -15)
 
 [node name="turret_slot33" parent="level2" unique_id=190970283 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -14.999999, 0, -15.000001)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.999999, 0, -15.000001)
 
 [node name="turret_slot44" parent="level2" unique_id=1626629450 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -15.000001, 0, 14.999999)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -15.000001, 0, 14.999999)
 
 [node name="level3" type="Node3D" parent="." unique_id=1457954258]
 visible = false
 
 [node name="turret_slot" parent="level3" unique_id=608979123 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 15)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 15)
 
 [node name="turret_slot17" parent="level3" unique_id=1953680926 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 0)
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, 15, 0, 0)
 
 [node name="turret_slot26" parent="level3" unique_id=1589729039 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 1.3113416e-06, 0, -15)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3113416e-06, 0, -15)
 
 [node name="turret_slot37" parent="level3" unique_id=1238609809 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -15, 0, -1.3113416e-06)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -15, 0, -1.3113416e-06)
 
 [node name="level4" type="Node3D" parent="." unique_id=410691236]
 visible = false
 
 [node name="turret_slot14" parent="level4" unique_id=819566560 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 10)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 10, 0, 10)
 
 [node name="turret_slot21" parent="level4" unique_id=984289146 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -10)
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, 10, 0, -10)
 
 [node name="turret_slot42" parent="level4" unique_id=2119209215 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -9.999999, 0, -10.000001)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.999999, 0, -10.000001)
 
 [node name="turret_slot43" parent="level4" unique_id=1099973515 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -10.000001, 0, 9.999999)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -10.000001, 0, 9.999999)
 
 [node name="level5" type="Node3D" parent="." unique_id=832214110]
 visible = false
 
 [node name="turret_slot4" parent="level5" unique_id=266127913 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 20)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 5, 0, 20)
 
 [node name="turret_slot16" parent="level5" unique_id=734198080 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 5)
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, 20, 0, 5)
 
 [node name="turret_slot20" parent="level5" unique_id=42872366 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, -5)
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, 20, 0, -5)
 
 [node name="turret_slot8" parent="level5" unique_id=634267247 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 20)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -5, 0, 20)
 
 [node name="turret_slot29" parent="level5" unique_id=263485387 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -4.999998, 0, -20)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.999998, 0, -20)
 
 [node name="turret_slot36" parent="level5" unique_id=209977886 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -20, 0, -5.000002)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, 0, -5.000002)
 
 [node name="turret_slot40" parent="level5" unique_id=2099687995 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -20, 0, 4.999998)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, 0, 4.999998)
 
 [node name="turret_slot47" parent="level5" unique_id=49115952 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 5.000002, 0, -20)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.000002, 0, -20)
 
 [node name="level6" type="Node3D" parent="." unique_id=323124583]
 visible = false
 
 [node name="turret_slot6" parent="level6" unique_id=975967111 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 20)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 10, 0, 20)
 
 [node name="turret_slot13" parent="level6" unique_id=1681764968 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 10)
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, 20, 0, 10)
 
 [node name="turret_slot22" parent="level6" unique_id=1086292173 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, -10)
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, 20, 0, -10)
 
 [node name="turret_slot10" parent="level6" unique_id=1969862048 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 20)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -10, 0, 20)
 
 [node name="turret_slot31" parent="level6" unique_id=772693191 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -9.999998, 0, -20)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.999998, 0, -20)
 
 [node name="turret_slot34" parent="level6" unique_id=1969745708 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -20, 0, -10.000002)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, 0, -10.000002)
 
 [node name="turret_slot41" parent="level6" unique_id=158764359 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -20, 0, 9.999998)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20, 0, 9.999998)
 
 [node name="turret_slot48" parent="level6" unique_id=1066374181 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 10.000002, 0, -20)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.000002, 0, -20)
 
 [node name="level7" type="Node3D" parent="." unique_id=1050422256]
 visible = false
 
 [node name="turret_slot3" parent="level7" unique_id=1368169626 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 15)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 5, 0, 15)
 
 [node name="turret_slot15" parent="level7" unique_id=1994813993 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 5)
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, 15, 0, 5)
 
 [node name="turret_slot19" parent="level7" unique_id=1882828125 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -5)
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, 15, 0, -5)
 
 [node name="turret_slot7" parent="level7" unique_id=813392607 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 15)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -5, 0, 15)
 
 [node name="turret_slot28" parent="level7" unique_id=1442212605 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -4.9999986, 0, -15)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.9999986, 0, -15)
 
 [node name="turret_slot35" parent="level7" unique_id=1486472680 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -15, 0, -5.0000014)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -15, 0, -5.0000014)
 
 [node name="turret_slot39" parent="level7" unique_id=1374633469 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -15, 0, 4.9999986)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -15, 0, 4.9999986)
 
 [node name="turret_slot46" parent="level7" unique_id=1324741380 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 5.0000014, 0, -15)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.0000014, 0, -15)
 
 [node name="level8" type="Node3D" parent="." unique_id=641141379]
 visible = false
 
 [node name="turret_slot5" parent="level8" unique_id=984514636 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 15)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 10, 0, 15)
 
 [node name="turret_slot11" parent="level8" unique_id=1797207937 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 10)
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, 15, 0, 10)
 
 [node name="turret_slot24" parent="level8" unique_id=1837406298 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -10)
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, 15, 0, -10)
 
 [node name="turret_slot25" parent="level8" unique_id=846673752 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -15)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 10, 0, -15)
 
 [node name="turret_slot9" parent="level8" unique_id=480829349 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 15)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -10, 0, 15)
 
 [node name="turret_slot30" parent="level8" unique_id=595741555 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -9.999999, 0, -15.000001)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.999999, 0, -15.000001)
 
 [node name="turret_slot32" parent="level8" unique_id=666309797 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -14.999999, 0, -10.000001)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -14.999999, 0, -10.000001)
 
 [node name="turret_slot45" parent="level8" unique_id=2058731849 instance=ExtResource("1_ob1ec")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -15.000001, 0, 9.999999)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -15.000001, 0, 9.999999)
