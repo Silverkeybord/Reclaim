@@ -13,7 +13,7 @@ extends turret_basics
 @export var cooldown := 0.2
 @export var damage := 1
 
-
+var connected_enemies := []
 var on_cooldown = false
 
 
@@ -27,12 +27,20 @@ func _process(_delta: float) -> void:
 
 # TARGETING LOGIC ------------------------------------------------------------
 func _on_turret_range_area_body_entered(body: Node3D) -> void:
+	if not is_instance_valid(body):
+		return
+	
 	if body not in in_range_enemies:
 		in_range_enemies.append(body)
-		body.tree_exiting.connect(_enemy_died.bind(body))
+		if body not in connected_enemies:
+			connected_enemies.append(body)
+			body.tree_exiting.connect(_enemy_died.bind(body))
 
 
 func _on_turret_range_area_body_exited(body: Node3D) -> void:
+	if not is_instance_valid(body):
+		return
+	
 	in_range_enemies.erase(body)
 
 

@@ -1,1 +1,38 @@
 extends Node
+
+const TURRET_PATH : String = "res://data/turrets/"
+const MODULES_PATH : String = "res://data/modules/"
+const WEPONS_PATH : String = "res://data/wepons/"
+const AMMO_PATH : String = "res://data/ammo/"
+const ENEMIES_PATH : String = "res://data/enemies/"
+const RESEARCH_PATH : String = "res://data/research/"
+const CRAFTING_PATH : String = "res://data/crafting/"
+
+var turrets : Dictionary
+var modules : Dictionary
+var wepons : Dictionary
+var ammo : Dictionary
+var enemies : Dictionary
+var research : Dictionary
+var crafting : Dictionary
+
+
+func _ready() -> void:
+	_load_folder(TURRET_PATH, turrets)
+	_load_folder(MODULES_PATH, modules)
+	_load_folder(WEPONS_PATH, wepons)
+	_load_folder(AMMO_PATH, ammo)
+	_load_folder(ENEMIES_PATH, enemies)
+	_load_folder(RESEARCH_PATH, research)
+	_load_folder(CRAFTING_PATH, crafting)
+
+
+func _load_folder(path : String, dict : Dictionary) -> void:
+	var dir = DirAccess.open(path)
+	dir.list_dir_begin()
+	var file = dir.get_next()
+	while file != "":
+		if file.ends_with(".tres"):
+			var res = load(path + file)
+			dict[res.tag] = res
+		file = dir.get_next()

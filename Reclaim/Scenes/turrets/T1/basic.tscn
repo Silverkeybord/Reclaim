@@ -26,6 +26,8 @@ height = 8.0
 radius = 25.0
 
 [node name="basic" type="StaticBody3D" unique_id=88525916 node_paths=PackedStringArray("turret_piviot_point", "turret_gun", "bullet_spawn", "cooldown_timer", "turret_range_coll")]
+collision_layer = 4
+collision_mask = 7
 script = ExtResource("1_q23d6")
 turret_piviot_point = NodePath("head_piviot_point")
 turret_gun = NodePath("head_piviot_point/gun")
@@ -44,6 +46,8 @@ shape = SubResource("ConcavePolygonShape3D_q23d6")
 
 [node name="head_piviot_point" type="StaticBody3D" parent="." unique_id=851992263]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+collision_layer = 4
+collision_mask = 7
 
 [node name="head" type="MeshInstance3D" parent="head_piviot_point" unique_id=1519841278]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 4.371139e-08, 0.75, 0)

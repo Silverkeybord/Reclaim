@@ -78,6 +78,8 @@ func _build_mode_handeling(ray_collider : Node) -> void:
 		if Global.build_mode:
 			turret_holagram = turret_holagram_scene.instantiate()
 			add_sibling(turret_holagram)
+			interact_overlay.visible = false
+			
 		else:
 			if turret_holagram:
 				turret_holagram.queue_free()

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="WaveData" format=3 uid="uid://wwsm4m2783l4"]
+
+[ext_resource type="Script" uid="uid://ebuopgthqly1" path="res://data/wave/wave_data.gd" id="1_rvc1w"]
+
+[resource]
+script = ExtResource("1_rvc1w")
+map = "remote_island"
+start_spawn_rate = 5.0
+end_spawn_rate = 3.0
+biggest_size = 1.5
+smallest_size = 1.0
+end_time = 300
+difficulty_mult = 1.0
+metadata/_custom_type_script = "uid://ebuopgthqly1"

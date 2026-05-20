@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://br62cm1gllm1"]
 
-[ext_resource type="Script" uid="uid://slvp6i1ygea6" path="res://Scripts/deploy_pod.gd" id="1_5c0cb"]
+[ext_resource type="Script" uid="uid://slvp6i1ygea6" path="res://Scripts/interacatable/deploy_pod.gd" id="1_5c0cb"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wn3eb"]
 size = Vector3(2, 3, 2)

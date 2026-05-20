@@ -17,6 +17,7 @@ config/features=PackedStringArray("4.6", "Forward Plus")
 [autoload]
 
 Global="*uid://cfmmf21gdrijp"
+GameData="*uid://3i5a76kjtllm"
 
 [file_customization]
 
