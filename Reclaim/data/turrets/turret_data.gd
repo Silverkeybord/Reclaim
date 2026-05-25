@@ -2,7 +2,7 @@ class_name TurretData
 extends Resource
 
 @export var id: int
-@export var tag: String
+@export var key: String
 @export var display_name: String
 @export var tier: int
 @export var damage: float

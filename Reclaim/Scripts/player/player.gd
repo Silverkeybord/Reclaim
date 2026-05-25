@@ -6,7 +6,6 @@ const TURRET_PLACEMENT_DISTANCE := 20
 @export_group("player stat")
 @export var jump_velocity := 20.0
 @export var move_speed := 14.0
-@export var gravity := 40.0
 @export var acceleration := 40
 
 @export_group("in scene")
@@ -92,7 +91,7 @@ func _build_mode_handeling(ray_collider : Node) -> void:
 			turret_holagram.valid_position = true
 			place_overlay.visible = true
 			
-			if Input.is_action_just_pressed("shoot"):
+			if Input.is_action_pressed("place"):
 				ray_collider.current_turret = "basic"
 				ray_collider.place_selected_turret()
 				#Global.build_mode = false

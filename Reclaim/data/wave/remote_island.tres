@@ -4,11 +4,32 @@
 
 [resource]
 script = ExtResource("1_rvc1w")
-map = "remote_island"
-start_spawn_rate = 5.0
-end_spawn_rate = 3.0
+key = "remote_island"
+ssr = 8.0
+esr = 5.0
+scs = 3
+ecs = 15
+cas = 0.5
+commandar_size = 2.0
 biggest_size = 1.5
 smallest_size = 1.0
-end_time = 300
+end_time = 120
 difficulty_mult = 1.0
+cluster_spawn_radius = 15.0
+enemy_spawn_radius = 10.0
+enemies = {
+"air": 0,
+"basic": 100,
+"concrete": 0,
+"dirt": 0,
+"dupe": 0,
+"earth": 0,
+"fire": 0,
+"glass": 0,
+"leaf": 0,
+"metal": 0,
+"stone": 0,
+"water": 0,
+"wood": 0
+}
 metadata/_custom_type_script = "uid://ebuopgthqly1"

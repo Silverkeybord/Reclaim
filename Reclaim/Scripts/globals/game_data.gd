@@ -5,6 +5,7 @@ const MODULES_PATH : String = "res://data/modules/"
 const WEPONS_PATH : String = "res://data/wepons/"
 const AMMO_PATH : String = "res://data/ammo/"
 const ENEMIES_PATH : String = "res://data/enemies/"
+const WAVE_PATH : String = "res://data/wave/"
 const RESEARCH_PATH : String = "res://data/research/"
 const CRAFTING_PATH : String = "res://data/crafting/"
 
@@ -13,6 +14,7 @@ var modules : Dictionary
 var wepons : Dictionary
 var ammo : Dictionary
 var enemies : Dictionary
+var wave : Dictionary
 var research : Dictionary
 var crafting : Dictionary
 
@@ -23,6 +25,7 @@ func _ready() -> void:
 	_load_folder(WEPONS_PATH, wepons)
 	_load_folder(AMMO_PATH, ammo)
 	_load_folder(ENEMIES_PATH, enemies)
+	_load_folder(WAVE_PATH, wave)
 	_load_folder(RESEARCH_PATH, research)
 	_load_folder(CRAFTING_PATH, crafting)
 
@@ -34,5 +37,5 @@ func _load_folder(path : String, dict : Dictionary) -> void:
 	while file != "":
 		if file.ends_with(".tres"):
 			var res = load(path + file)
-			dict[res.tag] = res
+			dict[res.key] = res
 		file = dir.get_next()

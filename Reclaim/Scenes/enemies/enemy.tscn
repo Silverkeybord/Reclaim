@@ -14,10 +14,11 @@ height = 0.9
 transparency = 1
 albedo_color = Color(0.8117647, 0.8117647, 0.8117647, 0.44313726)
 
-[node name="enemy" type="CharacterBody3D" unique_id=1676880902]
+[node name="enemy" type="CharacterBody3D" unique_id=1676880902 node_paths=PackedStringArray("collision_shape")]
 collision_layer = 8
-collision_mask = 3
+collision_mask = 33
 script = ExtResource("1_wbq3y")
+collision_shape = NodePath("CollisionShape3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=219369272]
 shape = SubResource("SphereShape3D_notgg")

@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_06ve0")
 id = 1
-tag = "basic"
+key = "basic"
 display_name = "Basic Turret"
 tier = 1
 damage = 5.0

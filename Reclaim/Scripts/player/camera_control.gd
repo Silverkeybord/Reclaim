@@ -4,7 +4,7 @@ extends Node3D
 const MIN_PITCH: float = -1.3 # Pitch is in rad so up and down are +- pi/2
 const MAX_PITCH: float = 1.1
 
-const ZOOM_SPEED := 0.3
+const ZOOM_SPEED := 0.5
 const MAX_ZOOM := 15.0
 const FIRST_PERSON_THRESHOLD := 1.25
 const FIRST_PERSON_CAMERA_LENGTH := 0
