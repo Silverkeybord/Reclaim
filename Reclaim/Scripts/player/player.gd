@@ -3,6 +3,9 @@ extends CharacterBody3D
 const INTERACT_DISTANCE := 5
 const TURRET_PLACEMENT_DISTANCE := 20
 
+const GUN_CHILD_INDEX := 0
+
+
 @export_group("player stat")
 @export var jump_velocity := 20.0
 @export var move_speed := 14.0
@@ -10,14 +13,22 @@ const TURRET_PLACEMENT_DISTANCE := 20
 
 @export_group("in scene")
 @export var interact_overlay : Control
-@export var sight_ray : RayCast3D
+@export var aim_ray : RayCast3D
+@export var gun_piviot : Node3D
+@export var shooting_timer : Timer
 
 @export_group("turrets")
 @export var turret_holagram_scene : PackedScene
 @export var place_overlay : Control
 
-
 var turret_holagram : Node3D
+
+var can_shoot : bool = true
+var weapon : Node3D
+
+
+func _ready() -> void:
+	_set_new_weapon()
 
 
 func _physics_process(delta: float) -> void:
@@ -46,9 +57,9 @@ func _physics_process(delta: float) -> void:
 
 
 func _process(_delta: float) -> void:
+	_shoot_control()
 	
-	
-	var ray_collider = sight_ray.get_collider()
+	var ray_collider = aim_ray.get_collider()
 	_build_mode_handeling(ray_collider)
 	
 	if Global.build_mode:
@@ -99,8 +110,39 @@ func _build_mode_handeling(ray_collider : Node) -> void:
 				#place_overlay.visible = false
 			
 		else:
-			turret_holagram.global_position = sight_ray.get_collision_point()
+			turret_holagram.global_position = aim_ray.get_collision_point()
 			turret_holagram.valid_position = false
 			place_overlay.visible = false
+
+
+# WEAPONS CONTROL ------------------------------------------------------------
+func _shoot_control() -> void:
+	if Global.build_mode or not weapon:
+		return
 	
+	if Input.is_action_pressed("shoot") and can_shoot:
+		can_shoot = false
+		shooting_timer.start()
+		_shoot()
+
+
+func _shoot() -> void:
+	var to : Vector3
+	if aim_ray.is_colliding():
+		to = aim_ray.get_collision_point()
+	else:
+		var forward_vector = -aim_ray.global_basis.z
+		var max_distance = aim_ray.target_position.length()
+		
+		to = aim_ray.global_position + (forward_vector * max_distance)
 	
+	var from = weapon.bullet_spawn.global_position
+	
+	Global.create_bullet_trail(from, to)
+
+func _set_new_weapon() -> void:
+	weapon = gun_piviot.get_child(GUN_CHILD_INDEX)
+
+
+func _on_shoot_timer_timeout() -> void:
+	can_shoot = true

@@ -1,5 +1,7 @@
 extends Node3D
 
+const SPAWN_MARKERS_GROUP : String = "enemy_spawn_groups"
+
 var wave_data : Resource
 
 var difficulty_mult : int
@@ -15,7 +17,6 @@ var cluster_size : int
 
 var wave_enemies : Dictionary
 
-
 @export_group("enemies")
 @export var enemy_scene : PackedScene
 
@@ -23,7 +24,6 @@ var wave_enemies : Dictionary
 @export var spawn_timer : Timer
 
 @export_group("map info")
-@export var spawn_nodes_parent : Node
 @export var extraction_pod : Node3D
 @export var map : String
 
@@ -37,7 +37,7 @@ func _ready() -> void:
 	spawn_rate_raito = (wave_data.ssr - wave_data.esr) / wave_data.end_time
 	cluster_rate_raito = (wave_data.scs - wave_data.ecs) / wave_data.end_time
 	
-	spawn_nodes = spawn_nodes_parent.get_children()
+	spawn_nodes = get_tree().get_nodes_in_group(SPAWN_MARKERS_GROUP)
 	
 	spawn_timer.start()
 

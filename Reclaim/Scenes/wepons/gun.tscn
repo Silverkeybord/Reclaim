@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://deasukscym312"]
+
+[ext_resource type="Script" uid="uid://b4vwlxjd2pp31" path="res://Scripts/wepons/gun.gd" id="1_ayfoy"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4f2ea"]
+size = Vector3(0.2, 0.2, 0.3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_meube"]
+size = Vector3(0.2, 0.35, 0.2)
+
+[node name="Gun" type="Node3D" unique_id=1312602602 node_paths=PackedStringArray("bullet_spawn")]
+script = ExtResource("1_ayfoy")
+bullet_spawn = NodePath("Marker3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1549322345]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.15)
+mesh = SubResource("BoxMesh_4f2ea")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=402019531]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.075, 0.1)
+mesh = SubResource("BoxMesh_meube")
+
+[node name="Marker3D" type="Marker3D" parent="." unique_id=1721114242]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.3)

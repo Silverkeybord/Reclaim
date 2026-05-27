@@ -55,9 +55,7 @@ func _shooting_logic() -> void:
 	target.check_dead()
 	
 	# Creates a bullet trail using the target position before the enemy is freed.
-	var new_bullet_trail = bullet_trail_scene.instantiate()
-	add_sibling(new_bullet_trail)
-	new_bullet_trail.create_bullet_trail(bullet_spawn.global_position, target_position)
+	Global.create_bullet_trail(bullet_spawn.global_position, target_position)
 
 
 func _on_cool_down_timer_timeout() -> void:

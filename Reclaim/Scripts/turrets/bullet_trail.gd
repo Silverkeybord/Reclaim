@@ -2,6 +2,9 @@ extends MeshInstance3D
 
 const TRAIL_THICKNESS := 0.5
 
+@export var trail : Resource
+
+
 func create_bullet_trail(start_pos: Vector3, end_pos: Vector3):
 	var draw_mesh = BoxMesh.new()
 	var distance = start_pos.distance_to(end_pos)

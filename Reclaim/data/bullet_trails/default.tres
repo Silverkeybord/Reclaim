@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="bullet_trail_data" format=3 uid="uid://deivlc3wm3mqr"]
+
+[ext_resource type="Script" uid="uid://rqn4axkyltah" path="res://data/1_resourse_scripts/bullet_trail_data.gd" id="1_82snc"]
+
+[resource]
+script = ExtResource("1_82snc")
+key = "default"
+metadata/_custom_type_script = "uid://rqn4axkyltah"

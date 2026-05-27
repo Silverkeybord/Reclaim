@@ -8,6 +8,7 @@ const ENEMIES_PATH : String = "res://data/enemies/"
 const WAVE_PATH : String = "res://data/wave/"
 const RESEARCH_PATH : String = "res://data/research/"
 const CRAFTING_PATH : String = "res://data/crafting/"
+const BULLET_TRAIL_PATH : String = "res://data/bullet_trails/"
 
 var turrets : Dictionary
 var modules : Dictionary
@@ -17,6 +18,7 @@ var enemies : Dictionary
 var wave : Dictionary
 var research : Dictionary
 var crafting : Dictionary
+var bullet_trail : Dictionary
 
 
 func _ready() -> void:
@@ -28,6 +30,9 @@ func _ready() -> void:
 	_load_folder(WAVE_PATH, wave)
 	_load_folder(RESEARCH_PATH, research)
 	_load_folder(CRAFTING_PATH, crafting)
+	_load_folder(BULLET_TRAIL_PATH, bullet_trail)
+	
+	print("fin loading files")
 
 
 func _load_folder(path : String, dict : Dictionary) -> void:

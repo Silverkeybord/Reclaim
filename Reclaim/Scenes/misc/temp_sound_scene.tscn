@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://bkaj13g81oj3q"]
+
+[node name="TempSoundScene" type="AudioStreamPlayer3D" unique_id=356879988]

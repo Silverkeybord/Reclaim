@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://dev5omns2mu5y" path="res://Scripts/player/camera_control.gd" id="2_mxepk"]
 [ext_resource type="Texture2D" uid="uid://b0sbhjjkojgb0" path="res://2D assets/interact_reticle.png" id="3_mxepk"]
 [ext_resource type="Texture2D" uid="uid://inmkey4p4wca" path="res://2D assets/normal_redicle.png" id="4_e41v5"]
+[ext_resource type="PackedScene" uid="uid://deasukscym312" path="res://Scenes/wepons/gun.tscn" id="4_xxarj"]
 [ext_resource type="FontFile" uid="uid://q3206aq7b5tl" path="res://Other assets/fonts/uni sans/Uni Sans Heavy.otf" id="5_ca0mu"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e41v5"]
@@ -18,12 +19,14 @@ size = Vector3(0.9, 0.9, 0.9)
 transparency = 1
 albedo_color = Color(0.8117647, 0.8117647, 0.8117647, 0.44313726)
 
-[node name="CharacterBody3D" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "sight_ray", "place_overlay")]
+[node name="CharacterBody3D" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "aim_ray", "gun_piviot", "shooting_timer", "place_overlay")]
 collision_layer = 2
-collision_mask = 15
+collision_mask = 79
 script = ExtResource("1_eo61r")
 interact_overlay = NodePath("interact_overlay")
-sight_ray = NodePath("SpringArm3D/RayCast3D")
+aim_ray = NodePath("SpringArm3D/RayCast3D")
+gun_piviot = NodePath("gun_piviot")
+shooting_timer = NodePath("gun_piviot/shoot_timer")
 turret_holagram_scene = ExtResource("2_6upyo")
 place_overlay = NodePath("place_overlay")
 
@@ -50,10 +53,18 @@ spring_arm = NodePath(".")
 current = true
 
 [node name="RayCast3D" type="RayCast3D" parent="SpringArm3D" unique_id=49309072]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
-target_position = Vector3(0, -150, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+target_position = Vector3(0, 0, -150)
 collision_mask = 25
 collide_with_areas = true
+
+[node name="gun_piviot" type="Node3D" parent="." unique_id=2066967989]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, 0, 0)
+
+[node name="Gun" parent="gun_piviot" unique_id=1312602602 node_paths=PackedStringArray("player") instance=ExtResource("4_xxarj")]
+player = NodePath("../..")
+
+[node name="shoot_timer" type="Timer" parent="gun_piviot" unique_id=1614041456]
 
 [node name="normal_reticle" type="TextureRect" parent="." unique_id=1247984658]
 anchors_preset = 8
@@ -177,3 +188,5 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("5_ca0mu")
 text = "click to Place"
+
+[connection signal="timeout" from="gun_piviot/shoot_timer" to="." method="_on_shoot_timer_timeout"]
