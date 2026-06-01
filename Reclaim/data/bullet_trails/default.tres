@@ -5,4 +5,8 @@
 [resource]
 script = ExtResource("1_82snc")
 key = "default"
+size = 0.5
+life = 0.1
+fade = true
+expand = true
 metadata/_custom_type_script = "uid://rqn4axkyltah"

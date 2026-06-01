@@ -4,9 +4,10 @@
 [ext_resource type="PackedScene" uid="uid://3hi5wymcupw7" path="res://Scenes/turrets/turret_holagram.tscn" id="2_6upyo"]
 [ext_resource type="Script" uid="uid://dev5omns2mu5y" path="res://Scripts/player/camera_control.gd" id="2_mxepk"]
 [ext_resource type="Texture2D" uid="uid://b0sbhjjkojgb0" path="res://2D assets/interact_reticle.png" id="3_mxepk"]
-[ext_resource type="Texture2D" uid="uid://inmkey4p4wca" path="res://2D assets/normal_redicle.png" id="4_e41v5"]
 [ext_resource type="PackedScene" uid="uid://deasukscym312" path="res://Scenes/wepons/gun.tscn" id="4_xxarj"]
 [ext_resource type="FontFile" uid="uid://q3206aq7b5tl" path="res://Other assets/fonts/uni sans/Uni Sans Heavy.otf" id="5_ca0mu"]
+[ext_resource type="Texture2D" uid="uid://bc52l5qd5bkcq" path="res://2D assets/normal_reticle.png" id="5_xxarj"]
+[ext_resource type="Texture2D" uid="uid://dmaj8a3oki02e" path="res://2D assets/remove_overlay.png" id="8_6k3cy"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e41v5"]
 
@@ -19,11 +20,15 @@ size = Vector3(0.9, 0.9, 0.9)
 transparency = 1
 albedo_color = Color(0.8117647, 0.8117647, 0.8117647, 0.44313726)
 
-[node name="CharacterBody3D" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "aim_ray", "gun_piviot", "shooting_timer", "place_overlay")]
+[sub_resource type="SphereShape3D" id="SphereShape3D_xxarj"]
+radius = 10.0
+
+[node name="area" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "hit_overlay", "aim_ray", "gun_piviot", "shooting_timer", "place_overlay")]
 collision_layer = 2
 collision_mask = 79
 script = ExtResource("1_eo61r")
 interact_overlay = NodePath("interact_overlay")
+hit_overlay = NodePath("hit_overlay")
 aim_ray = NodePath("SpringArm3D/RayCast3D")
 gun_piviot = NodePath("gun_piviot")
 shooting_timer = NodePath("gun_piviot/shoot_timer")
@@ -42,12 +47,13 @@ mesh = SubResource("BoxMesh_ca0mu")
 mesh = SubResource("BoxMesh_6upyo")
 surface_material_override/0 = SubResource("StandardMaterial3D_xxarj")
 
-[node name="SpringArm3D" type="SpringArm3D" parent="." unique_id=1017678808 node_paths=PackedStringArray("player", "spring_arm")]
+[node name="SpringArm3D" type="SpringArm3D" parent="." unique_id=1017678808 node_paths=PackedStringArray("player", "spring_arm", "gun_piviot")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 1.25, 0)
 spring_length = 3.0
 script = ExtResource("2_mxepk")
 player = NodePath("..")
 spring_arm = NodePath(".")
+gun_piviot = NodePath("../gun_piviot")
 
 [node name="Third person" type="Camera3D" parent="SpringArm3D" unique_id=918761004]
 current = true
@@ -65,6 +71,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, 0, 0)
 player = NodePath("../..")
 
 [node name="shoot_timer" type="Timer" parent="gun_piviot" unique_id=1614041456]
+wait_time = 0.2
 
 [node name="normal_reticle" type="TextureRect" parent="." unique_id=1247984658]
 anchors_preset = 8
@@ -79,7 +86,7 @@ offset_bottom = 23.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("4_e41v5")
+texture = ExtResource("5_xxarj")
 stretch_mode = 3
 
 [node name="interact_overlay" type="Control" parent="." unique_id=828996024]
@@ -189,4 +196,40 @@ grow_vertical = 2
 theme_override_fonts/font = ExtResource("5_ca0mu")
 text = "click to Place"
 
+[node name="hit_overlay" type="Control" parent="." unique_id=601068581]
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="remove_overlay" type="TextureRect" parent="hit_overlay" unique_id=784218117]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.5
+offset_top = -23.0
+offset_right = 25.5
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("8_6k3cy")
+stretch_mode = 3
+
+[node name="pick_up_area" type="Area3D" parent="." unique_id=1724560040 groups=["drop"]]
+collision_layer = 4
+collision_mask = 128
+
+[node name="pick_up_shape" type="CollisionShape3D" parent="pick_up_area" unique_id=713600423]
+shape = SubResource("SphereShape3D_xxarj")
+
 [connection signal="timeout" from="gun_piviot/shoot_timer" to="." method="_on_shoot_timer_timeout"]
+[connection signal="body_entered" from="pick_up_area" to="." method="_on_pick_up_area_body_entered"]

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bsspjwwk4bvma"]
 
 [ext_resource type="Script" uid="uid://2m7df3t2upw4" path="res://Scripts/enemies/enemy.gd" id="1_wbq3y"]
+[ext_resource type="PackedScene" uid="uid://qtk76i5mawjs" path="res://Scenes/enemies/drop.tscn" id="2_notgg"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_notgg"]
 
@@ -19,6 +20,8 @@ collision_layer = 8
 collision_mask = 33
 script = ExtResource("1_wbq3y")
 collision_shape = NodePath("CollisionShape3D")
+drops_scene = ExtResource("2_notgg")
+metadata/enemy = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=219369272]
 shape = SubResource("SphereShape3D_notgg")

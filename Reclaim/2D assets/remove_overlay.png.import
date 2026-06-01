@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://inmkey4p4wca"
-path="res://.godot/imported/normal_redicle.png-fac1cbff58824d08f071374343c47605.ctex"
+uid="uid://dmaj8a3oki02e"
+path="res://.godot/imported/remove_overlay.png-d559ea0064a801bb2c57712717168e2c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://2D assets/normal_redicle.png"
-dest_files=["res://.godot/imported/normal_redicle.png-fac1cbff58824d08f071374343c47605.ctex"]
+source_file="res://2D assets/remove_overlay.png"
+dest_files=["res://.godot/imported/remove_overlay.png-d559ea0064a801bb2c57712717168e2c.ctex"]
 
 [params]
 

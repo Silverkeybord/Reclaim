@@ -1,18 +1,21 @@
 [gd_scene format=3 uid="uid://c22ups1xaq3y4"]
 
 [ext_resource type="Script" uid="uid://di1j1lwb0eec" path="res://Scripts/turrets/bullet_trail.gd" id="1_3bu88"]
-[ext_resource type="Material" uid="uid://dxxhuajk2r4ov" path="res://Textures and Materials/turrets/bullet_trail.tres" id="1_y01q8"]
+[ext_resource type="Material" uid="uid://dxxhuajk2r4ov" path="res://Textures and Materials/bullet_trails/bullet_trail.tres" id="2_y01q8"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_5p3ff"]
+[sub_resource type="CylinderMesh" id="CylinderMesh_y01q8"]
 
-[node name="bullet_trail" type="MeshInstance3D" unique_id=1306428090]
-mesh = SubResource("BoxMesh_5p3ff")
-surface_material_override/0 = ExtResource("1_y01q8")
+[node name="bullet_trail" type="Node3D" unique_id=1064051473 node_paths=PackedStringArray("timer", "trail_mesh")]
 script = ExtResource("1_3bu88")
+timer = NodePath("Timer")
+trail_mesh = NodePath("MeshInstance3D")
 
 [node name="Timer" type="Timer" parent="." unique_id=1753620046]
 wait_time = 0.1
 one_shot = true
-autostart = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1809922453]
+mesh = SubResource("CylinderMesh_y01q8")
+surface_material_override/0 = ExtResource("2_y01q8")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

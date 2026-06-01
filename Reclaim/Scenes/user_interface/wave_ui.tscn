@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://c6q58efe0i7xg"]
+
+[ext_resource type="Script" uid="uid://kcktfiuhsi17" path="res://Scripts/user_interface/run_ui.gd" id="1_ucemv"]
+
+[node name="wave_ui" type="Control" unique_id=1725702450 node_paths=PackedStringArray("wave_time_label")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ucemv")
+wave_time_label = NodePath("Label")
+
+[node name="Label" type="Label" parent="." unique_id=655560637]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "Run time :  "
+horizontal_alignment = 1
+vertical_alignment = 1

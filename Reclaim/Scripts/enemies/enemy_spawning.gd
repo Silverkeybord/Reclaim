@@ -1,6 +1,6 @@
 extends Node3D
 
-const SPAWN_MARKERS_GROUP : String = "enemy_spawn_groups"
+const SPAWN_MARKERS_GROUP : String = "enemy_spawn_markers"
 
 var wave_data : Resource
 
@@ -12,7 +12,7 @@ var spawn_rate_raito : float # the spawnrate in terms of time alive
 var spawn_rate : float
 var spawn_nodes : Array[Node]
 
-var cluster_rate_raito : float
+var cluster_rate_raito : float # the cluster size in terms of time alive
 var cluster_size : int
 
 var wave_enemies : Dictionary
@@ -24,7 +24,9 @@ var wave_enemies : Dictionary
 @export var spawn_timer : Timer
 
 @export_group("map info")
+## the target for spawned enemies
 @export var extraction_pod : Node3D
+## the map this is placed on
 @export var map : String
 
 @export var run_time := 0.0
@@ -44,6 +46,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	run_time += delta
+	Global.sector_run_time = run_time
 
 
 func _on_spawn_timer_timeout() -> void:
@@ -58,32 +61,41 @@ func _on_spawn_timer_timeout() -> void:
 	var commander = enemy_scene.instantiate()
 	
 	add_sibling(commander)
-	var c_radius = randf_range(0, wave_data.cluster_spawn_radius)
-	var c_angle = randf_range(0, TAU)
-	var x_c_offset = sin(c_angle) * c_radius
-	var y_c_offset = cos(c_angle) * c_radius
-	commander.global_position = (
-		random_spawn_node.global_position + Vector3(x_c_offset, 0 , y_c_offset)
+	commander.global_position = spawn_in_radius(
+		random_spawn_node.global_position, wave_data.cluster_spawn_radius
 		)
+	
 	commander.extraction_pod = extraction_pod
 	commander.size = wave_data.commandar_size + randf_range(0, wave_data.cas)
 	commander.scale *= commander.size
-	
 	commander.fin_loading()
 	
 	for x in range(cluster_size):
 		var new_enemy = enemy_scene.instantiate()
 		add_sibling(new_enemy)
-		var radius = randf_range(0, wave_data.enemy_spawn_radius)
-		var angle = randf_range(0, TAU)
-		var x_offset = sin(angle) * radius
-		var y_offset = cos(angle) * radius
-		new_enemy.global_position = (
-			commander.global_position + Vector3(x_offset, 0, y_offset)
+		
+		new_enemy.global_position = spawn_in_radius(
+			commander.global_position, 
+			wave_data.enemy_spawn_radius,
+			commander.size
 			)
 		
 		new_enemy.extraction_pod = extraction_pod
 		new_enemy.size = randf_range(wave_data.smallest_size, wave_data.biggest_size)
 		new_enemy.scale *= new_enemy.size
-		
 		new_enemy.fin_loading()
+
+
+# Helper function to calculate a random XZ position within a given radius
+func spawn_in_radius(
+	center_position: Vector3, 
+	max_radius: float, 
+	min_radius : float = 0.0
+	) -> Vector3:
+	
+	var radius = randf_range(min_radius, max_radius)
+	var angle = randf_range(0, TAU)
+	var x_offset = sin(angle) * radius
+	var z_offset = cos(angle) * radius
+	
+	return center_position + Vector3(x_offset, 0, z_offset)

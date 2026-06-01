@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://qtk76i5mawjs"]
+
+[ext_resource type="Script" uid="uid://dw86xjbrodauy" path="res://Scripts/enemies/drop.gd" id="1_aphvy"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nseg0"]
+size = Vector3(0.4, 0.4, 0.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bjc4i"]
+size = Vector3(0.4, 0.4, 0.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_aphvy"]
+size = Vector3(0.45, 0.45, 0.45)
+
+[node name="RigidBody3D" type="RigidBody3D" unique_id=1967477221 node_paths=PackedStringArray("despawn_timer", "process_freeze_timer", "area3D") groups=["drops"]]
+collision_layer = 0
+collision_mask = 21
+script = ExtResource("1_aphvy")
+despawn_timer = NodePath("despawn_timer")
+process_freeze_timer = NodePath("process_freeze_timer")
+area3D = NodePath("Area3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1696334010]
+shape = SubResource("BoxShape3D_nseg0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=162596815]
+mesh = SubResource("BoxMesh_bjc4i")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=452772677]
+collision_layer = 0
+collision_mask = 3
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=2119456372]
+shape = SubResource("BoxShape3D_aphvy")
+
+[node name="process_freeze_timer" type="Timer" parent="." unique_id=928378712]
+wait_time = 0.3
+
+[node name="despawn_timer" type="Timer" parent="." unique_id=1992264395]
+wait_time = 15.0
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]
+[connection signal="timeout" from="process_freeze_timer" to="." method="_on_process_freeze_timer_timeout"]
+[connection signal="timeout" from="despawn_timer" to="." method="_on_despawn_timer_timeout"]

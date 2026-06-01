@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://dcu7uussd5i41"]
 
 [ext_resource type="Script" uid="uid://b5m6w72ttc6t6" path="res://Scripts/turrets/T1/basic.gd" id="1_q23d6"]
-[ext_resource type="PackedScene" uid="uid://c22ups1xaq3y4" path="res://Scenes/turrets/bullet_trail.tscn" id="2_uprog"]
 [ext_resource type="Script" uid="uid://bgy2xmmxnlw85" path="res://Scenes/turrets/turret_range_area.gd" id="3_5kt17"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_h2pfq"]
@@ -23,7 +22,7 @@ size = Vector3(1, 1, 2)
 data = PackedVector3Array(-0.5, 0.5, 1, 0.5, 0.5, 1, -0.5, -0.5, 1, 0.5, 0.5, 1, 0.5, -0.5, 1, -0.5, -0.5, 1, 0.5, 0.5, -1, -0.5, 0.5, -1, 0.5, -0.5, -1, -0.5, 0.5, -1, -0.5, -0.5, -1, 0.5, -0.5, -1, 0.5, 0.5, 1, 0.5, 0.5, -1, 0.5, -0.5, 1, 0.5, 0.5, -1, 0.5, -0.5, -1, 0.5, -0.5, 1, -0.5, 0.5, -1, -0.5, 0.5, 1, -0.5, -0.5, -1, -0.5, 0.5, 1, -0.5, -0.5, 1, -0.5, -0.5, -1, 0.5, 0.5, 1, -0.5, 0.5, 1, 0.5, 0.5, -1, -0.5, 0.5, 1, -0.5, 0.5, -1, 0.5, 0.5, -1, -0.5, -0.5, 1, 0.5, -0.5, 1, -0.5, -0.5, -1, 0.5, -0.5, 1, 0.5, -0.5, -1, -0.5, -0.5, -1)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_uprog"]
-height = 8.0
+height = 10.0
 radius = 25.0
 
 [node name="basic" type="StaticBody3D" unique_id=88525916 node_paths=PackedStringArray("turret_piviot_point", "turret_gun", "bullet_spawn", "cooldown_timer", "turret_range_area", "turret_range_coll")]
@@ -36,7 +35,6 @@ bullet_spawn = NodePath("head_piviot_point/gun/bullet_spawn")
 cooldown_timer = NodePath("cool_down_timer")
 turret_range_area = NodePath("turret_range_area")
 turret_range_coll = NodePath("turret_range_area/turret_range_coll")
-bullet_trail_scene = ExtResource("2_uprog")
 
 [node name="body" type="MeshInstance3D" parent="." unique_id=1853312379]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
@@ -76,7 +74,6 @@ collision_mask = 8
 script = ExtResource("3_5kt17")
 
 [node name="turret_range_coll" type="CollisionShape3D" parent="turret_range_area" unique_id=1099292850]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
 shape = SubResource("CylinderShape3D_uprog")
 
 [node name="cool_down_timer" type="Timer" parent="." unique_id=177401779]

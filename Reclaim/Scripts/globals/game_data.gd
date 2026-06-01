@@ -2,7 +2,7 @@ extends Node
 
 const TURRET_PATH : String = "res://data/turrets/"
 const MODULES_PATH : String = "res://data/modules/"
-const WEPONS_PATH : String = "res://data/wepons/"
+const WEAPONS_PATH : String = "res://data/weapon/"
 const AMMO_PATH : String = "res://data/ammo/"
 const ENEMIES_PATH : String = "res://data/enemies/"
 const WAVE_PATH : String = "res://data/wave/"
@@ -12,7 +12,7 @@ const BULLET_TRAIL_PATH : String = "res://data/bullet_trails/"
 
 var turrets : Dictionary
 var modules : Dictionary
-var wepons : Dictionary
+var weapon : Dictionary
 var ammo : Dictionary
 var enemies : Dictionary
 var wave : Dictionary
@@ -24,7 +24,7 @@ var bullet_trail : Dictionary
 func _ready() -> void:
 	_load_folder(TURRET_PATH, turrets)
 	_load_folder(MODULES_PATH, modules)
-	_load_folder(WEPONS_PATH, wepons)
+	_load_folder(WEAPONS_PATH, weapon)
 	_load_folder(AMMO_PATH, ammo)
 	_load_folder(ENEMIES_PATH, enemies)
 	_load_folder(WAVE_PATH, wave)
