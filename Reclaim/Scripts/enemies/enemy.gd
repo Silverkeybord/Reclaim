@@ -5,11 +5,13 @@ extends CharacterBody3D
 
 signal died(enemy: base_enemy)
 
+const DIRT_TYPE_FALLBACK : String = "dirt"
 const LOAD_BUFFER : float = 0.5
+const SIZE_BASE_STAT_FACTOR : float = 0.5
 
 @export var valid := false
 
-@export var enemy_resourse : Resource = GameData.enemies["basic"] # TEMP
+@export var enemy_resourse : EnemyData
 @export var size : float
 
 @export var extraction_pod : Node3D
@@ -20,7 +22,9 @@ const LOAD_BUFFER : float = 0.5
 var is_dead := false
 var hp : int
 var damage : int
-var speed : int
+var speed : float
+
+var drops : Dictionary
 
 
 func _physics_process(_delta: float) -> void:
@@ -54,11 +58,16 @@ func fin_loading() -> void:
 	if is_dead:
 		return
 	
+	# Gets the drops that will drop
+	for x in enemy_resourse.drop_table:
+		if enemy_resourse.drop_table[x] > 0:
+			drops[x] = enemy_resourse.drop_table[x]
+	
 	Global.enemies += 1
 	
 	# sets stats
-	hp = enemy_resourse.hp * size
-	damage = enemy_resourse.damage * size
+	hp = round(enemy_resourse.hp * ((size - 1) / SIZE_BASE_STAT_FACTOR))
+	damage = round(enemy_resourse.damage * ((size - 1) / SIZE_BASE_STAT_FACTOR))
 	speed = enemy_resourse.speed
 	
 	valid = true
@@ -102,7 +111,22 @@ func _queue_free_after_physics() -> void:
 
 
 func _spawn_drops() -> void:
-	for x in range(5):
+	for x in range(randi_range(enemy_resourse.min_drops, enemy_resourse.max_drops)):
 		var new_drop = drops_scene.instantiate()
-		get_tree().root.add_child(new_drop)
+		new_drop.drop_resourse = _get_drop_type_resourse()
+		add_sibling(new_drop)
 		new_drop.global_position = global_position
+
+
+func _get_drop_type_resourse():
+	
+	var value = randf()
+	var drop_weight : float = 0.0
+	
+	for x in drops:
+		drop_weight += drops[x] / Global.PROBABLITY_DIVIDE_CONSTANT
+		if drop_weight > value:
+			return GameData.drops[x]
+	
+	print("invalid weights returning dirt from enemy : ", enemy_resourse.key)
+	return GameData.drops[DIRT_TYPE_FALLBACK]

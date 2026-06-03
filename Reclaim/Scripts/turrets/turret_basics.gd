@@ -9,6 +9,8 @@ enum SHOOTING_METHODS {
 	RANDOM,
 }
 
+const FIRST_SHOT_TIMER_WAIT := 0.01
+
 @export var turret_shooting_type := SHOOTING_METHODS.FIRST
 
 @export_group("in scene")
@@ -21,19 +23,26 @@ enum SHOOTING_METHODS {
 
 @export_group("turret_stats")
 @export var turret_resourse : Resource
-@export var place_cooldown_active := true
-
-var on_cooldown = false
+# when godot detects that the varible will be changed from the timer ending
+# and settings teh value to false it runs the code underneath value is the 
+# value its going to be set to then some basic logic is run to optimise code
+@export var place_cooldown_active := true:
+	set(value):
+		place_cooldown_active = value
+		
+		if place_cooldown_active:
+			_stop_shoot_timer()
+		else:
+			_start_shoot_timer(true)
 
 
 func _ready() -> void:
-	_set_new_turret("basic")
+	_set_new_turret("basic") # TEMP
 	cooldown_timer.wait_time = turret_resourse.cooldown
-
-
-func _process(_delta: float) -> void:
+	cooldown_timer.one_shot = true
+	
 	if not place_cooldown_active:
-		_shooting_logic()
+		_start_shoot_timer(true)
 
 
 func _set_new_turret(key : String) -> void:
@@ -58,12 +67,6 @@ func _shooting_logic() -> void:
 	
 	var target_position : Vector3 = target.global_position
 	turret_piviot_point.look_at(target_position)
-		
-	if on_cooldown:
-		return
-	
-	on_cooldown = true
-	cooldown_timer.start()
 	
 	target.hit(turret_resourse.damage)
 	
@@ -72,4 +75,26 @@ func _shooting_logic() -> void:
 
 
 func _on_cool_down_timer_timeout() -> void:
-	on_cooldown = false
+	if place_cooldown_active:
+		return
+	
+	_shooting_logic()
+	_start_shoot_timer()
+
+
+func _start_shoot_timer(first_shot := false) -> void:
+	# edge case detetections
+	if not is_inside_tree() or cooldown_timer == null or turret_resourse == null:
+		return
+	
+	# if its the first shot only waits 0.01 seconds instead of the cooldown after
+	# the initial placement wait period
+	if first_shot:
+		cooldown_timer.start(FIRST_SHOT_TIMER_WAIT)
+	else:
+		cooldown_timer.start(turret_resourse.cooldown)
+
+
+func _stop_shoot_timer() -> void:
+	if cooldown_timer:
+		cooldown_timer.stop()

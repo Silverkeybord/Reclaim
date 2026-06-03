@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dtiq7x2mf21b0"]
 
-[ext_resource type="PackedScene" uid="uid://1ducx04kvn43" path="res://Scenes/mesh_scenes/turret_base_mesh.tscn" id="1_soqyp"]
+[ext_resource type="PackedScene" uid="uid://1ducx04kvn43" path="res://scenes/mesh_scenes/turret_base_mesh.tscn" id="1_soqyp"]
 
 [node name="tower_base" type="Node3D" unique_id=809151429]
 

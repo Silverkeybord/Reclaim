@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c6q58efe0i7xg"]
 
-[ext_resource type="Script" uid="uid://kcktfiuhsi17" path="res://Scripts/user_interface/run_ui.gd" id="1_ucemv"]
+[ext_resource type="Script" uid="uid://kcktfiuhsi17" path="res://scripts/user_interface/run_ui.gd" id="1_ucemv"]
 
 [node name="wave_ui" type="Control" unique_id=1725702450 node_paths=PackedStringArray("wave_time_label")]
 layout_mode = 3

@@ -1,12 +1,12 @@
 extends Node3D
 
-const empty_tres := "res://Textures and Materials/turrets/turret_position_slot.tres"
-const base_tres := "res://Textures and Materials/turrets/normal_turret_base.tres"
+const empty_tres := "res://textures_and_materials/turrets/turret_position_slot.tres"
+const base_tres := "res://textures_and_materials/turrets/normal_turret_base.tres"
 
 
 @export var place_cooldown : Timer
 @export var turrets_scenes := {
-	"basic" : preload("res://Scenes/turrets/T1/basic.tscn")
+	"basic" : preload("res://scenes/turrets/t1/basic.tscn")
 }
 
 @export var turret_origin_point : Marker3D
@@ -32,7 +32,8 @@ func place_selected_turret() -> void:
 	
 	var turret_resource = turrets_scenes[current_turret]
 	turret = turret_resource.instantiate()
-	turret_origin_point.add_child(turret)
+	get_tree().root.get_child(Global.CURRENT_SCENE_ROOT_INDEX).add_child(turret)
+	turret.global_position = turret_origin_point.global_position
 
 
 func build_base() -> void:

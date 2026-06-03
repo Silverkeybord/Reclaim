@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://1ducx04kvn43"]
 
-[ext_resource type="PackedScene" uid="uid://chnnt08xievhb" path="res://3D assets/turrets/turret_base_mesh.glb" id="1_75in6"]
-[ext_resource type="Texture2D" uid="uid://b31irr6awo2x4" path="res://Textures and Materials/maps/basic floor.png" id="2_mufp3"]
+[ext_resource type="PackedScene" uid="uid://chnnt08xievhb" path="res://3d_assets/turrets/turret_base_mesh.glb" id="1_75in6"]
+[ext_resource type="Texture2D" uid="uid://b31irr6awo2x4" path="res://textures_and_materials/maps/basic floor.png" id="2_mufp3"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_whpm7"]
 albedo_color = Color(0.56763506, 0.5676352, 0.5676351, 1)

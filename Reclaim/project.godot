@@ -22,15 +22,15 @@ GameData="*uid://3i5a76kjtllm"
 [file_customization]
 
 folder_colors={
-"res://2D assets/": "red",
-"res://3D assets/": "red",
-"res://Advance visuals/": "purple",
-"res://Other assets/": "orange",
-"res://Scenes/": "blue",
-"res://Scripts/": "gray",
-"res://Sounds/": "green",
-"res://Textures and Materials/": "yellow",
-"res://data/": "teal"
+"res://2d_assets/": "red",
+"res://3d_assets/": "red",
+"res://advanced_visuals/": "purple",
+"res://data/": "teal",
+"res://other_assets/": "orange",
+"res://scenes/": "blue",
+"res://scripts/": "gray",
+"res://sounds/": "green",
+"res://textures_and_materials/": "yellow"
 }
 
 [global_group]

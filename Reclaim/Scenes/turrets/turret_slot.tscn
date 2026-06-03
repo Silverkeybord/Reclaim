@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://cnw48lbuq7otc"]
 
-[ext_resource type="Material" uid="uid://qmcbajxi1qw4" path="res://Textures and Materials/turrets/turret_position_slot.tres" id="1_2v88f"]
-[ext_resource type="Script" uid="uid://d2dtba32oh8i5" path="res://Scripts/turrets/turret_slot.gd" id="1_uuoed"]
-[ext_resource type="Material" uid="uid://ctyd4d5jq5u1a" path="res://Textures and Materials/turrets/normal_turret_base.tres" id="2_awi3e"]
+[ext_resource type="Material" uid="uid://qmcbajxi1qw4" path="res://textures_and_materials/turrets/turret_position_slot.tres" id="1_2v88f"]
+[ext_resource type="Script" uid="uid://d2dtba32oh8i5" path="res://scripts/turrets/turret_slot.gd" id="1_uuoed"]
+[ext_resource type="Material" uid="uid://ctyd4d5jq5u1a" path="res://textures_and_materials/turrets/normal_turret_base.tres" id="2_awi3e"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_awi3e"]
 size = Vector3(4, 0.5, 4)

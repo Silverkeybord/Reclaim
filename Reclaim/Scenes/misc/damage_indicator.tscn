@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cot5l8v3e3d6t"]
 
-[ext_resource type="FontFile" uid="uid://c3jirpbnea3oa" path="res://Other assets/fonts/Tutankhamono-Bold.ttf" id="1_4ruqi"]
-[ext_resource type="Script" uid="uid://cmdf3wjb6abey" path="res://Scripts/other/damage_indicator.gd" id="2_w3d5f"]
+[ext_resource type="FontFile" uid="uid://c3jirpbnea3oa" path="res://other_assets/fonts/Tutankhamono-Bold.ttf" id="1_4ruqi"]
+[ext_resource type="Script" uid="uid://cmdf3wjb6abey" path="res://scripts/other/damage_indicator.gd" id="2_w3d5f"]
 
 [sub_resource type="Animation" id="Animation_8y66n"]
 length = 0.001

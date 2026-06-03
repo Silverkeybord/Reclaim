@@ -24,6 +24,7 @@ const HIT_OVERLAY_TIME := 0.05
 @export_group("turrets")
 @export var turret_holagram_scene : PackedScene
 @export var place_overlay : Control
+@export var turret_grid : Node3D
 
 var turret_holagram : Node3D
 
@@ -93,6 +94,8 @@ func _build_mode_handeling(ray_collider : Node) -> void:
 	if Input.is_action_just_pressed("build_mode") and not Global.at_ship:
 		Global.build_mode = not Global.build_mode
 		
+		turret_grid._toggle_build_mode(Global.build_mode)
+		
 		if Global.build_mode:
 			gun_piviot.visible = false
 			turret_holagram = turret_holagram_scene.instantiate()
@@ -104,7 +107,6 @@ func _build_mode_handeling(ray_collider : Node) -> void:
 			if turret_holagram:
 				turret_holagram.queue_free()
 			place_overlay.visible = false
-	
 	
 	if Global.build_mode:
 		# snaps the holagram onto a turret slot if the slot is unlocked

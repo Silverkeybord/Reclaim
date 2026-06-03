@@ -19,3 +19,10 @@ func _check_turret_slots() -> void:
 		for turret_slot in turret_slots:
 			turret_slot.unlocked = true
 		slot_level -= 1
+
+
+func _toggle_build_mode(build_mode) -> void:
+	if build_mode:
+		visible = true
+	else:
+		visible = false

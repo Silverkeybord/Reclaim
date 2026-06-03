@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://3hi5wymcupw7"]
 
-[ext_resource type="Script" uid="uid://buxpd7jm0hd00" path="res://Scripts/turrets/turret_holagram.gd" id="1_0os7u"]
+[ext_resource type="Script" uid="uid://buxpd7jm0hd00" path="res://scripts/turrets/turret_holagram.gd" id="1_0os7u"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_u8jeg"]
 size = Vector3(3.5, 4, 3.5)

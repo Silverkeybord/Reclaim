@@ -5,6 +5,8 @@ const RARITY_RESPAWN_MULT := 20 # seconds before desawning multipyled by the int
 const DESPAWN_SCALE := Vector3(0.1, 0.1, 0.1)
 const DESPAWN_TWEEN_TIME := 0.5
 
+const AREA_COLLISION_SHAPE_MARGIN := Vector3(0.2, 0.2, 0.2)
+
 const GROUND_GROUP_NAME := "ground"
 const PLAYER_GROUP_NAME := "player"
 const GROUND_COLLISION_LAYER := 1
@@ -17,17 +19,25 @@ const PICK_UP_BUFFER := 0.2
 const MAX_ANGULAR_VELOCITY := 10.0
 const MIN_ANGULAR_VELOCITY := 5.0
 const MAX_HOZ_VELOCITY := 10.0
-const MIN_HOZ_VELOCITY := 1.0
 const MAX_VERT_VELOCITY := 25.0
-const MIN_VERT_VELOCITY := 20.0
+const MIN_VERT_VELOCITY := 5.0
 const DIRECTION := [-1, 1]
 
 @export var player : CharacterBody3D
-@export var valid : bool = true
 
+@export var drop_resourse : DropData
+
+@export var mesh : MeshInstance3D
+
+@export_group("Collision Shapes")
+@export var rigid_collision_shape : CollisionShape3D
+@export var area_collision_shape : CollisionShape3D
+
+@export_group("Logic")
+@export var valid : bool = true
 @export var despawn_timer : Timer
 @export var process_freeze_timer : Timer
-@export var area3D : Area3D
+@export var detection_area3D : Area3D
 
 var last_process_pos : Vector3
 var on_ground : bool = false
@@ -39,20 +49,15 @@ var speed = 3
 
 
 func _ready() -> void:
-	despawn_timer.wait_time = RARITY_RESPAWN_MULT
+	despawn_timer.wait_time = RARITY_RESPAWN_MULT * drop_resourse.rarity
 	despawn_timer.start()
 	
-	# throws the drop in a random direction upwards when it spawns
-	var x_vel = randf_range(MIN_HOZ_VELOCITY, MAX_HOZ_VELOCITY) * DIRECTION.pick_random()
-	var z_vel = randf_range(MIN_HOZ_VELOCITY, MAX_HOZ_VELOCITY) * DIRECTION.pick_random()
-	var y_vel = randf_range(MIN_VERT_VELOCITY, MAX_VERT_VELOCITY) 
-	linear_velocity = Vector3(x_vel, y_vel, z_vel)
+	rigid_collision_shape.shape.size = drop_resourse.size
+	area_collision_shape.shape.size = drop_resourse.size + AREA_COLLISION_SHAPE_MARGIN
 	
-	# gives the drop a random spin
-	var x_ang = randf_range(MIN_ANGULAR_VELOCITY, MAX_ANGULAR_VELOCITY) * DIRECTION.pick_random()
-	var z_ang = randf_range(MIN_ANGULAR_VELOCITY, MAX_ANGULAR_VELOCITY) * DIRECTION.pick_random()
-	var y_ang = randf_range(MIN_ANGULAR_VELOCITY, MAX_ANGULAR_VELOCITY) * DIRECTION.pick_random()
-	angular_velocity = Vector3(x_ang, y_ang, z_ang)
+	mesh.set_surface_override_material(0, load(drop_resourse.material_path))
+	
+	_give_random_movement()
 	
 	# stops the player instantly picking it up while it is still flying out
 	await get_tree().create_timer(PICK_UP_BUFFER).timeout
@@ -61,6 +66,10 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if being_picked_up:
+		# validity testing
+		if not player:
+			return
+		
 		# accelerates towards the player until it reaches its cap
 		var dir = (player.global_position - global_position).normalized()
 		linear_velocity = dir * speed
@@ -105,7 +114,7 @@ func _on_process_freeze_timer_timeout() -> void:
 		freeze = true
 		set_process(false)
 		linear_velocity.y = 0
-		area3D.monitoring = false
+		detection_area3D.monitoring = false
 
 
 func _on_despawn_timer_timeout() -> void:
@@ -129,3 +138,18 @@ func pick_up() -> void:
 	being_picked_up = true
 	freeze = false
 	set_process(true)
+
+
+# gives the drop some random upwards movement 
+func _give_random_movement() -> void:
+	# throws the drop in a random direction upwards when it spawns
+	var x_vel = randf_range(0, MAX_HOZ_VELOCITY) * DIRECTION.pick_random()
+	var z_vel = randf_range(0, MAX_HOZ_VELOCITY) * DIRECTION.pick_random()
+	var y_vel = randf_range(MIN_VERT_VELOCITY, MAX_VERT_VELOCITY) 
+	linear_velocity = Vector3(x_vel, y_vel, z_vel)
+	
+	# gives the drop a random spin
+	var x_ang = randf_range(MIN_ANGULAR_VELOCITY, MAX_ANGULAR_VELOCITY) * DIRECTION.pick_random()
+	var z_ang = randf_range(MIN_ANGULAR_VELOCITY, MAX_ANGULAR_VELOCITY) * DIRECTION.pick_random()
+	var y_ang = randf_range(MIN_ANGULAR_VELOCITY, MAX_ANGULAR_VELOCITY) * DIRECTION.pick_random()
+	angular_velocity = Vector3(x_ang, y_ang, z_ang)

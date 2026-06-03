@@ -10,17 +10,18 @@ enum SHOT_TYPE {
 # MISC --------------------------------------------------------------------
 const GRAVITY : float = 40.0
 const DEFAULT_BULLET_TRAIL_KEY : String = "default"
+const PROBABLITY_DIVIDE_CONSTANT : float = 100.0
+const CURRENT_SCENE_ROOT_INDEX : int = 2
 
 # CAPS --------------------------------------------------------------------
 const MAX_DROPS : int = 250
 const MAX_SPHERES : int = 100
 const MAX_DAMAGE_INDICATIONS : int = 100
 
-
 # EFFECTS SCENES ----------------------------------------------------------
-const TEMP_SOUND_SCENE : PackedScene = preload("res://Scenes/misc/temp_sound_scene.tscn")
-const BULET_TRAIL_SCENE : PackedScene = preload("res://Scenes/turrets/bullet_trail.tscn")
-const DAMAGE_INDICATOR_SCENE : PackedScene = preload("res://Scenes/misc/damage_indicator.tscn")
+const TEMP_SOUND_SCENE : PackedScene = preload("res://scenes/misc/temp_sound_scene.tscn")
+const BULET_TRAIL_SCENE : PackedScene = preload("res://scenes/turrets/bullet_trail.tscn")
+const DAMAGE_INDICATOR_SCENE : PackedScene = preload("res://scenes/misc/damage_indicator.tscn")
 
 # VARIBLES =================================================================
 # LOGIC --------------------------------------------------------------------
@@ -29,7 +30,7 @@ var at_ship := true
 
 # SECTOR RELATED ------------------------------------------------------------
 var selected_sector : String
-var selected_sector_path := "res://Scenes/maps/remote_island.tscn"
+var selected_sector_path := "res://scenes/maps/remote_island.tscn"
 var sector_run_time : float
 
 # ENEMIES
@@ -58,18 +59,18 @@ func create_bullet_trail(
 	
 	var new_bullet_trail = BULET_TRAIL_SCENE.instantiate()
 	new_bullet_trail.trail = trail
-	get_tree().root.add_child(new_bullet_trail)
+	get_tree().root.get_child(CURRENT_SCENE_ROOT_INDEX).add_child(new_bullet_trail)
 	new_bullet_trail.create_bullet_trail(from, to)
 
 
 ## Creates a damage indicator at the position of the caller
 func create_damage_indicator(pos : Vector3, damage : int) -> void:
-	if damage_indications >= MAX_DAMAGE_INDICATIONS:
+	if damage_indications >= MAX_DAMAGE_INDICATIONS or at_ship:
 		return
 	
 	damage_indications += 1
 	var new_indication = DAMAGE_INDICATOR_SCENE.instantiate()
 	new_indication.text = "-" + str(damage)
-	get_tree().root.add_child(new_indication)
+	get_tree().root.get_child(CURRENT_SCENE_ROOT_INDEX).add_child(new_indication)
 	new_indication.global_position = pos
 	new_indication.init()

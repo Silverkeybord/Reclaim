@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://ctyd4d5jq5u1a"]
+
+[ext_resource type="Texture2D" uid="uid://b31irr6awo2x4" path="res://textures_and_materials/maps/basic floor.png" id="1_442qu"]
+
+[resource]
+albedo_color = Color(0.31555027, 0.3155501, 0.31555006, 1)
+rim_texture = ExtResource("1_442qu")
+uv1_triplanar = true

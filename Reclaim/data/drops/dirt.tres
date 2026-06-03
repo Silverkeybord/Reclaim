@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="DropData" format=3 uid="uid://sp02wx0d0gfn"]
+
+[ext_resource type="Script" uid="uid://cgqvvu75ctfva" path="res://data/resource_scripts/drops_data.gd" id="1_x3m7s"]
+
+[resource]
+script = ExtResource("1_x3m7s")
+key = "dirt"
+material_path = "res://textures_and_materials/drops/dirt.tres"
+metadata/_custom_type_script = "uid://cgqvvu75ctfva"

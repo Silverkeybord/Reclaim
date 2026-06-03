@@ -1,13 +1,13 @@
 [gd_scene format=3 uid="uid://dwm2mxns3x5wt"]
 
-[ext_resource type="Script" uid="uid://c22fbxy7wkp70" path="res://Scripts/player/player.gd" id="1_eo61r"]
-[ext_resource type="PackedScene" uid="uid://3hi5wymcupw7" path="res://Scenes/turrets/turret_holagram.tscn" id="2_6upyo"]
-[ext_resource type="Script" uid="uid://dev5omns2mu5y" path="res://Scripts/player/camera_control.gd" id="2_mxepk"]
-[ext_resource type="Texture2D" uid="uid://b0sbhjjkojgb0" path="res://2D assets/interact_reticle.png" id="3_mxepk"]
-[ext_resource type="PackedScene" uid="uid://deasukscym312" path="res://Scenes/wepons/gun.tscn" id="4_xxarj"]
-[ext_resource type="FontFile" uid="uid://q3206aq7b5tl" path="res://Other assets/fonts/uni sans/Uni Sans Heavy.otf" id="5_ca0mu"]
-[ext_resource type="Texture2D" uid="uid://bc52l5qd5bkcq" path="res://2D assets/normal_reticle.png" id="5_xxarj"]
-[ext_resource type="Texture2D" uid="uid://dmaj8a3oki02e" path="res://2D assets/remove_overlay.png" id="8_6k3cy"]
+[ext_resource type="Script" uid="uid://c22fbxy7wkp70" path="res://scripts/player/player.gd" id="1_eo61r"]
+[ext_resource type="PackedScene" uid="uid://3hi5wymcupw7" path="res://scenes/turrets/turret_holagram.tscn" id="2_6upyo"]
+[ext_resource type="Script" uid="uid://dev5omns2mu5y" path="res://scripts/player/camera_control.gd" id="2_mxepk"]
+[ext_resource type="Texture2D" uid="uid://b0sbhjjkojgb0" path="res://2d_assets/interact_reticle.png" id="3_mxepk"]
+[ext_resource type="PackedScene" uid="uid://deasukscym312" path="res://scenes/weapons/gun.tscn" id="4_xxarj"]
+[ext_resource type="FontFile" uid="uid://q3206aq7b5tl" path="res://other_assets/fonts/uni_sans/Uni Sans Heavy.otf" id="5_ca0mu"]
+[ext_resource type="Texture2D" uid="uid://bc52l5qd5bkcq" path="res://2d_assets/normal_reticle.png" id="5_xxarj"]
+[ext_resource type="Texture2D" uid="uid://dmaj8a3oki02e" path="res://2d_assets/remove_overlay.png" id="8_6k3cy"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e41v5"]
 

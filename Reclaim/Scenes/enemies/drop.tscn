@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://qtk76i5mawjs"]
 
-[ext_resource type="Script" uid="uid://dw86xjbrodauy" path="res://Scripts/enemies/drop.gd" id="1_aphvy"]
+[ext_resource type="Script" uid="uid://dw86xjbrodauy" path="res://scripts/enemies/drop.gd" id="1_aphvy"]
+[ext_resource type="Material" uid="uid://ceti8yafpcme3" path="res://textures_and_materials/drops/dirt.tres" id="2_nseg0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nseg0"]
 size = Vector3(0.4, 0.4, 0.4)
@@ -11,19 +12,23 @@ size = Vector3(0.4, 0.4, 0.4)
 [sub_resource type="BoxShape3D" id="BoxShape3D_aphvy"]
 size = Vector3(0.45, 0.45, 0.45)
 
-[node name="RigidBody3D" type="RigidBody3D" unique_id=1967477221 node_paths=PackedStringArray("despawn_timer", "process_freeze_timer", "area3D") groups=["drops"]]
+[node name="RigidBody3D" type="RigidBody3D" unique_id=1967477221 node_paths=PackedStringArray("mesh", "rigid_collision_shape", "area_collision_shape", "despawn_timer", "process_freeze_timer", "detection_area3D") groups=["drops"]]
 collision_layer = 0
 collision_mask = 21
 script = ExtResource("1_aphvy")
+mesh = NodePath("MeshInstance3D")
+rigid_collision_shape = NodePath("CollisionShape3D")
+area_collision_shape = NodePath("Area3D/CollisionShape3D")
 despawn_timer = NodePath("despawn_timer")
 process_freeze_timer = NodePath("process_freeze_timer")
-area3D = NodePath("Area3D")
+detection_area3D = NodePath("Area3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1696334010]
 shape = SubResource("BoxShape3D_nseg0")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=162596815]
 mesh = SubResource("BoxMesh_bjc4i")
+surface_material_override/0 = ExtResource("2_nseg0")
 
 [node name="Area3D" type="Area3D" parent="." unique_id=452772677]
 collision_layer = 0

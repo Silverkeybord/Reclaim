@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://dckqhslpr4ebc"]
 
-[ext_resource type="Script" uid="uid://du3loq87kdgkg" path="res://data/1_resourse_scripts/enemy_data.gd" id="1_ldbao"]
+[ext_resource type="Script" uid="uid://du3loq87kdgkg" path="res://data/resource_scripts/enemy_data.gd" id="1_ldbao"]
 
 [resource]
 script = ExtResource("1_ldbao")
@@ -8,4 +8,10 @@ key = "basic"
 hp = 20
 damage = 3
 speed = 5.0
+drop_table = {
+"dirt": 40,
+"rock": 20,
+"sand": 40,
+"stick": 0
+}
 metadata/_custom_type_script = "uid://du3loq87kdgkg"
