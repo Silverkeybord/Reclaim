@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="bullet_trail_data" format=3 uid="uid://cyq73hvqbxssb"]
+[gd_resource type="Resource" script_class="BulletTrailData" format=3 uid="uid://cyq73hvqbxssb"]
 
 [ext_resource type="Script" uid="uid://rqn4axkyltah" path="res://data/resource_scripts/bullet_trail_data.gd" id="1_2kw6h"]
 
@@ -6,7 +6,7 @@
 script = ExtResource("1_2kw6h")
 key = "pistol"
 shape = 1
-size = 0.15
+size = 0.1
 life = 0.3
 fade = true
 expand = true

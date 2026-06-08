@@ -24,20 +24,17 @@ const MIN_VERT_VELOCITY := 5.0
 const DIRECTION := [-1, 1]
 
 @export var player : CharacterBody3D
-
 @export var drop_resourse : DropData
 
 @export var mesh : MeshInstance3D
 
 @export_group("Collision Shapes")
 @export var rigid_collision_shape : CollisionShape3D
-@export var area_collision_shape : CollisionShape3D
 
 @export_group("Logic")
 @export var valid : bool = true
 @export var despawn_timer : Timer
 @export var process_freeze_timer : Timer
-@export var detection_area3D : Area3D
 
 var last_process_pos : Vector3
 var on_ground : bool = false
@@ -53,7 +50,6 @@ func _ready() -> void:
 	despawn_timer.start()
 	
 	rigid_collision_shape.shape.size = drop_resourse.size
-	area_collision_shape.shape.size = drop_resourse.size + AREA_COLLISION_SHAPE_MARGIN
 	
 	mesh.set_surface_override_material(0, load(drop_resourse.material_path))
 	
@@ -84,41 +80,21 @@ func _process(delta: float) -> void:
 			global_position = player.global_position
 			linear_velocity = Vector3.ZERO
 			picked_up = true
+			_pick_up()
 			set_process(false)
 			queue_free()
+			
 	else:
 		# gravity when the drops spawn
 		if linear_velocity.y > -Global.GRAVITY:
 			linear_velocity.y -= Global.GRAVITY * delta
 
 
-func _on_area_3d_body_entered(body: Node3D) -> void:
-	# starts checking if the drop has stopped moving on the ground
-	if body in get_tree().get_nodes_in_group(GROUND_GROUP_NAME):
-		on_ground = true
-		if process_freeze_timer.is_stopped():
-			process_freeze_timer.start()
-
-
-func _on_area_3d_body_exited(body: Node3D) -> void:
-	# stops the freeze timer if the drop bounces off the ground again
-	if body in get_tree().get_nodes_in_group(GROUND_GROUP_NAME):
-		on_ground = false
-		if not process_freeze_timer.is_stopped():
-			process_freeze_timer.stop()
-
-
-func _on_process_freeze_timer_timeout() -> void:
-	# freezes the drop when it has been sitting on the ground for a bit
-	if on_ground:
-		freeze = true
-		set_process(false)
-		linear_velocity.y = 0
-		detection_area3D.monitoring = false
-
-
 func _on_despawn_timer_timeout() -> void:
 	# deletes old drops that the player didnt pick up
+	if being_picked_up:
+		return
+	
 	valid = false
 	
 	var despawn_tween = create_tween()
@@ -130,8 +106,9 @@ func _on_despawn_timer_timeout() -> void:
 	queue_free()
 
 
-# primes the drop to be picked up
-func pick_up() -> void: 
+# primes the drop to be picked up when the drop enters the pick up area
+func prime_pick_up() -> void: 
+	linear_velocity = Vector3.ZERO
 	# turns off ground collision so the drop can fly into the player
 	set_collision_mask_value(GROUND_COLLISION_LAYER, false)
 	
@@ -140,7 +117,7 @@ func pick_up() -> void:
 	set_process(true)
 
 
-# gives the drop some random upwards movement 
+# gives the drop some random upwards movement w
 func _give_random_movement() -> void:
 	# throws the drop in a random direction upwards when it spawns
 	var x_vel = randf_range(0, MAX_HOZ_VELOCITY) * DIRECTION.pick_random()
@@ -153,3 +130,9 @@ func _give_random_movement() -> void:
 	var z_ang = randf_range(MIN_ANGULAR_VELOCITY, MAX_ANGULAR_VELOCITY) * DIRECTION.pick_random()
 	var y_ang = randf_range(MIN_ANGULAR_VELOCITY, MAX_ANGULAR_VELOCITY) * DIRECTION.pick_random()
 	angular_velocity = Vector3(x_ang, y_ang, z_ang)
+
+
+## add the drop into the inventory of the player
+func _pick_up() -> void:
+	Global.inventory[str(drop_resourse.rarity)][drop_resourse.key] += 1
+	print(Global.inventory)

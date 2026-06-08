@@ -34,6 +34,7 @@ func place_selected_turret() -> void:
 	turret = turret_resource.instantiate()
 	get_tree().root.get_child(Global.CURRENT_SCENE_ROOT_INDEX).add_child(turret)
 	turret.global_position = turret_origin_point.global_position
+	turret.global_rotation = turret_origin_point.global_rotation
 
 
 func build_base() -> void:

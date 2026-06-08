@@ -38,11 +38,17 @@ var enemies := 0
 var damage_indications := 0
 
 # META UPGRADES / RESEARCH --------------------------------------------------
-var turret_slots := 8
+var turret_slots := 1
 
 # INVENORY -----------------------------------------------------------------
 var cubits : int = 0
-var inventory : Dictionary = {}
+var inventory : Dictionary = {
+	"1" : {
+		"dirt" : 0,
+		"sand" : 0,
+		"rock" : 0
+	}
+}
 
 
 # FUNCTIONS ================================================================
@@ -74,3 +80,44 @@ func create_damage_indicator(pos : Vector3, damage : int) -> void:
 	get_tree().root.get_child(CURRENT_SCENE_ROOT_INDEX).add_child(new_indication)
 	new_indication.global_position = pos
 	new_indication.init()
+
+
+## Converts large integers into human-readable shorthand formatting. 
+## --- Made With Gemini ---
+func get_amount_shorthand(value: int) -> String:
+	const THOUSAND_LIMIT : float = 1_000.0
+	const MILLION_LIMIT  : float = 1_000_000.0
+	const BILLION_LIMIT  : float = 1_000_000_000.0
+
+	const SUFFIX_THOUSAND : String = "K"
+	const SUFFIX_MILLION  : String = "M"
+	const SUFFIX_BILLION  : String = "B"
+
+	const STRING_FORMAT_ONE_DECIMAL : String = "%.1f"
+	const FLOATING_POINT_ZERO_TRAIL : String = ".0"
+
+	var absolute_value : int = abs(value)
+	var suffix := ""
+	var divided_value := float(value)
+
+	# Direct evaluation blocks remove loop overhead entirely
+	if absolute_value >= BILLION_LIMIT:
+		divided_value = float(value) / BILLION_LIMIT
+		suffix = SUFFIX_BILLION
+	elif absolute_value >= MILLION_LIMIT:
+		divided_value = float(value) / MILLION_LIMIT
+		suffix = SUFFIX_MILLION
+	elif absolute_value >= THOUSAND_LIMIT:
+		divided_value = float(value) / THOUSAND_LIMIT
+		suffix = SUFFIX_THOUSAND
+	else:
+		return str(value)
+
+	# Apply truncation formatting rule
+	var formatted_string := STRING_FORMAT_ONE_DECIMAL % divided_value
+	
+	# Strip trailing zeros dynamically based on target string length
+	if formatted_string.ends_with(FLOATING_POINT_ZERO_TRAIL):
+		formatted_string = formatted_string.left(-FLOATING_POINT_ZERO_TRAIL.length())
+		
+	return formatted_string + suffix

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dcu7uussd5i41"]
 
 [ext_resource type="Script" uid="uid://b5m6w72ttc6t6" path="res://scripts/turrets/t1/basic.gd" id="1_q23d6"]
-[ext_resource type="Script" uid="uid://bgy2xmmxnlw85" path="res://scenes/turrets/turret_range_area.gd" id="3_5kt17"]
+[ext_resource type="Script" uid="uid://bgy2xmmxnlw85" path="res://scripts/turrets/turret_range_area.gd" id="3_5kt17"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_h2pfq"]
 size = Vector3(3.5, 3, 3.5)

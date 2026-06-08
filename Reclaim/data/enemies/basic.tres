@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_ldbao")
 key = "basic"
-hp = 20
+hp = 10
 damage = 3
 speed = 5.0
 drop_table = {

@@ -24,13 +24,15 @@ var spawn_nodes : Array[Node]
 
 var cluster_rate_ratio : float # The cluster decay in terms of time alive
 var cluster_size : int
+var commander_size_raito : float
+var normal_size_ratio : float
 
 var wave_enemies : Dictionary
 var run_time := 0.0
 
 
 func _ready() -> void:
-	# Load the resource
+	# Sets the resource
 	wave_data = GameData.wave[map]
 	
 	# Gets the enemies that will spawn in this sector and probiblities
@@ -40,8 +42,11 @@ func _ready() -> void:
 	
 	# Calculates ratios
 	spawn_rate = wave_data.spawn_start_rate
-	spawn_rate_ratio = (wave_data.spawn_start_rate - wave_data.spawn_end_rate) / wave_data.end_time
-	cluster_rate_ratio = (wave_data.cluster_start_size - wave_data.cluster_end_size) / wave_data.end_time
+	normal_size_ratio = _get_time_raito(wave_data.start_size, wave_data.end_size)
+	spawn_rate_ratio = _get_time_raito(wave_data.spawn_start_rate, wave_data.spawn_end_rate)
+	cluster_rate_ratio = _get_time_raito(wave_data.cluster_start_size, wave_data.cluster_end_size)
+	commander_size_raito = _get_time_raito(
+		wave_data.commander_start_size, wave_data.commander_end_size)
 	
 	spawn_nodes = get_tree().get_nodes_in_group(SPAWN_MARKERS_GROUP)
 	spawn_timer.start(spawn_rate)
@@ -62,9 +67,10 @@ func _on_spawn_timer_timeout() -> void:
 		return
 	
 	var random_spawn_node = spawn_nodes.pick_random()
-	var commander = enemy_scene.instantiate()
+	var commander : base_enemy = enemy_scene.instantiate()
 	add_sibling(commander)
 	
+	# sets the resourse of the commander
 	commander.enemy_resourse = _get_enemy_type_resourse()
 	
 	# Commander Positioning
@@ -73,13 +79,18 @@ func _on_spawn_timer_timeout() -> void:
 	)
 	
 	commander.extraction_pod = extraction_pod
-	commander.size = wave_data.commander_size + randf_range(0, wave_data.commander_additional_size)
+	commander.size = (
+		wave_data.commander_start_size + 
+		Global.sector_run_time * commander_size_raito + 
+		randf_range(0, wave_data.commander_random_additional_size)
+		)
 	commander.scale *= commander.size
+	commander.is_commander = true
 	commander.fin_loading()
 	
 	# Squad Cluster Spawning Loop
 	for x in range(cluster_size):
-		var new_enemy = enemy_scene.instantiate()
+		var new_enemy : base_enemy = enemy_scene.instantiate()
 		add_sibling(new_enemy)
 		
 		new_enemy.enemy_resourse = _get_enemy_type_resourse()
@@ -91,7 +102,11 @@ func _on_spawn_timer_timeout() -> void:
 		)
 		
 		new_enemy.extraction_pod = extraction_pod
-		new_enemy.size = randf_range(wave_data.smallest_size, wave_data.biggest_size)
+		new_enemy.size = (
+			wave_data.start_size +
+			Global.sector_run_time * normal_size_ratio +
+			randf_range(-wave_data.random_aditional_size, wave_data.random_aditional_size)
+			)
 		new_enemy.scale *= new_enemy.size
 		new_enemy.fin_loading()
 
@@ -123,3 +138,8 @@ func _get_enemy_type_resourse():
 	
 	print("invalid weights returning basic on map : ", map)
 	return GameData.enemies[BASIC_TYPE_FALLBACK]
+
+
+func _get_time_raito(start_value: float, end_value: float) -> float:
+	return (end_value - start_value) / wave_data.end_time
+	

@@ -6,7 +6,7 @@ const TURRET_PLACEMENT_DISTANCE := 20
 const GUN_CHILD_INDEX := 0
 const ENEMY_METADATA_TAG := "enemy"
 const DROPS_GROUP_NAME := "drops"
-const HIT_OVERLAY_TIME := 0.05
+const HIT_OVERLAY_TIME := 0.1
 
 
 @export_group("player stat")
@@ -179,4 +179,4 @@ func _on_pick_up_area_body_entered(body: Node3D) -> void:
 	# starts pick up movement when a valid drop touches the pickup area
 	if body in get_tree().get_nodes_in_group(DROPS_GROUP_NAME) and body.valid:
 		body.player = self
-		body.pick_up()
+		body.prime_pick_up()

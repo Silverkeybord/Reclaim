@@ -12,6 +12,7 @@ const SIZE_BASE_STAT_FACTOR : float = 0.5
 @export var valid := false
 
 @export var enemy_resourse : EnemyData
+@export var is_commander : bool = false
 @export var size : float
 
 @export var extraction_pod : Node3D
@@ -66,8 +67,10 @@ func fin_loading() -> void:
 	Global.enemies += 1
 	
 	# sets stats
-	hp = round(enemy_resourse.hp * ((size - 1) / SIZE_BASE_STAT_FACTOR))
-	damage = round(enemy_resourse.damage * ((size - 1) / SIZE_BASE_STAT_FACTOR))
+	# mulitplys the base stats by their size by half
+	var mult = 1 + ((size - 1) / SIZE_BASE_STAT_FACTOR)
+	hp = round(enemy_resourse.hp * mult)
+	damage = round(enemy_resourse.damage * mult)
 	speed = enemy_resourse.speed
 	
 	valid = true

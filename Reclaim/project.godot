@@ -19,6 +19,10 @@ config/features=PackedStringArray("4.6", "Forward Plus")
 Global="*uid://cfmmf21gdrijp"
 GameData="*uid://3i5a76kjtllm"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
+
 [file_customization]
 
 folder_colors={
