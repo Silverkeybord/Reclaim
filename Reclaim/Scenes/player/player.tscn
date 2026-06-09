@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dwm2mxns3x5wt"]
 
 [ext_resource type="Script" uid="uid://c22fbxy7wkp70" path="res://scripts/player/player.gd" id="1_eo61r"]
-[ext_resource type="PackedScene" uid="uid://3hi5wymcupw7" path="res://scenes/turrets/turret_holagram.tscn" id="2_6upyo"]
+[ext_resource type="PackedScene" uid="uid://3hi5wymcupw7" path="res://scenes/turrets/build_holagram.tscn" id="2_6upyo"]
 [ext_resource type="Script" uid="uid://dev5omns2mu5y" path="res://scripts/player/camera_control.gd" id="2_mxepk"]
 [ext_resource type="Texture2D" uid="uid://b0sbhjjkojgb0" path="res://2d_assets/interact_reticle.png" id="3_mxepk"]
 [ext_resource type="PackedScene" uid="uid://deasukscym312" path="res://scenes/weapons/gun.tscn" id="4_xxarj"]
@@ -37,6 +37,7 @@ place_overlay = NodePath("place_overlay")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=125637870]
 shape = SubResource("BoxShape3D_e41v5")
+debug_color = Color(0, 0, 0, 0.41960785)
 
 [node name="mesh" type="MeshInstance3D" parent="." unique_id=1173051299]
 
@@ -68,6 +69,7 @@ collide_with_areas = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, 0, 0)
 
 [node name="Gun" parent="gun_piviot" unique_id=1312602602 node_paths=PackedStringArray("player") instance=ExtResource("4_xxarj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -0.125)
 player = NodePath("../..")
 
 [node name="shoot_timer" type="Timer" parent="gun_piviot" unique_id=1614041456]

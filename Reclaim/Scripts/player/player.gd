@@ -108,22 +108,64 @@ func _build_mode_handeling(ray_collider : Node) -> void:
 				turret_holagram.queue_free()
 			place_overlay.visible = false
 	
+	#changes to the next build mode
+	if Input.is_action_just_pressed("change_build_mode") and Global.build_mode:
+		var build_modes : int = Global.BUILD_MODES.size()
+		Global.current_build_mode = (
+			((Global.current_build_mode + 1) % build_modes) as Global.BUILD_MODES
+			)
+	
+	
 	if Global.build_mode:
 		# snaps the holagram onto a turret slot if the slot is unlocked
-		if ray_collider and ray_collider.is_in_group("turret_slots") and ray_collider.unlocked:
-			turret_holagram.global_position = ray_collider.turret_origin_point.global_position
+		if _check_valid_placement(ray_collider):
+			
+			match Global.current_build_mode:
+				Global.BUILD_MODES.TURRET:
+					turret_holagram.global_position = (
+						ray_collider.turret_origin_point.global_position
+						)
+				
+				Global.BUILD_MODES.BASE:
+					turret_holagram.global_position = ray_collider.global_position
+			
 			turret_holagram.valid_position = true
 			place_overlay.visible = true
 			
 			if Input.is_action_pressed("place"):
-				ray_collider.current_turret = "basic" # TEMPERORY
-				ray_collider.place_selected_turret()
-			
+				match Global.current_build_mode:
+					Global.BUILD_MODES.TURRET:
+						ray_collider.place_selected_turret("basic") # TEMPERORY
+					
+					Global.BUILD_MODES.BASE:
+						ray_collider.build_base("basic") # TEMPERORY
+						
 		else:
 			# puts the holagram where the player is looking but marks it invalid
 			turret_holagram.global_position = aim_ray.get_collision_point()
 			turret_holagram.valid_position = false
 			place_overlay.visible = false
+
+
+func _check_valid_placement(ray_collider : Node) -> bool:
+	if (not ray_collider or 
+		not ray_collider.is_in_group("turret_slots") or 
+		not ray_collider.unlocked
+		):
+		
+		return false
+	
+	match Global.current_build_mode:
+		Global.BUILD_MODES.TURRET:
+			if ray_collider.current_base:
+				return true
+			else:
+				return false
+		
+		Global.BUILD_MODES.BASE:
+			return true
+	
+	return false
 
 
 # WEAPONS CONTROL ------------------------------------------------------------

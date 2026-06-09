@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://cnw48lbuq7otc"]
 
-[ext_resource type="Material" uid="uid://qmcbajxi1qw4" path="res://textures_and_materials/turrets/turret_position_slot.tres" id="1_2v88f"]
 [ext_resource type="Script" uid="uid://d2dtba32oh8i5" path="res://scripts/turrets/turret_slot.gd" id="1_uuoed"]
 [ext_resource type="Material" uid="uid://ctyd4d5jq5u1a" path="res://textures_and_materials/turrets/normal_turret_base.tres" id="2_awi3e"]
 
@@ -20,7 +19,6 @@ mesh = NodePath("MeshInstance3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1570106337]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
-material_override = ExtResource("1_2v88f")
 mesh = SubResource("BoxMesh_awi3e")
 surface_material_override/0 = ExtResource("2_awi3e")
 

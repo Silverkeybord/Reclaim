@@ -13,12 +13,17 @@ enum RANGE_SHAPES {
 @export_range(1, 5) var tier: int = 1
 
 @export_group("Basic Stats")
+## damage done to enemies
 @export var damage: float
+## time inetween each shot
 @export var cooldown: float
+## the radius in meters of the targeting area
 @export var turret_range: float
+## the shape of the range are
 @export var range_shape : RANGE_SHAPES
 
 @export_group("Ammo Types")
+## what ammo types the turret can shoot
 @export var ammo_types : Dictionary = {
 	"basic" : true,
 	"light" : true,
@@ -27,8 +32,6 @@ enum RANGE_SHAPES {
 	"beam" : false,
 	
 }
-@export_group("Recpie")
-@export var recipe: Dictionary
 
 @export_group("Synergy Tags")
 ## if these turrets are next to the turret the turret will be boosted

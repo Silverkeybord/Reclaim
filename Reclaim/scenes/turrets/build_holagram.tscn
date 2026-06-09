@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://3hi5wymcupw7"]
+
+[ext_resource type="Script" uid="uid://buxpd7jm0hd00" path="res://scripts/turrets/build_holagram.gd" id="1_bg2vo"]
+[ext_resource type="Material" uid="uid://d3pd43aatbaea" path="res://textures_and_materials/turrets/holagram.tres" id="2_41qyl"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_u8jeg"]
+size = Vector3(3.5, 4, 3.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7r27q"]
+size = Vector3(4, 0.5, 4)
+
+[node name="build_holagram" type="Node3D" unique_id=762244018 node_paths=PackedStringArray("turret_holagram", "base_holagram")]
+script = ExtResource("1_bg2vo")
+turret_holagram = NodePath("turret_holagram")
+base_holagram = NodePath("base_holagram")
+
+[node name="turret_holagram" type="MeshInstance3D" parent="." unique_id=2068682262]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+visible = false
+mesh = SubResource("BoxMesh_u8jeg")
+surface_material_override/0 = ExtResource("2_41qyl")
+
+[node name="base_holagram" type="MeshInstance3D" parent="." unique_id=122956196]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+visible = false
+mesh = SubResource("BoxMesh_7r27q")
+surface_material_override/0 = ExtResource("2_41qyl")

@@ -1,9 +1,14 @@
 extends Node
 
+# eums
 # TURRETS / WEAPONS ------------------------------------------------------- 
 enum SHOT_TYPE {
 	HITSCAN,
 	PROJECTILE
+}
+enum BUILD_MODES {
+	TURRET,
+	BASE
 }
 
 # CONSTANTS ===============================================================
@@ -26,6 +31,7 @@ const DAMAGE_INDICATOR_SCENE : PackedScene = preload("res://scenes/misc/damage_i
 # VARIBLES =================================================================
 # LOGIC --------------------------------------------------------------------
 var build_mode := false
+var current_build_mode := BUILD_MODES.TURRET
 var at_ship := true
 
 # SECTOR RELATED ------------------------------------------------------------
@@ -48,6 +54,39 @@ var inventory : Dictionary = {
 		"sand" : 0,
 		"rock" : 0
 	}
+}
+var turret_inventory : Dictionary = {
+	"1" : { 
+		"basic" : 0,
+		"dual" : 0,
+		"wind" : 0
+ 	},
+	"2" : { 
+		"shotgun" : 0,
+		"water" : 0,
+		"minigun" : 0,
+		"mortar" : 0
+ 	},
+	"3" : { 
+		"explosive" : 0,
+		"cannon" : 0,
+		"earth" : 0
+ 	},
+	"4" : { 
+		"missle" : 0,
+		"sniper" : 0,
+		"fire" : 0
+ 	},
+	"5" : { 
+		"railgun" : 0,
+		"cube" : 0,
+		"wind" : 0
+ 	}
+}
+var base_inventory : Dictionary = {
+	"plate" : 0,
+	"single" : 0,
+	
 }
 
 

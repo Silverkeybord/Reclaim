@@ -1,11 +1,14 @@
 [gd_scene format=3 uid="uid://dtiq7x2mf21b0"]
 
-[ext_resource type="PackedScene" uid="uid://1ducx04kvn43" path="res://scenes/mesh_scenes/turret_base_mesh.tscn" id="1_soqyp"]
+[sub_resource type="BoxMesh" id="BoxMesh_kiu3l"]
+size = Vector3(4, 0.5, 4)
 
-[node name="tower_base" type="Node3D" unique_id=809151429]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mp5w8"]
+albedo_color = Color(0.4883154, 0.4883154, 0.48831534, 1)
 
-[node name="Untitled" parent="." unique_id=1292368497 instance=ExtResource("1_soqyp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+[node name="turret_base" type="Node3D" unique_id=809151429]
 
-[node name="atachment_point" type="Marker3D" parent="." unique_id=1315721410]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1284754659]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+mesh = SubResource("BoxMesh_kiu3l")
+surface_material_override/0 = SubResource("StandardMaterial3D_mp5w8")
