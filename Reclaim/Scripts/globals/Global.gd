@@ -13,6 +13,7 @@ enum BUILD_MODES {
 
 # CONSTANTS ===============================================================
 # MISC --------------------------------------------------------------------
+const SAVE_PATH : String = "user://reclaim.save"
 const GRAVITY : float = 40.0
 const DEFAULT_BULLET_TRAIL_KEY : String = "default"
 const PROBABLITY_DIVIDE_CONSTANT : float = 100.0
@@ -20,8 +21,18 @@ const CURRENT_SCENE_ROOT_INDEX : int = 2
 
 # CAPS --------------------------------------------------------------------
 const MAX_DROPS : int = 250
-const MAX_SPHERES : int = 100
+const MAX_SPHERES : int = 300
 const MAX_DAMAGE_INDICATIONS : int = 100
+const ORDER_OF_MAGNITUDE : int = 10
+const HUNDRED_THRESHOLD : int = 3
+const SHORT_HAND_NUDGE : float = 1e-9
+const MAX_SHORTHAND_MAGNITUDE : int = 12
+const MAX_TEXT : String = "MAX"
+const SHORTHAND_THRESHOLDS : Dictionary = {
+	int(9) : "B",
+	int(6) : "M",
+	int(3) : "K",
+}
 
 # EFFECTS SCENES ----------------------------------------------------------
 const TEMP_SOUND_SCENE : PackedScene = preload("res://scenes/misc/temp_sound_scene.tscn")
@@ -121,42 +132,67 @@ func create_damage_indicator(pos : Vector3, damage : int) -> void:
 	new_indication.init()
 
 
-## Converts large integers into human-readable shorthand formatting. 
-## --- Made With Gemini ---
-func get_amount_shorthand(value: int) -> String:
-	const THOUSAND_LIMIT : float = 1_000.0
-	const MILLION_LIMIT  : float = 1_000_000.0
-	const BILLION_LIMIT  : float = 1_000_000_000.0
-
-	const SUFFIX_THOUSAND : String = "K"
-	const SUFFIX_MILLION  : String = "M"
-	const SUFFIX_BILLION  : String = "B"
-
-	const STRING_FORMAT_ONE_DECIMAL : String = "%.1f"
-	const FLOATING_POINT_ZERO_TRAIL : String = ".0"
-
-	var absolute_value : int = abs(value)
-	var suffix := ""
-	var divided_value := float(value)
-
-	# Direct evaluation blocks remove loop overhead entirely
-	if absolute_value >= BILLION_LIMIT:
-		divided_value = float(value) / BILLION_LIMIT
-		suffix = SUFFIX_BILLION
-	elif absolute_value >= MILLION_LIMIT:
-		divided_value = float(value) / MILLION_LIMIT
-		suffix = SUFFIX_MILLION
-	elif absolute_value >= THOUSAND_LIMIT:
-		divided_value = float(value) / THOUSAND_LIMIT
-		suffix = SUFFIX_THOUSAND
-	else:
-		return str(value)
-
-	# Apply truncation formatting rule
-	var formatted_string := STRING_FORMAT_ONE_DECIMAL % divided_value
+## Converts large integers into shorthand notation (e.g. 1_500 → "1.5K")
+func return_amount_shorthand(value: float) -> String:
+	var magnitude : int = floori(log(value) / log(ORDER_OF_MAGNITUDE) + SHORT_HAND_NUDGE)
+	var magnitude_divisor : int
+	var suffix : String
+	var decimal_point_needed : bool = false
 	
-	# Strip trailing zeros dynamically based on target string length
-	if formatted_string.ends_with(FLOATING_POINT_ZERO_TRAIL):
-		formatted_string = formatted_string.left(-FLOATING_POINT_ZERO_TRAIL.length())
+	if value <= 0:
+		return str(int(value))
+	
+	if magnitude < HUNDRED_THRESHOLD:
+		return str(int(value))
+	
+	if magnitude >= MAX_SHORTHAND_MAGNITUDE:
+		return MAX_TEXT
+	
+	for x in SHORTHAND_THRESHOLDS:
+		if x <= magnitude:
+			suffix = SHORTHAND_THRESHOLDS[x]
+			magnitude_divisor = x
+			if magnitude == x:
+				decimal_point_needed = true
+			
+			break
+	
+	if decimal_point_needed:
+		var tenth : int = roundi(value / (ORDER_OF_MAGNITUDE ** magnitude_divisor) * 10.0)
+		var whole : int = roundi(float(tenth) / 10.0)
+		var remainder : int = tenth % 10
 		
-	return formatted_string + suffix
+		if remainder == 0:
+			return str(whole) + suffix
+		return "%d.%d" % [whole, remainder] + suffix
+	
+	return str(floori(value / (ORDER_OF_MAGNITUDE ** magnitude_divisor))) + suffix
+
+
+# SAVEING, LODING, AND RESETING GAME DATA ------------------------------------
+func save_game():
+	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+	
+	var save_data = {
+		# inventory / storage
+		"inventory" : inventory,
+	}
+	
+	file.store_var(save_data)
+
+
+func load_game():
+	if !FileAccess.file_exists(SAVE_PATH):
+		return
+	
+	
+	var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
+	var data = file.get_var()
+	
+	inventory = data["inventory"]
+
+
+func reset_game():
+	if FileAccess.file_exists(SAVE_PATH):
+		DirAccess.remove_absolute(ProjectSettings.globalize_path(SAVE_PATH))
+	get_tree().quit()

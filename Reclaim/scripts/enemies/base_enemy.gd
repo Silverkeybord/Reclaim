@@ -52,6 +52,9 @@ func fin_loading() -> void:
 	# so turrets dont target it when its is instianted at 0, 0, 0
 	await get_tree().create_timer(LOAD_BUFFER).timeout
 	
+	# the enemys spawn half in the floor so adding half their radius will put them on the floor
+	global_position.y += size / 2
+	
 	set_process(true)
 	set_physics_process(true)
 	

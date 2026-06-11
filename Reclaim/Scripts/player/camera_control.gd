@@ -10,6 +10,7 @@ const FIRST_PERSON_THRESHOLD := 1.25
 const FIRST_PERSON_CAMERA_LENGTH := 0
 const THIRD_PERSON_CAMERA_OFFSET := Vector3(0.75, 1.25, 0)
 const FIRST_PERSON_CAMERA_OFFSET := Vector3(0, 0.4, 0)
+const Z_AXIS_THIRD_PERSON_OFFSET := Vector3(0, 1.25, 0)
 
 const RAY_LENGTH := 50 # in meters
 
@@ -20,6 +21,7 @@ const RAY_LENGTH := 50 # in meters
 @export var player: CharacterBody3D
 @export var spring_arm: SpringArm3D
 @export var gun_piviot : Node3D
+@export var z_axis_spring_arm : SpringArm3D
 
 var pitch := 0.0
 var zoom_value := 3.0
@@ -64,5 +66,9 @@ func _zoom_in_out(event: InputEventMouseButton) -> void:
 	if zoom_value <= FIRST_PERSON_THRESHOLD:
 		position = FIRST_PERSON_CAMERA_OFFSET
 		spring_arm.spring_length = FIRST_PERSON_CAMERA_LENGTH
+		z_axis_spring_arm.spring_length = FIRST_PERSON_CAMERA_LENGTH
+		z_axis_spring_arm.position = FIRST_PERSON_CAMERA_OFFSET
 	else:
 		position = THIRD_PERSON_CAMERA_OFFSET
+		z_axis_spring_arm.spring_length = THIRD_PERSON_CAMERA_OFFSET.z
+		z_axis_spring_arm.position = Z_AXIS_THIRD_PERSON_OFFSET

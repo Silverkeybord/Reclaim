@@ -101,16 +101,16 @@ map = "remote_island"
 [node name="enemy_spawn_markers" type="Node" parent="." unique_id=1301469332]
 
 [node name="Marker3D3" type="Marker3D" parent="enemy_spawn_markers" unique_id=596874140 groups=["enemy_spawn_markers"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90, -4, 0)
 
 [node name="Marker3D4" type="Marker3D" parent="enemy_spawn_markers" unique_id=166271002 groups=["enemy_spawn_markers"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -90, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -90, -4, 0)
 
 [node name="Marker3D2" type="Marker3D" parent="enemy_spawn_markers" unique_id=991813210 groups=["enemy_spawn_markers"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -90)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, -90)
 
 [node name="Marker3D5" type="Marker3D" parent="enemy_spawn_markers" unique_id=446555927 groups=["enemy_spawn_markers"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 89.21158)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 89.21158)
 
 [node name="map" type="Node" parent="." unique_id=218265755]
 
@@ -125,7 +125,7 @@ shape = SubResource("BoxShape3D_nic26")
 debug_color = Color(0, 0, 0, 1)
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="map/enemy_only_path" unique_id=1460039863]
-transform = Transform3D(0.81915194, -0.40557978, 0.4055798, 0, 0.7071067, 0.7071067, -0.57357645, -0.5792281, 0.5792279, -7.579359, -3.4636104, -63.063274)
+transform = Transform3D(0.81915194, -0.40557978, 0.4055798, 0, 0.7071067, 0.7071067, -0.57357645, -0.5792281, 0.5792279, -7.56, -3.51, -63.063)
 shape = SubResource("BoxShape3D_7wlnk")
 debug_color = Color(0, 0, 0, 1)
 
@@ -135,7 +135,7 @@ shape = SubResource("BoxShape3D_7wlnk")
 debug_color = Color(0, 0, 0, 1)
 
 [node name="CollisionShape3D4" type="CollisionShape3D" parent="map/enemy_only_path" unique_id=1128137135]
-transform = Transform3D(1, 0, 0, 0, 0.6873791, -0.7262988, 0, 0.7262988, 0.6873791, 13.651631, -3.4868546, -77.84124)
+transform = Transform3D(1, 0, 0, 0, 0.6873791, -0.7262988, 0, 0.7262988, 0.6873791, 13.651631, -3.4481936, -77.882)
 shape = SubResource("BoxShape3D_0k5vl")
 debug_color = Color(0, 0, 0, 1)
 

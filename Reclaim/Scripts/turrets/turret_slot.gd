@@ -51,9 +51,6 @@ func build_base(base_type : String) -> void:
 	
 	current_base = base_type
 	
-	can_place = false
-	place_cooldown.start()
-	
 	if base:
 		base.queue_free()
 	

@@ -6,7 +6,7 @@ const TURRET_PLACEMENT_DISTANCE := 20
 const GUN_CHILD_INDEX := 0
 const ENEMY_METADATA_TAG := "enemy"
 const DROPS_GROUP_NAME := "drops"
-const HIT_OVERLAY_TIME := 0.1
+const HIT_OVERLAY_TIME := 0.08
 
 
 @export_group("player stat")
@@ -37,6 +37,8 @@ var weapon_resourse : Resource
 func _ready() -> void:
 	# gives the player their starting weapon
 	_set_new_weapon()
+	
+	print(Global.return_amount_shorthand(1249))
 
 
 func _physics_process(delta: float) -> void:
@@ -181,10 +183,13 @@ func _shoot_control() -> void:
 
 func _shoot() -> void:
 	var to : Vector3
-	if aim_ray.is_colliding():
+	if aim_ray.is_colliding() and weapon.gun_ray.is_colliding():
+		#var camera_ray_collision_point = aim_ray.get_collision_point()
+		#weapon.gun_ray.look_at(camera_ray_collision_point)
+		#to = weapon.gun_ray.get_collision_point()
 		to = aim_ray.get_collision_point()
 		
-		var hit = aim_ray.get_collider()
+		var hit = weapon.gun_ray.get_collider()
 		if hit.has_meta(ENEMY_METADATA_TAG):
 			# damages enemies and flashes the hit overlay
 			hit.hit(weapon_resourse.damage)
