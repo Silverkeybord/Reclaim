@@ -10,6 +10,10 @@ enum BUILD_MODES {
 	TURRET,
 	BASE
 }
+enum BUILD_TYPES {
+	TURRET,
+	BASE
+}
 
 # CONSTANTS ===============================================================
 # MISC --------------------------------------------------------------------
@@ -43,6 +47,7 @@ const DAMAGE_INDICATOR_SCENE : PackedScene = preload("res://scenes/misc/damage_i
 # LOGIC --------------------------------------------------------------------
 var build_mode := false
 var current_build_mode := BUILD_MODES.TURRET
+var picking_up_builds := false
 var at_ship := true
 
 # SECTOR RELATED ------------------------------------------------------------
@@ -97,7 +102,6 @@ var turret_inventory : Dictionary = {
 var base_inventory : Dictionary = {
 	"plate" : 0,
 	"single" : 0,
-	
 }
 
 
@@ -134,42 +138,53 @@ func create_damage_indicator(pos : Vector3, damage : int) -> void:
 
 ## Converts large integers into shorthand notation (e.g. 1_500 → "1.5K")
 func return_amount_shorthand(value: float) -> String:
+	# works out the order of magnitude value has
 	var magnitude : int = floori(log(value) / log(ORDER_OF_MAGNITUDE) + SHORT_HAND_NUDGE)
 	var magnitude_divisor : int
 	var suffix : String
 	var decimal_point_needed : bool = false
 	
+	# stops 0 and negitive numbers breaking the log
 	if value <= 0:
 		return str(int(value))
 	
+	# numbers under 1000 dont need shorthand
 	if magnitude < HUNDRED_THRESHOLD:
 		return str(int(value))
 	
+	# caps very large numbers so they dont go past the shown range
 	if magnitude >= MAX_SHORTHAND_MAGNITUDE:
 		return MAX_TEXT
 	
+	# finds what suffix should be used like K, M, or B
 	for x in SHORTHAND_THRESHOLDS:
 		if x <= magnitude:
 			suffix = SHORTHAND_THRESHOLDS[x]
 			magnitude_divisor = x
+			
+			# only adds a decimal when the number just reached that shorthand group
 			if magnitude == x:
 				decimal_point_needed = true
 			
 			break
 	
 	if decimal_point_needed:
+		# gets the first decimal digit for stuff like 1.5K
 		var tenth : int = roundi(value / (ORDER_OF_MAGNITUDE ** magnitude_divisor) * 10.0)
 		var whole : int = roundi(float(tenth) / 10.0)
 		var remainder : int = tenth % 10
 		
+		# skips the decimal if it would just be .0
 		if remainder == 0:
 			return str(whole) + suffix
 		return "%d.%d" % [whole, remainder] + suffix
 	
+	# for bigger numbers it just shows the whole shorthand amount
 	return str(floori(value / (ORDER_OF_MAGNITUDE ** magnitude_divisor))) + suffix
 
 
 # SAVEING, LODING, AND RESETING GAME DATA ------------------------------------
+## Saves the current game data to the path
 func save_game():
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	
@@ -181,6 +196,7 @@ func save_game():
 	file.store_var(save_data)
 
 
+## Loads the data from the saved folder if there is one
 func load_game():
 	if !FileAccess.file_exists(SAVE_PATH):
 		return
@@ -192,6 +208,7 @@ func load_game():
 	inventory = data["inventory"]
 
 
+## Deleats the game data completly removing the save file
 func reset_game():
 	if FileAccess.file_exists(SAVE_PATH):
 		DirAccess.remove_absolute(ProjectSettings.globalize_path(SAVE_PATH))

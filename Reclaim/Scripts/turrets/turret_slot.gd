@@ -1,13 +1,15 @@
+class_name turret_slot
+
 extends Node3D
 
 const empty_tres := "res://textures_and_materials/turrets/turret_position_slot.tres"
 const base_tres := "res://textures_and_materials/turrets/normal_turret_base.tres"
 
 const turret_scenes := {
-	"basic" : preload("res://scenes/turrets/t1/basic.tscn")
+	"single" : preload("res://scenes/turrets/t1/single.tscn")
 }
 const base_scenes := {
-	"basic" : preload("res://scenes/turrets/turret_base.tscn")
+ 	"plate" : preload("res://scenes/bases/plate_base.tscn")
 }
 
 @export var place_cooldown : Timer
@@ -18,18 +20,18 @@ const base_scenes := {
 @export var current_base : String
 @export var unlocked := false
 
-var base
+var base : Node
 var turret : Node
 var can_place := true
 
 
 func place_selected_turret(turret_type : String) -> void:
-	if not can_place:
+	if not can_place and not base:
 		return
 	
 	current_turret = turret_type
 	
-	if not base_scenes.has(current_turret):
+	if not turret_scenes.has(current_turret):
 		print("missing turret value")
 		return
 	
@@ -55,6 +57,7 @@ func build_base(base_type : String) -> void:
 		base.queue_free()
 	
 	base = base_scenes[base_type].instantiate()
+	base.slot = self
 	get_tree().root.get_child(Global.CURRENT_SCENE_ROOT_INDEX).add_child(base)
 	base.global_position = global_position
 	base.global_rotation = global_rotation
@@ -75,7 +78,7 @@ func _remove_current_turret() -> void:
 	
 	var range_area = turret.get("turret_range_area") as TurretRangeArea
 	
-	# Stop the range Area3D before freeing the turret to avoid stale Jolt events.
+	# Stop the range Area3D before freeing the turret to avoid errors
 	if range_area:
 		range_area.monitoring = false
 		range_area.monitorable = false
@@ -83,3 +86,7 @@ func _remove_current_turret() -> void:
 	
 	turret.queue_free()
 	turret = null
+
+
+func base_removed() -> void:
+	mesh.visible = true

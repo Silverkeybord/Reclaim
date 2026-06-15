@@ -16,8 +16,8 @@ func _check_turret_slots() -> void:
 		turret_level_node.visible = true
 		
 		var turret_slots = turret_level_node.get_children()
-		for turret_slot in turret_slots:
-			turret_slot.unlocked = true
+		for slot in turret_slots:
+			slot.unlocked = true
 		slot_level -= 1
 
 

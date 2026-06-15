@@ -8,9 +8,9 @@ const ZOOM_SPEED := 0.5
 const MAX_ZOOM := 15.0
 const FIRST_PERSON_THRESHOLD := 1.25
 const FIRST_PERSON_CAMERA_LENGTH := 0
-const THIRD_PERSON_CAMERA_OFFSET := Vector3(0.75, 1.25, 0)
+const THIRD_PERSON_CAMERA_OFFSET := Vector3(0, 1.25, 0.8)
 const FIRST_PERSON_CAMERA_OFFSET := Vector3(0, 0.4, 0)
-const Z_AXIS_THIRD_PERSON_OFFSET := Vector3(0, 1.25, 0)
+const Z_AXIS_THIRD_PERSON_POSITION := Vector3(0, 1.25, 0)
 
 const RAY_LENGTH := 50 # in meters
 
@@ -71,4 +71,4 @@ func _zoom_in_out(event: InputEventMouseButton) -> void:
 	else:
 		position = THIRD_PERSON_CAMERA_OFFSET
 		z_axis_spring_arm.spring_length = THIRD_PERSON_CAMERA_OFFSET.z
-		z_axis_spring_arm.position = Z_AXIS_THIRD_PERSON_OFFSET
+		z_axis_spring_arm.position = Z_AXIS_THIRD_PERSON_POSITION

@@ -7,7 +7,9 @@ const GUN_CHILD_INDEX := 0
 const ENEMY_METADATA_TAG := "enemy"
 const DROPS_GROUP_NAME := "drops"
 const HIT_OVERLAY_TIME := 0.08
-
+const PICK_UP_TEXT := "CLICK TO PICK UP"
+const PLACE_TEXT := "CLICK TO PLACE"
+const REPLACE_TEXT := "CLICK TO REPLACE"
 
 @export_group("player stat")
 @export var jump_velocity := 20.0
@@ -18,13 +20,17 @@ const HIT_OVERLAY_TIME := 0.08
 @export var interact_overlay : Control
 @export var hit_overlay : Control
 @export var aim_ray : RayCast3D
+@export var build_ray : RayCast3D
 @export var gun_piviot : Node3D
 @export var shooting_timer : Timer
 
 @export_group("turrets")
 @export var turret_holagram_scene : PackedScene
-@export var place_overlay : Control
 @export var turret_grid : Node3D
+
+@export_group("2d elements")
+@export var build_overlay : Control
+@export var build_label : Label
 
 var turret_holagram : Node3D
 
@@ -33,12 +39,13 @@ var weapon : Node3D
 var weapon_name : String = "pistol"
 var weapon_resourse : Resource
 
+var selected_turret : String = "single"
+var selected_base : String = "plate"
+
 
 func _ready() -> void:
 	# gives the player their starting weapon
 	_set_new_weapon()
-	
-	print(Global.return_amount_shorthand(1249))
 
 
 func _physics_process(delta: float) -> void:
@@ -71,10 +78,8 @@ func _process(_delta: float) -> void:
 	var ray_collider = aim_ray.get_collider()
 	_build_mode_handeling(ray_collider)
 	
-	if Global.build_mode:
-		return
-	
-	_interaction_handeling(ray_collider)
+	if not Global.build_mode:
+		_interaction_handeling(ray_collider)
 
 
 func _interaction_handeling(ray_collider : Node) -> void:
@@ -91,62 +96,125 @@ func _interaction_handeling(ray_collider : Node) -> void:
 		interact_overlay.visible =  false
 
 
+# handels all build related logic from toggling modes and placement logic
 func _build_mode_handeling(ray_collider : Node) -> void:
+	var build_ray_collider = build_ray.get_collider()
+	
+	if Global.at_ship:
+		return
+	
+	
 	# toggles build mode and spawns/deletes the turret holagram
-	if Input.is_action_just_pressed("build_mode") and not Global.at_ship:
+	if Input.is_action_just_pressed("build_mode"):
 		Global.build_mode = not Global.build_mode
 		
 		turret_grid._toggle_build_mode(Global.build_mode)
 		
-		if Global.build_mode:
+		if Global.build_mode and not Global.picking_up_builds:
 			gun_piviot.visible = false
 			turret_holagram = turret_holagram_scene.instantiate()
 			add_sibling(turret_holagram)
 			interact_overlay.visible = false
 			
 		else:
+			Global.picking_up_builds = false
 			gun_piviot.visible = true
 			if turret_holagram:
 				turret_holagram.queue_free()
-			place_overlay.visible = false
+			build_overlay.visible = false
 	
-	#changes to the next build mode
-	if Input.is_action_just_pressed("change_build_mode") and Global.build_mode:
+	
+		# changes to the next build mode
+	
+	
+	if not Global.build_mode:
+		return
+	
+	
+	# changes the build mode to the next type
+	if Input.is_action_just_pressed("change_build_mode"):
 		var build_modes : int = Global.BUILD_MODES.size()
 		Global.current_build_mode = (
 			((Global.current_build_mode + 1) % build_modes) as Global.BUILD_MODES
 			)
 	
 	
-	if Global.build_mode:
-		# snaps the holagram onto a turret slot if the slot is unlocked
+	# toggles picking up when in build mode
+	if Input.is_action_just_pressed("pick_up_build_toggle"):
+		Global.picking_up_builds = not Global.picking_up_builds
+		
+		if turret_holagram:
+			turret_holagram.visible = not Global.picking_up_builds
+		
+		
+		if Global.picking_up_builds:
+			build_label.text = PICK_UP_TEXT
+		else:
+			build_label.text = PLACE_TEXT
+	
+	
+	# snaps the holagram onto a turret slot if the slot is unlocked and toggles
+	# 2D elements
+	if not Global.picking_up_builds:
 		if _check_valid_placement(ray_collider):
+			var prexisting_build := false
 			
+			# checks if there is a prexisting build there and if there is changes
+			# the text to say replace instead of place
 			match Global.current_build_mode:
 				Global.BUILD_MODES.TURRET:
 					turret_holagram.global_position = (
 						ray_collider.turret_origin_point.global_position
 						)
+					
+					if ray_collider.turret:
+						prexisting_build = true
 				
 				Global.BUILD_MODES.BASE:
 					turret_holagram.global_position = ray_collider.global_position
+					
+					if ray_collider.base:
+						prexisting_build = true
+			
+			if prexisting_build:
+				build_label.text = REPLACE_TEXT
+			else:
+				build_label.text = PLACE_TEXT
 			
 			turret_holagram.valid_position = true
-			place_overlay.visible = true
-			
-			if Input.is_action_pressed("place"):
-				match Global.current_build_mode:
-					Global.BUILD_MODES.TURRET:
-						ray_collider.place_selected_turret("basic") # TEMPERORY
-					
-					Global.BUILD_MODES.BASE:
-						ray_collider.build_base("basic") # TEMPERORY
-						
-		else:
+			build_overlay.visible = true
+		
+		elif turret_holagram:
 			# puts the holagram where the player is looking but marks it invalid
 			turret_holagram.global_position = aim_ray.get_collision_point()
 			turret_holagram.valid_position = false
-			place_overlay.visible = false
+			build_overlay.visible = false
+		
+	else:
+		if build_ray_collider:
+			build_overlay.visible = true
+		else:
+			build_overlay.visible = false
+	
+	
+	if Input.is_action_pressed("place_or_remove"):
+		
+		if Global.picking_up_builds:
+			
+			if build_ray_collider:
+				build_ray_collider.pick_up()
+				
+				if build_ray_collider.build_type == Global.BUILD_TYPES.BASE:
+					build_ray_collider.slot.base_removed()
+			
+		else:
+			if _check_valid_placement(ray_collider):
+				match Global.current_build_mode:
+					Global.BUILD_MODES.TURRET:
+						ray_collider.place_selected_turret(selected_turret)
+					
+					Global.BUILD_MODES.BASE:
+						ray_collider.build_base(selected_base)
 
 
 func _check_valid_placement(ray_collider : Node) -> bool:
@@ -157,9 +225,12 @@ func _check_valid_placement(ray_collider : Node) -> bool:
 		
 		return false
 	
+	if Global.picking_up_builds:
+		return true
+	
 	match Global.current_build_mode:
 		Global.BUILD_MODES.TURRET:
-			if ray_collider.current_base:
+			if ray_collider.base:
 				return true
 			else:
 				return false
@@ -183,19 +254,17 @@ func _shoot_control() -> void:
 
 func _shoot() -> void:
 	var to : Vector3
-	if aim_ray.is_colliding() and weapon.gun_ray.is_colliding():
-		#var camera_ray_collision_point = aim_ray.get_collision_point()
-		#weapon.gun_ray.look_at(camera_ray_collision_point)
-		#to = weapon.gun_ray.get_collision_point()
+	if aim_ray.is_colliding():
 		to = aim_ray.get_collision_point()
 		
-		var hit = weapon.gun_ray.get_collider()
-		if hit.has_meta(ENEMY_METADATA_TAG):
-			# damages enemies and flashes the hit overlay
-			hit.hit(weapon_resourse.damage)
-			hit_overlay.visible = true
-			await get_tree().create_timer(HIT_OVERLAY_TIME).timeout
-			hit_overlay.visible = false
+		var hit = aim_ray.get_collider()
+		if hit:
+			if hit.has_meta(ENEMY_METADATA_TAG):
+				# damages enemies and flashes the hit overlay
+				hit.hit(weapon_resourse.damage)
+				hit_overlay.visible = true
+				await get_tree().create_timer(HIT_OVERLAY_TIME).timeout
+				hit_overlay.visible = false
 			
 	else:
 		# if nothing is hit, shoot to the end of the ray instead

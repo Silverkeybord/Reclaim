@@ -4,7 +4,7 @@
 [ext_resource type="Material" uid="uid://d3pd43aatbaea" path="res://textures_and_materials/turrets/holagram.tres" id="2_41qyl"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_u8jeg"]
-size = Vector3(3.5, 4, 3.5)
+size = Vector3(3.75, 4.8, 3.75)
 
 [sub_resource type="BoxMesh" id="BoxMesh_7r27q"]
 size = Vector3(4, 0.5, 4)
@@ -15,8 +15,7 @@ turret_holagram = NodePath("turret_holagram")
 base_holagram = NodePath("base_holagram")
 
 [node name="turret_holagram" type="MeshInstance3D" parent="." unique_id=2068682262]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)
 mesh = SubResource("BoxMesh_u8jeg")
 surface_material_override/0 = ExtResource("2_41qyl")
 

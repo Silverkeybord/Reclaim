@@ -1,6 +1,6 @@
 class_name turret_basics
 
-extends Node3D
+extends builds
 
 enum SHOOTING_METHODS {
 	FIRST,
