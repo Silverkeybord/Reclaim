@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dmaj8a3oki02e"
-path="res://.godot/imported/remove_overlay.png-22cfc38fe81651de7744f282c4aabe58.ctex"
+uid="uid://biflvnsg5r3kc"
+path="res://.godot/imported/usefull_cell.png-00b49b1bda7654ddac8dd25a50b802b0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://2d_assets/remove_overlay.png"
-dest_files=["res://.godot/imported/remove_overlay.png-22cfc38fe81651de7744f282c4aabe58.ctex"]
+source_file="res://2d_assets/inventory/usefull_cell.png"
+dest_files=["res://.godot/imported/usefull_cell.png-00b49b1bda7654ddac8dd25a50b802b0.ctex"]
 
 [params]
 

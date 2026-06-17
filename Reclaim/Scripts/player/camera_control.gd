@@ -1,8 +1,8 @@
 extends Node3D
 ## Controls the player's camera rotation and zoom distance.
 
-const MIN_PITCH: float = -1.3 # Pitch is in rad so up and down are +- pi/2
-const MAX_PITCH: float = 1.1
+const MIN_PITCH: float = -PI/2 + 0.1
+const MAX_PITCH: float = PI/2 - 0.3
 
 const ZOOM_SPEED := 0.5
 const MAX_ZOOM := 15.0
@@ -11,8 +11,6 @@ const FIRST_PERSON_CAMERA_LENGTH := 0
 const THIRD_PERSON_CAMERA_OFFSET := Vector3(0, 1.25, 0.8)
 const FIRST_PERSON_CAMERA_OFFSET := Vector3(0, 0.4, 0)
 const Z_AXIS_THIRD_PERSON_POSITION := Vector3(0, 1.25, 0)
-
-const RAY_LENGTH := 50 # in meters
 
 @export_group("settings")
 @export var sensitivity: float = 0.003
@@ -33,11 +31,14 @@ func _ready() -> void:
 
 # Input function converting mouse movement into camera movement
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
+	if event is InputEventMouseMotion and Global.mouse_captured:
 		_pan_and_pitch(event)
 	
 	if event is InputEventMouseButton:
 		_zoom_in_out(event)
+	
+	if event.is_action_pressed("toggle_mouse_capture"):
+		Global.set_mouse_captured()
 
 
 # Controls camera movement

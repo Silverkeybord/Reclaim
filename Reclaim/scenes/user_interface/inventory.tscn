@@ -1,9 +1,23 @@
 [gd_scene format=3 uid="uid://bb8wmb84lf1st"]
 
-[node name="Control" type="Control" unique_id=951752441]
+[ext_resource type="Script" uid="uid://b1l4ahi8t0smt" path="res://scripts/user_interface/inventory.gd" id="1_yno4q"]
+[ext_resource type="PackedScene" uid="uid://byuh35b33sevw" path="res://scenes/user_interface/inventory_cell.tscn" id="2_il3p1"]
+
+[node name="inventory" type="Control" unique_id=951752441 node_paths=PackedStringArray("flow_container")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_yno4q")
+flow_container = NodePath("HFlowContainer")
+inventory_cell_scene = ExtResource("2_il3p1")
+metadata/_edit_lock_ = true
+
+[node name="HFlowContainer" type="HFlowContainer" parent="." unique_id=2099201285]
+layout_mode = 0
+offset_right = 350.0
+offset_bottom = 592.0
+theme_override_constants/h_separation = 70
+theme_override_constants/v_separation = 70

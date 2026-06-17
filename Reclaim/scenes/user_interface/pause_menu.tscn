@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://dxb4bka5q7f4t"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_b681e"]
+font_size = 128
+
+[node name="Control" type="Control" unique_id=1199239225]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="." unique_id=587511203]
+layout_mode = 0
+offset_left = 127.0
+offset_top = 263.0
+offset_right = 1197.0
+offset_bottom = 438.0
+text = "YOU ARE PAUSED"
+label_settings = SubResource("LabelSettings_b681e")

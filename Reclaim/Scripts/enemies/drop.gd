@@ -134,4 +134,4 @@ func _give_random_movement() -> void:
 
 ## add the drop into the inventory of the player
 func _pick_up() -> void:
-	Global.inventory[str(drop_resourse.rarity)][drop_resourse.key] += 1
+	Global.inventory[drop_resourse.rarity][drop_resourse.key] += 1

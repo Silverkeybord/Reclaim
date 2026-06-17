@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b0sbhjjkojgb0"
-path="res://.godot/imported/interact_reticle.png-1d5214a20bdc0c691d43ec96c4f95440.ctex"
+uid="uid://bc52l5qd5bkcq"
+path="res://.godot/imported/normal_reticle.png-8573d4326dc87edd1a82940acda9f6b3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://2d_assets/interact_reticle.png"
-dest_files=["res://.godot/imported/interact_reticle.png-1d5214a20bdc0c691d43ec96c4f95440.ctex"]
+source_file="res://2d_assets/reticles/normal_reticle.png"
+dest_files=["res://.godot/imported/normal_reticle.png-8573d4326dc87edd1a82940acda9f6b3.ctex"]
 
 [params]
 

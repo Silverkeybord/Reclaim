@@ -22,6 +22,28 @@ const GRAVITY : float = 40.0
 const DEFAULT_BULLET_TRAIL_KEY : String = "default"
 const PROBABLITY_DIVIDE_CONSTANT : float = 100.0
 const CURRENT_SCENE_ROOT_INDEX : int = 2
+const RARITY_CONFIG : Dictionary = {
+	1 : {
+		"color" : Color(0.541, 0.561, 0.596),
+		"cell" : preload("res://2d_assets/inventory/rough_cell.png")
+	},
+	2 : {
+		"color" : Color(0.29, 0.871, 0.502),
+		"cell" : preload("res://2d_assets/inventory/plain_cell.png")
+	},
+	3 : {
+		"color" : Color(0.29, 0.557, 0.996),
+		"cell" : preload("res://2d_assets/inventory/usefull_cell.png")
+	},
+	4 : {
+		"color" : Color(1.0, 0.847, 0.243),
+		"cell" : preload("res://2d_assets/inventory/valuable_cell.png")
+	},
+	5 : {
+		"color" : Color(0.937, 0.267, 0.267),
+		"cell" : preload("res://2d_assets/inventory/extraordinary_cell.png")
+	}
+}
 
 # CAPS --------------------------------------------------------------------
 const MAX_DROPS : int = 250
@@ -49,6 +71,7 @@ var build_mode := false
 var current_build_mode := BUILD_MODES.TURRET
 var picking_up_builds := false
 var at_ship := true
+var mouse_captured := true
 
 # SECTOR RELATED ------------------------------------------------------------
 var selected_sector : String
@@ -60,16 +83,39 @@ var enemies := 0
 var damage_indications := 0
 
 # META UPGRADES / RESEARCH --------------------------------------------------
-var turret_slots := 1
+var turret_slots := 8
 
 # INVENORY -----------------------------------------------------------------
 var cubits : int = 0
 var inventory : Dictionary = {
-	"1" : {
+	1 : {
 		"dirt" : 0,
 		"sand" : 0,
-		"rock" : 0
-	}
+		"rock" : 0,
+		"t1_mat" : 0
+	},
+	2 : {
+		"copper" : 0,
+		"bric" : 0,
+		"glass" : 0,
+		"t2_mat" : 0
+	},
+	3 : {
+		"elemental_essence" : 0,
+		"iron" : 0,
+		"concrete" : 0,
+		"gear" : 0,
+		"t3_mat" : 0
+	},
+	4 : {
+		"gold" : 0,
+		"acid" : 0,
+		"t4_mat" : 0
+	},
+	5 : {
+		"platinum" : 0,
+		"t5_mat" : 0
+	},
 }
 var turret_inventory : Dictionary = {
 	"1" : { 
@@ -183,7 +229,15 @@ func return_amount_shorthand(value: float) -> String:
 	return str(floori(value / (ORDER_OF_MAGNITUDE ** magnitude_divisor))) + suffix
 
 
-# SAVEING, LODING, AND RESETING GAME DATA ------------------------------------
+func set_mouse_captured() -> void:
+	mouse_captured = not mouse_captured
+	
+	if mouse_captured:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+# SAVEING, LODING, AND RESETING GAME DATA =====================================
 ## Saves the current game data to the path
 func save_game():
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
