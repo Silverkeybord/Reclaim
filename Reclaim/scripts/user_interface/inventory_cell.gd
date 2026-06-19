@@ -1,6 +1,7 @@
 class_name inventory_cell
 extends Control
 
+const NO_ITEM_TEXTURE := preload("res://2d_assets/items/t1/none.png")
 const CELL_TEXTURE_KEY := "cell"
 
 @export_group("values")
@@ -17,5 +18,7 @@ const CELL_TEXTURE_KEY := "cell"
 func setup() -> void:
 	amount_label.text = Global.return_amount_shorthand(amount)
 	cell_texture.texture = Global.RARITY_CONFIG[teir][CELL_TEXTURE_KEY]
-	print(cell_texture.texture)
-	
+	if item in GameData.drops:
+		item_texture.texture = load(GameData.drops[item].item_texture)
+	else:
+		item_texture.texture = NO_ITEM_TEXTURE

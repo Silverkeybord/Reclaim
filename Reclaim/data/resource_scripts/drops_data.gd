@@ -6,6 +6,8 @@ extends Resource
 
 ## path to the material 
 @export var material_path : String
+## the path of the item texture
+@export var item_texture : String = "res://2d_assets/items/t1/none.png"
 ## size of the side of the cube collision shape
 @export var size : Vector3 = Vector3(0.4, 0.4, 0.4)
 ## the rarity from 1 - 5

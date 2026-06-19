@@ -6,4 +6,5 @@
 script = ExtResource("1_x3m7s")
 key = "dirt"
 material_path = "res://textures_and_materials/drops/dirt.tres"
+item_texture = "res://2d_assets/items/t1/dirt.png"
 metadata/_custom_type_script = "uid://cgqvvu75ctfva"

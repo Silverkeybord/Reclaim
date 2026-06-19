@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://qtk76i5mawjs"]
 
 [ext_resource type="Script" uid="uid://dw86xjbrodauy" path="res://scripts/enemies/drop.gd" id="1_aphvy"]
-[ext_resource type="Material" uid="uid://ceti8yafpcme3" path="res://textures_and_materials/drops/dirt.tres" id="2_nseg0"]
+[ext_resource type="Material" uid="uid://83qsdvn0s4ii" path="res://textures_and_materials/drops/sand.tres" id="2_nseg0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nseg0"]
 size = Vector3(0.4, 0.4, 0.4)

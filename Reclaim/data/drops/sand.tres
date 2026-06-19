@@ -6,4 +6,5 @@
 script = ExtResource("1_pas87")
 key = "sand"
 material_path = "res://textures_and_materials/drops/sand.tres"
+item_texture = "res://2d_assets/items/t1/sand.png"
 metadata/_custom_type_script = "uid://cgqvvu75ctfva"

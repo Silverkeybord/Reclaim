@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://byuh35b33sevw"]
 
 [ext_resource type="Script" uid="uid://u7cyis4qmg6j" path="res://scripts/user_interface/inventory_cell.gd" id="1_2w1ph"]
+[ext_resource type="Texture2D" uid="uid://ce8e7f2chvcgw" path="res://2d_assets/inventory/rough_cell.png" id="2_e6v48"]
 [ext_resource type="FontFile" uid="uid://sfctk4d5x67" path="res://other_assets/fonts/uni_sans/Uni Sans Heavy Italic.otf" id="3_8q4hx"]
+[ext_resource type="Texture2D" uid="uid://d26l05806lg0t" path="res://2d_assets/items/t1/none.png" id="3_httvl"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_e6v48"]
 font = ExtResource("3_8q4hx")
@@ -10,13 +12,10 @@ outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
 [node name="item_cell" type="Control" unique_id=1715849231 node_paths=PackedStringArray("cell_texture", "item_texture", "amount_label")]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 3
-anchor_left = -0.026041666
-anchor_right = 0.026041666
-anchor_bottom = 0.09259259
-offset_left = 33.333332
-offset_right = 26.666668
-offset_bottom = -6.666664
+anchor_right = 0.046875
+anchor_bottom = 0.083333336
 script = ExtResource("1_2w1ph")
 cell_texture = NodePath("cell_texture")
 item_texture = NodePath("item_texture")
@@ -25,16 +24,17 @@ metadata/_edit_use_anchors_ = true
 
 [node name="cell_texture" type="TextureRect" parent="." unique_id=341389371]
 layout_mode = 0
-anchor_right = 1.0
-anchor_bottom = 1.0
-stretch_mode = 2
-metadata/_edit_use_anchors_ = true
+offset_right = 60.000004
+offset_bottom = 60.0
+texture = ExtResource("2_e6v48")
+stretch_mode = 3
 
 [node name="item_texture" type="TextureRect" parent="." unique_id=145673214]
-layout_mode = 0
-anchor_right = 1.0
-anchor_bottom = 1.0
-metadata/_edit_use_anchors_ = true
+layout_mode = 1
+offset_right = 60.0
+offset_bottom = 60.0
+texture = ExtResource("3_httvl")
+stretch_mode = 3
 
 [node name="amount_label" type="Label" parent="." unique_id=86576963]
 layout_mode = 0

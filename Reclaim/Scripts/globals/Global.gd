@@ -229,6 +229,14 @@ func return_amount_shorthand(value: float) -> String:
 	return str(floori(value / (ORDER_OF_MAGNITUDE ** magnitude_divisor))) + suffix
 
 
+## Temp testing function to fill inventory
+func set_random_inventory() -> void:
+	for teir in inventory:
+		for item in inventory[teir]:
+			inventory[teir][item] = randi_range(1, 999) * (10 ** randi_range(1, 9))
+
+
+## Sets the moust of the player to be unlocked or locked bassed on its last value
 func set_mouse_captured() -> void:
 	mouse_captured = not mouse_captured
 	
@@ -236,6 +244,7 @@ func set_mouse_captured() -> void:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	else:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
 
 # SAVEING, LODING, AND RESETING GAME DATA =====================================
 ## Saves the current game data to the path
