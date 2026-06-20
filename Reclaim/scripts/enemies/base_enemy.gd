@@ -62,11 +62,6 @@ func fin_loading() -> void:
 	if is_dead:
 		return
 	
-	# Gets the drops that will drop
-	for x in enemy_resourse.drop_table:
-		if enemy_resourse.drop_table[x] > 0:
-			drops[x] = enemy_resourse.drop_table[x]
-	
 	Global.enemies += 1
 	
 	# sets stats
@@ -125,14 +120,15 @@ func _spawn_drops() -> void:
 
 
 func _get_drop_type_resourse():
+	var total_weight := 0
 	
-	var value = randf()
-	var drop_weight : float = 0.0
+	for drop_probability_info : DropWeight in enemy_resourse.drop_table:
+		total_weight += drop_probability_info.weight
 	
-	for x in drops:
-		drop_weight += drops[x] / Global.PROBABLITY_DIVIDE_CONSTANT
-		if drop_weight > value:
-			return GameData.drops[x]
+	var roll = randf() * total_weight
 	
-	print("invalid weights returning dirt from enemy : ", enemy_resourse.key)
-	return GameData.drops[DIRT_TYPE_FALLBACK]
+	for drop_probability_info : DropWeight in enemy_resourse.drop_table:
+		roll -= drop_probability_info.weight
+	
+		if roll <= 0:
+			return DataRegistry.drops[drop_probability_info.drop_name]

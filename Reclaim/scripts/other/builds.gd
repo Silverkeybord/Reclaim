@@ -1,4 +1,4 @@
-class_name builds
+class_name Builds
 extends Node
 
 

@@ -20,7 +20,6 @@ enum BUILD_TYPES {
 const SAVE_PATH : String = "user://reclaim.save"
 const GRAVITY : float = 40.0
 const DEFAULT_BULLET_TRAIL_KEY : String = "default"
-const PROBABLITY_DIVIDE_CONSTANT : float = 100.0
 const CURRENT_SCENE_ROOT_INDEX : int = 2
 const RARITY_CONFIG : Dictionary = {
 	1 : {
@@ -85,65 +84,87 @@ var damage_indications := 0
 # META UPGRADES / RESEARCH --------------------------------------------------
 var turret_slots := 8
 
-# INVENORY -----------------------------------------------------------------
+# INVENORY + CURRENCY -------------------------------------------------------
 var cubits : int = 0
-var inventory : Dictionary = {
+var item_inventory : Dictionary = {
 	1 : {
+		"clay" : 0,
 		"dirt" : 0,
-		"sand" : 0,
+		"flint" : 0,
 		"rock" : 0,
-		"t1_mat" : 0
+		"sand" : 0,
+		"scrap" : 0,
+		"basic_material" : 0
 	},
 	2 : {
+		"brick" : 0,
+		"coal" : 0,
 		"copper" : 0,
-		"bric" : 0,
+		"elemental_essence" : 0,
 		"glass" : 0,
-		"t2_mat" : 0
+		"gunpowder" : 0,
+		"rubber" : 0,
+		"construction_material" : 0
 	},
 	3 : {
-		"elemental_essence" : 0,
-		"iron" : 0,
+		"circuit" : 0,
 		"concrete" : 0,
 		"gear" : 0,
-		"t3_mat" : 0
+		"ice" : 0,
+		"iron" : 0,
+		"steel" : 0,
+		"advanced_material" : 0,
+		"tungsten" : 0,
+		"water" : 0,
+		"wind" : 0
 	},
 	4 : {
-		"gold" : 0,
 		"acid" : 0,
-		"t4_mat" : 0
+		"chip" : 0,
+		"earth" : 0,
+		"fire" : 0,
+		"gold" : 0,
+		"silicon" : 0,
+		"electronic_material" : 0,
+		"uranium" : 0
 	},
 	5 : {
+		"antimatter" : 0,
+		"dark" : 0,
+		"graphene" : 0,
+		"light" : 0,
 		"platinum" : 0,
-		"t5_mat" : 0
+		"exotic_material" : 0,
+		"tesseract" : 0
 	},
 }
 var turret_inventory : Dictionary = {
-	"1" : { 
+	1 : {
 		"basic" : 0,
 		"dual" : 0,
 		"wind" : 0
- 	},
-	"2" : { 
-		"shotgun" : 0,
-		"water" : 0,
+	},
+	2 : {
 		"minigun" : 0,
-		"mortar" : 0
- 	},
-	"3" : { 
-		"explosive" : 0,
+		"mortar" : 0,
+		"shotgun" : 0,
+		"water" : 0
+	},
+	3 : {
 		"cannon" : 0,
-		"earth" : 0
- 	},
-	"4" : { 
+		"earth" : 0,
+		"explosive" : 0
+	},
+	4 : {
+		"fire" : 0,
 		"missle" : 0,
-		"sniper" : 0,
-		"fire" : 0
- 	},
-	"5" : { 
-		"railgun" : 0,
+		"sniper" : 0
+	},
+	5 : {
 		"cube" : 0,
+		"railgun" : 0,
 		"wind" : 0
- 	}
+	}
 }
 var base_inventory : Dictionary = {
 	"plate" : 0,
@@ -160,7 +181,7 @@ func spawn_temp_sound() -> void:
 ## Creates a bullet trail between 2 point. as a child of the root node
 func create_bullet_trail(
 	from : Vector3, to : Vector3, 
-	trail : Resource = GameData.bullet_trail[DEFAULT_BULLET_TRAIL_KEY]
+	trail : Resource = DataRegistry.bullet_trail[DEFAULT_BULLET_TRAIL_KEY]
 	) -> void:
 	
 	var new_bullet_trail = BULET_TRAIL_SCENE.instantiate()
@@ -231,9 +252,9 @@ func return_amount_shorthand(value: float) -> String:
 
 ## Temp testing function to fill inventory
 func set_random_inventory() -> void:
-	for teir in inventory:
-		for item in inventory[teir]:
-			inventory[teir][item] = randi_range(1, 999) * (10 ** randi_range(1, 9))
+	for teir in item_inventory:
+		for item in item_inventory[teir]:
+			item_inventory[teir][item] = randi_range(1, 999) * (10 ** randi_range(1, 9))
 
 
 ## Sets the moust of the player to be unlocked or locked bassed on its last value
@@ -253,7 +274,7 @@ func save_game():
 	
 	var save_data = {
 		# inventory / storage
-		"inventory" : inventory,
+		"inventory" : item_inventory,
 	}
 	
 	file.store_var(save_data)
@@ -268,7 +289,7 @@ func load_game():
 	var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
 	var data = file.get_var()
 	
-	inventory = data["inventory"]
+	item_inventory = data["inventory"]
 
 
 ## Deleats the game data completly removing the save file

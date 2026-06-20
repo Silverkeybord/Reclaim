@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
 const INTERACT_DISTANCE := 5
-const TURRET_PLACEMENT_DISTANCE := 20
+const BUILD_RANGE := 25
 
 const GUN_CHILD_INDEX := 0
 const ENEMY_METADATA_TAG := "enemy"
@@ -10,6 +10,7 @@ const HIT_OVERLAY_TIME := 0.08
 const PICK_UP_TEXT := "CLICK TO PICK UP"
 const PLACE_TEXT := "CLICK TO PLACE"
 const REPLACE_TEXT := "CLICK TO REPLACE"
+const MOVE_CLOSER_TEXT := "MOVE CLOSER"
 
 @export_group("player stat")
 @export var jump_velocity := 20.0
@@ -82,6 +83,7 @@ func _process(_delta: float) -> void:
 		_interaction_handeling(ray_collider)
 
 
+# for all interactions that toggles a ui indicator that you can interact
 func _interaction_handeling(ray_collider : Node) -> void:
 	# shows the interact ui when looking at something interactable
 	if (ray_collider in get_tree().get_nodes_in_group("interactable") and 
@@ -176,12 +178,20 @@ func _build_mode_handeling(ray_collider : Node) -> void:
 					if ray_collider.base:
 						prexisting_build = true
 			
-			if prexisting_build:
-				build_label.text = REPLACE_TEXT
-			else:
-				build_label.text = PLACE_TEXT
 			
-			turret_holagram.valid_position = true
+			
+			if global_position.distance_to(ray_collider.global_position) < BUILD_RANGE:
+				turret_holagram.valid_position = true
+				if prexisting_build:
+					build_label.text = REPLACE_TEXT
+				else:
+					build_label.text = PLACE_TEXT
+				
+			else:
+				build_label.text = MOVE_CLOSER_TEXT
+				turret_holagram.valid_position = false
+			
+			
 			build_overlay.visible = true
 		
 		elif turret_holagram:
@@ -201,14 +211,22 @@ func _build_mode_handeling(ray_collider : Node) -> void:
 		
 		if Global.picking_up_builds:
 			
-			if build_ray_collider:
+			if (
+			build_ray_collider and 
+			global_position.distance_to(ray_collider.global_position) < BUILD_RANGE
+				):
+				
 				build_ray_collider.pick_up()
 				
 				if build_ray_collider.build_type == Global.BUILD_TYPES.BASE:
 					build_ray_collider.slot.base_removed()
 			
 		else:
-			if _check_valid_placement(ray_collider):
+			if (
+			_check_valid_placement(ray_collider) and 
+			global_position.distance_to(ray_collider.global_position) < BUILD_RANGE
+				):
+				
 				match Global.current_build_mode:
 					Global.BUILD_MODES.TURRET:
 						ray_collider.place_selected_turret(selected_turret)
@@ -217,6 +235,7 @@ func _build_mode_handeling(ray_collider : Node) -> void:
 						ray_collider.build_base(selected_base)
 
 
+# checkes if the current posiiton of the turret is valid to be placed
 func _check_valid_placement(ray_collider : Node) -> bool:
 	if (not ray_collider or 
 		not ray_collider.is_in_group("turret_slots") or 
@@ -276,13 +295,13 @@ func _shoot() -> void:
 	# draws the bullet trail from the weapon to the target point
 	var from = weapon.bullet_spawn.global_position
 	
-	Global.create_bullet_trail(from, to, GameData.bullet_trail[weapon_name])
+	Global.create_bullet_trail(from, to, DataRegistry.bullet_trail[weapon_name])
 
 
 func _set_new_weapon() -> void:
-	# gets the weapon node and its data from gamedata
+	# gets the weapon node and its data from DataRegistry
 	weapon = gun_piviot.get_child(GUN_CHILD_INDEX)
-	weapon_resourse = GameData.weapon[weapon_name]
+	weapon_resourse = DataRegistry.weapon[weapon_name]
 	
 	shooting_timer.wait_time = weapon_resourse.cool_down
 

@@ -47,12 +47,12 @@ build_label = NodePath("build_overlay/Label")
 shape = SubResource("BoxShape3D_e41v5")
 debug_color = Color(0, 0, 0, 0.41960785)
 
-[node name="mesh" type="MeshInstance3D" parent="." unique_id=1173051299]
+[node name="player_model" type="Node3D" parent="." unique_id=1056608312]
 
-[node name="inner" type="MeshInstance3D" parent="mesh" unique_id=564812277]
+[node name="inner" type="MeshInstance3D" parent="player_model" unique_id=564812277]
 mesh = SubResource("BoxMesh_ca0mu")
 
-[node name="outter" type="MeshInstance3D" parent="mesh" unique_id=1930751977]
+[node name="outter" type="MeshInstance3D" parent="player_model" unique_id=1930751977]
 mesh = SubResource("BoxMesh_6upyo")
 surface_material_override/0 = SubResource("StandardMaterial3D_xxarj")
 
@@ -98,7 +98,7 @@ wait_time = 0.2
 
 [node name="pick_up_area" type="Area3D" parent="." unique_id=1724560040 groups=["drop"]]
 visible = false
-collision_layer = 4
+collision_layer = 0
 collision_mask = 128
 
 [node name="pick_up_shape" type="CollisionShape3D" parent="pick_up_area" unique_id=713600423]
@@ -164,6 +164,7 @@ grow_vertical = 2
 theme_override_fonts/font = ExtResource("5_ca0mu")
 text = "E to interact"
 label_settings = ExtResource("8_5gtgg")
+horizontal_alignment = 1
 
 [node name="build_overlay" type="Control" parent="." unique_id=159735907]
 visible = false
@@ -260,6 +261,7 @@ stretch_mode = 3
 [node name="Label" parent="." unique_id=1336845062 instance=ExtResource("10_h17s1")]
 offset_top = 697.0
 offset_bottom = 720.0
+label_settings = ExtResource("8_5gtgg")
 
 [connection signal="timeout" from="gun_piviot/shoot_timer" to="." method="_on_shoot_timer_timeout"]
 [connection signal="body_entered" from="pick_up_area" to="." method="_on_pick_up_area_body_entered"]

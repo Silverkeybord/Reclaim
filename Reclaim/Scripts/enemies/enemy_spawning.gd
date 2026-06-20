@@ -33,7 +33,7 @@ var run_time := 0.0
 
 func _ready() -> void:
 	# Sets the resource
-	wave_data = GameData.wave[map]
+	wave_data = DataRegistry.wave[map]
 	
 	# Gets the enemies that will spawn in this sector and probiblities
 	for x in wave_data.enemies:
@@ -134,10 +134,10 @@ func _get_enemy_type_resourse():
 	for x in wave_enemies:
 		enemy_weight += wave_enemies[x] / Global.PROBABLITY_DIVIDE_CONSTANT
 		if enemy_weight > value:
-			return GameData.enemies[x]
+			return DataRegistry.enemies[x]
 	
 	print("invalid weights returning basic on map : ", map)
-	return GameData.enemies[BASIC_TYPE_FALLBACK]
+	return DataRegistry.enemies[BASIC_TYPE_FALLBACK]
 
 
 func _get_time_raito(start_value: float, end_value: float) -> float:

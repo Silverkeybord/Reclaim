@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DropData" format=3 uid="uid://dindgm06orind"]
+
+[ext_resource type="Script" uid="uid://cgqvvu75ctfva" path="res://data/resource_scripts/drops_data.gd" id="1_1miv4"]
+
+[resource]
+script = ExtResource("1_1miv4")
+key = "scrap"
+material_path = "res://textures_and_materials/drops/scrap.tres"
+item_texture = "res://2d_assets/items/t1/scrap.png"
+metadata/_custom_type_script = "uid://cgqvvu75ctfva"

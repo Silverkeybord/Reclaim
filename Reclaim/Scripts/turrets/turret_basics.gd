@@ -1,6 +1,6 @@
-class_name turret_basics
+class_name TurretBasics
 
-extends builds
+extends Builds
 
 enum SHOOTING_METHODS {
 	FIRST,
@@ -46,7 +46,7 @@ func _ready() -> void:
 
 
 func _set_new_turret(key : String) -> void:
-	turret_resourse = GameData.turrets[key]
+	turret_resourse = DataRegistry.turrets[key]
 
 
 # SHOOTING LOGIC --------------------------------------------------------------

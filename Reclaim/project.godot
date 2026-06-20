@@ -12,12 +12,12 @@ config_version=5
 
 config/name="Reclaim"
 run/main_scene="uid://cykue4k22xfxa"
-config/features=PackedStringArray("4.6", "Forward Plus")
+config/features=PackedStringArray("4.7", "Forward Plus")
 
 [autoload]
 
 Global="*uid://cfmmf21gdrijp"
-GameData="*uid://3i5a76kjtllm"
+DataRegistry="*uid://3i5a76kjtllm"
 
 [display]
 

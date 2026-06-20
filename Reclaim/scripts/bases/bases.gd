@@ -1,5 +1,5 @@
-class_name bases
+class_name Bases
 
-extends builds
+extends Builds
 
 @export var slot : turret_slot

@@ -18,7 +18,7 @@ const CELL_TEXTURE_KEY := "cell"
 func setup() -> void:
 	amount_label.text = Global.return_amount_shorthand(amount)
 	cell_texture.texture = Global.RARITY_CONFIG[teir][CELL_TEXTURE_KEY]
-	if item in GameData.drops:
-		item_texture.texture = load(GameData.drops[item].item_texture)
+	if item in DataRegistry.drops:
+		item_texture.texture = load(DataRegistry.drops[item].item_texture)
 	else:
 		item_texture.texture = NO_ITEM_TEXTURE

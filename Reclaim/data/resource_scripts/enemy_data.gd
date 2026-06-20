@@ -14,10 +14,5 @@ extends Resource
 @export var min_drops : int = 1
 @export var max_drops : int = 3
 
-## must add to 100 for probability to work
-@export var drop_table : Dictionary = {
-	"dirt" : 0,
-	"sand" : 0,
-	"rock" : 0,
-	"stick" : 0
-}
+## using a weight system its the raito of what drops to what
+@export var drop_table : Array[DropWeight]

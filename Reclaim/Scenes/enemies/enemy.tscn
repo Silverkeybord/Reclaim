@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bsspjwwk4bvma"]
 
 [ext_resource type="Script" uid="uid://2m7df3t2upw4" path="res://scripts/enemies/base_enemy.gd" id="1_wbq3y"]
-[ext_resource type="PackedScene" uid="uid://qtk76i5mawjs" path="res://scenes/enemies/drop.tscn" id="2_notgg"]
+[ext_resource type="PackedScene" uid="uid://qtk76i5mawjs" path="res://scenes/enemies/drop.tscn" id="2_8e3ao"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_notgg"]
 
@@ -20,13 +20,13 @@ collision_layer = 8
 collision_mask = 33
 script = ExtResource("1_wbq3y")
 collision_shape = NodePath("CollisionShape3D")
-drops_scene = ExtResource("2_notgg")
+drops_scene = ExtResource("2_8e3ao")
 metadata/enemy = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=219369272]
 shape = SubResource("SphereShape3D_notgg")
 
-[node name="ball_mesh" type="MeshInstance3D" parent="." unique_id=1467637143]
+[node name="ball_mesh" type="Node3D" parent="." unique_id=1940412479]
 
 [node name="inner" type="MeshInstance3D" parent="ball_mesh" unique_id=1091480525]
 mesh = SubResource("SphereMesh_cpjt6")
