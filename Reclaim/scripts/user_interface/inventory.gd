@@ -1,4 +1,4 @@
-extends Control
+extends CanvasLayer
 
 @export var grid_container : GridContainer
 @export var inventory_cell_scene : PackedScene
@@ -19,3 +19,4 @@ func _load_inventory() -> void:
 				new_cell.teir = teir
 				new_cell.amount = Global.item_inventory[teir][item]
 				new_cell.setup()
+	

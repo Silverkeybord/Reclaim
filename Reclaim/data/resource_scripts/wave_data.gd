@@ -25,16 +25,15 @@ extends Resource
 @export var start_size : float = 1
 ## end base size of all non commanders at the end of clearing a sector
 @export var end_size : float = 1.3
+## random aditional size to all non commanders
 @export var random_aditional_size : float = 0.2
+## the max distance from the spawn marker the commander will spawn at
 @export var cluster_spawn_radius : float
+## the max distance form the commander the normal enemies will spawn at
 @export var enemy_spawn_radius : float
 
 @export_group("Wave Info")
+## The time you need to survive to clear a sector
 @export var end_time : float
-## Must add to 100
-@export var enemies : Dictionary = {
-	"basic" : 100,
-	"dirt" : 0,
-	"sand" : 0,
-	"water" : 0
-}
+## using a weight system like drops
+@export var enemies : Array[EnemyWeight]

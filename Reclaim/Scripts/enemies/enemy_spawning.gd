@@ -15,7 +15,7 @@ const SPAWN_MARKERS_GROUP : String = "enemy_spawn_markers"
 ## The map this is placed on
 @export var map : String
 
-var wave_data : WaveData # Calls class to get autocomplete
+var wave_resourse : WaveData
 var difficulty_mult : int
 
 var spawn_rate_ratio : float # The spawn rate drop-off in terms of time alive
@@ -27,26 +27,21 @@ var cluster_size : int
 var commander_size_raito : float
 var normal_size_ratio : float
 
-var wave_enemies : Dictionary
 var run_time := 0.0
 
 
 func _ready() -> void:
 	# Sets the resource
-	wave_data = DataRegistry.wave[map]
+	wave_resourse = DataRegistry.wave[map]
 	
-	# Gets the enemies that will spawn in this sector and probiblities
-	for x in wave_data.enemies:
-		if wave_data.enemies[x] > 0:
-			wave_enemies[x] = wave_data.enemies[x]
 	
 	# Calculates ratios
-	spawn_rate = wave_data.spawn_start_rate
-	normal_size_ratio = _get_time_raito(wave_data.start_size, wave_data.end_size)
-	spawn_rate_ratio = _get_time_raito(wave_data.spawn_start_rate, wave_data.spawn_end_rate)
-	cluster_rate_ratio = _get_time_raito(wave_data.cluster_start_size, wave_data.cluster_end_size)
+	spawn_rate = wave_resourse.spawn_start_rate
+	normal_size_ratio = _get_time_raito(wave_resourse.start_size, wave_resourse.end_size)
+	spawn_rate_ratio = _get_time_raito(wave_resourse.spawn_start_rate, wave_resourse.spawn_end_rate)
+	cluster_rate_ratio = _get_time_raito(wave_resourse.cluster_start_size, wave_resourse.cluster_end_size)
 	commander_size_raito = _get_time_raito(
-		wave_data.commander_start_size, wave_data.commander_end_size)
+		wave_resourse.commander_start_size, wave_resourse.commander_end_size)
 	
 	spawn_nodes = get_tree().get_nodes_in_group(SPAWN_MARKERS_GROUP)
 	spawn_timer.start(spawn_rate)
@@ -57,10 +52,11 @@ func _process(delta: float) -> void:
 	Global.sector_run_time = run_time
 
 
+# spawns the cluster after each time
 func _on_spawn_timer_timeout() -> void:
-	# Calculate dynamic values based on active run time
-	cluster_size = wave_data.cluster_start_size - round(run_time * cluster_rate_ratio)
-	spawn_rate = wave_data.spawn_start_rate - (run_time * spawn_rate_ratio)
+	# calculate dynamic values based on active run time
+	cluster_size = wave_resourse.cluster_start_size - round(run_time * cluster_rate_ratio)
+	spawn_rate = wave_resourse.spawn_start_rate - (run_time * spawn_rate_ratio)
 	spawn_timer.start(spawn_rate)
 	
 	if Global.enemies >= Global.MAX_SPHERES:
@@ -73,19 +69,21 @@ func _on_spawn_timer_timeout() -> void:
 	# sets the resourse of the commander
 	commander.enemy_resourse = _get_enemy_type_resourse()
 	
-	# Commander Positioning
-	commander.global_position = _spawn_in_radus(
-		random_spawn_node.global_position, wave_data.cluster_spawn_radius
-	)
-	
+	# setting properties
 	commander.extraction_pod = extraction_pod
 	commander.size = (
-		wave_data.commander_start_size + 
+		wave_resourse.commander_start_size + 
 		Global.sector_run_time * commander_size_raito + 
-		randf_range(0, wave_data.commander_random_additional_size)
+		randf_range(0, wave_resourse.commander_random_additional_size)
 		)
 	commander.scale *= commander.size
 	commander.is_commander = true
+	
+	commander.global_position = _spawn_in_radus(
+		random_spawn_node.global_position, 
+		wave_resourse.cluster_spawn_radius, 
+		commander.size
+	)
 	commander.fin_loading()
 	
 	# Squad Cluster Spawning Loop
@@ -95,19 +93,23 @@ func _on_spawn_timer_timeout() -> void:
 		
 		new_enemy.enemy_resourse = _get_enemy_type_resourse()
 		
-		new_enemy.global_position = _spawn_in_radus(
-			commander.global_position, 
-			wave_data.enemy_spawn_radius,
-			commander.size
-		)
-		
 		new_enemy.extraction_pod = extraction_pod
 		new_enemy.size = (
-			wave_data.start_size +
+			wave_resourse.start_size +
 			Global.sector_run_time * normal_size_ratio +
-			randf_range(-wave_data.random_aditional_size, wave_data.random_aditional_size)
+			randf_range(-wave_resourse.random_aditional_size, wave_resourse.random_aditional_size)
 			)
 		new_enemy.scale *= new_enemy.size
+		new_enemy.global_position = _spawn_in_radus(
+			Vector3(
+				commander.global_position.x,
+				random_spawn_node.global_position.y,
+				commander.global_position.z
+				),
+			wave_resourse.enemy_spawn_radius,
+			new_enemy.size,
+			commander.size
+		)
 		new_enemy.fin_loading()
 
 
@@ -115,6 +117,7 @@ func _on_spawn_timer_timeout() -> void:
 func _spawn_in_radus(
 	center_position: Vector3, 
 	max_radius: float, 
+	size : float,
 	min_radius : float = 0.0
 	) -> Vector3:
 	
@@ -123,23 +126,24 @@ func _spawn_in_radus(
 	var x_offset = sin(angle) * radius
 	var z_offset = cos(angle) * radius
 	
-	return center_position + Vector3(x_offset, 0, z_offset)
+	return center_position + Vector3(x_offset, (size / 2), z_offset)
 
 
 func _get_enemy_type_resourse():
+	var total_weight := 0
 	
-	var value = randf()
-	var enemy_weight : float = 0.0
+	for enemy_weight_info : EnemyWeight in wave_resourse.enemies:
+		total_weight += enemy_weight_info.weight
 	
-	for x in wave_enemies:
-		enemy_weight += wave_enemies[x] / Global.PROBABLITY_DIVIDE_CONSTANT
-		if enemy_weight > value:
-			return DataRegistry.enemies[x]
+	var roll = randf() * total_weight
 	
-	print("invalid weights returning basic on map : ", map)
-	return DataRegistry.enemies[BASIC_TYPE_FALLBACK]
+	for enemy_weight_info : EnemyWeight in wave_resourse.enemies:
+		roll -= enemy_weight_info.weight
+		
+		if roll <= 0:
+			return DataRegistry.enemies[enemy_weight_info.enemy_name]
 
 
 func _get_time_raito(start_value: float, end_value: float) -> float:
-	return (end_value - start_value) / wave_data.end_time
+	return (end_value - start_value) / wave_resourse.end_time
 	

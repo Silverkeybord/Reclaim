@@ -1,11 +1,13 @@
 extends Node3D
 
-const valid_color := Color(0.0, 0.431, 0.871, 0.506)
-const invalid_color := Color(0.813, 0.0, 0.412, 0.506)
+const VALID_MAT := preload("res://textures_and_materials/building/valid_holagram_placement.tres")
+const INVALID_MAT := preload("res://textures_and_materials/building/invalid_holagram_placement.tres")
 
 @export var turret_holagram : MeshInstance3D
 @export var base_holagram : MeshInstance3D
 @export var valid_position := false
+
+var _last_valid_position := false
 
 
 func _process(_delta: float) -> void:
@@ -22,8 +24,9 @@ func _process(_delta: float) -> void:
 			base_holagram.visible = true
 			turret_holagram.visible = false
 	
-	
-	if valid_position:
-		active_holagram.get_surface_override_material(0).albedo_color = valid_color
-	else:
-		active_holagram.get_surface_override_material(0).albedo_color = invalid_color
+	if valid_position != _last_valid_position:
+		_last_valid_position = valid_position
+		if valid_position:
+			active_holagram.set_surface_override_material(0, VALID_MAT)
+		else:
+			active_holagram.set_surface_override_material(0, INVALID_MAT)

@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://u7cyis4qmg6j" path="res://scripts/user_interface/inventory_cell.gd" id="1_2w1ph"]
 [ext_resource type="Texture2D" uid="uid://ce8e7f2chvcgw" path="res://2d_assets/inventory/rough_cell.png" id="2_e6v48"]
 [ext_resource type="FontFile" uid="uid://sfctk4d5x67" path="res://other_assets/fonts/uni_sans/Uni Sans Heavy Italic.otf" id="3_8q4hx"]
-[ext_resource type="Texture2D" uid="uid://d26l05806lg0t" path="res://2d_assets/items/t1/none.png" id="3_httvl"]
+[ext_resource type="Texture2D" uid="uid://bguj48j4chxxo" path="res://2d_assets/items/none.png" id="3_httvl"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_e6v48"]
 font = ExtResource("3_8q4hx")

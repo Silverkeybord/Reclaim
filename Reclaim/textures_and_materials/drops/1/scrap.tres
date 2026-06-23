@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://b0grvd22mypjn"]
+
+[ext_resource type="Texture2D" uid="uid://bte4hoqqfeaey" path="res://2d_assets/textures/scrap_mat_texture.png" id="1_de73h"]
+
+[resource]
+albedo_color = Color(0.63529414, 0.57254905, 0.50980395, 1)
+albedo_texture = ExtResource("1_de73h")
+uv1_scale = Vector3(1.5, 1.5, 1.5)

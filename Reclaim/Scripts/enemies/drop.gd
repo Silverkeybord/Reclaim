@@ -49,9 +49,20 @@ func _ready() -> void:
 	despawn_timer.wait_time = RARITY_RESPAWN_MULT * drop_resourse.rarity
 	despawn_timer.start()
 	
+	mesh.mesh = mesh.mesh.duplicate()
+	rigid_collision_shape.shape = rigid_collision_shape.shape.duplicate()
+
 	rigid_collision_shape.shape.size = drop_resourse.size
+	mesh.mesh.size = drop_resourse.size
 	
-	mesh.set_surface_override_material(0, load(drop_resourse.material_path))
+	var material_path = (
+		drop_resourse.MATERIAL_TEXTURE_PATH + 
+		str(drop_resourse.rarity) +
+		drop_resourse.SLASH +
+		drop_resourse.key +
+		drop_resourse.TRES_TYPE
+		)
+	mesh.set_surface_override_material(0, load(material_path))
 	
 	_give_random_movement()
 	
@@ -83,11 +94,7 @@ func _process(delta: float) -> void:
 			_pick_up()
 			set_process(false)
 			queue_free()
-			
-	else:
-		# gravity when the drops spawn
-		if linear_velocity.y > -Global.GRAVITY:
-			linear_velocity.y -= Global.GRAVITY * delta
+	
 
 
 func _on_despawn_timer_timeout() -> void:

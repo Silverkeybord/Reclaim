@@ -5,7 +5,7 @@ extends CharacterBody3D
 
 signal died(enemy: base_enemy)
 
-const DIRT_TYPE_FALLBACK : String = "dirt"
+const NONE_TYPE_DROP : String = "none"
 const LOAD_BUFFER : float = 0.5
 const SIZE_BASE_STAT_FACTOR : float = 0.5
 
@@ -113,10 +113,13 @@ func _queue_free_after_physics() -> void:
 
 func _spawn_drops() -> void:
 	for x in range(randi_range(enemy_resourse.min_drops, enemy_resourse.max_drops)):
-		var new_drop = drops_scene.instantiate()
-		new_drop.drop_resourse = _get_drop_type_resourse()
-		add_sibling(new_drop)
-		new_drop.global_position = global_position
+		var drop_type : Resource = _get_drop_type_resourse()
+		
+		if drop_type:
+			var new_drop = drops_scene.instantiate()
+			new_drop.drop_resourse = drop_type
+			add_sibling(new_drop)
+			new_drop.global_position = global_position
 
 
 func _get_drop_type_resourse():
@@ -131,4 +134,7 @@ func _get_drop_type_resourse():
 		roll -= drop_probability_info.weight
 	
 		if roll <= 0:
-			return DataRegistry.drops[drop_probability_info.drop_name]
+			if drop_probability_info.drop_name == NONE_TYPE_DROP:
+				return null
+			else:
+				return DataRegistry.drops[drop_probability_info.drop_name]

@@ -6,7 +6,7 @@ const empty_tres := "res://textures_and_materials/turrets/turret_position_slot.t
 const base_tres := "res://textures_and_materials/turrets/normal_turret_base.tres"
 
 const turret_scenes := {
-	"single" : preload("res://scenes/turrets/t1/single.tscn")
+	"single" : preload("res://scenes/turrets/1/single.tscn")
 }
 const base_scenes := {
  	"plate" : preload("res://scenes/bases/plate_base.tscn")
@@ -26,13 +26,12 @@ var can_place := true
 
 
 func place_selected_turret(turret_type : String) -> void:
-	if not can_place and not base:
+	if not can_place or not base:
 		return
 	
 	current_turret = turret_type
 	
 	if not turret_scenes.has(current_turret):
-		print("missing turret value")
 		return
 	
 	can_place = false

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://3hi5wymcupw7"]
 
 [ext_resource type="Script" uid="uid://buxpd7jm0hd00" path="res://scripts/turrets/build_holagram.gd" id="1_bg2vo"]
-[ext_resource type="Material" uid="uid://d3pd43aatbaea" path="res://textures_and_materials/turrets/holagram.tres" id="2_41qyl"]
+[ext_resource type="Material" uid="uid://ci0et13n1lc41" path="res://textures_and_materials/building/invalid_holagram_placement.tres" id="2_41qyl"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_u8jeg"]
 size = Vector3(3.75, 4.8, 3.75)

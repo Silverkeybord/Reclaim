@@ -5,6 +5,5 @@
 [resource]
 script = ExtResource("1_1miv4")
 key = "scrap"
-material_path = "res://textures_and_materials/drops/scrap.tres"
-item_texture = "res://2d_assets/items/t1/scrap.png"
+size = Vector3(0.2, 0.2, 0.5)
 metadata/_custom_type_script = "uid://cgqvvu75ctfva"

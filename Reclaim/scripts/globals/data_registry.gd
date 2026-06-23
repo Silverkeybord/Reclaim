@@ -39,6 +39,9 @@ func _ready() -> void:
 
 
 func _load_folder(path : String, dict : Dictionary) -> void:
+	if not path:
+		return
+	
 	var dir = DirAccess.open(path)
 	dir.list_dir_begin()
 	var file = dir.get_next()

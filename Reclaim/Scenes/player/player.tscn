@@ -259,7 +259,9 @@ texture = ExtResource("8_6k3cy")
 stretch_mode = 3
 
 [node name="Label" parent="." unique_id=1336845062 instance=ExtResource("10_h17s1")]
+offset_left = 5.0
 offset_top = 697.0
+offset_right = 45.0
 offset_bottom = 720.0
 label_settings = ExtResource("8_5gtgg")
 

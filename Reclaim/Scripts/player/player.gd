@@ -4,9 +4,10 @@ const INTERACT_DISTANCE := 5
 const BUILD_RANGE := 25
 
 const GUN_CHILD_INDEX := 0
+const REMOVE_BUILD_DELAY := 0.1
+const HIT_OVERLAY_TIME := 0.08
 const ENEMY_METADATA_TAG := "enemy"
 const DROPS_GROUP_NAME := "drops"
-const HIT_OVERLAY_TIME := 0.08
 const PICK_UP_TEXT := "CLICK TO PICK UP"
 const PLACE_TEXT := "CLICK TO PLACE"
 const REPLACE_TEXT := "CLICK TO REPLACE"
@@ -15,7 +16,6 @@ const MOVE_CLOSER_TEXT := "MOVE CLOSER"
 @export_group("player stat")
 @export var jump_velocity := 20.0
 @export var move_speed := 14.0
-@export var acceleration := 40
 
 @export_group("in scene")
 @export var interact_overlay : Control
@@ -42,6 +42,8 @@ var weapon_resourse : Resource
 
 var selected_turret : String = "single"
 var selected_base : String = "plate"
+
+var can_remove_build := true
 
 
 func _ready() -> void:
@@ -208,18 +210,24 @@ func _build_mode_handeling(ray_collider : Node) -> void:
 	
 	
 	if Input.is_action_pressed("place_or_remove"):
-		
+	
 		if Global.picking_up_builds:
-			
+		
 			if (
+			can_remove_build and
 			build_ray_collider and 
-			global_position.distance_to(ray_collider.global_position) < BUILD_RANGE
+			global_position.distance_to(build_ray_collider.global_position) < BUILD_RANGE
 				):
+				
+				can_remove_build = false
 				
 				build_ray_collider.pick_up()
 				
 				if build_ray_collider.build_type == Global.BUILD_TYPES.BASE:
 					build_ray_collider.slot.base_removed()
+				
+				await get_tree().create_timer(REMOVE_BUILD_DELAY).timeout
+				can_remove_build = true
 			
 		else:
 			if (

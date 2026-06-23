@@ -163,8 +163,10 @@ var turret_inventory : Dictionary = {
 	5 : {
 		"cube" : 0,
 		"railgun" : 0,
-		"wind" : 0
 	}
+}
+var ship_inventory : Dictionary = {
+	
 }
 var base_inventory : Dictionary = {
 	"plate" : 0,
