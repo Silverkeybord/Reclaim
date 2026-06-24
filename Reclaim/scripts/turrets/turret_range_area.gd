@@ -3,11 +3,24 @@ class_name TurretRangeArea
 extends Area3D
 ## Tracks valid enemies inside a turret's range and returns a target
 
-var in_range_enemies: Array[base_enemy] = []
+var in_range_enemies: Array[BaseEnemy] = []
 
 
-func get_target() -> base_enemy:
-	var target: base_enemy = null
+func get_valid_enemies() -> Array[BaseEnemy]:
+	var valid: Array[BaseEnemy] = []
+	for enemy in in_range_enemies:
+		if (
+			is_instance_valid(enemy)
+			and not enemy.is_queued_for_deletion()
+			and enemy.valid
+			and not enemy.is_dead
+		):
+			valid.append(enemy)
+	return valid
+
+
+func get_target() -> BaseEnemy:
+	var target: BaseEnemy = null
 	
 	for enemy in in_range_enemies:
 		if target == null:
@@ -24,7 +37,7 @@ func get_target() -> base_enemy:
 
 
 func _on_body_entered(body: Node3D) -> void:
-	var enemy := body as base_enemy
+	var enemy := body as BaseEnemy
 	
 	if not _is_valid_target(enemy):
 		return
@@ -37,11 +50,11 @@ func _on_body_entered(body: Node3D) -> void:
 
 
 func _on_body_exited(body: Node3D) -> void:
-	var enemy := body as base_enemy
+	var enemy := body as BaseEnemy
 	in_range_enemies.erase(enemy)
 
 
-func _is_valid_target(enemy: base_enemy) -> bool:
+func _is_valid_target(enemy: BaseEnemy) -> bool:
 	return (
 		is_instance_valid(enemy)
 		and enemy.valid
@@ -50,5 +63,5 @@ func _is_valid_target(enemy: base_enemy) -> bool:
 	)
 
 
-func _on_enemy_died(enemy: base_enemy) -> void:
+func _on_enemy_died(enemy: BaseEnemy) -> void:
 	in_range_enemies.erase(enemy)

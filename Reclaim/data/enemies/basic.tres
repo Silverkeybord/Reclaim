@@ -1,0 +1,49 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://dckqhslpr4ebc"]
+
+[ext_resource type="Script" uid="uid://cqm7b8e0xdrh5" path="res://scripts/enemies/drop_weight_resourse.gd" id="1_8x0ra"]
+[ext_resource type="Script" uid="uid://du3loq87kdgkg" path="res://data/resource_scripts/enemy_data.gd" id="2_6lcrm"]
+
+[sub_resource type="Resource" id="Resource_5hpjm"]
+script = ExtResource("1_8x0ra")
+drop_name = "dirt"
+weight = 25
+metadata/_custom_type_script = "uid://cqm7b8e0xdrh5"
+
+[sub_resource type="Resource" id="Resource_ldbw5"]
+script = ExtResource("1_8x0ra")
+drop_name = "clay"
+weight = 20
+metadata/_custom_type_script = "uid://cqm7b8e0xdrh5"
+
+[sub_resource type="Resource" id="Resource_4eudv"]
+script = ExtResource("1_8x0ra")
+drop_name = "rock"
+weight = 20
+metadata/_custom_type_script = "uid://cqm7b8e0xdrh5"
+
+[sub_resource type="Resource" id="Resource_qkt1o"]
+script = ExtResource("1_8x0ra")
+drop_name = "sand"
+weight = 20
+metadata/_custom_type_script = "uid://cqm7b8e0xdrh5"
+
+[sub_resource type="Resource" id="Resource_r78na"]
+script = ExtResource("1_8x0ra")
+drop_name = "flint"
+weight = 5
+metadata/_custom_type_script = "uid://cqm7b8e0xdrh5"
+
+[sub_resource type="Resource" id="Resource_65b5b"]
+script = ExtResource("1_8x0ra")
+drop_name = "scrap"
+weight = 3
+metadata/_custom_type_script = "uid://cqm7b8e0xdrh5"
+
+[resource]
+script = ExtResource("2_6lcrm")
+key = "basic"
+health = 20
+damage = 3
+speed = 5.0
+drop_table = Array[ExtResource("1_8x0ra")]([SubResource("Resource_5hpjm"), SubResource("Resource_ldbw5"), SubResource("Resource_4eudv"), SubResource("Resource_qkt1o"), SubResource("Resource_r78na"), SubResource("Resource_65b5b")])
+metadata/_custom_type_script = "uid://du3loq87kdgkg"

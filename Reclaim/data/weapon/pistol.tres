@@ -1,10 +1,26 @@
 [gd_resource type="Resource" script_class="WeaponData" format=3 uid="uid://j7m1gdi6bd7l"]
 
 [ext_resource type="Script" uid="uid://bcv8pchg6om62" path="res://data/resource_scripts/weapons_data.gd" id="1_0aanf"]
+[ext_resource type="Script" uid="uid://br78q44p6grd3" path="res://scripts/other/sound_info.gd" id="2_hr5cf"]
+[ext_resource type="AudioStream" uid="uid://cs0qp83qvlop" path="res://sounds/weapons/hitmarker_2.mp3" id="2_r0v3w"]
+[ext_resource type="AudioStream" uid="uid://bh832pllgcf0r" path="res://sounds/weapons/pistol_shot.wav" id="3_7hie4"]
+
+[sub_resource type="Resource" id="Resource_p0w2q"]
+script = ExtResource("2_hr5cf")
+stream = ExtResource("2_r0v3w")
+volume = -10
+metadata/_custom_type_script = "uid://br78q44p6grd3"
+
+[sub_resource type="Resource" id="Resource_58n8p"]
+script = ExtResource("2_hr5cf")
+stream = ExtResource("3_7hie4")
+metadata/_custom_type_script = "uid://br78q44p6grd3"
 
 [resource]
 script = ExtResource("1_0aanf")
 key = "pistol"
 damage = 5
 cool_down = 0.5
+shoot_resource = SubResource("Resource_58n8p")
+hit_resource = SubResource("Resource_p0w2q")
 metadata/_custom_type_script = "uid://bcv8pchg6om62"

@@ -491,9 +491,8 @@ Elements are primarily utility-focused. Examples:
 - **Wind** — Knockback.
 - **Earth** — Defense and reinforcement.
 - **Acid** — Corrosion.
-- **Gold** — Stunning effects.
 - **Dark** — Slowing and fire amplification.
-- **Light** — Advanced control effects.
+- **Light** — Stun/Blinding, all other elements amplified.
 
 ---
 

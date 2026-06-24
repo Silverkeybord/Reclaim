@@ -61,7 +61,7 @@ albedo_texture = ExtResource("4_cm411")
 uv1_scale = Vector3(0.5, 0.5, 0.5)
 uv1_triplanar = true
 
-[node name="remote_island" type="Node3D" unique_id=1949576147]
+[node name="remote_island" type="Node3D" unique_id=1949576147 groups=["root_nodes"]]
 
 [node name="consistant" type="Node" parent="." unique_id=1321206802]
 

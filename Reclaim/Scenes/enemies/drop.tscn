@@ -1,7 +1,50 @@
 [gd_scene format=3 uid="uid://qtk76i5mawjs"]
 
 [ext_resource type="Script" uid="uid://dw86xjbrodauy" path="res://scripts/enemies/drop.gd" id="1_aphvy"]
-[ext_resource type="Material" uid="uid://b0grvd22mypjn" path="res://textures_and_materials/drops/1/scrap.tres" id="2_pkv3f"]
+[ext_resource type="Script" uid="uid://br78q44p6grd3" path="res://scripts/other/sound_info.gd" id="2_3ca3l"]
+[ext_resource type="Material" uid="uid://b0grvd22mypjn" path="res://textures_and_materials/items/1/scrap.tres" id="2_pkv3f"]
+[ext_resource type="AudioStream" uid="uid://8rxy14rxlhrx" path="res://sounds/pickup/pickup_sound_1.WAV" id="3_dwcul"]
+[ext_resource type="AudioStream" uid="uid://cr55avxn7pq0c" path="res://sounds/pickup/pickup_sound_2.WAV" id="4_025ad"]
+[ext_resource type="AudioStream" uid="uid://crej082t5m7tm" path="res://sounds/pickup/pickup_sound_3.WAV" id="5_v564p"]
+[ext_resource type="AudioStream" uid="uid://ddgqy01fec88v" path="res://sounds/pickup/pickup_sound_4.WAV" id="6_ppelc"]
+[ext_resource type="AudioStream" uid="uid://b756p7e7fx70x" path="res://sounds/pickup/pickup_sound_5.WAV" id="7_u36yy"]
+[ext_resource type="AudioStream" uid="uid://ch6f6q5gpledl" path="res://sounds/pickup/pickup_sound_6.WAV" id="8_lnj5c"]
+
+[sub_resource type="Resource" id="Resource_v7v3a"]
+script = ExtResource("2_3ca3l")
+stream = ExtResource("3_dwcul")
+volume = -5
+metadata/_custom_type_script = "uid://br78q44p6grd3"
+
+[sub_resource type="Resource" id="Resource_6slhu"]
+script = ExtResource("2_3ca3l")
+stream = ExtResource("4_025ad")
+volume = -5
+metadata/_custom_type_script = "uid://br78q44p6grd3"
+
+[sub_resource type="Resource" id="Resource_pjqfc"]
+script = ExtResource("2_3ca3l")
+stream = ExtResource("5_v564p")
+volume = -5
+metadata/_custom_type_script = "uid://br78q44p6grd3"
+
+[sub_resource type="Resource" id="Resource_uh1hx"]
+script = ExtResource("2_3ca3l")
+stream = ExtResource("6_ppelc")
+volume = -5
+metadata/_custom_type_script = "uid://br78q44p6grd3"
+
+[sub_resource type="Resource" id="Resource_mhlrs"]
+script = ExtResource("2_3ca3l")
+stream = ExtResource("7_u36yy")
+volume = -10
+metadata/_custom_type_script = "uid://br78q44p6grd3"
+
+[sub_resource type="Resource" id="Resource_dwcul"]
+script = ExtResource("2_3ca3l")
+stream = ExtResource("8_lnj5c")
+volume = -10
+metadata/_custom_type_script = "uid://br78q44p6grd3"
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nseg0"]
 size = Vector3(0.4, 0.4, 0.4)
@@ -17,6 +60,7 @@ script = ExtResource("1_aphvy")
 mesh = NodePath("MeshInstance3D")
 rigid_collision_shape = NodePath("CollisionShape3D")
 despawn_timer = NodePath("despawn_timer")
+pickup_sounds = Array[ExtResource("2_3ca3l")]([SubResource("Resource_v7v3a"), SubResource("Resource_6slhu"), SubResource("Resource_pjqfc"), SubResource("Resource_uh1hx"), SubResource("Resource_mhlrs"), SubResource("Resource_dwcul")])
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1696334010]
 shape = SubResource("BoxShape3D_nseg0")

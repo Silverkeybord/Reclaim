@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://dk7l8sulvslqs"]
+
+[sub_resource type="GDScript" id="GDScript_qxv4j"]
+script/source = "class_name ItemData
+extends Resource
+
+@export var key : String
+
+## all types of items in the game
+@export_enum(
+	\"turret\",
+	\"plate\",
+	\"module\",
+	\"resourse\"
+) var type : String
+@export_range(1, 5) var teir : int
+"
+
+[resource]
+script = SubResource("GDScript_qxv4j")
+key = "dirt"
+metadata/_custom_type_script = "uid://dab1gpgqlg8br"

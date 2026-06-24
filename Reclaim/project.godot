@@ -50,6 +50,7 @@ player=""
 turret_slots=""
 ground=""
 drops=""
+root_nodes=""
 
 [input]
 

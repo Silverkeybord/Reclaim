@@ -1,16 +1,29 @@
 [gd_resource type="Resource" script_class="TurretData" format=3 uid="uid://y28uo7n7jj18"]
 
 [ext_resource type="Script" uid="uid://cc33b1pxw7k1r" path="res://data/resource_scripts/turret_data.gd" id="1_06ve0"]
+[ext_resource type="Script" uid="uid://br78q44p6grd3" path="res://scripts/other/sound_info.gd" id="2_41q63"]
+[ext_resource type="AudioStream" uid="uid://bafaj5xuyn8p3" path="res://sounds/turrets/1/single/single_1.wav" id="3_7i0b1"]
+[ext_resource type="AudioStream" uid="uid://6coyy5ya0a8i" path="res://sounds/turrets/1/single/single_2.wav" id="4_85c0u"]
+
+[sub_resource type="Resource" id="Resource_uh1hx"]
+script = ExtResource("2_41q63")
+stream = ExtResource("3_7i0b1")
+max_distance = 40
+volume = 20
+metadata/_custom_type_script = "uid://br78q44p6grd3"
+
+[sub_resource type="Resource" id="Resource_mhlrs"]
+script = ExtResource("2_41q63")
+stream = ExtResource("4_85c0u")
+max_distance = 40
+metadata/_custom_type_script = "uid://br78q44p6grd3"
 
 [resource]
 script = ExtResource("1_06ve0")
 key = "basic"
 display_name = "Basic Turret"
-damage = 2.0
-cooldown = 0.25
+damage = 4
+cooldown = 0.5
 turret_range = 25.0
-recipe = {
-"dirt": 5,
-"rock": 10
-}
+shooting_sound = Array[ExtResource("2_41q63")]([SubResource("Resource_uh1hx"), SubResource("Resource_mhlrs")])
 metadata/_custom_type_script = "uid://cc33b1pxw7k1r"

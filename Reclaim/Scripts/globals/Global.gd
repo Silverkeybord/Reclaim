@@ -1,7 +1,7 @@
 extends Node
 
-# eums
-# TURRETS / WEAPONS ------------------------------------------------------- 
+# ENUMS ====================================================================
+# TURRETS / WEAPONS --------------------------------------------------------
 enum SHOT_TYPE {
 	HITSCAN,
 	PROJECTILE
@@ -20,6 +20,7 @@ enum BUILD_TYPES {
 const SAVE_PATH : String = "user://reclaim.save"
 const GRAVITY : float = 40.0
 const DEFAULT_BULLET_TRAIL_KEY : String = "default"
+const ROOT_NODES_GROUP : String = "root_nodes"
 const CURRENT_SCENE_ROOT_INDEX : int = 2
 const RARITY_CONFIG : Dictionary = {
 	1 : {
@@ -45,14 +46,15 @@ const RARITY_CONFIG : Dictionary = {
 }
 
 # CAPS --------------------------------------------------------------------
+const MAX_TEXT : String = "MAX"
 const MAX_DROPS : int = 250
 const MAX_SPHERES : int = 300
+const MAX_SOUNDS : int = 50
 const MAX_DAMAGE_INDICATIONS : int = 100
 const ORDER_OF_MAGNITUDE : int = 10
 const HUNDRED_THRESHOLD : int = 3
 const SHORT_HAND_NUDGE : float = 1e-9
 const MAX_SHORTHAND_MAGNITUDE : int = 12
-const MAX_TEXT : String = "MAX"
 const SHORTHAND_THRESHOLDS : Dictionary = {
 	int(9) : "B",
 	int(6) : "M",
@@ -61,6 +63,7 @@ const SHORTHAND_THRESHOLDS : Dictionary = {
 
 # EFFECTS SCENES ----------------------------------------------------------
 const TEMP_SOUND_SCENE : PackedScene = preload("res://scenes/misc/temp_sound_scene.tscn")
+const TEMP_SOUND_SCENE_3D : PackedScene = preload("res://scenes/misc/temp_sound_scene_3D.tscn")
 const BULET_TRAIL_SCENE : PackedScene = preload("res://scenes/turrets/bullet_trail.tscn")
 const DAMAGE_INDICATOR_SCENE : PackedScene = preload("res://scenes/misc/damage_indicator.tscn")
 
@@ -78,106 +81,59 @@ var selected_sector_path := "res://scenes/maps/remote_island.tscn"
 var sector_run_time : float
 
 # ENEMIES
-var enemies := 0
-var damage_indications := 0
+var sounds : int = 0
+var enemies : int = 0
+var damage_indications : int = 0
 
-# META UPGRADES / RESEARCH --------------------------------------------------
+# META UPGRADES / COUNCIL AUTHORIZATION -------------------------------------
 var turret_slots := 8
 
 # INVENORY + CURRENCY -------------------------------------------------------
 var cubits : int = 0
-var item_inventory : Dictionary = {
-	1 : {
-		"clay" : 0,
-		"dirt" : 0,
-		"flint" : 0,
-		"rock" : 0,
-		"sand" : 0,
-		"scrap" : 0,
-		"basic_material" : 0
-	},
-	2 : {
-		"brick" : 0,
-		"coal" : 0,
-		"copper" : 0,
-		"elemental_essence" : 0,
-		"glass" : 0,
-		"gunpowder" : 0,
-		"rubber" : 0,
-		"construction_material" : 0
-	},
-	3 : {
-		"circuit" : 0,
-		"concrete" : 0,
-		"gear" : 0,
-		"ice" : 0,
-		"iron" : 0,
-		"steel" : 0,
-		"advanced_material" : 0,
-		"tungsten" : 0,
-		"water" : 0,
-		"wind" : 0
-	},
-	4 : {
-		"acid" : 0,
-		"chip" : 0,
-		"earth" : 0,
-		"fire" : 0,
-		"gold" : 0,
-		"silicon" : 0,
-		"electronic_material" : 0,
-		"uranium" : 0
-	},
-	5 : {
-		"antimatter" : 0,
-		"dark" : 0,
-		"graphene" : 0,
-		"light" : 0,
-		"platinum" : 0,
-		"exotic_material" : 0,
-		"tesseract" : 0
-	},
-}
-var turret_inventory : Dictionary = {
-	1 : {
-		"basic" : 0,
-		"dual" : 0,
-		"wind" : 0
-	},
-	2 : {
-		"minigun" : 0,
-		"mortar" : 0,
-		"shotgun" : 0,
-		"water" : 0
-	},
-	3 : {
-		"cannon" : 0,
-		"earth" : 0,
-		"explosive" : 0
-	},
-	4 : {
-		"fire" : 0,
-		"missle" : 0,
-		"sniper" : 0
-	},
-	5 : {
-		"cube" : 0,
-		"railgun" : 0,
-	}
+var sector_inventory : Dictionary = {
+	1 : {},
+	2 : {},
+	3 : {},
+	4 : {},
+	5 : {}
 }
 var ship_inventory : Dictionary = {
-	
-}
-var base_inventory : Dictionary = {
-	"plate" : 0,
-	"single" : 0,
+	1 : {},
+	2 : {},
+	3 : {},
+	4 : {},
+	5 : {}
 }
 
 
 # FUNCTIONS ================================================================
+## adds the node the the root node of the current scene bassed of the global group root_nodes
+func add_to_root_node(node : Node) -> void:
+	get_tree().get_first_node_in_group(ROOT_NODES_GROUP).add_child(node)
+
+
 ## Spawn Temp Sound. Spawns a tempory sound as a child of the root node
-func spawn_temp_sound() -> void:
-	pass
+func spawn_temp_sound(sound : SoundInfo, pos : Vector3 = Vector3.ZERO) -> void:
+	if sounds >= MAX_SOUNDS:
+		return
+	
+	sounds += 1
+	
+	if pos != Vector3.ZERO:
+		var new_sound : AudioStreamPlayer3D = TEMP_SOUND_SCENE_3D.instantiate()
+		new_sound.stream = sound.stream
+		add_to_root_node(new_sound)
+		new_sound.global_position = pos
+		new_sound.volume_db = sound.volume
+		new_sound.max_db = sound.max_db
+		new_sound.max_distance = sound.max_distance
+		new_sound.play()
+	else:
+		var new_sound : AudioStreamPlayer = TEMP_SOUND_SCENE.instantiate()
+		new_sound.stream = sound.stream
+		add_to_root_node(new_sound)
+		new_sound.volume_db = sound.volume
+		new_sound.play()
 
 
 ## Creates a bullet trail between 2 point. as a child of the root node
@@ -188,11 +144,11 @@ func create_bullet_trail(
 	
 	var new_bullet_trail = BULET_TRAIL_SCENE.instantiate()
 	new_bullet_trail.trail = trail
-	get_tree().root.get_child(CURRENT_SCENE_ROOT_INDEX).add_child(new_bullet_trail)
+	add_to_root_node(new_bullet_trail)
 	new_bullet_trail.create_bullet_trail(from, to)
 
 
-## Creates a damage indicator at the position of the caller
+## Creates a damage indicator at the position of the caller child of the root node
 func create_damage_indicator(pos : Vector3, damage : int) -> void:
 	if damage_indications >= MAX_DAMAGE_INDICATIONS or at_ship:
 		return
@@ -200,10 +156,9 @@ func create_damage_indicator(pos : Vector3, damage : int) -> void:
 	damage_indications += 1
 	var new_indication = DAMAGE_INDICATOR_SCENE.instantiate()
 	new_indication.text = "-" + str(damage)
-	get_tree().root.get_child(CURRENT_SCENE_ROOT_INDEX).add_child(new_indication)
+	add_to_root_node(new_indication)
 	new_indication.global_position = pos
 	new_indication.init()
-
 
 ## Converts large integers into shorthand notation (e.g. 1_500 → "1.5K")
 func return_amount_shorthand(value: float) -> String:
@@ -254,9 +209,9 @@ func return_amount_shorthand(value: float) -> String:
 
 ## Temp testing function to fill inventory
 func set_random_inventory() -> void:
-	for teir in item_inventory:
-		for item in item_inventory[teir]:
-			item_inventory[teir][item] = randi_range(1, 999) * (10 ** randi_range(1, 9))
+	for key in DataRegistry.items:
+		var resource = DataRegistry.items[key]
+		ship_inventory[resource.teir][key] = randi_range(1, 999) ** (randi_range(1, 5))
 
 
 ## Sets the moust of the player to be unlocked or locked bassed on its last value
@@ -276,7 +231,12 @@ func save_game():
 	
 	var save_data = {
 		# inventory / storage
-		"inventory" : item_inventory,
+		"ship_inventory" : ship_inventory,
+		"cubits" : cubits,
+		"council_authorization" : {
+			"turret_slots" : turret_slots
+		}
+		
 	}
 	
 	file.store_var(save_data)
@@ -291,7 +251,9 @@ func load_game():
 	var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
 	var data = file.get_var()
 	
-	item_inventory = data["inventory"]
+	ship_inventory = data["ship_inventory"]
+	cubits = data["cubits"]
+	turret_slots = data["council_authorization"]["turret_slots"]
 
 
 ## Deleats the game data completly removing the save file

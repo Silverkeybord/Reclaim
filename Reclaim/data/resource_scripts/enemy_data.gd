@@ -4,7 +4,7 @@ extends Resource
 @export var key : String
 
 ## health points
-@export var hp : int
+@export var health : int
 ## damage done to the barrier 
 @export var damage : int
 ## meters per second toward the target

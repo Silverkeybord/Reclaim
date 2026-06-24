@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="WaveData" format=3 uid="uid://wwsm4m2783l4"]
 
-[ext_resource type="Script" uid="uid://bkm3t85heyp8m" path="res://scripts/enemies/enemy_weight_resourse.gd" id="1_dbg6m"]
+[ext_resource type="Script" uid="uid://bkm3t85heyp8m" path="res://scripts/enemies/enemy_weight_resource.gd" id="1_dbg6m"]
 [ext_resource type="Script" uid="uid://ebuopgthqly1" path="res://data/resource_scripts/wave_data.gd" id="1_rvc1w"]
 
 [sub_resource type="Resource" id="Resource_pkv3f"]

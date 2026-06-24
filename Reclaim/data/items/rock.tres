@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DropData" format=3 uid="uid://dm10222fpo58l"]
+
+[ext_resource type="Script" uid="uid://cgqvvu75ctfva" path="res://data/resource_scripts/items_data.gd" id="1_6ucdb"]
+
+[resource]
+script = ExtResource("1_6ucdb")
+key = "rock"
+material_path = "res://textures_and_materials/drops/rock.tres"
+item_texture = "res://2d_assets/items/t1/stone.png"
+metadata/_custom_type_script = "uid://cgqvvu75ctfva"

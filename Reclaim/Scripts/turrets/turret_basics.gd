@@ -22,7 +22,7 @@ const FIRST_SHOT_TIMER_WAIT := 0.01
 @export var turret_range_coll : CollisionShape3D
 
 @export_group("turret_stats")
-@export var turret_resourse : Resource
+@export var turret_resource : TurretData
 # when godot detects that the varible will be changed from the timer ending
 # and settings teh value to false it runs the code underneath value is the 
 # value its going to be set to then some basic logic is run to optimise code
@@ -38,7 +38,7 @@ const FIRST_SHOT_TIMER_WAIT := 0.01
 
 func _ready() -> void:
 	_set_new_turret("basic") # TEMP
-	cooldown_timer.wait_time = turret_resourse.cooldown
+	cooldown_timer.wait_time = turret_resource.cooldown
 	cooldown_timer.one_shot = true
 	
 	if not place_cooldown_active:
@@ -46,7 +46,7 @@ func _ready() -> void:
 
 
 func _set_new_turret(key : String) -> void:
-	turret_resourse = DataRegistry.turrets[key]
+	turret_resource = DataRegistry.turrets[key]
 
 
 # SHOOTING LOGIC --------------------------------------------------------------
@@ -54,24 +54,49 @@ func _shooting_logic() -> void:
 	if turret_range_area == null:
 		return
 	
-	var target = turret_range_area.get_target()
+	var valid_enemies : Array[BaseEnemy]= turret_range_area.get_valid_enemies()
 	
-	if (
-		target == null
-		or not is_instance_valid(target)
-		or not target.valid
-		or target.is_dead
-		or target.is_queued_for_deletion()
-	):
+	if valid_enemies.is_empty():
 		return
 	
-	var target_position : Vector3 = target.global_position
+	var target: BaseEnemy = _pick_target(valid_enemies)
+	
+	if target == null or not is_instance_valid(target):
+		return
+	
+	var target_position := target.global_position
 	turret_piviot_point.look_at(target_position)
-	
-	target.hit(turret_resourse.damage)
-	
-	# Creates a bullet trail using the target position before the enemy is freed.
+	target.hit(turret_resource.damage)
 	Global.create_bullet_trail(bullet_spawn.global_position, target_position)
+	Global.spawn_temp_sound(
+		turret_resource.shooting_sound.pick_random(), 
+		bullet_spawn.global_position
+		)
+
+
+func _pick_target(enemies: Array[BaseEnemy]) -> BaseEnemy:
+	match turret_shooting_type:
+		
+		SHOOTING_METHODS.FIRST:
+			# First enemy to enter range (earliest in the array)
+			return enemies[0]
+		
+		SHOOTING_METHODS.LAST:
+			# Last enemy to enter range
+			return enemies[-1]
+		
+		SHOOTING_METHODS.STRONG:
+			# Enemy with the most health remaining
+			var strongest := enemies[0]
+			for enemy in enemies:
+				if enemy.health > strongest.health:
+					strongest = enemy
+			return strongest
+		
+		SHOOTING_METHODS.RANDOM:
+			return enemies[randi() % enemies.size()]
+	
+	return enemies[0]
 
 
 func _on_cool_down_timer_timeout() -> void:
@@ -84,7 +109,7 @@ func _on_cool_down_timer_timeout() -> void:
 
 func _start_shoot_timer(first_shot := false) -> void:
 	# edge case detetections
-	if not is_inside_tree() or cooldown_timer == null or turret_resourse == null:
+	if not is_inside_tree() or cooldown_timer == null or turret_resource == null:
 		return
 	
 	# if its the first shot only waits 0.01 seconds instead of the cooldown after
@@ -92,7 +117,7 @@ func _start_shoot_timer(first_shot := false) -> void:
 	if first_shot:
 		cooldown_timer.start(FIRST_SHOT_TIMER_WAIT)
 	else:
-		cooldown_timer.start(turret_resourse.cooldown)
+		cooldown_timer.start(turret_resource.cooldown)
 
 
 func _stop_shoot_timer() -> void:

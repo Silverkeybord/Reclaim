@@ -38,7 +38,7 @@ var turret_holagram : Node3D
 var can_shoot : bool = true
 var weapon : Node3D
 var weapon_name : String = "pistol"
-var weapon_resourse : Resource
+var weapon_resource : WeaponData
 
 var selected_turret : String = "single"
 var selected_base : String = "plate"
@@ -288,10 +288,11 @@ func _shoot() -> void:
 		if hit:
 			if hit.has_meta(ENEMY_METADATA_TAG):
 				# damages enemies and flashes the hit overlay
-				hit.hit(weapon_resourse.damage)
+				hit.hit(weapon_resource.damage)
 				hit_overlay.visible = true
 				await get_tree().create_timer(HIT_OVERLAY_TIME).timeout
 				hit_overlay.visible = false
+				Global.spawn_temp_sound(weapon_resource.hit_resource)
 			
 	else:
 		# if nothing is hit, shoot to the end of the ray instead
@@ -304,14 +305,15 @@ func _shoot() -> void:
 	var from = weapon.bullet_spawn.global_position
 	
 	Global.create_bullet_trail(from, to, DataRegistry.bullet_trail[weapon_name])
+	Global.spawn_temp_sound(weapon_resource.shoot_resource, from)
 
 
 func _set_new_weapon() -> void:
 	# gets the weapon node and its data from DataRegistry
 	weapon = gun_piviot.get_child(GUN_CHILD_INDEX)
-	weapon_resourse = DataRegistry.weapon[weapon_name]
+	weapon_resource = DataRegistry.weapon[weapon_name]
 	
-	shooting_timer.wait_time = weapon_resourse.cool_down
+	shooting_timer.wait_time = weapon_resource.cool_down
 
 
 func _on_shoot_timer_timeout() -> void:

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://dn3wtnao87311"]
+
+[ext_resource type="Script" uid="uid://cgqvvu75ctfva" path="res://data/resource_scripts/items_data.gd" id="1_65b5b"]
+
+[resource]
+script = ExtResource("1_65b5b")
+key = "gunpowder"
+size = Vector3(0.3, 0.3, 0.3)
+teir = 2
+value = 4.0
+weight = 2
+metadata/_custom_type_script = "uid://cgqvvu75ctfva"

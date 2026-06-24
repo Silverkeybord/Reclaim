@@ -1,6 +1,6 @@
 extends RigidBody3D
 
-const RARITY_RESPAWN_MULT := 20 # seconds before desawning multipyled by the interger value of the rarity
+const TEIR_DESPAWN_MULT := 20 # seconds before desawning multipyled by the interger value of the rarity
 
 const DESPAWN_SCALE := Vector3(0.1, 0.1, 0.1)
 const DESPAWN_TWEEN_TIME := 0.5
@@ -24,7 +24,7 @@ const MIN_VERT_VELOCITY := 5.0
 const DIRECTION := [-1, 1]
 
 @export var player : CharacterBody3D
-@export var drop_resourse : DropData
+@export var item_resource : ItemData
 
 @export var mesh : MeshInstance3D
 
@@ -36,6 +36,9 @@ const DIRECTION := [-1, 1]
 @export var despawn_timer : Timer
 @export var process_freeze_timer : Timer
 
+@export_group("Sounds")
+@export var pickup_sounds : Array[SoundInfo]
+
 var last_process_pos : Vector3
 var on_ground : bool = false
 var being_picked_up : bool = false
@@ -46,22 +49,16 @@ var speed = 3
 
 
 func _ready() -> void:
-	despawn_timer.wait_time = RARITY_RESPAWN_MULT * drop_resourse.rarity
+	despawn_timer.wait_time = TEIR_DESPAWN_MULT * item_resource.teir
 	despawn_timer.start()
 	
 	mesh.mesh = mesh.mesh.duplicate()
 	rigid_collision_shape.shape = rigid_collision_shape.shape.duplicate()
 
-	rigid_collision_shape.shape.size = drop_resourse.size
-	mesh.mesh.size = drop_resourse.size
+	rigid_collision_shape.shape.size = item_resource.size
+	mesh.mesh.size = item_resource.size
 	
-	var material_path = (
-		drop_resourse.MATERIAL_TEXTURE_PATH + 
-		str(drop_resourse.rarity) +
-		drop_resourse.SLASH +
-		drop_resourse.key +
-		drop_resourse.TRES_TYPE
-		)
+	var material_path = item_resource.get_material_path()
 	mesh.set_surface_override_material(0, load(material_path))
 	
 	_give_random_movement()
@@ -141,4 +138,9 @@ func _give_random_movement() -> void:
 
 ## add the drop into the inventory of the player
 func _pick_up() -> void:
-	Global.item_inventory[drop_resourse.rarity][drop_resourse.key] += 1
+	Global.spawn_temp_sound(pickup_sounds.pick_random())
+	
+	if Global.sector_inventory[item_resource.teir].has(item_resource.key):
+		Global.sector_inventory[item_resource.teir][item_resource.key] += 1
+	else:
+		Global.sector_inventory[item_resource.teir][item_resource.key] = 1

@@ -6,7 +6,6 @@ enum RANGE_SHAPES {
 	SPHERE
 }
 
-
 @export var key: String
 
 @export var display_name: String
@@ -14,24 +13,13 @@ enum RANGE_SHAPES {
 
 @export_group("Basic Stats")
 ## damage done to enemies
-@export var damage: float
+@export var damage: int
 ## time inetween each shot
 @export var cooldown: float
 ## the radius in meters of the targeting area
 @export var turret_range: float
 ## the shape of the range are
 @export var range_shape : RANGE_SHAPES
-
-@export_group("Ammo Types")
-## what ammo types the turret can shoot
-@export var ammo_types : Dictionary = {
-	"basic" : true,
-	"light" : true,
-	"heavy" : false,
-	"explosive" : false,
-	"beam" : false,
-	
-}
 
 @export_group("Synergy Tags")
 ## if these turrets are next to the turret the turret will be boosted
@@ -57,3 +45,7 @@ enum RANGE_SHAPES {
 	"ammo_efficiency" : true,
 	"explosive_bullets" : false
 }
+
+@export_group("Sounds")
+## one sould will be played form this array when this turret shoots
+@export var shooting_sound : Array[SoundInfo]

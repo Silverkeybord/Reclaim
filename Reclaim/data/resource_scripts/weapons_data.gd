@@ -10,3 +10,7 @@ extends Resource
 @export var damage : int
 ## time inbetween each shot with no upgrades
 @export var cool_down : float
+## the resource for the sound of the weapon
+@export var shoot_resource : SoundInfo
+## the hit sound whe you hit an enemy
+@export var hit_resource : SoundInfo
