@@ -15,8 +15,8 @@ const SLASH : String = "/"
 
 ## size of the side of the cube collision shape
 @export var size : Vector3 = Vector3(0.4, 0.4, 0.4)
-## the teir from 1 - 5
-@export_range(1, 5) var teir : int = 1
+## the tier from 1 - 5
+@export_range(1, 5) var tier : int = 1
 ## the type of item somthing is
 @export_enum(
 	"turret",
@@ -38,7 +38,7 @@ const SLASH : String = "/"
 func get_material_path() -> String:
 	return (
 			MATERIAL_TEXTURE_PATH + 
-			str(teir) +
+			str(tier) +
 			SLASH +
 			key + 
 			TRES_TYPE
@@ -48,7 +48,7 @@ func get_material_path() -> String:
 func get_item_path() -> String:
 	return (
 			ITEM_TEXTURE_PATH + 
-			str(teir) +
+			str(tier) +
 			SLASH +
 			key + 
 			PNG_TYPE

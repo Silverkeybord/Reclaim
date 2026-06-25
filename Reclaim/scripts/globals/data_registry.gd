@@ -30,20 +30,33 @@ func _ready() -> void:
 	_load_folder(RESEARCH_PATH, research)
 	_load_folder(CRAFTING_PATH, crafting)
 	_load_folder(BULLET_TRAIL_PATH, bullet_trail)
-	_load_folder(ITEMS_PATH, items)
+	_load_folder(ITEMS_PATH, items, true)
 	
 	print("fin loading files")
 
 
-func _load_folder(path : String, dict : Dictionary) -> void:
+func _load_folder(path: String, dict: Dictionary, recursive: bool = false) -> void:
 	if not path:
 		return
 	
 	var dir = DirAccess.open(path)
+	
+	# check for valid directory
+	if not dir:
+		push_error("DataRegistry: could not open path: " + path)
+		return
+	
+	# if recursive is and file is a folder it will will recursivly search that folder
+	# putting it in the same dict
 	dir.list_dir_begin()
 	var file = dir.get_next()
+	
 	while file != "":
 		if file.ends_with(".tres"):
 			var res = load(path + file)
 			dict[res.key] = res
+		
+		elif recursive and dir.current_is_dir() and not file.begins_with("."):
+			_load_folder(path + file + "/", dict, true)
+		
 		file = dir.get_next()

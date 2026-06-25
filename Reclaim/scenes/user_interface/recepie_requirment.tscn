@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://hgi3y5catplc"]
 
 [ext_resource type="Script" uid="uid://du0kgq472nuy0" path="res://scripts/user_interface/recepie_requirment.gd" id="1_58n8p"]
-[ext_resource type="StyleBox" uid="uid://x30xg8owly1s" path="res://other_assets/crafting_styles/t1_recepie_requirment.tres" id="1_p0w2q"]
+[ext_resource type="StyleBox" uid="uid://x30xg8owly1s" path="res://other_assets/crafting_styles/t1_style.tres" id="1_p0w2q"]
 [ext_resource type="Texture2D" uid="uid://muaixjqb24ps" path="res://2d_assets/crafting/enough_resources.png" id="3_58n8p"]
+[ext_resource type="Resource" uid="uid://dindgm06orind" path="res://data/items/tier1/scrap.tres" id="3_p0w2q"]
 [ext_resource type="Texture2D" uid="uid://cgcnht18jhoxa" path="res://2d_assets/items/1/scrap.png" id="4_58n8p"]
 [ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="4_es61k"]
 
@@ -16,6 +17,7 @@ offset_right = 219.0
 offset_bottom = 25.0
 theme_override_styles/panel = ExtResource("1_p0w2q")
 script = ExtResource("1_58n8p")
+item_data = ExtResource("3_p0w2q")
 label = NodePath("HBoxContainer/Label")
 item_image = NodePath("HBoxContainer/item_image")
 have_indication = NodePath("HBoxContainer/have_indication")

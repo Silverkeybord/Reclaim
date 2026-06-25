@@ -1,13 +1,16 @@
 [gd_scene format=3 uid="uid://bb8wmb84lf1st"]
 
 [ext_resource type="Script" uid="uid://b1l4ahi8t0smt" path="res://scripts/user_interface/inventory.gd" id="1_yno4q"]
-[ext_resource type="PackedScene" uid="uid://byuh35b33sevw" path="res://scenes/user_interface/inventory_cell.tscn" id="2_il3p1"]
+[ext_resource type="PackedScene" uid="uid://dqgjh854m2igs" path="res://scenes/user_interface/itemtip.tscn" id="3_pr3vw"]
 
-[node name="inventory" type="CanvasLayer" unique_id=437722077 node_paths=PackedStringArray("grid_container")]
+[node name="inventory" type="CanvasLayer" unique_id=437722077 node_paths=PackedStringArray("item_tip", "item_parent")]
 script = ExtResource("1_yno4q")
-grid_container = NodePath("PanelContainer/MarginContainer/GridContainer")
-inventory_cell_scene = ExtResource("2_il3p1")
+item_tip = NodePath("itemtip")
+item_parent = NodePath("PanelContainer/MarginContainer/GridContainer")
 metadata/_edit_lock_ = true
+
+[node name="itemtip" parent="." unique_id=854836766 instance=ExtResource("3_pr3vw")]
+layer = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1325230089]
 anchors_preset = 8

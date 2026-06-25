@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://jvgkff2pr1rj"]
+
+[ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="1_e5l8p"]
+[ext_resource type="Script" uid="uid://4ay68rj8dgkv" path="res://scripts/user_interface/crafing_selection_sections.gd" id="1_xmf41"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yf5fn"]
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.49019608, 0.49019608, 0.49019608, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="LabelSettings" id="LabelSettings_g4v7s"]
+font = ExtResource("1_e5l8p")
+font_size = 24
+font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+
+[node name="crafing_selection_sections" type="PanelContainer" unique_id=442247909 node_paths=PackedStringArray("tier_label")]
+custom_minimum_size = Vector2(335, 0)
+anchors_preset = -1
+anchor_right = 0.26171875
+anchor_bottom = 0.08194444
+theme_override_styles/panel = SubResource("StyleBoxFlat_yf5fn")
+script = ExtResource("1_xmf41")
+tier_label = NodePath("MarginContainer/VBoxContainer/Label")
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1811069289]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1155697026]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=411273172]
+layout_mode = 2
+text = "Tier - 5 -"
+label_settings = SubResource("LabelSettings_g4v7s")
+
+[node name="HFlowContainer" type="HFlowContainer" parent="MarginContainer/VBoxContainer" unique_id=1478384740]
+layout_mode = 2

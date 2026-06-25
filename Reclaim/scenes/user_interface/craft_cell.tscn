@@ -1,0 +1,89 @@
+[gd_scene format=3 uid="uid://cxjg2nfs7kh11"]
+
+[ext_resource type="Script" uid="uid://ccf72kbp75o6s" path="res://scripts/user_interface/craft_cell.gd" id="1_ksw0y"]
+[ext_resource type="Resource" uid="uid://csw4jndrwfsf1" path="res://data/crafting/tier1/basic_material.tres" id="2_ksw0y"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mnj7u"]
+bg_color = Color(0.8, 0.8, 0.8, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.65882355, 0.65882355, 0.65882355, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ecock"]
+bg_color = Color(0.8790556, 0.8790557, 0.87905544, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.5569528, 0.55695313, 0.55695283, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ksw0y"]
+bg_color = Color(0.83889705, 0.83889705, 0.8388969, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.70380783, 0.70380783, 0.70380783, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4v7s"]
+bg_color = Color(0, 0, 0, 0.5803922)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="craft_cell" type="Button" unique_id=126499183 node_paths=PackedStringArray("item_image", "double_click_timer", "cant_craft_overlay")]
+custom_minimum_size = Vector2(70, 70)
+custom_maximum_size = Vector2(70, 70)
+anchors_preset = -1
+anchor_right = 0.0546875
+anchor_bottom = 0.097222224
+theme_override_styles/normal = SubResource("StyleBoxFlat_mnj7u")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ecock")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ksw0y")
+script = ExtResource("1_ksw0y")
+craft_data = ExtResource("2_ksw0y")
+item_image = NodePath("item_image")
+double_click_timer = NodePath("double_click_timer")
+cant_craft_overlay = NodePath("cant_craft_overlay")
+metadata/_edit_use_anchors_ = true
+
+[node name="item_image" type="TextureRect" parent="." unique_id=1045134972]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 3
+
+[node name="cant_craft_overlay" type="PanelContainer" parent="." unique_id=449779506]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
+metadata/_edit_use_anchors_ = true
+
+[node name="double_click_timer" type="Timer" parent="." unique_id=404405429]
+
+[connection signal="button_up" from="." to="." method="_on_button_up"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]
+[connection signal="timeout" from="double_click_timer" to="." method="_on_double_click_timer_timeout"]

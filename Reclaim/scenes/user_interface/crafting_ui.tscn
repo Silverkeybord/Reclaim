@@ -1,21 +1,52 @@
 [gd_scene format=3 uid="uid://dx6bjy4kgj6s3"]
 
 [ext_resource type="Script" uid="uid://d2gjbxqj7bl38" path="res://scripts/user_interface/crafting_ui.gd" id="1_0a7d0"]
-[ext_resource type="PackedScene" uid="uid://opbnu4fhukps" path="res://scenes/user_interface/crafting_inventory.tscn" id="2_q0jvf"]
+[ext_resource type="Texture2D" uid="uid://pbbu4dvx70dy" path="res://2d_assets/crafting/inventory_background.png" id="2_7uxoi"]
+[ext_resource type="Script" uid="uid://b1l4ahi8t0smt" path="res://scripts/user_interface/inventory.gd" id="2_scvtr"]
 [ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="2_xasgv"]
+[ext_resource type="Texture2D" uid="uid://cupp0rbdyfemt" path="res://2d_assets/crafting/inventory_craftin_wedge.png" id="4_6ikml"]
 [ext_resource type="Texture2D" uid="uid://cynugc2vvvslx" path="res://2d_assets/crafting/connector.png" id="4_k2ynt"]
 [ext_resource type="Texture2D" uid="uid://bvmh1wenxuxrh" path="res://2d_assets/crafting/crafting_background.png" id="5_1af7d"]
 [ext_resource type="Texture2D" uid="uid://b3l1152wrmyr5" path="res://2d_assets/crafting/crafting_requirments_background.png" id="6_k2ynt"]
 [ext_resource type="Texture2D" uid="uid://cykia00d2ecko" path="res://2d_assets/crafting/active_turret_tab.png" id="7_uc2av"]
-[ext_resource type="Texture2D" uid="uid://dg6k5n428gfx0" path="res://2d_assets/crafting/active_modules_tab.png" id="8_7uxoi"]
-[ext_resource type="Texture2D" uid="uid://dc6gjbmsycfpy" path="res://2d_assets/crafting/active_resources_tab.png" id="9_6ikml"]
+[ext_resource type="Texture2D" uid="uid://kgqrfiwvetbo" path="res://2d_assets/crafting/inactive_modules_tab.png" id="10_6uax1"]
 [ext_resource type="Texture2D" uid="uid://nylt5y48ok7e" path="res://2d_assets/crafting/craft_selection_background.png" id="10_q0jvf"]
+[ext_resource type="Texture2D" uid="uid://bhyipt2qdnia4" path="res://2d_assets/crafting/inactive_resources_tab.png" id="11_u4imy"]
 [ext_resource type="LabelSettings" uid="uid://2e243et27feg" path="res://other_assets/label_settings/crafting_requirments_stats.tres" id="12_7uxoi"]
 [ext_resource type="Texture2D" uid="uid://ckkntno5yp5sl" path="res://2d_assets/crafting/stats_stroke.png" id="12_uc2av"]
 [ext_resource type="Texture2D" uid="uid://wbdpq7cxeel8" path="res://2d_assets/crafting/craft button.png" id="13_7uxoi"]
+[ext_resource type="PackedScene" uid="uid://jvgkff2pr1rj" path="res://scenes/user_interface/crafting_selection_sections.tscn" id="13_u4imy"]
 [ext_resource type="PackedScene" uid="uid://hgi3y5catplc" path="res://scenes/user_interface/recepie_requirment.tscn" id="13_uc2av"]
+[ext_resource type="PackedScene" uid="uid://cxjg2nfs7kh11" path="res://scenes/user_interface/craft_cell.tscn" id="14_6bmh7"]
+[ext_resource type="PackedScene" uid="uid://dqgjh854m2igs" path="res://scenes/user_interface/itemtip.tscn" id="16_6ikml"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_57qmd"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_scvtr"]
+font = ExtResource("2_xasgv")
+font_size = 26
+font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6uax1"]
+bg_color = Color(0.5568628, 0.5568628, 0.5568628, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iwo3t"]
+bg_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.65882355, 0.65882355, 0.65882355, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yf5fn"]
 
@@ -91,12 +122,31 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[node name="crafting_ui" type="CanvasLayer" unique_id=881350527 node_paths=PackedStringArray("turrets_tab", "modules_tab", "resources_tab")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yf5fn"]
+bg_color = Color(0.18431373, 0.18431373, 0.18431373, 0.3764706)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="crafting_ui" type="CanvasLayer" unique_id=881350527 node_paths=PackedStringArray("craft_name", "weight_stat", "value_stat", "teir_stat", "craft_time_stat", "description", "requirments_hflow", "craft_button", "craft_overlay", "turrets_tab", "modules_tab", "resources_tab")]
 script = ExtResource("1_0a7d0")
+recipe_requirments_scene = ExtResource("13_uc2av")
+craft_name = NodePath("crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/craft_name")
+weight_stat = NodePath("crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/requirments_stats_and_image/stats_stroke/MarginContainer/VBoxContainer/weight_stat")
+value_stat = NodePath("crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/requirments_stats_and_image/stats_stroke/MarginContainer/VBoxContainer/value_stat")
+teir_stat = NodePath("crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/requirments_stats_and_image/stats_stroke/MarginContainer/VBoxContainer/teir_stat")
+craft_time_stat = NodePath("crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/requirments_stats_and_image/stats_stroke/MarginContainer/VBoxContainer/craft_time_stat")
+description = NodePath("crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/description_margin/description")
+requirments_hflow = NodePath("crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/requirments_margin/requirments_panel/MarginContainer/requirments_hflow")
+craft_button = NodePath("crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/craft_button_margin/craft_button")
+craft_overlay = NodePath("crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/craft_button_margin/actual_craft_overlay")
 turrets_tab = NodePath("crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/VBoxContainer/tab_hbox/turret_tab_button")
 modules_tab = NodePath("crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/VBoxContainer/tab_hbox/modules_tab_button")
 resources_tab = NodePath("crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/VBoxContainer/tab_hbox/resourses_tab_button")
 metadata/_edit_horizontal_guides_ = [223.0]
+
+[node name="itemtip" parent="." unique_id=854836766 instance=ExtResource("16_6ikml")]
 
 [node name="crafting_margin" type="MarginContainer" parent="." unique_id=412766446]
 anchors_preset = -1
@@ -121,8 +171,80 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_g4v7s")
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="inventory" parent="crafting_margin/whole_ui/crafting_hbox" unique_id=223357087 instance=ExtResource("2_q0jvf")]
+[node name="crafting_inventory" type="PanelContainer" parent="crafting_margin/whole_ui/crafting_hbox" unique_id=273333935 node_paths=PackedStringArray("item_tip", "item_parent")]
+custom_minimum_size = Vector2(330, 0)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_57qmd")
+script = ExtResource("2_scvtr")
+item_tip = NodePath("../../../../itemtip")
+item_parent = NodePath("MarginContainer/inventory_vbox/inventory_cells_background/MarginContainer/inventory_scroll_container/inventory_hflow_continer")
+
+[node name="inventory_background" type="TextureRect" parent="crafting_margin/whole_ui/crafting_hbox/crafting_inventory" unique_id=334332849]
+layout_mode = 2
+texture = ExtResource("2_7uxoi")
+
+[node name="corner_wedge_margin" type="MarginContainer" parent="crafting_margin/whole_ui/crafting_hbox/crafting_inventory" unique_id=108563482]
+layout_mode = 2
+theme_override_constants/margin_top = 535
+
+[node name="inventory_corner_wedge" type="TextureRect" parent="crafting_margin/whole_ui/crafting_hbox/crafting_inventory/corner_wedge_margin" unique_id=1963506128]
+layout_mode = 2
+texture = ExtResource("4_6ikml")
+stretch_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="crafting_margin/whole_ui/crafting_hbox/crafting_inventory" unique_id=1600878597]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 21
+
+[node name="inventory_vbox" type="VBoxContainer" parent="crafting_margin/whole_ui/crafting_hbox/crafting_inventory/MarginContainer" unique_id=14296893]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="inventory_title" type="Label" parent="crafting_margin/whole_ui/crafting_hbox/crafting_inventory/MarginContainer/inventory_vbox" unique_id=40955609]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+text = "Inventory"
+label_settings = SubResource("LabelSettings_scvtr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="inventory_divider_margin" type="MarginContainer" parent="crafting_margin/whole_ui/crafting_hbox/crafting_inventory/MarginContainer/inventory_vbox" unique_id=1294007133]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 15
+
+[node name="inventory_divider" type="Panel" parent="crafting_margin/whole_ui/crafting_hbox/crafting_inventory/MarginContainer/inventory_vbox/inventory_divider_margin" unique_id=292785676]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6uax1")
+
+[node name="inventory_cells_background" type="PanelContainer" parent="crafting_margin/whole_ui/crafting_hbox/crafting_inventory/MarginContainer/inventory_vbox" unique_id=1788652865]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_iwo3t")
+
+[node name="MarginContainer" type="MarginContainer" parent="crafting_margin/whole_ui/crafting_hbox/crafting_inventory/MarginContainer/inventory_vbox/inventory_cells_background" unique_id=1000581961]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 10
+
+[node name="inventory_scroll_container" type="ScrollContainer" parent="crafting_margin/whole_ui/crafting_hbox/crafting_inventory/MarginContainer/inventory_vbox/inventory_cells_background/MarginContainer" unique_id=1768728650]
+layout_mode = 2
+follow_focus = true
+
+[node name="inventory_hflow_continer" type="HFlowContainer" parent="crafting_margin/whole_ui/crafting_hbox/crafting_inventory/MarginContainer/inventory_vbox/inventory_cells_background/MarginContainer/inventory_scroll_container" unique_id=92783126]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
 
 [node name="connector" type="TextureRect" parent="crafting_margin/whole_ui/crafting_hbox" unique_id=1485261882]
 custom_maximum_size = Vector2(-1, 590)
@@ -218,7 +340,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_cqbt3")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_1af7d")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_ytmqp")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ds5fe")
-icon = ExtResource("8_7uxoi")
+icon = ExtResource("10_6uax1")
 
 [node name="MarginContainer" type="MarginContainer" parent="crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/VBoxContainer/tab_hbox/modules_tab_button" unique_id=1695949203]
 layout_mode = 1
@@ -242,7 +364,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_cqbt3")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_1af7d")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_ytmqp")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ds5fe")
-icon = ExtResource("9_6ikml")
+icon = ExtResource("11_u4imy")
 
 [node name="MarginContainer" type="MarginContainer" parent="crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/VBoxContainer/tab_hbox/resourses_tab_button" unique_id=856765455]
 layout_mode = 1
@@ -264,6 +386,34 @@ layout_mode = 2
 texture = ExtResource("10_q0jvf")
 stretch_mode = 3
 
+[node name="MarginContainer" type="MarginContainer" parent="crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/VBoxContainer/TextureRect" unique_id=1264312394]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+metadata/_edit_use_anchors_ = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/VBoxContainer/TextureRect/MarginContainer" unique_id=1665398155]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/VBoxContainer/TextureRect/MarginContainer/ScrollContainer" unique_id=22679774]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="crafing_selection_sections" parent="crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/VBoxContainer/TextureRect/MarginContainer/ScrollContainer/VBoxContainer" unique_id=442247909 instance=ExtResource("13_u4imy")]
+layout_mode = 2
+
+[node name="craft_cell" parent="crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/VBoxContainer/TextureRect/MarginContainer/ScrollContainer/VBoxContainer/crafing_selection_sections/MarginContainer/VBoxContainer/HFlowContainer" parent_id_path=PackedInt32Array(442247909, 1478384740) index="0" unique_id=126499183 node_paths=PackedStringArray("crafting_menu") instance=ExtResource("14_6bmh7")]
+layout_mode = 2
+crafting_menu = NodePath("../../../../../../../../../../../../../../../../../..")
+
 [node name="crafting_requirments_background" type="TextureRect" parent="crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer" unique_id=992849128]
 layout_mode = 2
 texture = ExtResource("6_k2ynt")
@@ -283,7 +433,7 @@ theme_override_constants/margin_bottom = 10
 [node name="craftin_requirments_vbox" type="VBoxContainer" parent="crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin" unique_id=2126882018]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox" unique_id=331295582]
+[node name="craft_name" type="Label" parent="crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox" unique_id=331295582]
 layout_mode = 2
 text = "Name Of The Item"
 label_settings = SubResource("LabelSettings_xknqp")
@@ -330,22 +480,22 @@ theme_override_constants/separation = 8
 
 [node name="weight_stat" type="Label" parent="crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/requirments_stats_and_image/stats_stroke/MarginContainer/VBoxContainer" unique_id=1464740779]
 layout_mode = 2
-text = "Weight : 999k"
+text = "Weight :"
 label_settings = ExtResource("12_7uxoi")
 
 [node name="value_stat" type="Label" parent="crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/requirments_stats_and_image/stats_stroke/MarginContainer/VBoxContainer" unique_id=1900315412]
 layout_mode = 2
-text = "Value : 999k"
+text = "Value :"
 label_settings = ExtResource("12_7uxoi")
 
 [node name="teir_stat" type="Label" parent="crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/requirments_stats_and_image/stats_stroke/MarginContainer/VBoxContainer" unique_id=580199940]
 layout_mode = 2
-text = "Teir : 5"
+text = "Teir : "
 label_settings = ExtResource("12_7uxoi")
 
 [node name="craft_time_stat" type="Label" parent="crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/requirments_stats_and_image/stats_stroke/MarginContainer/VBoxContainer" unique_id=167747357]
 layout_mode = 2
-text = "Craft Time : 99s"
+text = "Craft Time : "
 label_settings = ExtResource("12_7uxoi")
 
 [node name="requirments_image_margin" type="MarginContainer" parent="crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/requirments_stats_and_image" unique_id=1795809530]
@@ -382,9 +532,10 @@ theme_override_constants/margin_top = 2
 custom_minimum_size = Vector2(200, 60)
 custom_maximum_size = Vector2(230, -1)
 layout_mode = 2
-text = "Now that i have a changed the layout of 
-this area can hold alot more information and provide a more clear description of what stuff is and other bla bla"
+text = "No description yet"
 label_settings = SubResource("LabelSettings_odlx4")
+horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 3
 clip_text = true
 
@@ -411,9 +562,6 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 alignment = 1
 
-[node name="PanelContainer" parent="crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/requirments_margin/requirments_panel/MarginContainer/requirments_hflow" unique_id=1834247981 instance=ExtResource("13_uc2av")]
-layout_mode = 2
-
 [node name="craft_button_margin" type="MarginContainer" parent="crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox" unique_id=1410724005]
 layout_mode = 2
 theme_override_constants/margin_left = 80
@@ -425,6 +573,20 @@ icon = ExtResource("13_7uxoi")
 flat = true
 icon_alignment = 1
 
+[node name="actual_craft_overlay" type="MarginContainer" parent="crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/craft_button_margin" unique_id=824540638]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="visual_craft_overlay" type="PanelContainer" parent="crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/craft_button_margin/actual_craft_overlay" unique_id=301406997]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_yf5fn")
+
 [connection signal="pressed" from="crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/VBoxContainer/tab_hbox/turret_tab_button" to="." method="_on_turret_tab_button_pressed"]
 [connection signal="pressed" from="crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/VBoxContainer/tab_hbox/modules_tab_button" to="." method="_on_modules_tab_button_pressed"]
 [connection signal="pressed" from="crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/VBoxContainer/tab_hbox/resourses_tab_button" to="." method="_on_resourses_tab_button_pressed"]
+[connection signal="pressed" from="crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/craft_button_margin/craft_button" to="." method="craft"]
+
+[editable path="crafting_margin/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/VBoxContainer/TextureRect/MarginContainer/ScrollContainer/VBoxContainer/crafing_selection_sections"]

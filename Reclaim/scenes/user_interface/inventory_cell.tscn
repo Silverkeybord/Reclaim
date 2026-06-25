@@ -46,3 +46,6 @@ rotation = -0.089428425
 text = "999.9k"
 label_settings = SubResource("LabelSettings_e6v48")
 horizontal_alignment = 2
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

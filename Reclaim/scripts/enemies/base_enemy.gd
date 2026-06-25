@@ -135,7 +135,7 @@ func _get_drop_type_resource():
 		roll -= drop_probability_info.weight
 	
 		if roll <= 0:
-			if drop_probability_info.drop_name == NONE_TYPE_DROP:
+			if drop_probability_info.drop_name.key == NONE_TYPE_DROP:
 				return null
 			else:
-				return DataRegistry.items[drop_probability_info.drop_name]
+				return DataRegistry.items[drop_probability_info.drop_name.key]

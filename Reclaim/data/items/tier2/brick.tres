@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://byppdxebw1gs6"]
+
+[ext_resource type="Script" uid="uid://cgqvvu75ctfva" path="res://data/resource_scripts/items_data.gd" id="1_fhinb"]
+
+[resource]
+script = ExtResource("1_fhinb")
+key = "brick"
+size = Vector3(0.4, 0.4, 0.6)
+tier = 2
+weight = 5
+metadata/_custom_type_script = "uid://cgqvvu75ctfva"

@@ -1,0 +1,49 @@
+[gd_resource type="Resource" script_class="CraftData" format=3 uid="uid://csw4jndrwfsf1"]
+
+[ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="1_req"]
+[ext_resource type="Script" uid="uid://hps2ehio5s7l" path="res://data/resource_scripts/craft_data.gd" id="2_craft"]
+[ext_resource type="Resource" uid="uid://sp02wx0d0gfn" path="res://data/items/tier1/dirt.tres" id="3_0idfr"]
+[ext_resource type="Resource" uid="uid://ke1h4l1ko4bj" path="res://data/items/tier1/basic_material.tres" id="3_item"]
+[ext_resource type="Texture2D" uid="uid://05pxfvk22uxb" path="res://2d_assets/items/1/basic_material.png" id="4_c0236"]
+[ext_resource type="Resource" uid="uid://dmc0tsryqmh28" path="res://data/items/tier1/sand.tres" id="4_udb2c"]
+[ext_resource type="Resource" uid="uid://dm10222fpo58l" path="res://data/items/tier1/rock.tres" id="5_3roqm"]
+[ext_resource type="Resource" uid="uid://drghxojuhxfnn" path="res://data/items/tier1/clay.tres" id="6_vywpv"]
+[ext_resource type="Resource" uid="uid://dindgm06orind" path="res://data/items/tier1/scrap.tres" id="7_kn2js"]
+
+[sub_resource type="Resource" id="Resource_ecock"]
+script = ExtResource("1_req")
+item = ExtResource("3_0idfr")
+amount = 5
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_ksw0y"]
+script = ExtResource("1_req")
+item = ExtResource("4_udb2c")
+amount = 5
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_yxjx5"]
+script = ExtResource("1_req")
+item = ExtResource("5_3roqm")
+amount = 3
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_f8cje"]
+script = ExtResource("1_req")
+item = ExtResource("6_vywpv")
+amount = 3
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_mnj7u"]
+script = ExtResource("1_req")
+item = ExtResource("7_kn2js")
+amount = 1
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[resource]
+script = ExtResource("2_craft")
+key = "basic_material"
+requirements = Array[ExtResource("1_req")]([SubResource("Resource_ecock"), SubResource("Resource_ksw0y"), SubResource("Resource_yxjx5"), SubResource("Resource_f8cje"), SubResource("Resource_mnj7u")])
+crafted_item = ExtResource("3_item")
+texture = ExtResource("4_c0236")
+metadata/_custom_type_script = "uid://hps2ehio5s7l"

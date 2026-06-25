@@ -1,7 +1,8 @@
-extends CanvasLayer
+extends Node
 
-@export var grid_container : GridContainer
-@export var inventory_cell_scene : PackedScene
+@export var item_tip : CanvasLayer
+@export var item_parent : Node
+const inventory_cell_scene : PackedScene = preload("res://scenes/user_interface/inventory_cell.tscn")
 
 
 func _ready() -> void:
@@ -21,9 +22,7 @@ func _load_inventory() -> void:
 		for item in current_inventory[teir]:
 			if current_inventory[teir][item] > 0:
 				var new_cell : inventory_cell = inventory_cell_scene.instantiate()
-				grid_container.add_child(new_cell)
-				new_cell.item = item
-				new_cell.teir = teir
-				new_cell.amount = current_inventory[teir][item]
+				item_parent.add_child(new_cell)
+				new_cell.item_resource = DataRegistry.items[item]
+				new_cell.item_tip = item_tip
 				new_cell.setup()
-	

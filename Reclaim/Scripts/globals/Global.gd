@@ -22,26 +22,31 @@ const GRAVITY : float = 40.0
 const DEFAULT_BULLET_TRAIL_KEY : String = "default"
 const ROOT_NODES_GROUP : String = "root_nodes"
 const CURRENT_SCENE_ROOT_INDEX : int = 2
-const RARITY_CONFIG : Dictionary = {
+const TIER_CONFIG : Dictionary = {
 	1 : {
 		"color" : Color(0.541, 0.561, 0.596),
-		"cell" : preload("res://2d_assets/inventory/rough_cell.png")
+		"cell" : preload("res://2d_assets/inventory/rough_cell.png"),
+		"style" : preload("res://other_assets/crafting_styles/t1_style.tres")
 	},
 	2 : {
 		"color" : Color(0.29, 0.871, 0.502),
-		"cell" : preload("res://2d_assets/inventory/plain_cell.png")
+		"cell" : preload("res://2d_assets/inventory/plain_cell.png"),
+		"style" : preload("res://other_assets/crafting_styles/t2_style.tres")
 	},
 	3 : {
 		"color" : Color(0.29, 0.557, 0.996),
-		"cell" : preload("res://2d_assets/inventory/usefull_cell.png")
+		"cell" : preload("res://2d_assets/inventory/usefull_cell.png"),
+		"style" : preload("res://other_assets/crafting_styles/t3_style.tres")
 	},
 	4 : {
 		"color" : Color(1.0, 0.847, 0.243),
-		"cell" : preload("res://2d_assets/inventory/valuable_cell.png")
+		"cell" : preload("res://2d_assets/inventory/valuable_cell.png"),
+		"style" : preload("res://other_assets/crafting_styles/t4_style.tres")
 	},
 	5 : {
 		"color" : Color(0.937, 0.267, 0.267),
-		"cell" : preload("res://2d_assets/inventory/extraordinary_cell.png")
+		"cell" : preload("res://2d_assets/inventory/extraordinary_cell.png"),
+		"style" : preload("res://other_assets/crafting_styles/t5_style.tres")
 	}
 }
 
@@ -86,7 +91,7 @@ var enemies : int = 0
 var damage_indications : int = 0
 
 # META UPGRADES / COUNCIL AUTHORIZATION -------------------------------------
-var turret_slots := 8
+var turret_slots := 1
 
 # INVENORY + CURRENCY -------------------------------------------------------
 var cubits : int = 0
@@ -160,6 +165,7 @@ func create_damage_indicator(pos : Vector3, damage : int) -> void:
 	new_indication.global_position = pos
 	new_indication.init()
 
+
 ## Converts large integers into shorthand notation (e.g. 1_500 → "1.5K")
 func return_amount_shorthand(value: float) -> String:
 	# works out the order of magnitude value has
@@ -207,11 +213,39 @@ func return_amount_shorthand(value: float) -> String:
 	return str(floori(value / (ORDER_OF_MAGNITUDE ** magnitude_divisor))) + suffix
 
 
+## splits the string into words, capitalizes those words 
+## then joins them with a space inbetween
+func get_display_name(input : String) -> String:
+	var words := input.split("_")
+	
+	for i in words.size():
+		words[i] = words[i].capitalize()
+	
+	return " ".join(words)
+
+
+## puts commas every 3 numbers --- MADE WITH CHAT GPT ---
+func comma_number(num : int) -> String:
+	if num >= (10 ** MAX_SHORTHAND_MAGNITUDE):
+		return MAX_TEXT
+	
+	var text := str(num)
+	var result := ""
+
+	while text.length() > 3:
+		result = "," + text.substr(text.length() - 3) + result
+		text = text.substr(0, text.length() - 3)
+
+	return text + result
+
+
 ## Temp testing function to fill inventory
 func set_random_inventory() -> void:
 	for key in DataRegistry.items:
 		var resource = DataRegistry.items[key]
-		ship_inventory[resource.teir][key] = randi_range(1, 999) ** (randi_range(1, 5))
+		ship_inventory[resource.tier][key] = (
+			randi_range(1, 999) * (10 ** (randi_range(1, 9)))
+			)
 
 
 ## Sets the moust of the player to be unlocked or locked bassed on its last value
@@ -223,6 +257,13 @@ func set_mouse_captured() -> void:
 	else:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
+
+## gets the current inventory bassed on where the player is in the game
+func get_current_inventory() -> Dictionary:
+	if at_ship:
+		return ship_inventory
+	else:
+		return sector_inventory
 
 # SAVEING, LODING, AND RESETING GAME DATA =====================================
 ## Saves the current game data to the path

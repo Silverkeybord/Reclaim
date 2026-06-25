@@ -9,7 +9,7 @@
 script = ExtResource("2_41q63")
 stream = ExtResource("3_7i0b1")
 max_distance = 40
-volume = 20
+volume = 30
 metadata/_custom_type_script = "uid://br78q44p6grd3"
 
 [sub_resource type="Resource" id="Resource_mhlrs"]

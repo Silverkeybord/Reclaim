@@ -168,6 +168,21 @@ Unlock New Sectors
 Repeat
 ```
 
+### Extraction Loss Rule (Reinforced)
+
+Anything not extracted:
+
+ - is permanently lost
+ - is consumed by spheres
+ - may be partially converted into future enemy adaptation
+
+This ensures:
+
+ - Player attachment to risk decisions
+ - “left behind = lost forever” tension loop
+ - reinforces extraction urgency
+
+
 ---
 
 ## 6. Player
@@ -296,19 +311,24 @@ Resources are divided into five tiers.
 - Circuit
 - Concrete
 - Gear
-- Ice
+- Ice_essence
+- Ice_shard
 - Iron
 - Steel
 - Tungsten
-- Water
-- Wind
+- Water_essence
+- Water_shard
+- Wind_essence
+- Wind_shard
 
 ### Tier 4 — Electronic Material
 
 - Acid
 - Chip
-- Earth
-- Fire
+- Earth_esssence
+- Earth_shard
+- Fire_essence
+- fire_shard
 - Gold
 - Silicon
 - Uranium
@@ -316,9 +336,11 @@ Resources are divided into five tiers.
 ### Tier 5 — Exotic Material
 
 - Antimatter
-- Dark
+- Dark_essence
+- Dark_shard
 - Graphene
-- Light
+- Light_essence
+- light_shard
 - Platinum
 - Tesseract
 
@@ -481,20 +503,53 @@ Modules should create builds rather than simply increasing numbers.
 
 ---
 
-## 18. Elemental System
+## 18. Elemental System (Reworked)
 
-Elements are primarily utility-focused. Examples:
+Elements are no longer directly dropped in full form.
 
-- **Fire** — Burn damage.
-- **Ice** — Freeze.
-- **Water** — Wet status.
-- **Wind** — Knockback.
-- **Earth** — Defense and reinforcement.
-- **Acid** — Corrosion.
-- **Dark** — Slowing and fire amplification.
-- **Light** — Stun/Blinding, all other elements amplified.
+Core Loop
 
----
+Enemies drop:
+
+### Elemental Shards
+- fire_shard
+- ice_shard
+- water_shard
+- wind_shard
+- earth_shard
+- etc.
+
+Shards are raw environmental residue from sphere adaptation.
+
+### Refinement System
+
+To create usable elemental resources:
+
+Shards + Elemental Essence → Elemental Resource
+
+Examples:
+
+- fire_shard + elemental_essence → fire
+- ice_shard + elemental_essence → ice
+- wind_shard + elemental_essence → wind
+
+Design Purpose
+
+This creates a deliberate bottleneck:
+
+Elemental Essence becomes a strategic limiting resource
+Players cannot spam elemental builds early
+Encourages sector targeting based on resource availability
+Makes Council market and extraction decisions meaningful
+
+### Late Game Scaling
+
+Higher-tier sectors increase:
+
+- shard density
+- essence scarcity or abundance imbalance
+- elemental contamination variants (future expansion hook)
+
 
 ## 19. Sector Progression
 

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CraftData" format=3 uid="uid://bleg481706p04"]
+
+[ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="1_req"]
+[ext_resource type="Script" uid="uid://hps2ehio5s7l" path="res://data/resource_scripts/craft_data.gd" id="2_craft"]
+[ext_resource type="Resource" uid="uid://byppdxebw1gs6" path="res://data/items/tier2/brick.tres" id="3_item"]
+[ext_resource type="Texture2D" uid="uid://bcumbj4f7a7ii" path="res://2d_assets/items/2/brick.png" id="4_6g32r"]
+
+[resource]
+script = ExtResource("2_craft")
+key = "brick"
+crafted_item = ExtResource("3_item")
+texture = ExtResource("4_6g32r")
+metadata/_custom_type_script = "uid://hps2ehio5s7l"

@@ -1,3 +1,4 @@
+class_name RecipeRequirement
 extends PanelContainer
 
 const HAVE_INDICATIONS : Dictionary = {
@@ -5,16 +6,7 @@ const HAVE_INDICATIONS : Dictionary = {
 	true : preload("res://2d_assets/crafting/enough_resources.png")
 }
 
-const TEIR_STYLES : Dictionary = {
-	1 : preload("res://other_assets/crafting_styles/t1_recepie_requirment.tres"),
-	2 : preload("res://other_assets/crafting_styles/t2_recepie_requirment.tres"),
-	3 : preload("res://other_assets/crafting_styles/t3_recepie_requirment.tres"),
-	4 : preload("res://other_assets/crafting_styles/t4_recepie_requirment.tres"),
-	5 : preload("res://other_assets/crafting_styles/t5_recepie_requirment.tres")
-}
-
-
-@export var item : String = "scrap"
+@export var item_data : ItemData
 @export var amount_required : int = 10
 @export var have_enough : bool = false
 
@@ -24,31 +16,31 @@ const TEIR_STYLES : Dictionary = {
 
 
 func _ready() -> void:
+	Global.set_random_inventory()
 	await get_tree().create_timer(2).timeout
 	update_value()
 
 
-
 func update_value() -> void:
-	add_theme_stylebox_override("panel", TEIR_STYLES[DataRegistry.items[item].teir])
-	item_image.texture = load(DataRegistry.items[item].get_item_path())
-	label.text = Global.return_amount_shorthand(amount_required) + " " + item
+	add_theme_stylebox_override(
+		"panel", Global.TIER_CONFIG[item_data.tier]["style"]
+		)
+	item_image.texture = load(item_data.get_item_path())
+	label.text = Global.return_amount_shorthand(amount_required) + " " + item_data.key
 	check_requirment()
 
 
 func check_requirment() -> void:
-	var current_inventory : Dictionary
-	if Global.at_ship:
-		current_inventory = Global.ship_inventory
-	else:
-		current_inventory = Global.sector_inventory
+	var current_inventory : Dictionary = Global.get_current_inventory()
 	
-	if current_inventory.has(item):
-		if current_inventory[item] >= amount_required:
+	if current_inventory[item_data.tier].has(item_data.key):
+		if current_inventory[item_data.tier][item_data.key] >= amount_required:
 			have_enough = true
 		else:
+			print("not enough")
 			have_enough = false
 	else:
+		print("cant find")
 		have_enough = false
 	
 	have_indication.texture = HAVE_INDICATIONS[have_enough]

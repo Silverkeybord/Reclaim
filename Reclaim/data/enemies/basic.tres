@@ -2,40 +2,46 @@
 
 [ext_resource type="Script" uid="uid://cqm7b8e0xdrh5" path="res://scripts/enemies/drop_weight_resourse.gd" id="1_8x0ra"]
 [ext_resource type="Script" uid="uid://du3loq87kdgkg" path="res://data/resource_scripts/enemy_data.gd" id="2_6lcrm"]
+[ext_resource type="Resource" uid="uid://sp02wx0d0gfn" path="res://data/items/tier1/dirt.tres" id="2_juh8h"]
+[ext_resource type="Resource" uid="uid://drghxojuhxfnn" path="res://data/items/tier1/clay.tres" id="3_ka0f0"]
+[ext_resource type="Resource" uid="uid://dm10222fpo58l" path="res://data/items/tier1/rock.tres" id="4_1om4g"]
+[ext_resource type="Resource" uid="uid://dmc0tsryqmh28" path="res://data/items/tier1/sand.tres" id="5_xf8t8"]
+[ext_resource type="Resource" uid="uid://c6k8hue261trj" path="res://data/items/tier1/flint.tres" id="6_ot3hm"]
+[ext_resource type="Resource" uid="uid://dindgm06orind" path="res://data/items/tier1/scrap.tres" id="7_lr81q"]
 
 [sub_resource type="Resource" id="Resource_5hpjm"]
 script = ExtResource("1_8x0ra")
-drop_name = "dirt"
+drop_name = ExtResource("2_juh8h")
 weight = 25
 metadata/_custom_type_script = "uid://cqm7b8e0xdrh5"
 
 [sub_resource type="Resource" id="Resource_ldbw5"]
 script = ExtResource("1_8x0ra")
-drop_name = "clay"
+drop_name = ExtResource("3_ka0f0")
 weight = 20
 metadata/_custom_type_script = "uid://cqm7b8e0xdrh5"
 
 [sub_resource type="Resource" id="Resource_4eudv"]
 script = ExtResource("1_8x0ra")
-drop_name = "rock"
+drop_name = ExtResource("4_1om4g")
 weight = 20
 metadata/_custom_type_script = "uid://cqm7b8e0xdrh5"
 
 [sub_resource type="Resource" id="Resource_qkt1o"]
 script = ExtResource("1_8x0ra")
-drop_name = "sand"
+drop_name = ExtResource("5_xf8t8")
 weight = 20
 metadata/_custom_type_script = "uid://cqm7b8e0xdrh5"
 
 [sub_resource type="Resource" id="Resource_r78na"]
 script = ExtResource("1_8x0ra")
-drop_name = "flint"
+drop_name = ExtResource("6_ot3hm")
 weight = 5
 metadata/_custom_type_script = "uid://cqm7b8e0xdrh5"
 
 [sub_resource type="Resource" id="Resource_65b5b"]
 script = ExtResource("1_8x0ra")
-drop_name = "scrap"
+drop_name = ExtResource("7_lr81q")
 weight = 3
 metadata/_custom_type_script = "uid://cqm7b8e0xdrh5"
 

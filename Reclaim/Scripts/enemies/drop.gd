@@ -1,6 +1,6 @@
 extends RigidBody3D
 
-const TEIR_DESPAWN_MULT := 20 # seconds before desawning multipyled by the interger value of the rarity
+const TIER_DESPAWN_MULT := 20 # seconds before desawning multipyled by the interger value of the rarity
 
 const DESPAWN_SCALE := Vector3(0.1, 0.1, 0.1)
 const DESPAWN_TWEEN_TIME := 0.5
@@ -49,7 +49,7 @@ var speed = 3
 
 
 func _ready() -> void:
-	despawn_timer.wait_time = TEIR_DESPAWN_MULT * item_resource.teir
+	despawn_timer.wait_time = TIER_DESPAWN_MULT * item_resource.tier
 	despawn_timer.start()
 	
 	mesh.mesh = mesh.mesh.duplicate()
@@ -140,7 +140,7 @@ func _give_random_movement() -> void:
 func _pick_up() -> void:
 	Global.spawn_temp_sound(pickup_sounds.pick_random())
 	
-	if Global.sector_inventory[item_resource.teir].has(item_resource.key):
-		Global.sector_inventory[item_resource.teir][item_resource.key] += 1
+	if Global.sector_inventory[item_resource.tier].has(item_resource.key):
+		Global.sector_inventory[item_resource.tier][item_resource.key] += 1
 	else:
-		Global.sector_inventory[item_resource.teir][item_resource.key] = 1
+		Global.sector_inventory[item_resource.tier][item_resource.key] = 1

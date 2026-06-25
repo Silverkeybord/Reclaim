@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CraftData" format=3 uid="uid://bj70g68d6760k"]
+
+[ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="1_req"]
+[ext_resource type="Script" uid="uid://hps2ehio5s7l" path="res://data/resource_scripts/craft_data.gd" id="2_craft"]
+[ext_resource type="Resource" uid="uid://drghxojuhxfnn" path="res://data/items/tier1/clay.tres" id="3_item"]
+[ext_resource type="Texture2D" uid="uid://cr3pichkg7sax" path="res://2d_assets/items/1/clay.png" id="4_j2yeo"]
+
+[resource]
+script = ExtResource("2_craft")
+key = "clay"
+crafted_item = ExtResource("3_item")
+texture = ExtResource("4_j2yeo")
+metadata/_custom_type_script = "uid://hps2ehio5s7l"
