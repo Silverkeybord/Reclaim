@@ -1,3 +1,4 @@
+class_name CraftingSelection
 extends PanelContainer
 
 const TIER_TEXT := "Tier "
@@ -7,10 +8,8 @@ const BORDER_THICKNESS := 4
 @export_range(1, 5) var tier : int = 1
 
 @export var tier_label : Label
-
-
-func _ready() -> void:
-	set_up()
+@export var hflow : HFlowContainer
+@export var tab : String
 
 
 func set_up() -> void: 

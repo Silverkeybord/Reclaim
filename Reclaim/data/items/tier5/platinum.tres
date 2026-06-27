@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemData" format=3]
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://4blvyhwaq8rb"]
 
 [ext_resource type="Script" uid="uid://cgqvvu75ctfva" path="res://data/resource_scripts/items_data.gd" id="1_dannn"]
 
@@ -6,5 +6,4 @@
 script = ExtResource("1_dannn")
 key = "platinum"
 tier = 5
-type = "resources"
 metadata/_custom_type_script = "uid://cgqvvu75ctfva"

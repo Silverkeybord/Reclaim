@@ -15,32 +15,26 @@ const HAVE_INDICATIONS : Dictionary = {
 @export var have_indication : TextureRect
 
 
-func _ready() -> void:
-	Global.set_random_inventory()
-	await get_tree().create_timer(2).timeout
-	update_value()
-
-
 func update_value() -> void:
+	name = item_data.key
 	add_theme_stylebox_override(
 		"panel", Global.TIER_CONFIG[item_data.tier]["style"]
 		)
-	item_image.texture = load(item_data.get_item_path())
+	item_image.texture = item_data.get_item_texture()
 	label.text = Global.return_amount_shorthand(amount_required) + " " + item_data.key
-	check_requirment()
+	check_requirement()
 
 
-func check_requirment() -> void:
+func check_requirement() -> bool:
 	var current_inventory : Dictionary = Global.get_current_inventory()
 	
 	if current_inventory[item_data.tier].has(item_data.key):
 		if current_inventory[item_data.tier][item_data.key] >= amount_required:
 			have_enough = true
 		else:
-			print("not enough")
 			have_enough = false
 	else:
-		print("cant find")
 		have_enough = false
 	
 	have_indication.texture = HAVE_INDICATIONS[have_enough]
+	return have_enough

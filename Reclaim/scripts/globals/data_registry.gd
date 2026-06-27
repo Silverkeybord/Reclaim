@@ -28,7 +28,7 @@ func _ready() -> void:
 	_load_folder(ENEMIES_PATH, enemies)
 	_load_folder(WAVE_PATH, wave)
 	_load_folder(RESEARCH_PATH, research)
-	_load_folder(CRAFTING_PATH, crafting)
+	_load_folder(CRAFTING_PATH, crafting, true)
 	_load_folder(BULLET_TRAIL_PATH, bullet_trail)
 	_load_folder(ITEMS_PATH, items, true)
 	
@@ -49,7 +49,7 @@ func _load_folder(path: String, dict: Dictionary, recursive: bool = false) -> vo
 	# if recursive is and file is a folder it will will recursivly search that folder
 	# putting it in the same dict
 	dir.list_dir_begin()
-	var file = dir.get_next()
+	var file = dir.get_next() 
 	
 	while file != "":
 		if file.ends_with(".tres"):

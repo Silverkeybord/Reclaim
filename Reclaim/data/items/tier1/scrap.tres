@@ -1,9 +1,13 @@
-[gd_resource type="Resource" script_class="DropData" format=3 uid="uid://dindgm06orind"]
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://dindgm06orind"]
 
 [ext_resource type="Script" uid="uid://cgqvvu75ctfva" path="res://data/resource_scripts/items_data.gd" id="1_1miv4"]
+[ext_resource type="Texture2D" uid="uid://cgcnht18jhoxa" path="res://2d_assets/items/1/scrap.png" id="1_ubw5f"]
+[ext_resource type="Material" uid="uid://b0grvd22mypjn" path="res://textures_and_materials/items/1/scrap.tres" id="2_7djxg"]
 
 [resource]
 script = ExtResource("1_1miv4")
 key = "scrap"
 size = Vector3(0.2, 0.2, 0.5)
+item_texture = ExtResource("1_ubw5f")
+material = ExtResource("2_7djxg")
 metadata/_custom_type_script = "uid://cgqvvu75ctfva"

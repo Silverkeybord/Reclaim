@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://d0c8fedifhdn"]
 
+[ext_resource type="Texture2D" uid="uid://dvlxs50rja4iw" path="res://2d_assets/items/2/coal.png" id="1_8af7e"]
 [ext_resource type="Script" uid="uid://cgqvvu75ctfva" path="res://data/resource_scripts/items_data.gd" id="1_o2dpg"]
 
 [resource]
@@ -7,4 +8,5 @@ script = ExtResource("1_o2dpg")
 key = "coal"
 size = Vector3(0.4, 0.35, 0.4)
 tier = 2
+item_texture = ExtResource("1_8af7e")
 metadata/_custom_type_script = "uid://cgqvvu75ctfva"

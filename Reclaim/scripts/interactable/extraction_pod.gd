@@ -1,6 +1,6 @@
 extends StaticBody3D
 
-const ship_scene := "res://scenes/ship/ship.tscn"
+const ship_scene := "res://scenes/ship.tscn"
 
 
 func interact() -> void:

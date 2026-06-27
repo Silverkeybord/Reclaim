@@ -2,8 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://b31irr6awo2x4" path="res://textures_and_materials/maps/basic floor.png" id="1_yiw8y"]
 [ext_resource type="PackedScene" uid="uid://dwm2mxns3x5wt" path="res://scenes/player/player.tscn" id="2_3x14o"]
-[ext_resource type="PackedScene" uid="uid://cm7cq456gvpot" path="res://scenes/ship/crafting_table.tscn" id="3_vd8et"]
-[ext_resource type="PackedScene" uid="uid://p33w1llwyou3" path="res://scenes/ship/research_table.tscn" id="4_cj7di"]
+[ext_resource type="PackedScene" uid="uid://cm7cq456gvpot" path="res://scenes/interactable/crafting_table.tscn" id="3_vd8et"]
+[ext_resource type="PackedScene" uid="uid://p33w1llwyou3" path="res://scenes/interactable/research_table.tscn" id="4_cj7di"]
 [ext_resource type="PackedScene" uid="uid://c08otjhflwli2" path="res://scenes/maps/extraction_pod.tscn" id="5_cj7di"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_orl8w"]

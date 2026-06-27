@@ -1,7 +1,7 @@
 class_name CraftCell
 extends Button
 
-const DOUBLE_CLICK_TIME : float = 0.2
+const DOUBLE_CLICK_TIME : float = 0.3
 const CAN_CRAFT_TEXTURES : Dictionary = {
 	true : preload("res://2d_assets/crafting/can_craft_cell.png"),
 	false : preload("res://2d_assets/crafting/cant_craft_cell.png")
@@ -29,11 +29,13 @@ func _ready() -> void:
 
 
 func set_up() -> void:
-	item_image.texture = craft_data.texture
+	item_image.texture = craft_data.crafted_item.get_item_texture()
+	
 	check_requirements()
 
 
 func check_requirements() -> void:
+	can_craft = true
 	for requirement : RequirementsTemplate in craft_data.requirements:
 		var have_enough = true
 		var current_inventory : Dictionary = Global.get_current_inventory()
@@ -45,10 +47,9 @@ func check_requirements() -> void:
 		else:
 			can_craft = false
 		
-		craft_requirements[requirement.item] = [have_enough]
+		craft_requirements[requirement.item] = have_enough
 	
 	cant_craft_overlay.visible = not can_craft
-	disabled = not can_craft
 
 
 func _on_pressed() -> void:
@@ -60,6 +61,8 @@ func _on_pressed() -> void:
 	
 	if valid_last_click:
 		crafting_menu.craft(craft_data)
+		double_click_timer.stop()
+		double_click_timer.start()
 
 
 func _on_double_click_timer_timeout() -> void:

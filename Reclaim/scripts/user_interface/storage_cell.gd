@@ -1,4 +1,4 @@
-class_name inventory_cell
+class_name StorageCell
 extends Control
 
 const CELL_TEXTURE_KEY := "cell"
@@ -11,31 +11,34 @@ const CELL_TEXTURE_KEY := "cell"
 @export var item_texture : TextureRect
 @export var amount_label : Label
 @export var item_tip : CanvasLayer
+@export var highlight_overlay : Panel
 
 var amount : int 
 
 
 func setup() -> void:
-	if Global.at_ship:
-		amount = Global.ship_inventory[item_resource.tier][item_resource.key]
-	else:
-		amount = Global.sector_inventory[item_resource.tier][item_resource.key]
-	
-	amount_label.text = Global.return_amount_shorthand(amount)
+	update_amount()
 	
 	cell_texture.texture = Global.TIER_CONFIG[item_resource.tier][CELL_TEXTURE_KEY]
 	
-	var item_texture_path = item_resource.get_item_path()
+	item_texture.texture = item_resource.get_item_texture()
+
+
+func update_amount() -> void:
+	var inventory = Global.ship_inventory if Global.at_ship else Global.sector_inventory
+	# If returned value dosen't exist return 0
+	amount = inventory[item_resource.tier].get(item_resource.key, 0)
+	amount_label.text = Global.return_amount_shorthand(amount)
 	
-	if FileAccess.file_exists(item_texture_path):
-		item_texture.texture = load(item_texture_path)
-	else:
-		item_texture.texture = load(item_resource.NONE_ITEM)
+	# you can get booleans from this
+	visible = amount > 0
 
 
 func _on_mouse_entered() -> void:
 	item_tip.show_itemtip(item_resource, amount)
+	highlight_overlay.visible = true
 
 
 func _on_mouse_exited() -> void:
 	item_tip.hide_itemtip()
+	highlight_overlay.visible = false

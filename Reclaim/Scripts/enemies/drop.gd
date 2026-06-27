@@ -58,8 +58,7 @@ func _ready() -> void:
 	rigid_collision_shape.shape.size = item_resource.size
 	mesh.mesh.size = item_resource.size
 	
-	var material_path = item_resource.get_material_path()
-	mesh.set_surface_override_material(0, load(material_path))
+	mesh.set_surface_override_material(0, item_resource.get_material())
 	
 	_give_random_movement()
 	
@@ -91,7 +90,6 @@ func _process(delta: float) -> void:
 			_pick_up()
 			set_process(false)
 			queue_free()
-	
 
 
 func _on_despawn_timer_timeout() -> void:

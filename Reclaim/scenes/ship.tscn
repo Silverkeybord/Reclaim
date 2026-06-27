@@ -1,9 +1,10 @@
 [gd_scene format=4 uid="uid://cykue4k22xfxa"]
 
 [ext_resource type="PackedScene" uid="uid://dwm2mxns3x5wt" path="res://scenes/player/player.tscn" id="1_m75ec"]
-[ext_resource type="PackedScene" uid="uid://cm7cq456gvpot" path="res://scenes/ship/crafting_table.tscn" id="2_f0cws"]
-[ext_resource type="PackedScene" uid="uid://p33w1llwyou3" path="res://scenes/ship/research_table.tscn" id="3_w1oif"]
-[ext_resource type="PackedScene" uid="uid://br62cm1gllm1" path="res://scenes/ship/deploy_pod.tscn" id="4_m75ec"]
+[ext_resource type="PackedScene" uid="uid://cm7cq456gvpot" path="res://scenes/interactable/crafting_table.tscn" id="2_f0cws"]
+[ext_resource type="PackedScene" uid="uid://p33w1llwyou3" path="res://scenes/interactable/research_table.tscn" id="3_w1oif"]
+[ext_resource type="PackedScene" uid="uid://br62cm1gllm1" path="res://scenes/interactable/deploy_pod.tscn" id="4_m75ec"]
+[ext_resource type="PackedScene" uid="uid://dy5epdlb81c0u" path="res://scenes/interactable/storage_container.tscn" id="5_io440"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_m75ec"]
 _surfaces = [{
@@ -46,3 +47,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25725937, 0, -7.802432)
 
 [node name="deploy_pod" parent="." unique_id=1373262889 groups=["interactable"] instance=ExtResource("4_m75ec")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, 0)
+
+[node name="storage_container" parent="." unique_id=1421577712 instance=ExtResource("5_io440")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 5.98608, 0.009203434, 7.7906218)

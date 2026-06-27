@@ -52,25 +52,23 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	#basic movement
-	var input_dir := Input.get_vector("left", "right", "forward", "back")
-	var direction := (global_basis * Vector3(input_dir.x, 0.0, input_dir.y)).normalized()
-	
-	velocity.x = direction.x * move_speed
-	velocity.z = direction.z * move_speed
-	
 	if not is_on_floor():
 		velocity.y -= Global.GRAVITY * delta
 	else:
 		velocity.y = 0.0
 	
-	
-	if Input.is_action_pressed("jump") and is_on_floor():
-		velocity.y = jump_velocity
-	
-	if Input.is_action_just_released("jump") and is_on_floor():
-		velocity.y = jump_velocity
-	
+	if not Global.crafting_open:
+		#basic movement
+		var input_dir := Input.get_vector("left", "right", "forward", "back")
+		var direction := (global_basis * Vector3(input_dir.x, 0.0, input_dir.y)).normalized()
+		
+		velocity.x = direction.x * move_speed
+		velocity.z = direction.z * move_speed
+		
+		if Input.is_action_just_pressed("jump") and is_on_floor():
+			velocity.y = jump_velocity
+	else:
+		velocity = Vector3(0, velocity.y, 0)
 	
 	move_and_slide()
 
@@ -270,7 +268,7 @@ func _check_valid_placement(ray_collider : Node) -> bool:
 
 # WEAPONS CONTROL ------------------------------------------------------------
 func _shoot_control() -> void:
-	if Global.build_mode or not weapon:
+	if Global.build_mode or not weapon or Global.crafting_open:
 		return
 	
 	if Input.is_action_pressed("shoot") and can_shoot:

@@ -1,12 +1,14 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://dn3wtnao87311"]
 
 [ext_resource type="Script" uid="uid://cgqvvu75ctfva" path="res://data/resource_scripts/items_data.gd" id="1_65b5b"]
+[ext_resource type="Texture2D" uid="uid://dq2jaws35sg34" path="res://2d_assets/items/2/gunpowder.png" id="1_fi3k4"]
 
 [resource]
 script = ExtResource("1_65b5b")
 key = "gunpowder"
 size = Vector3(0.3, 0.3, 0.3)
 tier = 2
+item_texture = ExtResource("1_fi3k4")
 value = 4.0
 weight = 2
 metadata/_custom_type_script = "uid://cgqvvu75ctfva"

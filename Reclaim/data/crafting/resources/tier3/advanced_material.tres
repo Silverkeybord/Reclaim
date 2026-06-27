@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CraftData" format=3]
+[gd_resource type="Resource" script_class="CraftData" format=3 uid="uid://dlaox44331vvb"]
 
 [ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="1_req"]
 [ext_resource type="Script" uid="uid://hps2ehio5s7l" path="res://data/resource_scripts/craft_data.gd" id="2_craft"]
@@ -7,6 +7,5 @@
 [resource]
 script = ExtResource("2_craft")
 key = "advanced_material"
-requirements = Array[ExtResource("1_req")]([])
 crafted_item = ExtResource("3_item")
 metadata/_custom_type_script = "uid://hps2ehio5s7l"

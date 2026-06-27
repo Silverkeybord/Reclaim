@@ -14,6 +14,12 @@ enum BUILD_TYPES {
 	TURRET,
 	BASE
 }
+enum ITEM_TYPES {
+	MODULE,
+	TURRET,
+	BASE,
+	RESOURCES
+}
 
 # CONSTANTS ===============================================================
 # MISC --------------------------------------------------------------------
@@ -80,6 +86,14 @@ var picking_up_builds := false
 var at_ship := true
 var mouse_captured := true
 
+# USER INTERFACE
+var paused := false
+var ui_open := false
+var storage_open := false
+var crafting_open := false
+var research_open := false
+var market_open := false
+
 # SECTOR RELATED ------------------------------------------------------------
 var selected_sector : String
 var selected_sector_path := "res://scenes/maps/remote_island.tscn"
@@ -91,7 +105,9 @@ var enemies : int = 0
 var damage_indications : int = 0
 
 # META UPGRADES / COUNCIL AUTHORIZATION -------------------------------------
+var ship_level := 1
 var turret_slots := 1
+
 
 # INVENORY + CURRENCY -------------------------------------------------------
 var cubits : int = 0
@@ -244,7 +260,7 @@ func set_random_inventory() -> void:
 	for key in DataRegistry.items:
 		var resource = DataRegistry.items[key]
 		ship_inventory[resource.tier][key] = (
-			randi_range(1, 999) * (10 ** (randi_range(1, 9)))
+			randi_range(1, 999) * (10 ** (randi_range(0, 0)))
 			)
 
 
@@ -264,6 +280,7 @@ func get_current_inventory() -> Dictionary:
 		return ship_inventory
 	else:
 		return sector_inventory
+
 
 # SAVEING, LODING, AND RESETING GAME DATA =====================================
 ## Saves the current game data to the path

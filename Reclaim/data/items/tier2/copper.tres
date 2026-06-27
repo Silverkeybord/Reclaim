@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://cuij8c6b5xgqd"]
 
+[ext_resource type="Texture2D" uid="uid://m5cydvgythc6" path="res://2d_assets/items/2/copper.png" id="1_e6xax"]
 [ext_resource type="Script" uid="uid://cgqvvu75ctfva" path="res://data/resource_scripts/items_data.gd" id="1_mhnw7"]
 
 [resource]
@@ -7,5 +8,6 @@ script = ExtResource("1_mhnw7")
 key = "copper"
 size = Vector3(0.4, 0.3, 0.4)
 tier = 2
+item_texture = ExtResource("1_e6xax")
 value = 2.5
 metadata/_custom_type_script = "uid://cgqvvu75ctfva"
