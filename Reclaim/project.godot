@@ -16,7 +16,7 @@ config/features=PackedStringArray("4.7", "Forward Plus")
 
 [audio]
 
-buses/default_bus_layout="uid://qdgyeauxu44d"
+buses/default_bus_layout=""
 
 [autoload]
 

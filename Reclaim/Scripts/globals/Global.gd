@@ -1,6 +1,8 @@
 extends Node
+# =============================================================================
+# ENUMS =======================================================================
+# =============================================================================
 
-# ENUMS ====================================================================
 # TURRETS / WEAPONS --------------------------------------------------------
 enum SHOT_TYPE {
 	HITSCAN,
@@ -21,7 +23,11 @@ enum ITEM_TYPES {
 	RESOURCES
 }
 
-# CONSTANTS ===============================================================
+
+# =============================================================================
+# CONSTANTS ===================================================================
+# =============================================================================
+
 # MISC --------------------------------------------------------------------
 const SAVE_PATH : String = "user://reclaim.save"
 const GRAVITY : float = 40.0
@@ -78,7 +84,11 @@ const TEMP_SOUND_SCENE_3D : PackedScene = preload("res://scenes/misc/temp_sound_
 const BULET_TRAIL_SCENE : PackedScene = preload("res://scenes/turrets/bullet_trail.tscn")
 const DAMAGE_INDICATOR_SCENE : PackedScene = preload("res://scenes/misc/damage_indicator.tscn")
 
-# VARIBLES =================================================================
+
+# =============================================================================
+# VARIBLES ===================================================================
+# =============================================================================
+
 # LOGIC --------------------------------------------------------------------
 var build_mode := false
 var current_build_mode := BUILD_MODES.TURRET
@@ -126,8 +136,10 @@ var ship_inventory : Dictionary = {
 	5 : {}
 }
 
+# =============================================================================
+# FUNCTIONS ===================================================================
+# =============================================================================
 
-# FUNCTIONS ================================================================
 ## adds the node the the root node of the current scene bassed of the global group root_nodes
 func add_to_root_node(node : Node) -> void:
 	get_tree().get_first_node_in_group(ROOT_NODES_GROUP).add_child(node)
@@ -170,17 +182,20 @@ func create_bullet_trail(
 
 
 ## Creates a damage indicator at the position of the caller child of the root node
-func create_damage_indicator(pos : Vector3, damage : int) -> void:
+func create_damage_indicator(pos : Vector3, damage : float, crit : bool) -> void:
 	if damage_indications >= MAX_DAMAGE_INDICATIONS or at_ship:
 		return
 	
 	damage_indications += 1
 	var new_indication = DAMAGE_INDICATOR_SCENE.instantiate()
-	new_indication.text = "-" + str(damage)
+	new_indication.damage = damage
 	add_to_root_node(new_indication)
 	new_indication.global_position = pos
+	new_indication.crit = crit
 	new_indication.init()
 
+
+# DISPLAY/UI functions ========================================================
 
 ## Converts large integers into shorthand notation (e.g. 1_500 → "1.5K")
 func return_amount_shorthand(value: float) -> String:
@@ -190,7 +205,6 @@ func return_amount_shorthand(value: float) -> String:
 	var suffix : String
 	var decimal_point_needed : bool = false
 	
-	# stops 0 and negitive numbers breaking the log
 	if value <= 0:
 		return str(int(value))
 	
@@ -198,7 +212,7 @@ func return_amount_shorthand(value: float) -> String:
 	if magnitude < HUNDRED_THRESHOLD:
 		return str(int(value))
 	
-	# caps very large numbers so they dont go past the shown range
+	# limits the max though noone should get this high
 	if magnitude >= MAX_SHORTHAND_MAGNITUDE:
 		return MAX_TEXT
 	
@@ -208,24 +222,21 @@ func return_amount_shorthand(value: float) -> String:
 			suffix = SHORTHAND_THRESHOLDS[x]
 			magnitude_divisor = x
 			
-			# only adds a decimal when the number just reached that shorthand group
+			# only has a decimal point when needed
 			if magnitude == x:
 				decimal_point_needed = true
 			
 			break
 	
 	if decimal_point_needed:
-		# gets the first decimal digit for stuff like 1.5K
 		var tenth : int = roundi(value / (ORDER_OF_MAGNITUDE ** magnitude_divisor) * 10.0)
 		var whole : int = roundi(float(tenth) / 10.0)
 		var remainder : int = tenth % 10
 		
-		# skips the decimal if it would just be .0
 		if remainder == 0:
 			return str(whole) + suffix
 		return "%d.%d" % [whole, remainder] + suffix
 	
-	# for bigger numbers it just shows the whole shorthand amount
 	return str(floori(value / (ORDER_OF_MAGNITUDE ** magnitude_divisor))) + suffix
 
 
@@ -240,7 +251,7 @@ func get_display_name(input : String) -> String:
 	return " ".join(words)
 
 
-## puts commas every 3 numbers --- MADE WITH CHAT GPT ---
+## puts commas every 3 numbers --- MADE WITH CHAT GPT ---	
 func comma_number(num : int) -> String:
 	if num >= (10 ** MAX_SHORTHAND_MAGNITUDE):
 		return MAX_TEXT
@@ -254,6 +265,8 @@ func comma_number(num : int) -> String:
 
 	return text + result
 
+
+# STORAGE functions ===========================================================
 
 ## Temp testing function to fill inventory
 func set_random_inventory() -> void:
@@ -282,7 +295,22 @@ func get_current_inventory() -> Dictionary:
 		return sector_inventory
 
 
+## return a dictionay of all the items of that type in the current inventory
+func _get_items_from_type(item_type) -> Dictionary:
+	var current_inventory = Global.get_current_inventory()
+	var items : Dictionary
+	
+	for tier in current_inventory:
+		items[tier] = {}
+		for item_key in current_inventory[tier]:
+			if DataRegistry.items[item_key].type == item_type:
+				items[tier][item_key] = current_inventory[tier][item_key]
+	
+	return items
+
+
 # SAVEING, LODING, AND RESETING GAME DATA =====================================
+
 ## Saves the current game data to the path
 func save_game():
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)

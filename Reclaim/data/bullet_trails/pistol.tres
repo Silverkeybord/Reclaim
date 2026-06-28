@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="BulletTrailData" format=3 uid="uid://cyq73hvqbxssb"]
 
 [ext_resource type="Script" uid="uid://rqn4axkyltah" path="res://data/resource_scripts/bullet_trail_data.gd" id="1_2kw6h"]
+[ext_resource type="Material" uid="uid://dxxhuajk2r4ov" path="res://textures_and_materials/bullet_trails/bullet_trail.tres" id="1_eps0v"]
 
 [resource]
 script = ExtResource("1_2kw6h")

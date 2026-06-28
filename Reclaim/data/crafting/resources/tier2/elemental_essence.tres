@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="1_req"]
 [ext_resource type="Script" uid="uid://hps2ehio5s7l" path="res://data/resource_scripts/craft_data.gd" id="2_craft"]
-[ext_resource type="Resource" uid="uid://bel0svp4bnsfn" path="res://data/items/tier2/elemental_essence.tres" id="3_item"]
+[ext_resource type="Resource" uid="uid://bel0svp4bnsfn" path="res://data/items/resources/tier2/elemental_essence.tres" id="3_item"]
 [ext_resource type="Texture2D" uid="uid://du26yald1c7st" path="res://2d_assets/items/2/elemental_essence.png" id="4_bs25h"]
 
 [resource]

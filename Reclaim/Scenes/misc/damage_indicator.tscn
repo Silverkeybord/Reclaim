@@ -63,7 +63,7 @@ _data = {
 [node name="Label3D" type="Label3D" unique_id=1032262854 node_paths=PackedStringArray("animation_player")]
 top_level = true
 billboard = 1
-modulate = Color(1, 0.512888, 0.44664234, 1)
+modulate = Color(1, 0.341, 0.188, 1)
 text = "-5"
 font = ExtResource("1_4ruqi")
 font_size = 64
@@ -73,3 +73,5 @@ animation_player = NodePath("AnimationPlayer")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=835261330]
 libraries/ = SubResource("AnimationLibrary_j7nti")
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=353630625]

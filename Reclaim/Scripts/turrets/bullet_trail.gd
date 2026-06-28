@@ -2,9 +2,11 @@ extends Node3D
 
 const CYLINDAR_ROTATION := Vector3(PI/2, 0, 0)
 
-@export var trail : Resource
+@export var trail : BulletTrailData
 @export var timer : Timer
 @export var trail_mesh : MeshInstance3D
+
+@export var default_material : Material
 
 
 func _ready() -> void:
@@ -14,7 +16,13 @@ func _ready() -> void:
 	
 	if trail.fade:
 		# makes the material unique so only this bullet trail fades
-		var unique_mat: Material = trail_mesh.get_active_material(0).duplicate()
+		var unique_mat : Material
+		
+		if trail.material:
+			unique_mat = trail.material.duplicate()
+		else:
+			unique_mat = default_material.duplicate()
+		
 		trail_mesh.set_surface_override_material(0, unique_mat)
 		
 		var fade_tween = create_tween()

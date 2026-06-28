@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="1_req"]
 [ext_resource type="Script" uid="uid://hps2ehio5s7l" path="res://data/resource_scripts/craft_data.gd" id="2_craft"]
-[ext_resource type="Resource" path="res://data/items/tier3/water_essence.tres" id="3_item"]
+[ext_resource type="Resource" uid="uid://b5nme8w2gbw0d" path="res://data/items/resources/tier3/water_essence.tres" id="3_item"]
 
 [resource]
 script = ExtResource("2_craft")

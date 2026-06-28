@@ -15,6 +15,8 @@ enum SHAPES {
 @export var size : float = 0.2
 ## time before queuefree'ing
 @export var life : float = 0.2
+## the material of the bulet trail
+@export var material : Material
 
 @export_group("Animations and Effects")
 ## if it fades out or not

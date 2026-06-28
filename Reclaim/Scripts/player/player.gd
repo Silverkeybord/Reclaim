@@ -45,8 +45,11 @@ var selected_base : String = "plate"
 
 var can_remove_build := true
 
+var turrets : Dictionary
+
 
 func _ready() -> void:
+	Global.set_random_inventory()
 	# gives the player their starting weapon
 	_set_new_weapon()
 
@@ -65,7 +68,7 @@ func _physics_process(delta: float) -> void:
 		velocity.x = direction.x * move_speed
 		velocity.z = direction.z * move_speed
 		
-		if Input.is_action_just_pressed("jump") and is_on_floor():
+		if Input.is_action_pressed("jump") and is_on_floor():
 			velocity.y = jump_velocity
 	else:
 		velocity = Vector3(0, velocity.y, 0)
@@ -98,6 +101,7 @@ func _interaction_handeling(ray_collider : Node) -> void:
 		interact_overlay.visible =  false
 
 
+# BUILDING -------------------------------------------------------------------
 # handels all build related logic from toggling modes and placement logic
 func _build_mode_handeling(ray_collider : Node) -> void:
 	var build_ray_collider = build_ray.get_collider()
@@ -196,7 +200,12 @@ func _build_mode_handeling(ray_collider : Node) -> void:
 		
 		elif turret_holagram:
 			# puts the holagram where the player is looking but marks it invalid
-			turret_holagram.global_position = aim_ray.get_collision_point()
+			if aim_ray.is_colliding():
+				turret_holagram.global_position = aim_ray.get_collision_point()
+				turret_holagram.visible = true
+			else:
+				turret_holagram.visible = false
+			
 			turret_holagram.valid_position = false
 			build_overlay.visible = false
 		
@@ -286,7 +295,11 @@ func _shoot() -> void:
 		if hit:
 			if hit.has_meta(ENEMY_METADATA_TAG):
 				# damages enemies and flashes the hit overlay
-				hit.hit(weapon_resource.damage)
+				if weapon_resource.get_critical():
+					hit.hit(weapon_resource.damage * weapon_resource.critical_multiplier, true)
+				else:
+					hit.hit(weapon_resource.damage)
+				
 				hit_overlay.visible = true
 				await get_tree().create_timer(HIT_OVERLAY_TIME).timeout
 				hit_overlay.visible = false

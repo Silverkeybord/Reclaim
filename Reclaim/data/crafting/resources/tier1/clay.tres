@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="CraftData" format=3 uid="uid://bj70g68d6760k"]
 
-[ext_resource type="Resource" uid="uid://drghxojuhxfnn" path="res://data/items/tier1/clay.tres" id="1_rmy65"]
+[ext_resource type="Resource" uid="uid://drghxojuhxfnn" path="res://data/items/resources/tier1/clay.tres" id="1_rmy65"]
 [ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="2_ulqhk"]
-[ext_resource type="Resource" uid="uid://sp02wx0d0gfn" path="res://data/items/tier1/dirt.tres" id="3_slk53"]
-[ext_resource type="Resource" uid="uid://b5nme8w2gbw0d" path="res://data/items/tier3/water_essence.tres" id="4_u0eno"]
+[ext_resource type="Resource" uid="uid://sp02wx0d0gfn" path="res://data/items/resources/tier1/dirt.tres" id="3_slk53"]
+[ext_resource type="Resource" uid="uid://b5nme8w2gbw0d" path="res://data/items/resources/tier3/water_essence.tres" id="4_u0eno"]
 [ext_resource type="Script" uid="uid://hps2ehio5s7l" path="res://data/resource_scripts/craft_data.gd" id="5_eblc1"]
 
 [sub_resource type="Resource" id="Resource_00hkk"]

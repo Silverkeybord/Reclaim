@@ -13,7 +13,7 @@ enum RANGE_SHAPES {
 
 @export_group("Basic Stats")
 ## damage done to enemies
-@export var damage: int
+@export var damage: float
 ## time inetween each shot
 @export var cooldown: float
 ## the radius in meters of the targeting area
@@ -49,3 +49,17 @@ enum RANGE_SHAPES {
 @export_group("Sounds")
 ## one sould will be played form this array when this turret shoots
 @export var shooting_sound : Array[SoundInfo]
+
+
+@export_group("Critical Stats")
+## probablity of a crit
+@export_range(0, 1, 0.01) var cirt_rate : float
+## damge multiplier on a successful crit
+@export_range(1, 5, 0.1) var critical_multiplier : float = 1.5
+
+
+func get_critical() -> float:
+	if randf() < cirt_rate:
+		return true
+	else:
+		return false

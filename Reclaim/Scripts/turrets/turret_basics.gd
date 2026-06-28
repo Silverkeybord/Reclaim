@@ -66,7 +66,13 @@ func _shooting_logic() -> void:
 	
 	var target_position := target.global_position
 	turret_piviot_point.look_at(target_position)
-	target.hit(turret_resource.damage)
+	
+	
+	if turret_resource.get_critical():
+		target.hit(turret_resource.damage * turret_resource.critical_multiplier, true)
+	else:
+		target.hit(turret_resource.damage)
+	
 	Global.create_bullet_trail(bullet_spawn.global_position, target_position)
 	Global.spawn_temp_sound(
 		turret_resource.shooting_sound.pick_random(), 

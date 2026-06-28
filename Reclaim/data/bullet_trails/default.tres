@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="bullet_trail_data" format=3 uid="uid://deivlc3wm3mqr"]
+[gd_resource type="Resource" script_class="BulletTrailData" format=3 uid="uid://deivlc3wm3mqr"]
 
+[ext_resource type="Material" uid="uid://dxxhuajk2r4ov" path="res://textures_and_materials/bullet_trails/bullet_trail.tres" id="1_1cfbe"]
 [ext_resource type="Script" uid="uid://rqn4axkyltah" path="res://data/resource_scripts/bullet_trail_data.gd" id="1_82snc"]
 
 [resource]

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c22ups1xaq3y4"]
 
 [ext_resource type="Script" uid="uid://di1j1lwb0eec" path="res://scripts/turrets/bullet_trail.gd" id="1_3bu88"]
-[ext_resource type="Material" uid="uid://dxxhuajk2r4ov" path="res://textures_and_materials/bullet_trails/bullet_trail.tres" id="2_y01q8"]
+[ext_resource type="Material" uid="uid://dxxhuajk2r4ov" path="res://textures_and_materials/bullet_trails/default.tres" id="2_y01q8"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_y01q8"]
 
@@ -9,6 +9,7 @@
 script = ExtResource("1_3bu88")
 timer = NodePath("Timer")
 trail_mesh = NodePath("MeshInstance3D")
+default_material = ExtResource("2_y01q8")
 
 [node name="Timer" type="Timer" parent="." unique_id=1753620046]
 wait_time = 0.1

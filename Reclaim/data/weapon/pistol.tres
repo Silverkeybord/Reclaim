@@ -23,4 +23,5 @@ damage = 5
 cool_down = 0.5
 shoot_resource = SubResource("Resource_58n8p")
 hit_resource = SubResource("Resource_p0w2q")
+cirt_rate = 0.05
 metadata/_custom_type_script = "uid://bcv8pchg6om62"

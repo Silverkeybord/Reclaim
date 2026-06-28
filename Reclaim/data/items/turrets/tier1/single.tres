@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://c4hptllryju3u"]
+
+[ext_resource type="Script" uid="uid://cgqvvu75ctfva" path="res://data/resource_scripts/items_data.gd" id="2_huicc"]
+
+[resource]
+script = ExtResource("2_huicc")
+key = "single"
+type = 1
+value = 10.0
+weight = 100
+metadata/_custom_type_script = "uid://cgqvvu75ctfva"

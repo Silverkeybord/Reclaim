@@ -20,7 +20,7 @@ const SIZE_BASE_STAT_FACTOR : float = 0.5
 
 @export var drops_scene : PackedScene
 
-@export var health : int
+@export var health : float
 
 var is_dead := false
 var damage : int
@@ -75,9 +75,9 @@ func fin_loading() -> void:
 	valid = true
 
 
-func hit(hit_damage : int) -> void:
+func hit(hit_damage : float, crit : bool = false) -> void:
 	health -= hit_damage
-	Global.create_damage_indicator(global_position, hit_damage)
+	Global.create_damage_indicator(global_position, hit_damage, crit)
 	if health <= 0 and not is_dead:
 		_die()
 

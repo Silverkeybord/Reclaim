@@ -121,16 +121,23 @@ func close_crafting() -> void:
 # Loading and Crafting ======================================================
 ## crafts the item from the craft data given
 func craft(craft_data : CraftData = current_displayed_requirments) -> void:
-	var current_inventory = Global.get_current_inventory()
+	if not current_displayed_requirments:
+		return
 	
+	var current_inventory = Global.get_current_inventory()
 	
 	for requirment : RequirementsTemplate in craft_data.requirements:
 		current_inventory[requirment.item.tier][requirment.item.key] -= requirment.amount
 	
-	current_inventory[craft_data.crafted_item.tier][craft_data.crafted_item.key] += (
-		craft_data.craft_amount
-		)
-	
+	if current_inventory[craft_data.crafted_item.tier].has(craft_data.crafted_item.key):
+		current_inventory[craft_data.crafted_item.tier][craft_data.crafted_item.key] += (
+			craft_data.craft_amount
+			)
+	else:
+		current_inventory[craft_data.crafted_item.tier][craft_data.crafted_item.key] = (
+			craft_data.craft_amount
+			)
+
 	update_crafting_display()
 
 
@@ -182,6 +189,9 @@ func update_crafting_display() -> void:
 	
 	craft_overlay.visible = not can_craft
 	craft_button.disabled = not can_craft
+	
+	if not current_displayed_requirments:
+		craft_overlay.visible = true
 	
 	crafting_storage.update_storage()
 	

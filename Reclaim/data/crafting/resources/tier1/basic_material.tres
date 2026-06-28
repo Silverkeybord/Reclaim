@@ -1,12 +1,12 @@
 [gd_resource type="Resource" script_class="CraftData" format=3 uid="uid://csw4jndrwfsf1"]
 
-[ext_resource type="Resource" uid="uid://ke1h4l1ko4bj" path="res://data/items/tier1/basic_material.tres" id="1_lwpau"]
+[ext_resource type="Resource" uid="uid://ke1h4l1ko4bj" path="res://data/items/resources/tier1/basic_material.tres" id="1_lwpau"]
 [ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="2_5563l"]
-[ext_resource type="Resource" uid="uid://sp02wx0d0gfn" path="res://data/items/tier1/dirt.tres" id="3_diytk"]
-[ext_resource type="Resource" uid="uid://dmc0tsryqmh28" path="res://data/items/tier1/sand.tres" id="4_o0afg"]
-[ext_resource type="Resource" uid="uid://dm10222fpo58l" path="res://data/items/tier1/rock.tres" id="5_jmbl8"]
-[ext_resource type="Resource" uid="uid://drghxojuhxfnn" path="res://data/items/tier1/clay.tres" id="6_ei0m3"]
-[ext_resource type="Resource" uid="uid://dindgm06orind" path="res://data/items/tier1/scrap.tres" id="7_o0suk"]
+[ext_resource type="Resource" uid="uid://sp02wx0d0gfn" path="res://data/items/resources/tier1/dirt.tres" id="3_diytk"]
+[ext_resource type="Resource" uid="uid://dmc0tsryqmh28" path="res://data/items/resources/tier1/sand.tres" id="4_o0afg"]
+[ext_resource type="Resource" uid="uid://dm10222fpo58l" path="res://data/items/resources/tier1/rock.tres" id="5_jmbl8"]
+[ext_resource type="Resource" uid="uid://drghxojuhxfnn" path="res://data/items/resources/tier1/clay.tres" id="6_ei0m3"]
+[ext_resource type="Resource" uid="uid://dindgm06orind" path="res://data/items/resources/tier1/scrap.tres" id="7_o0suk"]
 [ext_resource type="Script" uid="uid://hps2ehio5s7l" path="res://data/resource_scripts/craft_data.gd" id="8_moboh"]
 
 [sub_resource type="Resource" id="Resource_ecock"]
