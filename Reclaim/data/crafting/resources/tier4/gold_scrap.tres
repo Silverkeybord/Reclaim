@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="CraftData" format=3 uid="uid://bb53vegltro7u"]
+
+[ext_resource type="Resource" uid="uid://by8buon641f34" path="res://data/items/resources/tier4/gold.tres" id="1_2y7y3"]
+[ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="2_gu4yo"]
+[ext_resource type="Resource" uid="uid://dindgm06orind" path="res://data/items/resources/tier1/scrap.tres" id="3_ft28u"]
+[ext_resource type="Resource" uid="uid://d0c8fedifhdn" path="res://data/items/resources/tier2/coal.tres" id="4_ao780"]
+[ext_resource type="Resource" uid="uid://dh1ex5l81ysbr" path="res://data/items/resources/tier4/acid.tres" id="5_yueku"]
+[ext_resource type="Resource" uid="uid://dkgf2qn8wlu3i" path="res://data/items/resources/tier4/fire_essence.tres" id="6_3tlox"]
+[ext_resource type="Script" uid="uid://hps2ehio5s7l" path="res://data/resource_scripts/craft_data.gd" id="7_i5cwq"]
+
+[sub_resource type="Resource" id="req_0"]
+script = ExtResource("2_gu4yo")
+item = ExtResource("3_ft28u")
+amount = 500
+
+[sub_resource type="Resource" id="req_1"]
+script = ExtResource("2_gu4yo")
+item = ExtResource("4_ao780")
+amount = 50
+
+[sub_resource type="Resource" id="req_2"]
+script = ExtResource("2_gu4yo")
+item = ExtResource("5_yueku")
+amount = 20
+
+[sub_resource type="Resource" id="req_3"]
+script = ExtResource("2_gu4yo")
+item = ExtResource("6_3tlox")
+amount = 5
+
+[resource]
+script = ExtResource("7_i5cwq")
+key = "gold_scrap"
+required_ship_level = 6
+requirements = Array[ExtResource("2_gu4yo")]([SubResource("req_0"), SubResource("req_1"), SubResource("req_2"), SubResource("req_3")])
+crafted_item = ExtResource("1_2y7y3")
+craft_amount = 5
+description = "Shiny valuable metal. Good at conducting electricy"

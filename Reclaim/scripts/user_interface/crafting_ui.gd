@@ -221,7 +221,15 @@ func display_requirements_for(craft_data : CraftData, can_craft : bool) -> void:
 	for cell in get_tree().get_nodes_in_group(REQUIRMENT_CELLS_GROUP):
 		cell.queue_free()
 	
-	for requirment in craft_data.requirements:
+	# gets a sorted list of all requirments sorted from t1 - t5 then alphabetacally
+	var sorted_requirements = craft_data.requirements.duplicate()
+	sorted_requirements.sort_custom(func(a, b):
+		if a.item.tier != b.item.tier:
+			return a.item.tier < b.item.tier
+		return a.item.key.nocasecmp_to(b.item.key) < 0
+	)
+	
+	for requirment in sorted_requirements:
 		var new_requirment : RecipeRequirement = recipe_requirments_scene.instantiate()
 		new_requirment.item_data = requirment.item
 		new_requirment.amount_required = requirment.amount

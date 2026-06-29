@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="CraftData" format=3 uid="uid://c48tssl3ncgj5"]
+
+[ext_resource type="Resource" uid="uid://c4hptllryju3u" path="res://data/items/turrets/tier1/single.tres" id="1_2xj8l"]
+[ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="1_s40kv"]
+[ext_resource type="Script" uid="uid://hps2ehio5s7l" path="res://data/resource_scripts/craft_data.gd" id="2_vjbfo"]
+[ext_resource type="Resource" uid="uid://ke1h4l1ko4bj" path="res://data/items/resources/tier1/basic_material.tres" id="3_mfrir"]
+[ext_resource type="Resource" uid="uid://dm10222fpo58l" path="res://data/items/resources/tier1/rock.tres" id="4_etyuw"]
+[ext_resource type="Resource" uid="uid://dmc0tsryqmh28" path="res://data/items/resources/tier1/sand.tres" id="5_tojxp"]
+[ext_resource type="Resource" uid="uid://c6k8hue261trj" path="res://data/items/resources/tier1/flint.tres" id="6_ot624"]
+
+[sub_resource type="Resource" id="Resource_wyyet"]
+script = ExtResource("1_s40kv")
+item = ExtResource("3_mfrir")
+amount = 5
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_0gl0l"]
+script = ExtResource("1_s40kv")
+item = ExtResource("4_etyuw")
+amount = 10
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_mu1jm"]
+script = ExtResource("1_s40kv")
+item = ExtResource("5_tojxp")
+amount = 10
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_2xj8l"]
+script = ExtResource("1_s40kv")
+item = ExtResource("6_ot624")
+amount = 3
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[resource]
+script = ExtResource("2_vjbfo")
+key = "single"
+requirements = Array[ExtResource("1_s40kv")]([SubResource("Resource_wyyet"), SubResource("Resource_0gl0l"), SubResource("Resource_mu1jm"), SubResource("Resource_2xj8l")])
+crafted_item = ExtResource("1_2xj8l")
+description = "This turret goes pew pew"
+craft_time = 5.0
+metadata/_custom_type_script = "uid://hps2ehio5s7l"

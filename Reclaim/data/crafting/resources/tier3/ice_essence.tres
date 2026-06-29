@@ -1,12 +1,25 @@
-[gd_resource type="Resource" script_class="CraftData" format=3]
+[gd_resource type="Resource" script_class="CraftData" format=3 uid="uid://888tmqquwten"]
 
-[ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="1_req"]
-[ext_resource type="Script" uid="uid://hps2ehio5s7l" path="res://data/resource_scripts/craft_data.gd" id="2_craft"]
-[ext_resource type="Resource" uid="uid://cxfxnactex4s4" path="res://data/items/resources/tier3/ice_essence.tres" id="3_item"]
+[ext_resource type="Resource" uid="uid://cxfxnactex4s4" path="res://data/items/resources/tier3/ice_essence.tres" id="crafted"]
+[ext_resource type="Resource" uid="uid://b5nme8w2gbw0d" path="res://data/items/resources/tier3/water_essence.tres" id="item_0"]
+[ext_resource type="Resource" uid="uid://brx7tngv11aji" path="res://data/items/resources/tier3/wind_essence.tres" id="item_1"]
+[ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="req_script"]
+[ext_resource type="Script" uid="uid://hps2ehio5s7l" path="res://data/resource_scripts/craft_data.gd" id="script"]
+
+[sub_resource type="Resource" id="req_0"]
+script = ExtResource("req_script")
+item = ExtResource("item_0")
+amount = 2
+
+[sub_resource type="Resource" id="req_1"]
+script = ExtResource("req_script")
+item = ExtResource("item_1")
+amount = 2
 
 [resource]
-script = ExtResource("2_craft")
+script = ExtResource("script")
 key = "ice_essence"
-requirements = Array[ExtResource("1_req")]([])
-crafted_item = ExtResource("3_item")
-metadata/_custom_type_script = "uid://hps2ehio5s7l"
+required_ship_level = 5
+requirements = Array[ExtResource("req_script")]([SubResource("req_0"), SubResource("req_1")])
+crafted_item = ExtResource("crafted")
+description = "This is cold. Could be used to slow stuff down."

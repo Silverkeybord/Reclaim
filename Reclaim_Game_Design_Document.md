@@ -6,7 +6,7 @@
 **Engine:** Godot 4
 **Genre:** 3D Tower Defense Extraction Game
 **Target Platform:** PC
-**Target Playtime:** 8–10 Hours (might be alot more now)
+**Target Playtime:** 8–10 Hours (might be more now)
 
 ---
 
@@ -312,7 +312,6 @@ Resources are divided into five tiers.
 - Concrete
 - Gear
 - Ice_essence
-- Ice_shard
 - Iron
 - Steel
 - Tungsten
@@ -332,6 +331,7 @@ Resources are divided into five tiers.
 - Gold
 - Silicon
 - Uranium
+- Uranium_core
 
 ### Tier 5 — Exotic Material
 
@@ -529,9 +529,10 @@ Shards + Elemental Essence → Elemental Resource
 
 Examples:
 
-- fire_shard + elemental_essence → fire
-- ice_shard + elemental_essence → ice
-- wind_shard + elemental_essence → wind
+- fire_shard + elemental_essence → fire_essence
+- water_shard + elemental_essence → water_esesnce
+- wind_shard + elemental_essence → wind_essence
+- water_essence + wind_essence → ice_essence
 
 Design Purpose
 

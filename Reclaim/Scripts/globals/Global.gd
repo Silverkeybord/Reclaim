@@ -115,7 +115,7 @@ var enemies : int = 0
 var damage_indications : int = 0
 
 # META UPGRADES / COUNCIL AUTHORIZATION -------------------------------------
-var ship_level := 1
+var ship_level := 8
 var turret_slots := 1
 
 

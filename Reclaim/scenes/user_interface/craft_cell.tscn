@@ -1,7 +1,14 @@
 [gd_scene format=3 uid="uid://cxjg2nfs7kh11"]
 
 [ext_resource type="Script" uid="uid://ccf72kbp75o6s" path="res://scripts/user_interface/craft_cell.gd" id="1_ksw0y"]
-[ext_resource type="Resource" uid="uid://csw4jndrwfsf1" path="res://data/crafting/resources/tier1/basic_material.tres" id="2_ksw0y"]
+[ext_resource type="Resource" uid="uid://ke1h4l1ko4bj" path="res://data/items/resources/tier1/basic_material.tres" id="2_i2d25"]
+[ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="3_u08vh"]
+[ext_resource type="Resource" uid="uid://sp02wx0d0gfn" path="res://data/items/resources/tier1/dirt.tres" id="4_w8jtf"]
+[ext_resource type="Resource" uid="uid://dmc0tsryqmh28" path="res://data/items/resources/tier1/sand.tres" id="5_01shh"]
+[ext_resource type="Resource" uid="uid://dm10222fpo58l" path="res://data/items/resources/tier1/rock.tres" id="6_hak6n"]
+[ext_resource type="Resource" uid="uid://drghxojuhxfnn" path="res://data/items/resources/tier1/clay.tres" id="7_bw7s8"]
+[ext_resource type="Resource" uid="uid://dindgm06orind" path="res://data/items/resources/tier1/scrap.tres" id="8_3dab0"]
+[ext_resource type="Script" uid="uid://hps2ehio5s7l" path="res://data/resource_scripts/craft_data.gd" id="9_ik0bm"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mnj7u"]
 bg_color = Color(0.8, 0.8, 0.8, 1)
@@ -39,6 +46,44 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
+[sub_resource type="Resource" id="Resource_ecock"]
+script = ExtResource("3_u08vh")
+item = ExtResource("4_w8jtf")
+amount = 5
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_ksw0y"]
+script = ExtResource("3_u08vh")
+item = ExtResource("5_01shh")
+amount = 5
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_yxjx5"]
+script = ExtResource("3_u08vh")
+item = ExtResource("6_hak6n")
+amount = 3
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_f8cje"]
+script = ExtResource("3_u08vh")
+item = ExtResource("7_bw7s8")
+amount = 3
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_mnj7u"]
+script = ExtResource("3_u08vh")
+item = ExtResource("8_3dab0")
+amount = 1
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_857sj"]
+script = ExtResource("9_ik0bm")
+key = "basic_material"
+requirements = Array[ExtResource("3_u08vh")]([SubResource("Resource_ecock"), SubResource("Resource_ksw0y"), SubResource("Resource_yxjx5"), SubResource("Resource_f8cje"), SubResource("Resource_mnj7u")])
+crafted_item = ExtResource("2_i2d25")
+craft_amount = 2
+metadata/_custom_type_script = "uid://hps2ehio5s7l"
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yxjx5"]
 bg_color = Color(0.18431373, 0.18431373, 0.18431373, 0.3764706)
 corner_radius_top_left = 5
@@ -56,7 +101,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_mnj7u")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ecock")
 theme_override_styles/hover = SubResource("StyleBoxFlat_ksw0y")
 script = ExtResource("1_ksw0y")
-craft_data = ExtResource("2_ksw0y")
+craft_data = SubResource("Resource_857sj")
 item_image = NodePath("item_image")
 double_click_timer = NodePath("double_click_timer")
 cant_craft_overlay = NodePath("cant_craft_overlay")

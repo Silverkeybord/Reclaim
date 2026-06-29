@@ -1,13 +1,38 @@
-[gd_resource type="Resource" script_class="CraftData" format=3 uid="uid://bmagym7ksfhma"]
+[gd_resource type="Resource" script_class="CraftData" format=3 uid="uid://dl67ptq1jqeif"]
 
-[ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="1_req"]
-[ext_resource type="Script" uid="uid://hps2ehio5s7l" path="res://data/resource_scripts/craft_data.gd" id="2_craft"]
-[ext_resource type="Resource" uid="uid://bel0svp4bnsfn" path="res://data/items/resources/tier2/elemental_essence.tres" id="3_item"]
-[ext_resource type="Texture2D" uid="uid://du26yald1c7st" path="res://2d_assets/items/2/elemental_essence.png" id="4_bs25h"]
+[ext_resource type="Resource" uid="uid://bel0svp4bnsfn" path="res://data/items/resources/tier2/elemental_essence.tres" id="crafted"]
+[ext_resource type="Resource" uid="uid://cddqx504fqqq7" path="res://data/items/resources/tier4/earth_shard.tres" id="item_0"]
+[ext_resource type="Resource" uid="uid://bj5kxk0i5qf1l" path="res://data/items/resources/tier4/fire_shard.tres" id="item_1"]
+[ext_resource type="Resource" uid="uid://8u1vnggp5spj" path="res://data/items/resources/tier3/water_shard.tres" id="item_2"]
+[ext_resource type="Resource" uid="uid://bxlw8qyouph5l" path="res://data/items/resources/tier3/wind_shard.tres" id="item_3"]
+[ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="req_script"]
+[ext_resource type="Script" uid="uid://hps2ehio5s7l" path="res://data/resource_scripts/craft_data.gd" id="script"]
+
+[sub_resource type="Resource" id="req_0"]
+script = ExtResource("req_script")
+item = ExtResource("item_0")
+amount = 1
+
+[sub_resource type="Resource" id="req_1"]
+script = ExtResource("req_script")
+item = ExtResource("item_1")
+amount = 1
+
+[sub_resource type="Resource" id="req_2"]
+script = ExtResource("req_script")
+item = ExtResource("item_2")
+amount = 1
+
+[sub_resource type="Resource" id="req_3"]
+script = ExtResource("req_script")
+item = ExtResource("item_3")
+amount = 1
 
 [resource]
-script = ExtResource("2_craft")
+script = ExtResource("script")
 key = "elemental_essence"
-crafted_item = ExtResource("3_item")
-texture = ExtResource("4_bs25h")
-metadata/_custom_type_script = "uid://hps2ehio5s7l"
+required_ship_level = 4
+requirements = Array[ExtResource("req_script")]([SubResource("req_0"), SubResource("req_1"), SubResource("req_2"), SubResource("req_3")])
+crafted_item = ExtResource("crafted")
+craft_amount = 3
+description = "Core for all elemental resources. Common in life rich areas"

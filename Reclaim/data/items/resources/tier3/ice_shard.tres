@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://fni3a4kjbr3g"]
-
-[ext_resource type="Script" uid="uid://cgqvvu75ctfva" path="res://data/resource_scripts/items_data.gd" id="1_dannn"]
-
-[resource]
-script = ExtResource("1_dannn")
-key = "ice_shard"
-tier = 3
-metadata/_custom_type_script = "uid://cgqvvu75ctfva"

@@ -1,12 +1,43 @@
-[gd_resource type="Resource" script_class="CraftData" format=3]
+[gd_resource type="Resource" script_class="CraftData" format=3 uid="uid://bx4e06hopde04"]
 
-[ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="1_req"]
-[ext_resource type="Script" uid="uid://hps2ehio5s7l" path="res://data/resource_scripts/craft_data.gd" id="2_craft"]
-[ext_resource type="Resource" uid="uid://b5njqlc7nd43m" path="res://data/items/resources/tier5/tesseract.tres" id="3_item"]
+[ext_resource type="Resource" uid="uid://b5njqlc7nd43m" path="res://data/items/resources/tier5/tesseract.tres" id="crafted"]
+[ext_resource type="Resource" uid="uid://y4281divnrs0" path="res://data/items/resources/tier5/light_essence.tres" id="item_0"]
+[ext_resource type="Resource" uid="uid://bqb75he5qqbvw" path="res://data/items/resources/tier5/exotic_material.tres" id="item_1"]
+[ext_resource type="Resource" uid="uid://coniauqe450rn" path="res://data/items/resources/tier2/glass.tres" id="item_2"]
+[ext_resource type="Resource" uid="uid://4blvyhwaq8rb" path="res://data/items/resources/tier5/platinum.tres" id="item_3"]
+[ext_resource type="Resource" uid="uid://bkgvo3l1aqry8" path="res://data/items/resources/tier4/uranium_core.tres" id="item_4"]
+[ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="req_script"]
+[ext_resource type="Script" uid="uid://hps2ehio5s7l" path="res://data/resource_scripts/craft_data.gd" id="script"]
+
+[sub_resource type="Resource" id="req_0"]
+script = ExtResource("req_script")
+item = ExtResource("item_0")
+amount = 5
+
+[sub_resource type="Resource" id="req_1"]
+script = ExtResource("req_script")
+item = ExtResource("item_1")
+amount = 5
+
+[sub_resource type="Resource" id="req_2"]
+script = ExtResource("req_script")
+item = ExtResource("item_2")
+amount = 200
+
+[sub_resource type="Resource" id="req_3"]
+script = ExtResource("req_script")
+item = ExtResource("item_3")
+amount = 20
+
+[sub_resource type="Resource" id="req_4"]
+script = ExtResource("req_script")
+item = ExtResource("item_4")
+amount = 1
 
 [resource]
-script = ExtResource("2_craft")
+script = ExtResource("script")
 key = "tesseract"
-requirements = Array[ExtResource("1_req")]([])
-crafted_item = ExtResource("3_item")
-metadata/_custom_type_script = "uid://hps2ehio5s7l"
+required_ship_level = 8
+requirements = Array[ExtResource("req_script")]([SubResource("req_0"), SubResource("req_1"), SubResource("req_2"), SubResource("req_3"), SubResource("req_4")])
+crafted_item = ExtResource("crafted")
+description = "Your higherups don't even know how you got this."

@@ -2,10 +2,42 @@
 
 [ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="1_req"]
 [ext_resource type="Script" uid="uid://hps2ehio5s7l" path="res://data/resource_scripts/craft_data.gd" id="2_craft"]
+[ext_resource type="Resource" uid="uid://d0c8fedifhdn" path="res://data/items/resources/tier2/coal.tres" id="3_7ar0j"]
 [ext_resource type="Resource" uid="uid://b02lesvh3btwf" path="res://data/items/resources/tier5/graphene.tres" id="3_item"]
+[ext_resource type="Resource" uid="uid://dkgf2qn8wlu3i" path="res://data/items/resources/tier4/fire_essence.tres" id="4_mwhsd"]
+[ext_resource type="Resource" uid="uid://c8r4mnuywrbk6" path="res://data/items/resources/tier5/dark_essence.tres" id="5_a2cv7"]
+[ext_resource type="Resource" uid="uid://4blvyhwaq8rb" path="res://data/items/resources/tier5/platinum.tres" id="6_rirvh"]
+
+[sub_resource type="Resource" id="Resource_llqo7"]
+script = ExtResource("1_req")
+item = ExtResource("3_7ar0j")
+amount = 25
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_atiqi"]
+script = ExtResource("1_req")
+item = ExtResource("4_mwhsd")
+amount = 5
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_mb4uk"]
+script = ExtResource("1_req")
+item = ExtResource("5_a2cv7")
+amount = 1
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_l7ivf"]
+script = ExtResource("1_req")
+item = ExtResource("6_rirvh")
+amount = 5
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
 
 [resource]
 script = ExtResource("2_craft")
 key = "graphene"
+required_ship_level = 6
+requirements = Array[ExtResource("1_req")]([SubResource("Resource_llqo7"), SubResource("Resource_atiqi"), SubResource("Resource_mb4uk"), SubResource("Resource_l7ivf")])
 crafted_item = ExtResource("3_item")
+craft_amount = 2
+description = "Very durable, Very light, Very good."
 metadata/_custom_type_script = "uid://hps2ehio5s7l"

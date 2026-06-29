@@ -1,11 +1,50 @@
-[gd_resource type="Resource" script_class="CraftData" format=3 uid="uid://dlaox44331vvb"]
+[gd_resource type="Resource" script_class="CraftData" format=3 uid="uid://dm2bq0m3iaju6"]
 
-[ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="1_req"]
-[ext_resource type="Script" uid="uid://hps2ehio5s7l" path="res://data/resource_scripts/craft_data.gd" id="2_craft"]
-[ext_resource type="Resource" uid="uid://qu4lywx7yfi" path="res://data/items/resources/tier3/advanced_material.tres" id="3_item"]
+[ext_resource type="Resource" uid="uid://qu4lywx7yfi" path="res://data/items/resources/tier3/advanced_material.tres" id="crafted"]
+[ext_resource type="Resource" uid="uid://ke1h4l1ko4bj" path="res://data/items/resources/tier1/basic_material.tres" id="item_0"]
+[ext_resource type="Resource" uid="uid://c5otcno2tqgbt" path="res://data/items/resources/tier2/construction_material.tres" id="item_1"]
+[ext_resource type="Resource" uid="uid://byppdxebw1gs6" path="res://data/items/resources/tier2/brick.tres" id="item_2"]
+[ext_resource type="Resource" uid="uid://cpmjc10cjkpdb" path="res://data/items/resources/tier3/concrete.tres" id="item_3"]
+[ext_resource type="Resource" uid="uid://nvsjnmpyx0fc" path="res://data/items/resources/tier3/steel.tres" id="item_4"]
+[ext_resource type="Resource" uid="uid://di51v1ybk1itv" path="res://data/items/resources/tier3/gear.tres" id="item_5"]
+[ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="req_script"]
+[ext_resource type="Script" uid="uid://hps2ehio5s7l" path="res://data/resource_scripts/craft_data.gd" id="script"]
+
+[sub_resource type="Resource" id="req_0"]
+script = ExtResource("req_script")
+item = ExtResource("item_0")
+amount = 5
+
+[sub_resource type="Resource" id="req_1"]
+script = ExtResource("req_script")
+item = ExtResource("item_1")
+amount = 3
+
+[sub_resource type="Resource" id="req_2"]
+script = ExtResource("req_script")
+item = ExtResource("item_2")
+amount = 20
+
+[sub_resource type="Resource" id="req_3"]
+script = ExtResource("req_script")
+item = ExtResource("item_3")
+amount = 10
+
+[sub_resource type="Resource" id="req_4"]
+script = ExtResource("req_script")
+item = ExtResource("item_4")
+amount = 10
+
+[sub_resource type="Resource" id="req_5"]
+script = ExtResource("req_script")
+item = ExtResource("item_5")
+amount = 5
 
 [resource]
-script = ExtResource("2_craft")
+script = ExtResource("script")
 key = "advanced_material"
-crafted_item = ExtResource("3_item")
-metadata/_custom_type_script = "uid://hps2ehio5s7l"
+required_ship_level = 4
+requirements = Array[ExtResource("req_script")]([SubResource("req_0"), SubResource("req_1"), SubResource("req_2"), SubResource("req_3"), SubResource("req_4"), SubResource("req_5")])
+crafted_item = ExtResource("crafted")
+craft_amount = 2
+description = "Made with useful materials. It's very advanced"

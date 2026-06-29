@@ -1,22 +1,22 @@
-[gd_resource type="Resource" script_class="CraftData" format=3 uid="uid://c0ytm2lv0sgup"]
+[gd_resource type="Resource" script_class="CraftData" format=3 uid="uid://dmel3f5um07f0"]
 
-[ext_resource type="Resource" uid="uid://bge1tthylo3ux" path="res://data/items/resources/tier4/earth_essence.tres" id="crafted"]
-[ext_resource type="Resource" uid="uid://cddqx504fqqq7" path="res://data/items/resources/tier4/earth_shard.tres" id="item_0"]
-[ext_resource type="Resource" uid="uid://bel0svp4bnsfn" path="res://data/items/resources/tier2/elemental_essence.tres" id="item_1"]
-[ext_resource type="Resource" uid="uid://sp02wx0d0gfn" path="res://data/items/resources/tier1/dirt.tres" id="item_2"]
-[ext_resource type="Resource" uid="uid://dm10222fpo58l" path="res://data/items/resources/tier1/rock.tres" id="item_3"]
+[ext_resource type="Resource" uid="uid://dod8dbwqrd08b" path="res://data/items/resources/tier3/tungsten.tres" id="crafted"]
+[ext_resource type="Resource" uid="uid://dindgm06orind" path="res://data/items/resources/tier1/scrap.tres" id="item_0"]
+[ext_resource type="Resource" uid="uid://nvsjnmpyx0fc" path="res://data/items/resources/tier3/steel.tres" id="item_1"]
+[ext_resource type="Resource" uid="uid://d0c8fedifhdn" path="res://data/items/resources/tier2/coal.tres" id="item_2"]
+[ext_resource type="Resource" uid="uid://dkgf2qn8wlu3i" path="res://data/items/resources/tier4/fire_essence.tres" id="item_3"]
 [ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="req_script"]
 [ext_resource type="Script" uid="uid://hps2ehio5s7l" path="res://data/resource_scripts/craft_data.gd" id="script"]
 
 [sub_resource type="Resource" id="req_0"]
 script = ExtResource("req_script")
 item = ExtResource("item_0")
-amount = 5
+amount = 250
 
 [sub_resource type="Resource" id="req_1"]
 script = ExtResource("req_script")
 item = ExtResource("item_1")
-amount = 3
+amount = 5
 
 [sub_resource type="Resource" id="req_2"]
 script = ExtResource("req_script")
@@ -26,12 +26,12 @@ amount = 50
 [sub_resource type="Resource" id="req_3"]
 script = ExtResource("req_script")
 item = ExtResource("item_3")
-amount = 10
+amount = 1
 
 [resource]
 script = ExtResource("script")
-key = "earth_essence"
-required_ship_level = 5
+key = "tungsten_scrap"
+required_ship_level = 6
 requirements = Array[ExtResource("req_script")]([SubResource("req_0"), SubResource("req_1"), SubResource("req_2"), SubResource("req_3")])
 crafted_item = ExtResource("crafted")
-description = "It's comprized of dirt and some other magic."
+craft_amount = 5

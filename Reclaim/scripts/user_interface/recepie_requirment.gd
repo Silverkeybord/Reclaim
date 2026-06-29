@@ -21,7 +21,10 @@ func update_value() -> void:
 		"panel", Global.TIER_CONFIG[item_data.tier]["style"]
 		)
 	item_image.texture = item_data.get_item_texture()
-	label.text = Global.return_amount_shorthand(amount_required) + " " + item_data.key
+	label.text = (
+		Global.return_amount_shorthand(amount_required) + 
+		" " + Global.get_display_name(item_data.key)
+		)
 	check_requirement()
 
 
