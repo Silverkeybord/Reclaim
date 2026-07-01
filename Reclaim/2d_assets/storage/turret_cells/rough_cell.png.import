@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ssroq0w4ai6r"
-path="res://.godot/imported/itemtip_background.png-03985a0d5f5059bf02e6e488538e0af1.ctex"
+uid="uid://csjahjyudg6j1"
+path="res://.godot/imported/rough_cell.png-a81b249ae6d9ab8c9474cc6101dd362e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://2d_assets/inventory/itemtip_background.png"
-dest_files=["res://.godot/imported/itemtip_background.png-03985a0d5f5059bf02e6e488538e0af1.ctex"]
+source_file="res://2d_assets/storage/turret_cells/rough_cell.png"
+dest_files=["res://.godot/imported/rough_cell.png-a81b249ae6d9ab8c9474cc6101dd362e.ctex"]
 
 [params]
 

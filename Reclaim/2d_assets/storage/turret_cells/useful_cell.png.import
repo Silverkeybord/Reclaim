@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://biflvnsg5r3kc"
-path="res://.godot/imported/usefull_cell.png-00b49b1bda7654ddac8dd25a50b802b0.ctex"
+uid="uid://c3t7bi3k50flv"
+path="res://.godot/imported/useful_cell.png-37443b0b027b758c9508224ba49e6d13.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://2d_assets/inventory/usefull_cell.png"
-dest_files=["res://.godot/imported/usefull_cell.png-00b49b1bda7654ddac8dd25a50b802b0.ctex"]
+source_file="res://2d_assets/storage/turret_cells/useful_cell.png"
+dest_files=["res://.godot/imported/useful_cell.png-37443b0b027b758c9508224ba49e6d13.ctex"]
 
 [params]
 

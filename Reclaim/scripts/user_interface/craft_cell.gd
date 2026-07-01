@@ -24,7 +24,7 @@ var valid_last_click : bool = false
 
 func _ready() -> void:
 	double_click_timer.wait_time = DOUBLE_CLICK_TIME
-	#Global.set_random_inventory()
+	#Global.set_random_storage()
 	set_up()
 
 
@@ -38,10 +38,10 @@ func check_requirements() -> void:
 	can_craft = true
 	for requirement : RequirementsTemplate in craft_data.requirements:
 		var have_enough = true
-		var current_inventory : Dictionary = Global.get_current_inventory()
+		var current_storage : Dictionary = Global.get_current_storage()
 		
-		if current_inventory[requirement.item.tier].has(requirement.item.key):
-			if current_inventory[requirement.item.tier][requirement.item.key] < requirement.amount:
+		if current_storage[requirement.item.tier].has(requirement.item.key):
+			if current_storage[requirement.item.tier][requirement.item.key] < requirement.amount:
 				have_enough = false
 				can_craft = false
 		else:

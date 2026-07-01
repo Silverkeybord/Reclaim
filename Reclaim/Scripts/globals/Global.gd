@@ -3,7 +3,6 @@ extends Node
 # ENUMS =======================================================================
 # =============================================================================
 
-# TURRETS / WEAPONS --------------------------------------------------------
 enum SHOT_TYPE {
 	HITSCAN,
 	PROJECTILE
@@ -22,6 +21,11 @@ enum ITEM_TYPES {
 	BASE,
 	RESOURCES
 }
+enum PLAYER_MODES {
+	WEAPON,
+	BUILDING,
+	INSTALLING
+}
 
 
 # =============================================================================
@@ -37,28 +41,48 @@ const CURRENT_SCENE_ROOT_INDEX : int = 2
 const TIER_CONFIG : Dictionary = {
 	1 : {
 		"color" : Color(0.541, 0.561, 0.596),
-		"cell" : preload("res://2d_assets/inventory/rough_cell.png"),
-		"style" : preload("res://other_assets/crafting_styles/t1_style.tres")
+		"style" : preload("res://other_assets/crafting_styles/t1_style.tres"),
+		"cells" : {
+			"resources" : preload("res://2d_assets/storage/resource_cells/rough_cell.png"),
+			"turrets" : preload("res://2d_assets/storage/turret_cells/rough_cell.png"),
+			"modules" : preload("res://2d_assets/storage/resource_cells/rough_cell.png")
+		}
 	},
 	2 : {
 		"color" : Color(0.29, 0.871, 0.502),
-		"cell" : preload("res://2d_assets/inventory/plain_cell.png"),
-		"style" : preload("res://other_assets/crafting_styles/t2_style.tres")
+		"style" : preload("res://other_assets/crafting_styles/t2_style.tres"),
+		"cells" : {
+			"resources" : preload("res://2d_assets/storage/resource_cells/rough_cell.png"),
+			"turrets" : preload("res://2d_assets/storage/turret_cells/rough_cell.png"),
+			"modules" : preload("res://2d_assets/storage/resource_cells/rough_cell.png")
+		}
 	},
 	3 : {
 		"color" : Color(0.29, 0.557, 0.996),
-		"cell" : preload("res://2d_assets/inventory/usefull_cell.png"),
-		"style" : preload("res://other_assets/crafting_styles/t3_style.tres")
+		"style" : preload("res://other_assets/crafting_styles/t3_style.tres"),
+		"cells" : {
+			"resources" : preload("res://2d_assets/storage/resource_cells/rough_cell.png"),
+			"turrets" : preload("res://2d_assets/storage/turret_cells/rough_cell.png"),
+			"modules" : preload("res://2d_assets/storage/resource_cells/rough_cell.png")
+		}
 	},
 	4 : {
 		"color" : Color(1.0, 0.847, 0.243),
-		"cell" : preload("res://2d_assets/inventory/valuable_cell.png"),
-		"style" : preload("res://other_assets/crafting_styles/t4_style.tres")
+		"style" : preload("res://other_assets/crafting_styles/t4_style.tres"),
+		"cells" : {
+			"resources" : preload("res://2d_assets/storage/resource_cells/rough_cell.png"),
+			"turrets" : preload("res://2d_assets/storage/turret_cells/rough_cell.png"),
+			"modules" : preload("res://2d_assets/storage/resource_cells/rough_cell.png")
+		}
 	},
 	5 : {
 		"color" : Color(0.937, 0.267, 0.267),
-		"cell" : preload("res://2d_assets/inventory/extraordinary_cell.png"),
-		"style" : preload("res://other_assets/crafting_styles/t5_style.tres")
+		"style" : preload("res://other_assets/crafting_styles/t5_style.tres"),
+		"cells" : {
+			"resources" : preload("res://2d_assets/storage/resource_cells/rough_cell.png"),
+			"turrets" : preload("res://2d_assets/storage/turret_cells/rough_cell.png"),
+			"modules" : preload("res://2d_assets/storage/resource_cells/rough_cell.png")
+		}
 	}
 }
 
@@ -90,7 +114,7 @@ const DAMAGE_INDICATOR_SCENE : PackedScene = preload("res://scenes/misc/damage_i
 # =============================================================================
 
 # LOGIC --------------------------------------------------------------------
-var build_mode := false
+var player_mode := PLAYER_MODES.WEAPON
 var current_build_mode := BUILD_MODES.TURRET
 var picking_up_builds := false
 var at_ship := true
@@ -104,6 +128,8 @@ var crafting_open := false
 var research_open := false
 var market_open := false
 
+var hidden_item_tip := false
+
 # SECTOR RELATED ------------------------------------------------------------
 var selected_sector : String
 var selected_sector_path := "res://scenes/maps/remote_island.tscn"
@@ -115,20 +141,26 @@ var enemies : int = 0
 var damage_indications : int = 0
 
 # META UPGRADES / COUNCIL AUTHORIZATION -------------------------------------
-var ship_level := 8
+var ship_level := 1
 var turret_slots := 1
-
 
 # INVENORY + CURRENCY -------------------------------------------------------
 var cubits : int = 0
-var sector_inventory : Dictionary = {
+var sector_storage : Dictionary = {
 	1 : {},
 	2 : {},
 	3 : {},
 	4 : {},
 	5 : {}
 }
-var ship_inventory : Dictionary = {
+var ship_storage : Dictionary = {
+	1 : {},
+	2 : {},
+	3 : {},
+	4 : {},
+	5 : {}
+}
+var extraction_storage : Dictionary = {
 	1 : {},
 	2 : {},
 	3 : {},
@@ -137,8 +169,9 @@ var ship_inventory : Dictionary = {
 }
 
 # =============================================================================
-# FUNCTIONS ===================================================================
+# FUNCTIONS ============================ac======================================
 # =============================================================================
+
 
 ## adds the node the the root node of the current scene bassed of the global group root_nodes
 func add_to_root_node(node : Node) -> void:
@@ -268,11 +301,11 @@ func comma_number(num : int) -> String:
 
 # STORAGE functions ===========================================================
 
-## Temp testing function to fill inventory
-func set_random_inventory() -> void:
+## Temp testing function to fill storage
+func set_random_storage() -> void:
 	for key in DataRegistry.items:
 		var resource = DataRegistry.items[key]
-		ship_inventory[resource.tier][key] = (
+		ship_storage[resource.tier][key] = (
 			randi_range(1, 999) * (10 ** (randi_range(0, 0)))
 			)
 
@@ -287,24 +320,24 @@ func set_mouse_captured() -> void:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 
-## gets the current inventory bassed on where the player is in the game
-func get_current_inventory() -> Dictionary:
+## gets the current storage bassed on where the player is in the game
+func get_current_storage() -> Dictionary:
 	if at_ship:
-		return ship_inventory
+		return ship_storage
 	else:
-		return sector_inventory
+		return sector_storage
 
 
-## return a dictionay of all the items of that type in the current inventory
+## return a dictionay of all the items of that type in the current storage
 func _get_items_from_type(item_type) -> Dictionary:
-	var current_inventory = Global.get_current_inventory()
+	var current_storage = Global.get_current_storage()
 	var items : Dictionary
 	
-	for tier in current_inventory:
+	for tier in current_storage:
 		items[tier] = {}
-		for item_key in current_inventory[tier]:
+		for item_key in current_storage[tier]:
 			if DataRegistry.items[item_key].type == item_type:
-				items[tier][item_key] = current_inventory[tier][item_key]
+				items[tier][item_key] = current_storage[tier][item_key]
 	
 	return items
 
@@ -316,8 +349,8 @@ func save_game():
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	
 	var save_data = {
-		# inventory / storage
-		"ship_inventory" : ship_inventory,
+		# storage / storage
+		"ship_storage" : ship_storage,
 		"cubits" : cubits,
 		"council_authorization" : {
 			"turret_slots" : turret_slots
@@ -337,7 +370,7 @@ func load_game():
 	var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
 	var data = file.get_var()
 	
-	ship_inventory = data["ship_inventory"]
+	ship_storage = data["ship_storage"]
 	cubits = data["cubits"]
 	turret_slots = data["council_authorization"]["turret_slots"]
 

@@ -13,7 +13,7 @@ const GROUND_COLLISION_LAYER := 1
 const DROP_COLLISION_LAYER := 8
 
 const MAX_SPEED := 100.0
-const ACCELERATION_MULT := 1.1 # each frame it gets 1.1 times faster
+const ACCELERATION_MULT := 1.08 # each frame it gets X times faster
 const PICK_UP_BUFFER := 0.2
 
 const MAX_ANGULAR_VELOCITY := 10.0
@@ -134,11 +134,11 @@ func _give_random_movement() -> void:
 	angular_velocity = Vector3(x_ang, y_ang, z_ang)
 
 
-## add the drop into the inventory of the player
+## add the drop into the storage of the player
 func _pick_up() -> void:
 	Global.spawn_temp_sound(pickup_sounds.pick_random())
 	
-	if Global.sector_inventory[item_resource.tier].has(item_resource.key):
-		Global.sector_inventory[item_resource.tier][item_resource.key] += 1
+	if Global.sector_storage[item_resource.tier].has(item_resource.key):
+		Global.sector_storage[item_resource.tier][item_resource.key] += 1
 	else:
-		Global.sector_inventory[item_resource.tier][item_resource.key] = 1
+		Global.sector_storage[item_resource.tier][item_resource.key] = 1

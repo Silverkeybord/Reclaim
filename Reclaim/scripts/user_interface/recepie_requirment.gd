@@ -29,10 +29,10 @@ func update_value() -> void:
 
 
 func check_requirement() -> bool:
-	var current_inventory : Dictionary = Global.get_current_inventory()
+	var current_storage : Dictionary = Global.get_current_storage()
 	
-	if current_inventory[item_data.tier].has(item_data.key):
-		if current_inventory[item_data.tier][item_data.key] >= amount_required:
+	if current_storage[item_data.tier].has(item_data.key):
+		if current_storage[item_data.tier][item_data.key] >= amount_required:
 			have_enough = true
 		else:
 			have_enough = false

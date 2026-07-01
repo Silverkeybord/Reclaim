@@ -10,6 +10,7 @@
 [ext_resource type="LabelSettings" uid="uid://did6nhlhj082r" path="res://other_assets/label_settings/help_text.tres" id="8_5gtgg"]
 [ext_resource type="Texture2D" uid="uid://dmaj8a3oki02e" path="res://2d_assets/reticles/remove_overlay.png" id="8_6k3cy"]
 [ext_resource type="PackedScene" uid="uid://bqdl5iwhoay06" path="res://scenes/user_interface/fps_label.tscn" id="10_h17s1"]
+[ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="12_fm80t"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e41v5"]
 
@@ -29,7 +30,17 @@ albedo_color = Color(0.8117647, 0.8117647, 0.8117647, 0.44313726)
 [sub_resource type="SphereShape3D" id="SphereShape3D_xxarj"]
 radius = 10.0
 
-[node name="player" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "hit_overlay", "aim_ray", "build_ray", "gun_piviot", "shooting_timer", "build_overlay", "build_label") groups=["player"]]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4v7s"]
+bg_color = Color(1, 1, 1, 0.23529412)
+border_width_top = 4
+border_width_right = 6
+corner_radius_top_right = 20
+corner_detail = 1
+
+[sub_resource type="LabelSettings" id="LabelSettings_je7p5"]
+font = ExtResource("12_fm80t")
+
+[node name="player" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "hit_overlay", "aim_ray", "build_ray", "gun_piviot", "shooting_timer", "build_overlay", "build_label", "input_tip") groups=["player"]]
 collision_layer = 2
 collision_mask = 79
 script = ExtResource("1_eo61r")
@@ -42,6 +53,7 @@ shooting_timer = NodePath("gun_piviot/shoot_timer")
 turret_holagram_scene = ExtResource("2_6upyo")
 build_overlay = NodePath("build_overlay")
 build_label = NodePath("build_overlay/Label")
+input_tip = NodePath("PanelContainer/MarginContainer/input_tip")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=125637870]
 shape = SubResource("BoxShape3D_e41v5")
@@ -258,12 +270,31 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("8_6k3cy")
 stretch_mode = 3
 
-[node name="Label" parent="." unique_id=1336845062 instance=ExtResource("10_h17s1")]
+[node name="FPS counter" parent="." unique_id=1336845062 instance=ExtResource("10_h17s1")]
 offset_left = 5.0
-offset_top = 697.0
 offset_right = 45.0
-offset_bottom = 720.0
 label_settings = ExtResource("8_5gtgg")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1946409334]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -19.0
+offset_right = 139.0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1312460894]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="input_tip" type="Label" parent="PanelContainer/MarginContainer" unique_id=1361217528]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_je7p5")
 
 [connection signal="timeout" from="gun_piviot/shoot_timer" to="." method="_on_shoot_timer_timeout"]
 [connection signal="body_entered" from="pick_up_area" to="." method="_on_pick_up_area_body_entered"]

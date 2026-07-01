@@ -29,7 +29,7 @@ var speed : float
 var drops : Dictionary
 
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if extraction_pod == null or is_dead:
 		return
 	
@@ -39,7 +39,7 @@ func _physics_process(_delta: float) -> void:
 	velocity = direction * speed 
 	
 	if not is_on_floor():
-		velocity.y -= Global.GRAVITY
+		velocity.y -= Global.GRAVITY * delta
 	else:
 		velocity.y = 0.0
 	

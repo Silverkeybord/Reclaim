@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b3l1152wrmyr5"
-path="res://.godot/imported/crafting_requirments_background.png-5d3becbd62d4895f6c8cb67b94f089bd.ctex"
+uid="uid://ndhwgs36iqdi"
+path="res://.godot/imported/plain_cell.png-edf45f4b242af25518a4ea91ff92b5cb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://2d_assets/crafting/crafting_requirments_background.png"
-dest_files=["res://.godot/imported/crafting_requirments_background.png-5d3becbd62d4895f6c8cb67b94f089bd.ctex"]
+source_file="res://2d_assets/storage/turret_cells/plain_cell.png"
+dest_files=["res://.godot/imported/plain_cell.png-edf45f4b242af25518a4ea91ff92b5cb.ctex"]
 
 [params]
 

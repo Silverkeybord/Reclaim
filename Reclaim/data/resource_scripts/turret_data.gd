@@ -8,7 +8,6 @@ enum RANGE_SHAPES {
 
 @export var key: String
 
-@export var display_name: String
 @export_range(1, 5) var tier: int = 1
 
 @export_group("Basic Stats")
@@ -20,6 +19,20 @@ enum RANGE_SHAPES {
 @export var turret_range: float
 ## the shape of the range are
 @export var range_shape : RANGE_SHAPES
+## shots per second
+@export var fire_rate : float = 1 / cooldown
+## minimum damage per second the turret will do
+@export var damage_per_second := damage * fire_rate
+## a way to class the default property of the turret
+@export_enum(
+	"none",
+	"burning",
+	"freezing",
+	"shock",
+	"blinding",
+	"wet",
+	"poison",
+) var ability := "none"
 
 @export_group("Synergy Tags")
 ## if these turrets are next to the turret the turret will be boosted

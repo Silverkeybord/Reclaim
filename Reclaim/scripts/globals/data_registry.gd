@@ -22,7 +22,7 @@ var items : Dictionary
 
 
 func _ready() -> void:
-	_load_folder(TURRET_PATH, turrets)
+	_load_folder(TURRET_PATH, turrets, true)
 	_load_folder(MODULES_PATH, modules)
 	_load_folder(WEAPONS_PATH, weapon)
 	_load_folder(ENEMIES_PATH, enemies)
@@ -39,24 +39,24 @@ func _load_folder(path: String, dict: Dictionary, recursive: bool = false) -> vo
 	if not path:
 		return
 	
-	var dir = DirAccess.open(path)
+	var directory = DirAccess.open(path)
 	
-	# check for valid directory
-	if not dir:
+	# check for valid directoryectory
+	if not directory:
 		push_error("DataRegistry: could not open path: " + path)
 		return
 	
 	# if recursive is and file is a folder it will will recursivly search that folder
 	# putting it in the same dict
-	dir.list_dir_begin()
-	var file = dir.get_next() 
+	directory.list_dir_begin()
+	var file = directory.get_next() 
 	
 	while file != "":
 		if file.ends_with(".tres"):
 			var res = load(path + file)
 			dict[res.key] = res
 		
-		elif recursive and dir.current_is_dir() and not file.begins_with("."):
+		elif recursive and directory.current_is_dir() and not file.begins_with("."):
 			_load_folder(path + file + "/", dict, true)
 		
-		file = dir.get_next()
+		file = directory.get_next()

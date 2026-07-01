@@ -1,5 +1,12 @@
 extends CharacterBody3D
 
+const PLAYER_MODE_INPUTS = "1 - Weapon
+2 - Building
+3 - Installation"
+const BUILDING_INPUTS = "R - Pick up Builds
+F - Change Builds"
+const INTERACT_INPUT = "E - Interact"
+
 const INTERACT_DISTANCE := 5
 const BUILD_RANGE := 25
 
@@ -32,6 +39,7 @@ const MOVE_CLOSER_TEXT := "MOVE CLOSER"
 @export_group("2d elements")
 @export var build_overlay : Control
 @export var build_label : Label
+@export var input_tip : Label
 
 var turret_holagram : Node3D
 
@@ -49,7 +57,7 @@ var turrets : Dictionary
 
 
 func _ready() -> void:
-	Global.set_random_inventory()
+	Global.set_random_storage()
 	# gives the player their starting weapon
 	_set_new_weapon()
 
@@ -78,12 +86,46 @@ func _physics_process(delta: float) -> void:
 
 func _process(_delta: float) -> void:
 	_shoot_control()
+	_player_mode_handeling()
+	_input_tip_updating()
 	
 	var ray_collider = aim_ray.get_collider()
-	_build_mode_handeling(ray_collider)
 	
-	if not Global.build_mode:
+	match Global.player_mode:
+		Global.PLAYER_MODES.WEAPON:
+			pass
+		Global.PLAYER_MODES.BUILDING:
+			_build_mode_handeling(ray_collider)
+		Global.PLAYER_MODES.INSTALLING:
+			pass
+	
+	if Global.player_mode != Global.PLAYER_MODES.BUILDING:
 		_interaction_handeling(ray_collider)
+
+
+func _input_tip_updating() -> void:
+	var input_tip_output = []
+	
+	if Global.player_mode == Global.PLAYER_MODES.BUILDING:
+		input_tip_output.append(BUILDING_INPUTS)
+	
+	if not Global.at_ship:
+		input_tip_output.append(PLAYER_MODE_INPUTS)
+	
+	input_tip_output.append(INTERACT_INPUT)
+	
+	var output_text : String = ""
+	var formating_amount = input_tip_output.size()
+	
+	for x in input_tip_output:
+		output_text += x
+		formating_amount -= 1
+		
+		if formating_amount > 0:
+			output_text += "
+			"
+	 
+	input_tip.text = output_text
 
 
 # for all interactions that toggles a ui indicator that you can interact
@@ -101,40 +143,38 @@ func _interaction_handeling(ray_collider : Node) -> void:
 		interact_overlay.visible =  false
 
 
+func _player_mode_handeling() -> void:
+	if Input.is_action_just_pressed("weapon_mode"):
+		Global.player_mode = Global.PLAYER_MODES.WEAPON
+		_remove_holagram(true)
+	
+	if Input.is_action_just_pressed("build_mode") and not Global.at_ship:
+		Global.player_mode = Global.PLAYER_MODES.BUILDING
+	
+	if Input.is_action_just_pressed("install_mode") and not Global.at_ship:
+		Global.player_mode  = Global.PLAYER_MODES.INSTALLING
+		_remove_holagram(true)
+
+
 # BUILDING -------------------------------------------------------------------
 # handels all build related logic from toggling modes and placement logic
 func _build_mode_handeling(ray_collider : Node) -> void:
 	var build_ray_collider = build_ray.get_collider()
 	
-	if Global.at_ship:
-		return
+	# toggles build mode and spawns/deletes the turret holagram'
 	
+	if Global.player_mode == Global.PLAYER_MODES.BUILDING:	
+		turret_grid._toggle_build_mode(true)
 	
-	# toggles build mode and spawns/deletes the turret holagram
-	if Input.is_action_just_pressed("build_mode"):
-		Global.build_mode = not Global.build_mode
-		
-		turret_grid._toggle_build_mode(Global.build_mode)
-		
-		if Global.build_mode and not Global.picking_up_builds:
-			gun_piviot.visible = false
-			turret_holagram = turret_holagram_scene.instantiate()
-			add_sibling(turret_holagram)
-			interact_overlay.visible = false
-			
-		else:
-			Global.picking_up_builds = false
-			gun_piviot.visible = true
-			if turret_holagram:
-				turret_holagram.queue_free()
-			build_overlay.visible = false
-	
-	
-		# changes to the next build mode
-	
-	
-	if not Global.build_mode:
-		return
+	if (
+		Global.player_mode == Global.PLAYER_MODES.BUILDING and 
+		not Global.picking_up_builds and 
+		not turret_holagram
+		):
+		gun_piviot.visible = false
+		turret_holagram = turret_holagram_scene.instantiate()
+		add_sibling(turret_holagram)
+		interact_overlay.visible = false
 	
 	
 	# changes the build mode to the next type
@@ -275,9 +315,25 @@ func _check_valid_placement(ray_collider : Node) -> bool:
 	return false
 
 
+func _remove_holagram(change_mode : bool = false) -> void:
+	gun_piviot.visible = true
+	if turret_holagram:
+		turret_holagram.queue_free()
+	build_overlay.visible = false
+	
+	if change_mode:
+		turret_grid._toggle_build_mode(false)
+		Global.picking_up_builds = false
+
+
 # WEAPONS CONTROL ------------------------------------------------------------
 func _shoot_control() -> void:
-	if Global.build_mode or not weapon or Global.crafting_open:
+	if (
+		Global.player_mode != Global.PLAYER_MODES.WEAPON or 
+		not weapon or 
+		Global.crafting_open
+		):
+		
 		return
 	
 	if Input.is_action_pressed("shoot") and can_shoot:

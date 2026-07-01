@@ -124,17 +124,17 @@ func craft(craft_data : CraftData = current_displayed_requirments) -> void:
 	if not current_displayed_requirments:
 		return
 	
-	var current_inventory = Global.get_current_inventory()
+	var current_storage = Global.get_current_storage()
 	
 	for requirment : RequirementsTemplate in craft_data.requirements:
-		current_inventory[requirment.item.tier][requirment.item.key] -= requirment.amount
+		current_storage[requirment.item.tier][requirment.item.key] -= requirment.amount
 	
-	if current_inventory[craft_data.crafted_item.tier].has(craft_data.crafted_item.key):
-		current_inventory[craft_data.crafted_item.tier][craft_data.crafted_item.key] += (
+	if current_storage[craft_data.crafted_item.tier].has(craft_data.crafted_item.key):
+		current_storage[craft_data.crafted_item.tier][craft_data.crafted_item.key] += (
 			craft_data.craft_amount
 			)
 	else:
-		current_inventory[craft_data.crafted_item.tier][craft_data.crafted_item.key] = (
+		current_storage[craft_data.crafted_item.tier][craft_data.crafted_item.key] = (
 			craft_data.craft_amount
 			)
 

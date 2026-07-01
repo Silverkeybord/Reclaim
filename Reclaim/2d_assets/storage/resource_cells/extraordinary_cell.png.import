@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ce8e7f2chvcgw"
-path="res://.godot/imported/rough_cell.png-2a125e9eb3afe310a0fc17008530f4eb.ctex"
+uid="uid://b3qdlq3pf7p24"
+path="res://.godot/imported/extraordinary_cell.png-92c9a1f62552deb312a770b47b823048.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://2d_assets/inventory/rough_cell.png"
-dest_files=["res://.godot/imported/rough_cell.png-2a125e9eb3afe310a0fc17008530f4eb.ctex"]
+source_file="res://2d_assets/storage/resource_cells/extraordinary_cell.png"
+dest_files=["res://.godot/imported/extraordinary_cell.png-92c9a1f62552deb312a770b47b823048.ctex"]
 
 [params]
 

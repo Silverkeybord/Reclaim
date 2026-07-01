@@ -20,6 +20,8 @@ font_size = 24
 font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 
 [node name="crafing_selection_sections" type="PanelContainer" unique_id=442247909 node_paths=PackedStringArray("tier_label", "hflow")]
+custom_minimum_size = Vector2(332, 0)
+custom_maximum_size = Vector2(332, -1)
 offset_right = 330.0
 offset_bottom = 59.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_yf5fn")

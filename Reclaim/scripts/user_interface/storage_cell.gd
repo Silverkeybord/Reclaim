@@ -1,7 +1,10 @@
 class_name StorageCell
 extends Control
 
-const CELL_TEXTURE_KEY := "cell"
+const CELLS_TEXTURE_KEY := "cells"
+const RESOURCES_KEY := "resources"
+const TURRETS_KEY := "turrets"
+const MODULES_KEY := "modules"
 
 @export_group("values")
 @export var item_resource : ItemData
@@ -19,15 +22,26 @@ var amount : int
 func setup() -> void:
 	update_amount()
 	
-	cell_texture.texture = Global.TIER_CONFIG[item_resource.tier][CELL_TEXTURE_KEY]
+	var textures : Dictionary = Global.TIER_CONFIG[item_resource.tier][CELLS_TEXTURE_KEY]
+	var texture : Texture
+	
+	match item_resource.type:
+		Global.ITEM_TYPES.RESOURCES:
+			texture = textures[RESOURCES_KEY]
+		Global.ITEM_TYPES.TURRET:
+			texture = textures[TURRETS_KEY]
+		Global.ITEM_TYPES.MODULE:
+			texture = textures[MODULES_KEY]
+	
+	cell_texture.texture = texture
 	
 	item_texture.texture = item_resource.get_item_texture()
 
 
 func update_amount() -> void:
-	var inventory = Global.ship_inventory if Global.at_ship else Global.sector_inventory
+	var storage = Global.ship_storage if Global.at_ship else Global.sector_storage
 	# If returned value dosen't exist return 0
-	amount = inventory[item_resource.tier].get(item_resource.key, 0)
+	amount = storage[item_resource.tier].get(item_resource.key, 0)
 	amount_label.text = Global.return_amount_shorthand(amount)
 	
 	# you can get booleans from this
@@ -35,7 +49,7 @@ func update_amount() -> void:
 
 
 func _on_mouse_entered() -> void:
-	item_tip.show_itemtip(item_resource, amount)
+	item_tip.show_itemtip(item_resource, amount, item_resource.type)
 	highlight_overlay.visible = true
 
 

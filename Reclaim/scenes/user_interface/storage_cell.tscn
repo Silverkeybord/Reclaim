@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://byuh35b33sevw"]
 
 [ext_resource type="Script" uid="uid://u7cyis4qmg6j" path="res://scripts/user_interface/storage_cell.gd" id="1_0lxaj"]
-[ext_resource type="Texture2D" uid="uid://ce8e7f2chvcgw" path="res://2d_assets/inventory/rough_cell.png" id="2_gx0yy"]
+[ext_resource type="Texture2D" uid="uid://ce8e7f2chvcgw" path="res://2d_assets/storage/resource_cells/rough_cell.png" id="2_gx0yy"]
 [ext_resource type="Texture2D" uid="uid://bguj48j4chxxo" path="res://2d_assets/items/none.png" id="3_l2jdo"]
 [ext_resource type="FontFile" uid="uid://sfctk4d5x67" path="res://other_assets/fonts/uni_sans/Uni Sans Heavy Italic.otf" id="4_g5eis"]
 
