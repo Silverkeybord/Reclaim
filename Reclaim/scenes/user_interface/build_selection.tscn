@@ -1,0 +1,89 @@
+[gd_scene format=3 uid="uid://5wiwx78yrbjr"]
+
+[ext_resource type="Texture2D" uid="uid://54jovper8ma2" path="res://2d_assets/building/build_selection_background.png" id="1_503lm"]
+[ext_resource type="Script" uid="uid://emv6jkplv1oa" path="res://scripts/user_interface/build_selection.gd" id="1_irgbf"]
+[ext_resource type="Texture2D" uid="uid://ba1w1713esehs" path="res://2d_assets/building/build_selection_highlight.png" id="2_irgbf"]
+[ext_resource type="PackedScene" uid="uid://dry5quv0ak5ck" path="res://scenes/user_interface/building_cell.tscn" id="4_irgbf"]
+[ext_resource type="FontFile" uid="uid://q3206aq7b5tl" path="res://other_assets/fonts/uni_sans/Uni Sans Heavy.otf" id="5_f3ev6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_irgbf"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_g4v7s"]
+font = ExtResource("5_f3ev6")
+font_size = 12
+
+[node name="build_selection" type="CanvasLayer" unique_id=437229528 node_paths=PackedStringArray("selected_name", "position_negative_3", "position_negative_2", "position_negative_1", "position_selected_0", "position_positive_1", "position_positive_2", "position_positive_3")]
+script = ExtResource("1_irgbf")
+build_cell_scene = ExtResource("4_irgbf")
+selected_name = NodePath("selected_name")
+position_negative_3 = NodePath("-3")
+position_negative_2 = NodePath("-2")
+position_negative_1 = NodePath("-1")
+position_selected_0 = NodePath("0")
+position_positive_1 = NodePath("1")
+position_positive_2 = NodePath("2")
+position_positive_3 = NodePath("3")
+
+[node name="-3" type="Marker2D" parent="." unique_id=8868560]
+position = Vector2(775, 419)
+
+[node name="-2" type="Marker2D" parent="." unique_id=1284029205]
+position = Vector2(727, 419)
+
+[node name="-1" type="Marker2D" parent="." unique_id=162727788]
+position = Vector2(674, 416)
+
+[node name="0" type="Marker2D" parent="." unique_id=174386681]
+position = Vector2(613, 413)
+
+[node name="1" type="Marker2D" parent="." unique_id=1040092118]
+position = Vector2(557, 416)
+
+[node name="2" type="Marker2D" parent="." unique_id=1371279081]
+position = Vector2(509, 419)
+
+[node name="3" type="Marker2D" parent="." unique_id=2055275172]
+position = Vector2(461, 419)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=700583171]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 401
+theme_override_constants/margin_bottom = 240
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=542212279]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_irgbf")
+metadata/_edit_lock_ = true
+
+[node name="selected_highlight" type="TextureRect" parent="MarginContainer/PanelContainer" unique_id=1103204723]
+z_index = 1
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("2_irgbf")
+stretch_mode = 3
+metadata/_edit_lock_ = true
+
+[node name="background" type="TextureRect" parent="MarginContainer/PanelContainer" unique_id=1751479598]
+layout_mode = 2
+texture = ExtResource("1_503lm")
+stretch_mode = 3
+metadata/_edit_lock_ = true
+
+[node name="selected_name" type="Label" parent="." unique_id=1323956833]
+anchors_preset = -1
+anchor_top = 0.65902776
+anchor_right = 1.0
+anchor_bottom = 0.6770833
+offset_top = 3.0517578e-05
+grow_horizontal = 2
+grow_vertical = 2
+text = "DARK MATTER TURRET"
+label_settings = SubResource("LabelSettings_g4v7s")
+horizontal_alignment = 1

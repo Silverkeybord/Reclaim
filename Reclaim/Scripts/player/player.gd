@@ -1,10 +1,12 @@
+class_name Player
 extends CharacterBody3D
 
 const PLAYER_MODE_INPUTS = "1 - Weapon
 2 - Building
 3 - Installation"
 const BUILDING_INPUTS = "R - Pick up Builds
-F - Change Builds"
+F - Change Builds
+Q + Scroll - Selection"
 const INTERACT_INPUT = "E - Interact"
 
 const INTERACT_DISTANCE := 5
@@ -35,11 +37,14 @@ const MOVE_CLOSER_TEXT := "MOVE CLOSER"
 @export_group("turrets")
 @export var turret_holagram_scene : PackedScene
 @export var turret_grid : Node3D
+@export var selected_turret : String = ""
+@export var selected_base : String = ""
 
 @export_group("2d elements")
 @export var build_overlay : Control
 @export var build_label : Label
 @export var input_tip : Label
+@export var building_selection : CanvasLayer
 
 var turret_holagram : Node3D
 
@@ -48,16 +53,13 @@ var weapon : Node3D
 var weapon_name : String = "pistol"
 var weapon_resource : WeaponData
 
-var selected_turret : String = "single"
-var selected_base : String = "plate"
-
 var can_remove_build := true
 
 var turrets : Dictionary
 
 
 func _ready() -> void:
-	Global.set_random_storage()
+	Global.set_random_storage(true)
 	# gives the player their starting weapon
 	_set_new_weapon()
 
@@ -112,7 +114,8 @@ func _input_tip_updating() -> void:
 	if not Global.at_ship:
 		input_tip_output.append(PLAYER_MODE_INPUTS)
 	
-	input_tip_output.append(INTERACT_INPUT)
+	if Global.player_mode != Global.PLAYER_MODES.BUILDING:
+		input_tip_output.append(INTERACT_INPUT)
 	
 	var output_text : String = ""
 	var formating_amount = input_tip_output.size()
@@ -143,6 +146,7 @@ func _interaction_handeling(ray_collider : Node) -> void:
 		interact_overlay.visible =  false
 
 
+# handels the player changing modes
 func _player_mode_handeling() -> void:
 	if Input.is_action_just_pressed("weapon_mode"):
 		Global.player_mode = Global.PLAYER_MODES.WEAPON
@@ -150,9 +154,11 @@ func _player_mode_handeling() -> void:
 	
 	if Input.is_action_just_pressed("build_mode") and not Global.at_ship:
 		Global.player_mode = Global.PLAYER_MODES.BUILDING
+		building_selection.load_selection()
+		building_selection.set_process(true)
 	
 	if Input.is_action_just_pressed("install_mode") and not Global.at_ship:
-		Global.player_mode  = Global.PLAYER_MODES.INSTALLING
+		Global.player_mode = Global.PLAYER_MODES.INSTALLING
 		_remove_holagram(true)
 
 
@@ -163,7 +169,7 @@ func _build_mode_handeling(ray_collider : Node) -> void:
 	
 	# toggles build mode and spawns/deletes the turret holagram'
 	
-	if Global.player_mode == Global.PLAYER_MODES.BUILDING:	
+	if Global.player_mode == Global.PLAYER_MODES.BUILDING:
 		turret_grid._toggle_build_mode(true)
 	
 	if (
@@ -183,6 +189,7 @@ func _build_mode_handeling(ray_collider : Node) -> void:
 		Global.current_build_mode = (
 			((Global.current_build_mode + 1) % build_modes) as Global.BUILD_MODES
 			)
+		building_selection.change_build_mode()
 	
 	
 	# toggles picking up when in build mode
@@ -191,7 +198,6 @@ func _build_mode_handeling(ray_collider : Node) -> void:
 		
 		if turret_holagram:
 			turret_holagram.visible = not Global.picking_up_builds
-		
 		
 		if Global.picking_up_builds:
 			build_label.text = PICK_UP_TEXT
@@ -288,6 +294,8 @@ func _build_mode_handeling(ray_collider : Node) -> void:
 					
 					Global.BUILD_MODES.BASE:
 						ray_collider.build_base(selected_base)
+				
+				building_selection.placed_build()
 
 
 # checkes if the current posiiton of the turret is valid to be placed
@@ -315,6 +323,7 @@ func _check_valid_placement(ray_collider : Node) -> bool:
 	return false
 
 
+# just removes the holagram when changing build modes and toggles when changing mode
 func _remove_holagram(change_mode : bool = false) -> void:
 	gun_piviot.visible = true
 	if turret_holagram:
@@ -322,8 +331,10 @@ func _remove_holagram(change_mode : bool = false) -> void:
 	build_overlay.visible = false
 	
 	if change_mode:
-		turret_grid._toggle_build_mode(false)
 		Global.picking_up_builds = false
+		
+		if not Global.at_ship:
+			turret_grid._toggle_build_mode(false)
 
 
 # WEAPONS CONTROL ------------------------------------------------------------

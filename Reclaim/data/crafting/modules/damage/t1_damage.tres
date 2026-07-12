@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="CraftData" format=3 uid="uid://43bwpoeqro1c"]
+
+[ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="1_lh6or"]
+[ext_resource type="Resource" uid="uid://b54nvwdywn4mm" path="res://data/items/modules/tier1/t1_damage.tres" id="1_nap5t"]
+[ext_resource type="Script" uid="uid://hps2ehio5s7l" path="res://data/resource_scripts/craft_data.gd" id="2_nap5t"]
+[ext_resource type="Resource" uid="uid://ke1h4l1ko4bj" path="res://data/items/resources/tier1/basic_material.tres" id="3_nophv"]
+[ext_resource type="Resource" uid="uid://c6k8hue261trj" path="res://data/items/resources/tier1/flint.tres" id="4_763sd"]
+[ext_resource type="Resource" uid="uid://dindgm06orind" path="res://data/items/resources/tier1/scrap.tres" id="5_3vaby"]
+[ext_resource type="Resource" uid="uid://dn3wtnao87311" path="res://data/items/resources/tier2/gunpowder.tres" id="6_axvhe"]
+
+[sub_resource type="Resource" id="Resource_socrw"]
+script = ExtResource("1_lh6or")
+item = ExtResource("3_nophv")
+amount = 1
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_y815y"]
+script = ExtResource("1_lh6or")
+item = ExtResource("4_763sd")
+amount = 5
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_wtdj3"]
+script = ExtResource("1_lh6or")
+item = ExtResource("5_3vaby")
+amount = 5
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_nophv"]
+script = ExtResource("1_lh6or")
+item = ExtResource("6_axvhe")
+amount = 1
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[resource]
+script = ExtResource("2_nap5t")
+key = "t1_damage"
+requirements = Array[ExtResource("1_lh6or")]([SubResource("Resource_socrw"), SubResource("Resource_y815y"), SubResource("Resource_wtdj3"), SubResource("Resource_nophv")])
+crafted_item = ExtResource("1_nap5t")
+description = "A slight increase in damage"
+metadata/_custom_type_script = "uid://hps2ehio5s7l"

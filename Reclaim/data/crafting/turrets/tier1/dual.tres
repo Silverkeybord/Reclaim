@@ -1,0 +1,50 @@
+[gd_resource type="Resource" script_class="CraftData" format=3 uid="uid://b7r3npftyhptr"]
+
+[ext_resource type="Resource" uid="uid://cjgft8kjnh1e7" path="res://data/items/turrets/tier1/dual.tres" id="1_v3bs5"]
+[ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="2_pt4uh"]
+[ext_resource type="Resource" uid="uid://ke1h4l1ko4bj" path="res://data/items/resources/tier1/basic_material.tres" id="3_snc1d"]
+[ext_resource type="Resource" uid="uid://dm10222fpo58l" path="res://data/items/resources/tier1/rock.tres" id="4_7vyi0"]
+[ext_resource type="Resource" uid="uid://dmc0tsryqmh28" path="res://data/items/resources/tier1/sand.tres" id="5_6lqqr"]
+[ext_resource type="Resource" uid="uid://c6k8hue261trj" path="res://data/items/resources/tier1/flint.tres" id="6_t2f6p"]
+[ext_resource type="Resource" uid="uid://dn3wtnao87311" path="res://data/items/resources/tier2/gunpowder.tres" id="7_y825w"]
+[ext_resource type="Script" uid="uid://hps2ehio5s7l" path="res://data/resource_scripts/craft_data.gd" id="8_jr77r"]
+
+[sub_resource type="Resource" id="Resource_wyyet"]
+script = ExtResource("2_pt4uh")
+item = ExtResource("3_snc1d")
+amount = 8
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_0gl0l"]
+script = ExtResource("2_pt4uh")
+item = ExtResource("4_7vyi0")
+amount = 15
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_mu1jm"]
+script = ExtResource("2_pt4uh")
+item = ExtResource("5_6lqqr")
+amount = 25
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_2xj8l"]
+script = ExtResource("2_pt4uh")
+item = ExtResource("6_t2f6p")
+amount = 5
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_ypebh"]
+script = ExtResource("2_pt4uh")
+item = ExtResource("7_y825w")
+amount = 3
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[resource]
+script = ExtResource("8_jr77r")
+key = "dual"
+required_ship_level = 2
+requirements = Array[ExtResource("2_pt4uh")]([SubResource("Resource_wyyet"), SubResource("Resource_0gl0l"), SubResource("Resource_mu1jm"), SubResource("Resource_2xj8l"), SubResource("Resource_ypebh")])
+crafted_item = ExtResource("1_v3bs5")
+description = "This turret goes pew pew. but x2"
+craft_time = 8.0
+metadata/_custom_type_script = "uid://hps2ehio5s7l"

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dcu7uussd5i41"]
 
 [ext_resource type="Script" uid="uid://b5m6w72ttc6t6" path="res://scripts/turrets/t1/single.gd" id="1_5hpjm"]
+[ext_resource type="Resource" uid="uid://y28uo7n7jj18" path="res://data/turrets/single.tres" id="2_2bfc7"]
 [ext_resource type="Script" uid="uid://bgy2xmmxnlw85" path="res://scripts/turrets/turret_range_area.gd" id="2_ldbw5"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_h2pfq"]
@@ -25,16 +26,17 @@ data = PackedVector3Array(-0.5, 0.5, 1, 0.5, 0.5, 1, -0.5, -0.5, 1, 0.5, 0.5, 1,
 height = 10.0
 radius = 25.0
 
-[node name="single" type="StaticBody3D" unique_id=88525916 node_paths=PackedStringArray("turret_piviot_point", "turret_gun", "bullet_spawn", "cooldown_timer", "turret_range_area", "turret_range_coll")]
+[node name="single" type="StaticBody3D" unique_id=88525916 node_paths=PackedStringArray("main_body", "turret_piviot_point", "bullet_spawn", "cooldown_timer", "turret_range_area", "turret_range_coll")]
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("1_5hpjm")
+main_body = NodePath(".")
 turret_piviot_point = NodePath("head_piviot_point")
-turret_gun = NodePath("head_piviot_point/gun")
 bullet_spawn = NodePath("head_piviot_point/gun/bullet_spawn")
 cooldown_timer = NodePath("cool_down_timer")
 turret_range_area = NodePath("turret_range_area")
 turret_range_coll = NodePath("turret_range_area/turret_range_coll")
+turret_resource = ExtResource("2_2bfc7")
 build = "single"
 metadata/build = false
 

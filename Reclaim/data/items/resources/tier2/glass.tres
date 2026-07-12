@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://coniauqe450rn"]
 
-[ext_resource type="Texture2D" uid="uid://ccnyb53y1dpol" path="res://2d_assets/items/2/glass.png" id="1_4t7c1"]
+[ext_resource type="Texture2D" uid="uid://ccnyb53y1dpol" path="res://2d_assets/items/resources/2/glass.png" id="1_4t7c1"]
 [ext_resource type="Script" uid="uid://cgqvvu75ctfva" path="res://data/resource_scripts/items_data.gd" id="1_gy7mt"]
 
 [resource]

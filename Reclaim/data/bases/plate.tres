@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="BaseData" format=3 uid="uid://cbl5nx4e2ycvq"]
+
+[ext_resource type="Script" uid="uid://cok3yxxldqfv4" path="res://data/resource_scripts/base_data.gd" id="1_4khvu"]
+
+[resource]
+script = ExtResource("1_4khvu")
+key = "plate"
+metadata/_custom_type_script = "uid://cok3yxxldqfv4"

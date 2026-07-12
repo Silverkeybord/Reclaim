@@ -1,0 +1,103 @@
+[gd_scene format=3 uid="uid://cw50byvl414oe"]
+
+[ext_resource type="Script" uid="uid://c5yp2bb2cbqs1" path="res://scripts/turrets/t1/dual.gd" id="1_11lst"]
+[ext_resource type="Resource" uid="uid://twejnti2x2k5" path="res://data/turrets/dual.tres" id="2_wikfi"]
+[ext_resource type="Script" uid="uid://bgy2xmmxnlw85" path="res://scripts/turrets/turret_range_area.gd" id="3_efcju"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_h2pfq"]
+size = Vector3(3.5, 3, 3.5)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_q23d6"]
+data = PackedVector3Array(-1.75, 1.5, 1.75, 1.75, 1.5, 1.75, -1.75, -1.5, 1.75, 1.75, 1.5, 1.75, 1.75, -1.5, 1.75, -1.75, -1.5, 1.75, 1.75, 1.5, -1.75, -1.75, 1.5, -1.75, 1.75, -1.5, -1.75, -1.75, 1.5, -1.75, -1.75, -1.5, -1.75, 1.75, -1.5, -1.75, 1.75, 1.5, 1.75, 1.75, 1.5, -1.75, 1.75, -1.5, 1.75, 1.75, 1.5, -1.75, 1.75, -1.5, -1.75, 1.75, -1.5, 1.75, -1.75, 1.5, -1.75, -1.75, 1.5, 1.75, -1.75, -1.5, -1.75, -1.75, 1.5, 1.75, -1.75, -1.5, 1.75, -1.75, -1.5, -1.75, 1.75, 1.5, 1.75, -1.75, 1.5, 1.75, 1.75, 1.5, -1.75, -1.75, 1.5, 1.75, -1.75, 1.5, -1.75, 1.75, 1.5, -1.75, -1.75, -1.5, 1.75, 1.75, -1.5, 1.75, -1.75, -1.5, -1.75, 1.75, -1.5, 1.75, 1.75, -1.5, -1.75, -1.75, -1.5, -1.75)
+
+[sub_resource type="BoxMesh" id="BoxMesh_2utbc"]
+size = Vector3(2, 1.5, 2)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_uprog"]
+data = PackedVector3Array(-1, 0.75, 1, 1, 0.75, 1, -1, -0.75, 1, 1, 0.75, 1, 1, -0.75, 1, -1, -0.75, 1, 1, 0.75, -1, -1, 0.75, -1, 1, -0.75, -1, -1, 0.75, -1, -1, -0.75, -1, 1, -0.75, -1, 1, 0.75, 1, 1, 0.75, -1, 1, -0.75, 1, 1, 0.75, -1, 1, -0.75, -1, 1, -0.75, 1, -1, 0.75, -1, -1, 0.75, 1, -1, -0.75, -1, -1, 0.75, 1, -1, -0.75, 1, -1, -0.75, -1, 1, 0.75, 1, -1, 0.75, 1, 1, 0.75, -1, -1, 0.75, 1, -1, 0.75, -1, 1, 0.75, -1, -1, -0.75, 1, 1, -0.75, 1, -1, -0.75, -1, 1, -0.75, 1, 1, -0.75, -1, -1, -0.75, -1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_q4ebr"]
+size = Vector3(0.8, 0.8, 2)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_wikfi"]
+data = PackedVector3Array(-0.39999998, 0.39999998, 1, 0.39999998, 0.39999998, 1, -0.39999998, -0.39999998, 1, 0.39999998, 0.39999998, 1, 0.39999998, -0.39999998, 1, -0.39999998, -0.39999998, 1, 0.39999998, 0.39999998, -1, -0.39999998, 0.39999998, -1, 0.39999998, -0.39999998, -1, -0.39999998, 0.39999998, -1, -0.39999998, -0.39999998, -1, 0.39999998, -0.39999998, -1, 0.39999998, 0.39999998, 1, 0.39999998, 0.39999998, -1, 0.39999998, -0.39999998, 1, 0.39999998, 0.39999998, -1, 0.39999998, -0.39999998, -1, 0.39999998, -0.39999998, 1, -0.39999998, 0.39999998, -1, -0.39999998, 0.39999998, 1, -0.39999998, -0.39999998, -1, -0.39999998, 0.39999998, 1, -0.39999998, -0.39999998, 1, -0.39999998, -0.39999998, -1, 0.39999998, 0.39999998, 1, -0.39999998, 0.39999998, 1, 0.39999998, 0.39999998, -1, -0.39999998, 0.39999998, 1, -0.39999998, 0.39999998, -1, 0.39999998, 0.39999998, -1, -0.39999998, -0.39999998, 1, 0.39999998, -0.39999998, 1, -0.39999998, -0.39999998, -1, 0.39999998, -0.39999998, 1, 0.39999998, -0.39999998, -1, -0.39999998, -0.39999998, -1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_w84ug"]
+data = PackedVector3Array(-0.39999998, 0.39999998, 1, 0.39999998, 0.39999998, 1, -0.39999998, -0.39999998, 1, 0.39999998, 0.39999998, 1, 0.39999998, -0.39999998, 1, -0.39999998, -0.39999998, 1, 0.39999998, 0.39999998, -1, -0.39999998, 0.39999998, -1, 0.39999998, -0.39999998, -1, -0.39999998, 0.39999998, -1, -0.39999998, -0.39999998, -1, 0.39999998, -0.39999998, -1, 0.39999998, 0.39999998, 1, 0.39999998, 0.39999998, -1, 0.39999998, -0.39999998, 1, 0.39999998, 0.39999998, -1, 0.39999998, -0.39999998, -1, 0.39999998, -0.39999998, 1, -0.39999998, 0.39999998, -1, -0.39999998, 0.39999998, 1, -0.39999998, -0.39999998, -1, -0.39999998, 0.39999998, 1, -0.39999998, -0.39999998, 1, -0.39999998, -0.39999998, -1, 0.39999998, 0.39999998, 1, -0.39999998, 0.39999998, 1, 0.39999998, 0.39999998, -1, -0.39999998, 0.39999998, 1, -0.39999998, 0.39999998, -1, 0.39999998, 0.39999998, -1, -0.39999998, -0.39999998, 1, 0.39999998, -0.39999998, 1, -0.39999998, -0.39999998, -1, 0.39999998, -0.39999998, 1, 0.39999998, -0.39999998, -1, -0.39999998, -0.39999998, -1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_uprog"]
+height = 10.0
+radius = 25.0
+
+[node name="dual" type="StaticBody3D" unique_id=88525916 node_paths=PackedStringArray("left_marker", "right_marker", "main_body", "turret_piviot_point", "cooldown_timer", "turret_range_area", "turret_range_coll")]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_11lst")
+left_marker = NodePath("head_piviot_point/left_barrel/bullet_spawn")
+right_marker = NodePath("head_piviot_point/right_barrel/bullet_spawn")
+main_body = NodePath(".")
+turret_piviot_point = NodePath("head_piviot_point")
+cooldown_timer = NodePath("cool_down_timer")
+turret_range_area = NodePath("turret_range_area")
+turret_range_coll = NodePath("turret_range_area/turret_range_coll")
+turret_resource = ExtResource("2_wikfi")
+metadata/build = false
+
+[node name="body" type="MeshInstance3D" parent="." unique_id=1853312379]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+mesh = SubResource("BoxMesh_h2pfq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1602904139]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("ConcavePolygonShape3D_q23d6")
+
+[node name="head_piviot_point" type="StaticBody3D" parent="." unique_id=851992263]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+collision_layer = 2
+collision_mask = 7
+
+[node name="head" type="MeshInstance3D" parent="head_piviot_point" unique_id=1519841278]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 4.371139e-08, 0.75, 0)
+mesh = SubResource("BoxMesh_2utbc")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="head_piviot_point" unique_id=748854766]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 4.371139e-08, 0.75, 0)
+shape = SubResource("ConcavePolygonShape3D_uprog")
+
+[node name="left_barrel" type="MeshInstance3D" parent="head_piviot_point" unique_id=1786086648]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -0.45, 0.75, -1)
+mesh = SubResource("BoxMesh_q4ebr")
+
+[node name="bullet_spawn" type="Marker3D" parent="head_piviot_point/left_barrel" unique_id=1963288427]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.742277e-08, 0, 1)
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="head_piviot_point" unique_id=1138873821]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -0.45, 0.75, -1)
+shape = SubResource("ConcavePolygonShape3D_wikfi")
+
+[node name="right_barrel" type="MeshInstance3D" parent="head_piviot_point" unique_id=117030672]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.45, 0.75, -1)
+mesh = SubResource("BoxMesh_q4ebr")
+
+[node name="bullet_spawn" type="Marker3D" parent="head_piviot_point/right_barrel" unique_id=1089318132]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.742277e-08, 0, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="head_piviot_point" unique_id=1779936506]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.45, 0.75, -1)
+shape = SubResource("ConcavePolygonShape3D_w84ug")
+
+[node name="turret_range_area" type="Area3D" parent="." unique_id=1900284662]
+visible = false
+collision_layer = 2
+collision_mask = 8
+monitorable = false
+script = ExtResource("3_efcju")
+
+[node name="turret_range_coll" type="CollisionShape3D" parent="turret_range_area" unique_id=1099292850]
+shape = SubResource("CylinderShape3D_uprog")
+
+[node name="cool_down_timer" type="Timer" parent="." unique_id=177401779]
+
+[connection signal="body_entered" from="turret_range_area" to="turret_range_area" method="_on_body_entered"]
+[connection signal="body_exited" from="turret_range_area" to="turret_range_area" method="_on_body_exited"]
+[connection signal="timeout" from="cool_down_timer" to="." method="_on_cool_down_timer_timeout"]

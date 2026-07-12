@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://dry5quv0ak5ck"]
+
+[ext_resource type="Script" uid="uid://bio1gj5y2teq4" path="res://scripts/user_interface/build_selection_cell.gd" id="1_m1r4k"]
+[ext_resource type="Texture2D" uid="uid://c3p43fip0vogy" path="res://2d_assets/building/building_rough_cell.png" id="2_m1r4k"]
+[ext_resource type="Texture2D" uid="uid://bguj48j4chxxo" path="res://2d_assets/items/none.png" id="3_m1r4k"]
+[ext_resource type="FontFile" uid="uid://q3206aq7b5tl" path="res://other_assets/fonts/uni_sans/Uni Sans Heavy.otf" id="4_h3nwr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_e6v48"]
+font = ExtResource("4_h3nwr")
+font_size = 10
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[node name="building_cell" type="Control" unique_id=1715849231 node_paths=PackedStringArray("cell_texture", "item_texture", "amount_label")]
+custom_minimum_size = Vector2(50, 50)
+custom_maximum_size = Vector2(50, 50)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 50.0
+offset_bottom = 50.0
+script = ExtResource("1_m1r4k")
+cell_texture = NodePath("cell_texture")
+item_texture = NodePath("item_texture")
+amount_label = NodePath("amount_label")
+
+[node name="cell_texture" type="TextureRect" parent="." unique_id=341389371]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_m1r4k")
+stretch_mode = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="item_texture" type="TextureRect" parent="." unique_id=145673214]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 4.347824
+offset_bottom = 4.347824
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.92, 0.92)
+texture = ExtResource("3_m1r4k")
+stretch_mode = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="amount_label" type="Label" parent="." unique_id=86576963]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 39.0
+offset_right = 50.0
+offset_bottom = 50.0
+text = "999.9k"
+label_settings = SubResource("LabelSettings_e6v48")
+horizontal_alignment = 1

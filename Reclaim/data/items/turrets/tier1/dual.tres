@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://cjgft8kjnh1e7"]
+
+[ext_resource type="Script" uid="uid://cgqvvu75ctfva" path="res://data/resource_scripts/items_data.gd" id="1_j6223"]
+[ext_resource type="Texture2D" uid="uid://djcow5a7xfb6e" path="res://2d_assets/items/turrets/dual_turret_item_texture.png" id="1_k4d20"]
+
+[resource]
+script = ExtResource("1_j6223")
+key = "dual"
+type = 1
+item_texture = ExtResource("1_k4d20")
+value = 20.0
+weight = 175
+metadata/_custom_type_script = "uid://cgqvvu75ctfva"

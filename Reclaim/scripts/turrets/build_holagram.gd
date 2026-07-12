@@ -7,8 +7,6 @@ const INVALID_MAT := preload("res://textures_and_materials/building/invalid_hola
 @export var base_holagram : MeshInstance3D
 @export var valid_position := false
 
-var _last_valid_position := false
-
 
 func _process(_delta: float) -> void:
 	var active_holagram : MeshInstance3D
@@ -24,9 +22,7 @@ func _process(_delta: float) -> void:
 			base_holagram.visible = true
 			turret_holagram.visible = false
 	
-	if valid_position != _last_valid_position:
-		_last_valid_position = valid_position
-		if valid_position:
-			active_holagram.set_surface_override_material(0, VALID_MAT)
-		else:
-			active_holagram.set_surface_override_material(0, INVALID_MAT)
+	if valid_position:
+		active_holagram.set_surface_override_material(0, VALID_MAT)
+	else:
+		active_holagram.set_surface_override_material(0, INVALID_MAT)

@@ -3,6 +3,8 @@ class_name TurretBasics
 extends Builds
 
 enum SHOOTING_METHODS {
+	CLOSEST,
+	FARTHEST,
 	FIRST,
 	LAST,
 	STRONG,
@@ -11,11 +13,11 @@ enum SHOOTING_METHODS {
 
 const FIRST_SHOT_TIMER_WAIT := 0.01
 
-@export var turret_shooting_type := SHOOTING_METHODS.FIRST
+@export var turret_shooting_type := SHOOTING_METHODS.CLOSEST
 
 @export_group("in scene")
+@export var main_body : Node3D
 @export var turret_piviot_point : Node3D
-@export var turret_gun : Node3D
 @export var bullet_spawn : Marker3D
 @export var cooldown_timer : Timer
 @export var turret_range_area : TurretRangeArea
@@ -37,7 +39,6 @@ const FIRST_SHOT_TIMER_WAIT := 0.01
 
 
 func _ready() -> void:
-	_set_new_turret("basic") # TEMP
 	cooldown_timer.wait_time = turret_resource.cooldown
 	cooldown_timer.one_shot = true
 	
@@ -64,9 +65,12 @@ func _shooting_logic() -> void:
 	if target == null or not is_instance_valid(target):
 		return
 	
+	shoot(target)
+
+
+func shoot(target : CharacterBody3D) -> void:
 	var target_position := target.global_position
 	turret_piviot_point.look_at(target_position)
-	
 	
 	if turret_resource.get_critical():
 		target.hit(turret_resource.damage * turret_resource.critical_multiplier, true)
@@ -82,6 +86,16 @@ func _shooting_logic() -> void:
 
 func _pick_target(enemies: Array[BaseEnemy]) -> BaseEnemy:
 	match turret_shooting_type:
+		
+		SHOOTING_METHODS.CLOSEST:
+			var closest = enemies[0]
+			for enemy in enemies:
+				if (
+				main_body.global_position.distance_to(enemy.global_position) < 
+				main_body.global_position.distance_to(closest.global_position)
+				):
+					closest = enemy
+			return closest
 		
 		SHOOTING_METHODS.FIRST:
 			# First enemy to enter range (earliest in the array)

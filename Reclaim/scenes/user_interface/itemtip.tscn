@@ -20,35 +20,43 @@ font = ExtResource("3_oswdm")
 font_size = 10
 font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 
-[node name="itemtip" type="CanvasLayer" unique_id=854836766 node_paths=PackedStringArray("resource_name_label", "resource_value_label", "resource_weight_label", "resource_amount_label", "turret_name_label", "turret_value_label", "turret_weight_label", "turret_fire_rate_label", "turret_damage_label", "turret_range_label", "turret_ability_label", "resources_tip", "turrets_tip")]
-layer = 2
-visible = false
+[node name="itemtip" type="CanvasLayer" unique_id=854836766 node_paths=PackedStringArray("item_control", "resource_name_label", "resource_value_label", "resource_weight_label", "resource_amount_label", "turret_name_label", "turret_value_label", "turret_weight_label", "turret_fire_rate_label", "turret_damage_label", "turret_range_label", "turret_ability_label", "resources_tip", "turrets_tip")]
+layer = 3
 script = ExtResource("1_nhpud")
-resource_name_label = NodePath("resource_tip/MarginContainer/VBoxContainer/name_label")
-resource_value_label = NodePath("resource_tip/MarginContainer/VBoxContainer/HBoxContainer/value_label")
-resource_weight_label = NodePath("resource_tip/MarginContainer/VBoxContainer/HBoxContainer/weight_label")
-resource_amount_label = NodePath("resource_tip/MarginContainer/VBoxContainer/amount_label")
-turret_name_label = NodePath("turret_tip/MarginContainer/VBoxContainer/name_label")
-turret_value_label = NodePath("turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3/VBoxContainer/value_label")
-turret_weight_label = NodePath("turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3/VBoxContainer2/weight_label")
-turret_fire_rate_label = NodePath("turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3/VBoxContainer/fire_rate_label")
-turret_damage_label = NodePath("turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3/VBoxContainer/damage_label")
-turret_range_label = NodePath("turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3/VBoxContainer2/range_label")
-turret_ability_label = NodePath("turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3/VBoxContainer2/ability_label")
-resources_tip = NodePath("resource_tip")
-turrets_tip = NodePath("turret_tip")
+item_control = NodePath("item_control")
+resource_name_label = NodePath("item_control/resource_tip/MarginContainer/VBoxContainer/name_label")
+resource_value_label = NodePath("item_control/resource_tip/MarginContainer/VBoxContainer/HBoxContainer/value_label")
+resource_weight_label = NodePath("item_control/resource_tip/MarginContainer/VBoxContainer/HBoxContainer/weight_label")
+resource_amount_label = NodePath("item_control/resource_tip/MarginContainer/VBoxContainer/amount_label")
+turret_name_label = NodePath("item_control/turret_tip/MarginContainer/VBoxContainer/name_label")
+turret_value_label = NodePath("item_control/turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3/VBoxContainer/value_label")
+turret_weight_label = NodePath("item_control/turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3/VBoxContainer2/weight_label")
+turret_fire_rate_label = NodePath("item_control/turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3/VBoxContainer/fire_rate_label")
+turret_damage_label = NodePath("item_control/turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3/VBoxContainer/damage_label")
+turret_range_label = NodePath("item_control/turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3/VBoxContainer2/range_label")
+turret_ability_label = NodePath("item_control/turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3/VBoxContainer2/ability_label")
+resources_tip = NodePath("item_control/resource_tip")
+turrets_tip = NodePath("item_control/turret_tip")
 
-[node name="resource_tip" type="TextureRect" parent="." unique_id=1467608717]
+[node name="item_control" type="Control" parent="." unique_id=1687772551]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="resource_tip" type="TextureRect" parent="item_control" unique_id=1467608717]
+visible = false
 texture_filter = 1
+layout_mode = 1
 anchors_preset = -1
 anchor_top = -0.09166667
 anchor_right = 0.13125
+offset_top = -66.0
+offset_right = 168.0
 mouse_filter = 2
 texture = ExtResource("2_puydn")
 stretch_mode = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="MarginContainer" type="MarginContainer" parent="resource_tip" unique_id=129206741]
+[node name="MarginContainer" type="MarginContainer" parent="item_control/resource_tip" unique_id=129206741]
 layout_mode = 1
 offset_right = 154.0
 offset_bottom = 64.0
@@ -57,39 +65,41 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="VBoxContainer" type="VBoxContainer" parent="resource_tip/MarginContainer" unique_id=2119405421]
+[node name="VBoxContainer" type="VBoxContainer" parent="item_control/resource_tip/MarginContainer" unique_id=2119405421]
 layout_mode = 2
 theme_override_constants/separation = 3
 
-[node name="name_label" type="Label" parent="resource_tip/MarginContainer/VBoxContainer" unique_id=1772191354]
+[node name="name_label" type="Label" parent="item_control/resource_tip/MarginContainer/VBoxContainer" unique_id=1772191354]
 layout_mode = 2
 text = "Construction Material"
 label_settings = SubResource("LabelSettings_g4v7s")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="resource_tip/MarginContainer/VBoxContainer" unique_id=153610517]
+[node name="HBoxContainer" type="HBoxContainer" parent="item_control/resource_tip/MarginContainer/VBoxContainer" unique_id=153610517]
 layout_mode = 2
 
-[node name="weight_label" type="Label" parent="resource_tip/MarginContainer/VBoxContainer/HBoxContainer" unique_id=614804711]
+[node name="weight_label" type="Label" parent="item_control/resource_tip/MarginContainer/VBoxContainer/HBoxContainer" unique_id=614804711]
 layout_mode = 2
 text = "Weight : 999k"
 label_settings = SubResource("LabelSettings_l7j5f")
 
-[node name="value_label" type="Label" parent="resource_tip/MarginContainer/VBoxContainer/HBoxContainer" unique_id=570829852]
+[node name="value_label" type="Label" parent="item_control/resource_tip/MarginContainer/VBoxContainer/HBoxContainer" unique_id=570829852]
 layout_mode = 2
 text = "Value : 999k"
 label_settings = SubResource("LabelSettings_1eo2d")
 
-[node name="amount_label" type="Label" parent="resource_tip/MarginContainer/VBoxContainer" unique_id=1723301668]
+[node name="amount_label" type="Label" parent="item_control/resource_tip/MarginContainer/VBoxContainer" unique_id=1723301668]
 layout_mode = 2
 text = "Amount : 999,999"
 label_settings = SubResource("LabelSettings_1eo2d")
 
-[node name="turret_tip" type="TextureRect" parent="." unique_id=318515611]
-visible = false
+[node name="turret_tip" type="TextureRect" parent="item_control" unique_id=318515611]
 texture_filter = 1
+layout_mode = 1
 anchors_preset = -1
 anchor_top = -0.11111111
 anchor_right = 0.1625
+offset_top = -80.0
+offset_right = 208.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0, 1)
@@ -98,8 +108,7 @@ texture = ExtResource("4_puydn")
 stretch_mode = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="MarginContainer" type="MarginContainer" parent="turret_tip" unique_id=1968807294]
-visible = false
+[node name="MarginContainer" type="MarginContainer" parent="item_control/turret_tip" unique_id=1968807294]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -110,61 +119,62 @@ theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 6
 theme_override_constants/margin_bottom = 6
-metadata/_edit_lock_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="turret_tip/MarginContainer" unique_id=1949840242]
+[node name="VBoxContainer" type="VBoxContainer" parent="item_control/turret_tip/MarginContainer" unique_id=1949840242]
 layout_mode = 2
 theme_override_constants/separation = 2
 
-[node name="name_label" type="Label" parent="turret_tip/MarginContainer/VBoxContainer" unique_id=1312852733]
+[node name="name_label" type="Label" parent="item_control/turret_tip/MarginContainer/VBoxContainer" unique_id=1312852733]
 layout_mode = 2
-text = "Big Cannon that Boom"
+text = "- Big Cannon that Boom -"
 label_settings = SubResource("LabelSettings_g4v7s")
+horizontal_alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="turret_tip/MarginContainer/VBoxContainer" unique_id=640787551]
+[node name="MarginContainer" type="MarginContainer" parent="item_control/turret_tip/MarginContainer/VBoxContainer" unique_id=640787551]
 layout_mode = 2
 theme_override_constants/margin_left = 2
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="turret_tip/MarginContainer/VBoxContainer/MarginContainer" unique_id=330130029]
+[node name="HBoxContainer3" type="HBoxContainer" parent="item_control/turret_tip/MarginContainer/VBoxContainer/MarginContainer" unique_id=330130029]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3" unique_id=2138433484]
+[node name="VBoxContainer" type="VBoxContainer" parent="item_control/turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3" unique_id=2138433484]
+custom_minimum_size = Vector2(95, 0)
 custom_maximum_size = Vector2(84, -1)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 3
 
-[node name="value_label" type="Label" parent="turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3/VBoxContainer" unique_id=200977285]
+[node name="value_label" type="Label" parent="item_control/turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3/VBoxContainer" unique_id=200977285]
 layout_mode = 2
 text = "Fire Rate : 0.01"
 label_settings = SubResource("LabelSettings_l7j5f")
 
-[node name="fire_rate_label" type="Label" parent="turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3/VBoxContainer" unique_id=1097589367]
+[node name="fire_rate_label" type="Label" parent="item_control/turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3/VBoxContainer" unique_id=1097589367]
 layout_mode = 2
 text = "Cooldown : 0.01"
 label_settings = SubResource("LabelSettings_l7j5f")
 
-[node name="damage_label" type="Label" parent="turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3/VBoxContainer" unique_id=1908889598]
+[node name="damage_label" type="Label" parent="item_control/turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3/VBoxContainer" unique_id=1908889598]
 layout_mode = 2
 text = "Weight : 999k"
 label_settings = SubResource("LabelSettings_l7j5f")
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3" unique_id=36989639]
+[node name="VBoxContainer2" type="VBoxContainer" parent="item_control/turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3" unique_id=36989639]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 3
 
-[node name="weight_label" type="Label" parent="turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3/VBoxContainer2" unique_id=18951477]
+[node name="weight_label" type="Label" parent="item_control/turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3/VBoxContainer2" unique_id=18951477]
 layout_mode = 2
 text = "Weight : 999k"
 label_settings = SubResource("LabelSettings_l7j5f")
 
-[node name="range_label" type="Label" parent="turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3/VBoxContainer2" unique_id=573914221]
+[node name="range_label" type="Label" parent="item_control/turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3/VBoxContainer2" unique_id=573914221]
 layout_mode = 2
 text = "Weight : 999k"
 label_settings = SubResource("LabelSettings_l7j5f")
 
-[node name="ability_label" type="Label" parent="turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3/VBoxContainer2" unique_id=1217985081]
+[node name="ability_label" type="Label" parent="item_control/turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3/VBoxContainer2" unique_id=1217985081]
 layout_mode = 2
 text = "Weight : 999k"
 label_settings = SubResource("LabelSettings_l7j5f")

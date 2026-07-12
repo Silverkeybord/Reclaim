@@ -1,5 +1,5 @@
 extends Node3D
-## Controls the player's camera rotation and zoom distance.
+# Controls the player's camera rotation and zoom distance.
 
 const MIN_PITCH: float = -PI/2 + 0.1
 const MAX_PITCH: float = PI/2 - 0.3
@@ -41,9 +41,14 @@ func _input(event: InputEvent) -> void:
 		return
 	
 	if event is InputEventMouseButton:
-		_zoom_in_out(event)
+		if (
+			not (Input.is_action_pressed("change_selected_build") and 
+			Global.player_mode == Global.PLAYER_MODES.BUILDING)
+		):
+			_zoom_in_out(event)
 	
 	
+	# TEMPERORY
 	if event.is_action_pressed("toggle_mouse_capture"):
 		Global.set_mouse_captured()
 

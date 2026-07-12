@@ -6,10 +6,11 @@ const empty_tres := "res://textures_and_materials/turrets/turret_position_slot.t
 const base_tres := "res://textures_and_materials/turrets/normal_turret_base.tres"
 
 const turret_scenes := {
-	"single" : preload("res://scenes/turrets/1/single.tscn")
+	"single" : preload("res://scenes/turrets/1/single.tscn"),
+	"dual" : preload("res://scenes/turrets/1/dual.tscn")
 }
 const base_scenes := {
- 	"plate" : preload("res://scenes/bases/plate_base.tscn")
+ 	"plate" : preload("res://scenes/bases/plate.tscn")
 }
 
 @export var place_cooldown : Timer
@@ -41,7 +42,7 @@ func place_selected_turret(turret_type : String) -> void:
 	
 	var turret_resource = turret_scenes[current_turret]
 	turret = turret_resource.instantiate()
-	get_tree().root.get_child(Global.CURRENT_SCENE_ROOT_INDEX).add_child(turret)
+	Global.add_to_root_node(turret)
 	turret.global_position = turret_origin_point.global_position
 	turret.global_rotation = turret_origin_point.global_rotation
 
@@ -57,7 +58,7 @@ func build_base(base_type : String) -> void:
 	
 	base = base_scenes[base_type].instantiate()
 	base.slot = self
-	get_tree().root.get_child(Global.CURRENT_SCENE_ROOT_INDEX).add_child(base)
+	Global.add_to_root_node(base)
 	base.global_position = global_position
 	base.global_rotation = global_rotation
 	

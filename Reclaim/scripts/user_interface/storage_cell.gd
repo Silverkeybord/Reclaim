@@ -28,7 +28,7 @@ func setup() -> void:
 	match item_resource.type:
 		Global.ITEM_TYPES.RESOURCES:
 			texture = textures[RESOURCES_KEY]
-		Global.ITEM_TYPES.TURRET:
+		Global.ITEM_TYPES.TURRET, Global.ITEM_TYPES.BASE:
 			texture = textures[TURRETS_KEY]
 		Global.ITEM_TYPES.MODULE:
 			texture = textures[MODULES_KEY]

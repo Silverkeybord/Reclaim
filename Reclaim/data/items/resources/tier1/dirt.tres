@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://sp02wx0d0gfn"]
 
-[ext_resource type="Texture2D" uid="uid://b7jm2ktv5ivse" path="res://2d_assets/items/1/dirt.png" id="1_8na1y"]
+[ext_resource type="Texture2D" uid="uid://b7jm2ktv5ivse" path="res://2d_assets/items/resources/1/dirt.png" id="1_8na1y"]
 [ext_resource type="Script" uid="uid://cgqvvu75ctfva" path="res://data/resource_scripts/items_data.gd" id="1_x3m7s"]
 [ext_resource type="Material" uid="uid://m7o6b6v5n7vu" path="res://textures_and_materials/items/1/dirt.tres" id="2_e6r60"]
 

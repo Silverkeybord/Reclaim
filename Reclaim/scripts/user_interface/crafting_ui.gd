@@ -55,6 +55,7 @@ const CLOSE_ANIMATION := "close_crafting"
 
 @onready var tab_vboxs : Dictionary = {
 	Global.ITEM_TYPES.TURRET : turrets_vbox,
+	Global.ITEM_TYPES.BASE : turrets_vbox,
 	Global.ITEM_TYPES.MODULE : modules_vbox,
 	Global.ITEM_TYPES.RESOURCES : resources_vbox
 }

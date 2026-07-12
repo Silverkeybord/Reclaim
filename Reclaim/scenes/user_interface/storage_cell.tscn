@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://byuh35b33sevw"]
 
 [ext_resource type="Script" uid="uid://u7cyis4qmg6j" path="res://scripts/user_interface/storage_cell.gd" id="1_0lxaj"]
-[ext_resource type="Texture2D" uid="uid://ce8e7f2chvcgw" path="res://2d_assets/storage/resource_cells/rough_cell.png" id="2_gx0yy"]
+[ext_resource type="Texture2D" uid="uid://csjahjyudg6j1" path="res://2d_assets/storage/turret_cells/rough_cell.png" id="2_0lxaj"]
 [ext_resource type="Texture2D" uid="uid://bguj48j4chxxo" path="res://2d_assets/items/none.png" id="3_l2jdo"]
 [ext_resource type="FontFile" uid="uid://sfctk4d5x67" path="res://other_assets/fonts/uni_sans/Uni Sans Heavy Italic.otf" id="4_g5eis"]
 
@@ -19,7 +19,7 @@ font_size = 14
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
-[node name="item_cell" type="Control" unique_id=1715849231 node_paths=PackedStringArray("cell_texture", "item_texture", "amount_label", "highlight_overlay")]
+[node name="storage_cell" type="Control" unique_id=1715849231 node_paths=PackedStringArray("cell_texture", "item_texture", "amount_label", "highlight_overlay")]
 custom_minimum_size = Vector2(60, 60)
 custom_maximum_size = Vector2(60, 60)
 layout_mode = 3
@@ -33,10 +33,11 @@ highlight_overlay = NodePath("highlight_overlay")
 metadata/_edit_use_anchors_ = true
 
 [node name="cell_texture" type="TextureRect" parent="." unique_id=341389371]
+texture_filter = 1
 layout_mode = 0
 offset_right = 60.000004
 offset_bottom = 60.0
-texture = ExtResource("2_gx0yy")
+texture = ExtResource("2_0lxaj")
 stretch_mode = 3
 
 [node name="item_texture" type="TextureRect" parent="." unique_id=145673214]
@@ -60,10 +61,10 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
 
 [node name="amount_label" type="Label" parent="." unique_id=86576963]
 layout_mode = 0
-offset_left = -2.0
-offset_top = 50.0
-offset_right = 58.0
-offset_bottom = 65.0
+offset_left = 8.515956
+offset_top = 49.057056
+offset_right = 57.95781
+offset_bottom = 64.05706
 rotation = -0.089428425
 text = "999.9k"
 label_settings = SubResource("LabelSettings_e6v48")

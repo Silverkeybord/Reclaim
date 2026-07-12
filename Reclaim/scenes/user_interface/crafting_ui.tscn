@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dx6bjy4kgj6s3"]
 
 [ext_resource type="Script" uid="uid://d2gjbxqj7bl38" path="res://scripts/user_interface/crafting_ui.gd" id="1_0a7d0"]
-[ext_resource type="Texture2D" uid="uid://pbbu4dvx70dy" path="res://2d_assets/crafting/inventory_background.png" id="2_7uxoi"]
+[ext_resource type="Texture2D" uid="uid://pbbu4dvx70dy" path="res://2d_assets/storage/inventory_background.png" id="2_7uxoi"]
 [ext_resource type="Script" uid="uid://b1l4ahi8t0smt" path="res://scripts/user_interface/storage_ui.gd" id="2_scvtr"]
 [ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="2_xasgv"]
 [ext_resource type="Texture2D" uid="uid://cupp0rbdyfemt" path="res://2d_assets/crafting/inventory_craftin_wedge.png" id="4_6ikml"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://hgi3y5catplc" path="res://scenes/user_interface/recepie_requirment.tscn" id="13_uc2av"]
 [ext_resource type="Script" uid="uid://bb1xlwb46h5mt" path="res://scripts/user_interface/crafting_selection_vbox.gd" id="14_6uax1"]
 [ext_resource type="PackedScene" uid="uid://dqgjh854m2igs" path="res://scenes/user_interface/itemtip.tscn" id="16_6ikml"]
+[ext_resource type="Texture2D" uid="uid://cxpnn7sljdano" path="res://2d_assets/items/bases/plate.png" id="17_6uax1"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
 
@@ -239,13 +240,14 @@ _data = {
 }
 
 [node name="crafting_ui" type="CanvasLayer" unique_id=881350527 node_paths=PackedStringArray("crafting_animations", "crafting_storage", "craft_name", "image_background", "requirement_image", "weight_stat", "value_stat", "amount_stat", "craft_time_stat", "description", "requirments_hflow", "craft_button", "craft_overlay", "turrets_tab", "modules_tab", "resources_tab", "turrets_vbox", "modules_vbox", "resources_vbox", "turrets_tab_scroll", "modules_tab_scroll", "resources_tab_scroll")]
+layer = 2
 script = ExtResource("1_0a7d0")
 crafting_animations = NodePath("AnimationPlayer")
 crafting_storage = NodePath("ui_root/whole_ui/crafting_hbox/crafting_inventory")
 recipe_requirments_scene = ExtResource("13_uc2av")
 craft_name = NodePath("ui_root/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/craft_name")
 image_background = NodePath("ui_root/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/requirments_stats_and_image/requirments_image_margin/image_background")
-requirement_image = NodePath("ui_root/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/requirments_stats_and_image/requirments_image_margin/image_background/requirments_image")
+requirement_image = NodePath("ui_root/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/requirments_stats_and_image/requirments_image_margin/image_background/MarginContainer/requirments_image")
 weight_stat = NodePath("ui_root/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/requirments_stats_and_image/stats_stroke/MarginContainer/VBoxContainer/weight_stat")
 value_stat = NodePath("ui_root/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/requirments_stats_and_image/stats_stroke/MarginContainer/VBoxContainer/value_stat")
 amount_stat = NodePath("ui_root/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/requirments_stats_and_image/stats_stroke/MarginContainer/VBoxContainer/amount_stat")
@@ -647,9 +649,18 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_6bmh7")
 
-[node name="requirments_image" type="TextureRect" parent="ui_root/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/requirments_stats_and_image/requirments_image_margin/image_background" unique_id=9114493]
+[node name="MarginContainer" type="MarginContainer" parent="ui_root/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/requirments_stats_and_image/requirments_image_margin/image_background" unique_id=2078409761]
 layout_mode = 2
-stretch_mode = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="requirments_image" type="TextureRect" parent="ui_root/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/requirments_stats_and_image/requirments_image_margin/image_background/MarginContainer" unique_id=9114493]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("17_6uax1")
+stretch_mode = 5
 
 [node name="description_title_margin" type="MarginContainer" parent="ui_root/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox" unique_id=1358901910]
 layout_mode = 2

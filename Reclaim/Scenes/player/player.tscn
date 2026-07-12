@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://dmaj8a3oki02e" path="res://2d_assets/reticles/remove_overlay.png" id="8_6k3cy"]
 [ext_resource type="PackedScene" uid="uid://bqdl5iwhoay06" path="res://scenes/user_interface/fps_label.tscn" id="10_h17s1"]
 [ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="12_fm80t"]
+[ext_resource type="PackedScene" uid="uid://5wiwx78yrbjr" path="res://scenes/user_interface/build_selection.tscn" id="12_gx1jg"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e41v5"]
 
@@ -40,20 +41,21 @@ corner_detail = 1
 [sub_resource type="LabelSettings" id="LabelSettings_je7p5"]
 font = ExtResource("12_fm80t")
 
-[node name="player" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "hit_overlay", "aim_ray", "build_ray", "gun_piviot", "shooting_timer", "build_overlay", "build_label", "input_tip") groups=["player"]]
+[node name="player" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "hit_overlay", "aim_ray", "build_ray", "gun_piviot", "shooting_timer", "build_overlay", "build_label", "input_tip", "building_selection") groups=["player"]]
 collision_layer = 2
 collision_mask = 79
 script = ExtResource("1_eo61r")
-interact_overlay = NodePath("interact_overlay")
-hit_overlay = NodePath("hit_overlay")
+interact_overlay = NodePath("CanvasLayer/interact_overlay")
+hit_overlay = NodePath("CanvasLayer/hit_overlay")
 aim_ray = NodePath("SpringArm3D2/SpringArm3D/aim_ray")
 build_ray = NodePath("SpringArm3D2/SpringArm3D/build_ray")
 gun_piviot = NodePath("gun_piviot")
 shooting_timer = NodePath("gun_piviot/shoot_timer")
 turret_holagram_scene = ExtResource("2_6upyo")
-build_overlay = NodePath("build_overlay")
-build_label = NodePath("build_overlay/Label")
-input_tip = NodePath("PanelContainer/MarginContainer/input_tip")
+build_overlay = NodePath("CanvasLayer/build_overlay")
+build_label = NodePath("CanvasLayer/build_overlay/Label")
+input_tip = NodePath("CanvasLayer/input_tips/MarginContainer/input_tip")
+building_selection = NodePath("CanvasLayer/build_selection")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=125637870]
 shape = SubResource("BoxShape3D_e41v5")
@@ -116,7 +118,13 @@ collision_mask = 128
 [node name="pick_up_shape" type="CollisionShape3D" parent="pick_up_area" unique_id=713600423]
 shape = SubResource("SphereShape3D_xxarj")
 
-[node name="normal_reticle" type="TextureRect" parent="." unique_id=1247984658]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=685615734]
+
+[node name="build_selection" parent="CanvasLayer" unique_id=437229528 node_paths=PackedStringArray("player") instance=ExtResource("12_gx1jg")]
+visible = false
+player = NodePath("../..")
+
+[node name="normal_reticle" type="TextureRect" parent="CanvasLayer" unique_id=1247984658]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -132,7 +140,7 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("5_xxarj")
 stretch_mode = 3
 
-[node name="interact_overlay" type="Control" parent="." unique_id=828996024]
+[node name="interact_overlay" type="Control" parent="CanvasLayer" unique_id=828996024]
 visible = false
 layout_mode = 3
 anchors_preset = 8
@@ -143,7 +151,7 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="interact_reticle" type="TextureRect" parent="interact_overlay" unique_id=608260650]
+[node name="interact_reticle" type="TextureRect" parent="CanvasLayer/interact_overlay" unique_id=608260650]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -160,7 +168,7 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("3_mxepk")
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="interact_overlay" unique_id=1453697848]
+[node name="Label" type="Label" parent="CanvasLayer/interact_overlay" unique_id=1453697848]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -178,7 +186,7 @@ text = "E to interact"
 label_settings = ExtResource("8_5gtgg")
 horizontal_alignment = 1
 
-[node name="build_overlay" type="Control" parent="." unique_id=159735907]
+[node name="build_overlay" type="Control" parent="CanvasLayer" unique_id=159735907]
 visible = false
 layout_mode = 3
 anchors_preset = 8
@@ -189,7 +197,7 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="interact_reticle" type="TextureRect" parent="build_overlay" unique_id=1375775932]
+[node name="interact_reticle" type="TextureRect" parent="CanvasLayer/build_overlay" unique_id=1375775932]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -207,7 +215,7 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("3_mxepk")
 stretch_mode = 3
 
-[node name="interact_reticle2" type="TextureRect" parent="build_overlay" unique_id=1711736982]
+[node name="interact_reticle2" type="TextureRect" parent="CanvasLayer/build_overlay" unique_id=1711736982]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -225,7 +233,7 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("3_mxepk")
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="build_overlay" unique_id=370554443]
+[node name="Label" type="Label" parent="CanvasLayer/build_overlay" unique_id=370554443]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -242,7 +250,7 @@ theme_override_fonts/font = ExtResource("5_ca0mu")
 text = "click to Place"
 label_settings = ExtResource("8_5gtgg")
 
-[node name="hit_overlay" type="Control" parent="." unique_id=601068581]
+[node name="hit_overlay" type="Control" parent="CanvasLayer" unique_id=601068581]
 visible = false
 layout_mode = 3
 anchors_preset = 8
@@ -253,7 +261,7 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="remove_overlay" type="TextureRect" parent="hit_overlay" unique_id=784218117]
+[node name="remove_overlay" type="TextureRect" parent="CanvasLayer/hit_overlay" unique_id=784218117]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -270,29 +278,32 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("8_6k3cy")
 stretch_mode = 3
 
-[node name="FPS counter" parent="." unique_id=1336845062 instance=ExtResource("10_h17s1")]
-offset_left = 5.0
-offset_right = 45.0
+[node name="FPS counter" parent="CanvasLayer/hit_overlay" unique_id=1336845062 instance=ExtResource("10_h17s1")]
+layout_mode = 0
+offset_left = -635.0
+offset_top = -360.0
+offset_right = -595.0
+offset_bottom = -337.0
 label_settings = ExtResource("8_5gtgg")
 
-[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1946409334]
+[node name="input_tips" type="PanelContainer" parent="CanvasLayer" unique_id=1946409334]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -19.0
+offset_top = -40.0
 offset_right = 139.0
 grow_vertical = 0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1312460894]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/input_tips" unique_id=1312460894]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 5
 
-[node name="input_tip" type="Label" parent="PanelContainer/MarginContainer" unique_id=1361217528]
+[node name="input_tip" type="Label" parent="CanvasLayer/input_tips/MarginContainer" unique_id=1361217528]
 layout_mode = 2
 label_settings = SubResource("LabelSettings_je7p5")
 

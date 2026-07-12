@@ -19,11 +19,6 @@ enum RANGE_SHAPES {
 @export var turret_range: float
 ## the shape of the range are
 @export var range_shape : RANGE_SHAPES
-## shots per second
-@export var fire_rate : float = 1 / cooldown
-## minimum damage per second the turret will do
-@export var damage_per_second := damage * fire_rate
-## a way to class the default property of the turret
 @export_enum(
 	"none",
 	"burning",
@@ -55,7 +50,6 @@ enum RANGE_SHAPES {
 	"modular_modules" : true,
 	"turbo_charge" : true,
 	"frost" : true,
-	"ammo_efficiency" : true,
 	"explosive_bullets" : false
 }
 
@@ -69,6 +63,13 @@ enum RANGE_SHAPES {
 @export_range(0, 1, 0.01) var cirt_rate : float
 ## damge multiplier on a successful crit
 @export_range(1, 5, 0.1) var critical_multiplier : float = 1.5
+
+
+func get_firerate() -> float:
+	return 1 / cooldown
+
+func get_damage_per_second() -> float:
+	return damage * (1 / cooldown)
 
 
 func get_critical() -> float:

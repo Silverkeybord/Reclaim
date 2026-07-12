@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://dm10222fpo58l"]
 
 [ext_resource type="Script" uid="uid://cgqvvu75ctfva" path="res://data/resource_scripts/items_data.gd" id="1_6ucdb"]
-[ext_resource type="Texture2D" uid="uid://cpeveoes6368s" path="res://2d_assets/items/1/rock.png" id="1_m6pjm"]
+[ext_resource type="Texture2D" uid="uid://cpeveoes6368s" path="res://2d_assets/items/resources/1/rock.png" id="1_m6pjm"]
 [ext_resource type="Material" uid="uid://ctuhxi74semi1" path="res://textures_and_materials/items/1/rock.tres" id="2_jiqbh"]
 
 [resource]

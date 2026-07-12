@@ -121,6 +121,7 @@ _data = {
 }
 
 [node name="inventory" type="CanvasLayer" unique_id=437722077 node_paths=PackedStringArray("item_tip", "item_parent", "storage_animations", "scroll_container")]
+layer = 2
 script = ExtResource("1_6egws")
 item_tip = NodePath("itemtip")
 item_parent = NodePath("inventory_root/storage_background/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/ScrollContainer/GridContainer")

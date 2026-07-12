@@ -37,7 +37,6 @@ const SAVE_PATH : String = "user://reclaim.save"
 const GRAVITY : float = 40.0
 const DEFAULT_BULLET_TRAIL_KEY : String = "default"
 const ROOT_NODES_GROUP : String = "root_nodes"
-const CURRENT_SCENE_ROOT_INDEX : int = 2
 const TIER_CONFIG : Dictionary = {
 	1 : {
 		"color" : Color(0.541, 0.561, 0.596),
@@ -45,43 +44,43 @@ const TIER_CONFIG : Dictionary = {
 		"cells" : {
 			"resources" : preload("res://2d_assets/storage/resource_cells/rough_cell.png"),
 			"turrets" : preload("res://2d_assets/storage/turret_cells/rough_cell.png"),
-			"modules" : preload("res://2d_assets/storage/resource_cells/rough_cell.png")
+			"modules" : preload("res://2d_assets/storage/module_cells/rough_cell.png")
 		}
 	},
 	2 : {
 		"color" : Color(0.29, 0.871, 0.502),
 		"style" : preload("res://other_assets/crafting_styles/t2_style.tres"),
 		"cells" : {
-			"resources" : preload("res://2d_assets/storage/resource_cells/rough_cell.png"),
-			"turrets" : preload("res://2d_assets/storage/turret_cells/rough_cell.png"),
-			"modules" : preload("res://2d_assets/storage/resource_cells/rough_cell.png")
+			"resources" : preload("res://2d_assets/storage/resource_cells/plain_cell.png"),
+			"turrets" : preload("res://2d_assets/storage/turret_cells/plain_cell.png"),
+			"modules" : preload("res://2d_assets/storage/module_cells/plain_cell.png")
 		}
 	},
 	3 : {
 		"color" : Color(0.29, 0.557, 0.996),
 		"style" : preload("res://other_assets/crafting_styles/t3_style.tres"),
 		"cells" : {
-			"resources" : preload("res://2d_assets/storage/resource_cells/rough_cell.png"),
-			"turrets" : preload("res://2d_assets/storage/turret_cells/rough_cell.png"),
-			"modules" : preload("res://2d_assets/storage/resource_cells/rough_cell.png")
+			"resources" : preload("res://2d_assets/storage/resource_cells/usefull_cell.png"),
+			"turrets" : preload("res://2d_assets/storage/turret_cells/useful_cell.png"),
+			"modules" : preload("res://2d_assets/storage/module_cells/usefull_cell.png")
 		}
 	},
 	4 : {
 		"color" : Color(1.0, 0.847, 0.243),
 		"style" : preload("res://other_assets/crafting_styles/t4_style.tres"),
 		"cells" : {
-			"resources" : preload("res://2d_assets/storage/resource_cells/rough_cell.png"),
-			"turrets" : preload("res://2d_assets/storage/turret_cells/rough_cell.png"),
-			"modules" : preload("res://2d_assets/storage/resource_cells/rough_cell.png")
+			"resources" : preload("res://2d_assets/storage/resource_cells/valuable_cell.png"),
+			"turrets" : preload("res://2d_assets/storage/turret_cells/valuable_cell.png"),
+			"modules" : preload("res://2d_assets/storage/module_cells/valuable_cell.png")
 		}
 	},
 	5 : {
 		"color" : Color(0.937, 0.267, 0.267),
 		"style" : preload("res://other_assets/crafting_styles/t5_style.tres"),
 		"cells" : {
-			"resources" : preload("res://2d_assets/storage/resource_cells/rough_cell.png"),
-			"turrets" : preload("res://2d_assets/storage/turret_cells/rough_cell.png"),
-			"modules" : preload("res://2d_assets/storage/resource_cells/rough_cell.png")
+			"resources" : preload("res://2d_assets/storage/resource_cells/extraordinary_cell.png"),
+			"turrets" : preload("res://2d_assets/storage/turret_cells/extraordinary_cell.png"),
+			"modules" : preload("res://2d_assets/storage/module_cells/extraordinary_cell.png")
 		}
 	}
 }
@@ -92,8 +91,11 @@ const MAX_DROPS : int = 250
 const MAX_SPHERES : int = 300
 const MAX_SOUNDS : int = 50
 const MAX_DAMAGE_INDICATIONS : int = 100
+
+# text editing
 const ORDER_OF_MAGNITUDE : int = 10
 const HUNDRED_THRESHOLD : int = 3
+const COMMA_FREQUENCY : int = 3
 const SHORT_HAND_NUDGE : float = 1e-9
 const MAX_SHORTHAND_MAGNITUDE : int = 12
 const SHORTHAND_THRESHOLDS : Dictionary = {
@@ -141,7 +143,7 @@ var enemies : int = 0
 var damage_indications : int = 0
 
 # META UPGRADES / COUNCIL AUTHORIZATION -------------------------------------
-var ship_level := 1
+var ship_level := 8
 var turret_slots := 1
 
 # INVENORY + CURRENCY -------------------------------------------------------
@@ -241,7 +243,7 @@ func return_amount_shorthand(value: float) -> String:
 	if value <= 0:
 		return str(int(value))
 	
-	# numbers under 1000 dont need shorthand
+	# numbers under 1000 dont need further processing
 	if magnitude < HUNDRED_THRESHOLD:
 		return str(int(value))
 	
@@ -284,30 +286,37 @@ func get_display_name(input : String) -> String:
 	return " ".join(words)
 
 
-## puts commas every 3 numbers --- MADE WITH CHAT GPT ---	
+## puts commas every 3 numbers
 func comma_number(num : int) -> String:
-	if num >= (10 ** MAX_SHORTHAND_MAGNITUDE):
+	if num >= (ORDER_OF_MAGNITUDE ** MAX_SHORTHAND_MAGNITUDE):
 		return MAX_TEXT
 	
 	var text := str(num)
 	var result := ""
-
-	while text.length() > 3:
-		result = "," + text.substr(text.length() - 3) + result
-		text = text.substr(0, text.length() - 3)
-
-	return text + result
+	
+	# while the length of the text is larger than COMMA_FREQUENCY it will split and 
+	# add a comma every 3 numbers 
+	while text.length() > COMMA_FREQUENCY:
+		result = "," + text.substr(text.length() - COMMA_FREQUENCY) + result
+		text = text.substr(0, text.length() - COMMA_FREQUENCY)
+	
+	return text + result 
 
 
 # STORAGE functions ===========================================================
 
 ## Temp testing function to fill storage
-func set_random_storage() -> void:
+func set_random_storage(set_sector_storage = false) -> void:
 	for key in DataRegistry.items:
 		var resource = DataRegistry.items[key]
-		ship_storage[resource.tier][key] = (
-			randi_range(1, 999) * (10 ** (randi_range(0, 0)))
-			)
+		if set_sector_storage:
+			sector_storage[resource.tier][key] = (
+				randi_range(1, 999) * (10 ** (randi_range(0, 0)))
+				)
+		else:
+			ship_storage[resource.tier][key] = (
+				randi_range(1, 999) * (10 ** (randi_range(0, 0)))
+				)
 
 
 ## Sets the moust of the player to be unlocked or locked bassed on its last value

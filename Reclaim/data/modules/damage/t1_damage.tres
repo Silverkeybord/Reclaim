@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ModuleData" format=3 uid="uid://uvg6pltodysc"]
+
+[ext_resource type="Script" uid="uid://djlpr1w3x0sxi" path="res://data/resource_scripts/module_data.gd" id="1_yh3hs"]
+
+[resource]
+script = ExtResource("1_yh3hs")
+key = "t1_damage"
+value = "5"
+metadata/_custom_type_script = "uid://djlpr1w3x0sxi"

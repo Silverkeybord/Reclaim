@@ -23,7 +23,7 @@ var items : Dictionary
 
 func _ready() -> void:
 	_load_folder(TURRET_PATH, turrets, true)
-	_load_folder(MODULES_PATH, modules)
+	_load_folder(MODULES_PATH, modules, true)
 	_load_folder(WEAPONS_PATH, weapon)
 	_load_folder(ENEMIES_PATH, enemies)
 	_load_folder(WAVE_PATH, wave)
