@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://dwwd5g8n3a4bn"]
+
+[ext_resource type="Script" uid="uid://cgqvvu75ctfva" path="res://data/resource_scripts/items_data.gd" id="1_ahq46"]
+
+[resource]
+script = ExtResource("1_ahq46")
+key = "test_3"
+tier = 4
+type = 1
+value = 20.0
+weight = 175
+metadata/_custom_type_script = "uid://cgqvvu75ctfva"

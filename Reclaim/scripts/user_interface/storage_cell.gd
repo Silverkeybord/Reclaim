@@ -14,7 +14,8 @@ const MODULES_KEY := "modules"
 @export var item_texture : TextureRect
 @export var amount_label : Label
 @export var item_tip : CanvasLayer
-@export var highlight_overlay : Panel
+@export var resource_highlight_overlay : Panel
+@export var full_highlight_overlay : Panel
 
 var amount : int 
 
@@ -40,7 +41,7 @@ func setup() -> void:
 
 func update_amount() -> void:
 	var storage = Global.ship_storage if Global.at_ship else Global.sector_storage
-	# If returned value dosen't exist return 0
+	# If key value dosen't exist return 0
 	amount = storage[item_resource.tier].get(item_resource.key, 0)
 	amount_label.text = Global.return_amount_shorthand(amount)
 	
@@ -50,9 +51,17 @@ func update_amount() -> void:
 
 func _on_mouse_entered() -> void:
 	item_tip.show_itemtip(item_resource, amount, item_resource.type)
-	highlight_overlay.visible = true
+	
+	if item_resource.type == Global.ITEM_TYPES.RESOURCES:
+		resource_highlight_overlay.visible = true
+	else:
+		full_highlight_overlay.visible = true
 
 
 func _on_mouse_exited() -> void:
 	item_tip.hide_itemtip()
-	highlight_overlay.visible = false
+	
+	if item_resource.type == Global.ITEM_TYPES.RESOURCES:
+		resource_highlight_overlay.visible = false
+	else:
+		full_highlight_overlay.visible = false

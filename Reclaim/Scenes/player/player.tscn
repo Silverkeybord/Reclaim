@@ -278,14 +278,6 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("8_6k3cy")
 stretch_mode = 3
 
-[node name="FPS counter" parent="CanvasLayer/hit_overlay" unique_id=1336845062 instance=ExtResource("10_h17s1")]
-layout_mode = 0
-offset_left = -635.0
-offset_top = -360.0
-offset_right = -595.0
-offset_bottom = -337.0
-label_settings = ExtResource("8_5gtgg")
-
 [node name="input_tips" type="PanelContainer" parent="CanvasLayer" unique_id=1946409334]
 anchors_preset = 2
 anchor_top = 1.0
@@ -306,6 +298,11 @@ theme_override_constants/margin_bottom = 5
 [node name="input_tip" type="Label" parent="CanvasLayer/input_tips/MarginContainer" unique_id=1361217528]
 layout_mode = 2
 label_settings = SubResource("LabelSettings_je7p5")
+
+[node name="FPS counter" parent="." unique_id=1336845062 instance=ExtResource("10_h17s1")]
+offset_left = 5.0
+offset_right = 45.0
+label_settings = ExtResource("8_5gtgg")
 
 [connection signal="timeout" from="gun_piviot/shoot_timer" to="." method="_on_shoot_timer_timeout"]
 [connection signal="body_entered" from="pick_up_area" to="." method="_on_pick_up_area_body_entered"]

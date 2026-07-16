@@ -65,6 +65,9 @@ func show_itemtip(item : ItemData, amount : int, type : int) -> void:
 			turret_value_label.text = VALUE_TEXT + str(item.value)
 			turret_weight_label.text = WEIGHT_TEXT + str(item.weight)
 			
+			if not DataRegistry.turrets.has(item.key):
+				return
+			
 			var turret_info : TurretData = DataRegistry.turrets[item.key]
 			
 			turret_ability_label.text = ABILITY_TEXT + turret_info.ability
@@ -76,6 +79,7 @@ func show_itemtip(item : ItemData, amount : int, type : int) -> void:
 			
 			turret_range_label.text = (
 				RANGE_TEXT + str(round(turret_info.turret_range)) + METERS_TEXT)
+			
 		Global.ITEM_TYPES.MODULE:
 			current_tip = moduels_tip
 	

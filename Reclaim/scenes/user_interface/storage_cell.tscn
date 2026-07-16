@@ -8,7 +8,6 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4v7s"]
 bg_color = Color(1, 1, 1, 0.18039216)
 corner_radius_top_left = 3
-corner_radius_top_right = 15
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 1
@@ -19,7 +18,7 @@ font_size = 14
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
-[node name="storage_cell" type="Control" unique_id=1715849231 node_paths=PackedStringArray("cell_texture", "item_texture", "amount_label", "highlight_overlay")]
+[node name="storage_cell" type="Control" unique_id=1715849231 node_paths=PackedStringArray("cell_texture", "item_texture", "amount_label", "resource_highlight_overlay", "full_highlight_overlay")]
 custom_minimum_size = Vector2(60, 60)
 custom_maximum_size = Vector2(60, 60)
 layout_mode = 3
@@ -29,7 +28,8 @@ script = ExtResource("1_0lxaj")
 cell_texture = NodePath("cell_texture")
 item_texture = NodePath("item_texture")
 amount_label = NodePath("amount_label")
-highlight_overlay = NodePath("highlight_overlay")
+resource_highlight_overlay = NodePath("resourse_highlight_overlay")
+full_highlight_overlay = NodePath("full_highlight_overlay")
 metadata/_edit_use_anchors_ = true
 
 [node name="cell_texture" type="TextureRect" parent="." unique_id=341389371]
@@ -47,7 +47,19 @@ offset_bottom = 60.0
 texture = ExtResource("3_l2jdo")
 stretch_mode = 3
 
-[node name="highlight_overlay" type="Panel" parent="." unique_id=38702207]
+[node name="resourse_highlight_overlay" type="Panel" parent="." unique_id=38702207]
+visible = false
+light_mask = 0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
+
+[node name="full_highlight_overlay" type="Panel" parent="." unique_id=432572134]
 visible = false
 light_mask = 0
 layout_mode = 1

@@ -59,6 +59,8 @@ The objective is not merely survival. The objective is reclaiming the planet sec
 
 Each successful deployment weakens sphere presence and allows expansion into adjacent territory.
 
+You will fail and lose resources but you need to pick yourself and try again. Though Failure should have meaningful consequences, but every failure should leave the player better equipped—through knowledge, strategy, or permanent progression—to succeed on their next deployment.
+
 ### 2.4 Environmental Adaptation
 
 Everything in the game stems from one core concept:
@@ -73,6 +75,10 @@ The environment directly influences:
 - Progression paths
 
 ---
+
+### 2.5 How Resilence is Learnt
+
+Reclaim is designed around the principle that resilience is developed through repeated adaptation rather than repeated success. Players are expected to fail, reassess their strategies, manage limited resources more effectively, and gradually overcome increasingly difficult challenges. Every major gameplay system—from extraction limits and deployment risk to Council Authorization and sector progression—exists to reinforce this cycle of learning, adaptation, and perseverance.
 
 ## 3. Setting
 

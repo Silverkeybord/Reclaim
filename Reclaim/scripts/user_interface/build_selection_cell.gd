@@ -12,7 +12,10 @@ const BUILDING_CELLS := {
 	4 : preload("res://2d_assets/building/building_valuable_cell.png"),
 	5 : preload("res://2d_assets/building/building_extraordinary_cell.png"),
 }
+const POS_TWEEN_REQUIRMENTS = [-2, 3]
+const NEG_TWEEN_REQUIRMENTS = [-3, 2]
 
+const INSTANT_SCROLL_REQUIRMENT := 5
 
 ## actual position of the cell
 @export var cell_position : int
@@ -20,7 +23,6 @@ const BUILDING_CELLS := {
 @export var cell_number : int
 @export var build_selection : CanvasLayer
 @export var cell_properties : Dictionary
-
 @export_group("values")
 @export var item_resource : ItemData
 
@@ -30,6 +32,7 @@ const BUILDING_CELLS := {
 @export var amount_label : Label
 
 var amount : int 
+var instant_scroll : bool = false
 
 
 func setup() -> void:
@@ -50,17 +53,15 @@ func update_amount() -> void:
 
 
 func move(direction : int, tween_time : float) -> void:
-	if direction == 0:
-		return
+	cell_position += direction
+	#print("cell : ", item_resource.key, " - is at position : ", cell_position)
 	
 	if direction == 1:
-		if cell_position < -3 or cell_position > 2:
+		if cell_position < POS_TWEEN_REQUIRMENTS[0] or cell_position > POS_TWEEN_REQUIRMENTS[1]:
 			return
 	else:
-		if cell_position > 3 or cell_position < -2:
+		if cell_position < NEG_TWEEN_REQUIRMENTS[0] or cell_position > NEG_TWEEN_REQUIRMENTS[1]:
 			return
-	
-	cell_position += direction
 	
 	var target_scale = cell_properties[cell_position]["scale"]
 	var target_position = cell_properties[cell_position]["marker"].global_position
@@ -70,8 +71,10 @@ func move(direction : int, tween_time : float) -> void:
 	move_tween.tween_property(self, "scale", target_scale, tween_time)
 	move_tween.tween_property(self, "position", target_position, tween_time)
 	move_tween.tween_property(self, "modulate", target_modulate, tween_time)
-
-
-func place() -> void:
-	update_amount()
 	
+	await get_tree().create_timer(tween_time).timeout
+
+
+
+func item_placed() -> void:
+	update_amount()
