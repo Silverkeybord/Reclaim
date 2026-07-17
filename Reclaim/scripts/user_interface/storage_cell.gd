@@ -43,7 +43,7 @@ func update_amount() -> void:
 	var storage = Global.ship_storage if Global.at_ship else Global.sector_storage
 	# If key value dosen't exist return 0
 	amount = storage[item_resource.tier].get(item_resource.key, 0)
-	amount_label.text = Global.return_amount_shorthand(amount)
+	amount_label.text = HelperFunctions.return_amount_shorthand(amount)
 	
 	# you can get booleans from this
 	visible = amount > 0

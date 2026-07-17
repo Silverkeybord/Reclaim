@@ -206,14 +206,14 @@ func display_requirements_for(craft_data : CraftData, can_craft : bool) -> void:
 		return
 	
 	current_displayed_requirments = craft_data
-	craft_name.text = Global.get_display_name(craft_data.crafted_item.key)
+	craft_name.text = HelperFunctions.get_display_name(craft_data.crafted_item.key)
 	requirement_image.texture = craft_data.crafted_item.get_item_texture()
 	
 	var style : StyleBoxFlat = image_background.get_theme_stylebox("panel").duplicate()
 	style.bg_color = Global.TIER_CONFIG[craft_data.crafted_item.tier]["color"]
 	image_background.add_theme_stylebox_override("panel", style)
 	
-	weight_stat.text = "Weight: " + Global.comma_number(craft_data.crafted_item.weight)
+	weight_stat.text = "Weight: " + HelperFunctions.comma_number(craft_data.crafted_item.weight)
 	value_stat.text = "Value: " + str(craft_data.crafted_item.value)
 	amount_stat.text = "Amount: " + str(craft_data.craft_amount)
 	craft_time_stat.text = "Craft Time: " + str(craft_data.craft_time)

@@ -29,11 +29,11 @@ const MAX_SCALE := 4
 
 
 func init() -> void:
-	text = "-" + Global.comma_number(round(damage))
+	text = "-" + HelperFunctions.comma_number(round(damage))
 	
 	var magnitude : int = (
-		floori(log(damage) / log(Global.ORDER_OF_MAGNITUDE) 
-		+ Global.SHORT_HAND_NUDGE)
+		floori(log(damage) / log(HelperFunctions.ORDER_OF_MAGNITUDE) 
+		+ HelperFunctions.SHORT_HAND_NUDGE)
 		)
 	var life = randf_range(MIN_LIFE, MAX_LIFE)
 	
@@ -64,5 +64,5 @@ func init() -> void:
 	animation_player.play(FADE_OUT_ANIMAITON_NAME)
 	
 	await animation_player.animation_finished
-	Global.damage_indications -= 1
+	HelperFunctions.damage_indications -= 1
 	queue_free()

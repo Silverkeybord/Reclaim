@@ -22,14 +22,14 @@ func update_value() -> void:
 		)
 	item_image.texture = item_data.get_item_texture()
 	label.text = (
-		Global.return_amount_shorthand(amount_required) + 
-		" " + Global.get_display_name(item_data.key)
+		HelperFunctions.return_amount_shorthand(amount_required) + 
+		" " + HelperFunctions.get_display_name(item_data.key)
 		)
 	check_requirement()
 
 
 func check_requirement() -> bool:
-	var current_storage : Dictionary = Global.get_current_storage()
+	var current_storage : Dictionary = HelperFunctions.get_current_storage()
 	
 	if current_storage[item_data.tier].has(item_data.key):
 		if current_storage[item_data.tier][item_data.key] >= amount_required:

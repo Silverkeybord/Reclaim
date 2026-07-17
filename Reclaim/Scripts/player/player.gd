@@ -4,9 +4,9 @@ extends CharacterBody3D
 const PLAYER_MODE_INPUTS = "1 - Weapon
 2 - Building
 3 - Installation"
-const BUILDING_INPUTS = "R - Pick up Builds
+const BUILDING_INPUTS = "M2 - Pick up Builds
 F - Change Builds
-Q + Scroll - Selection"
+Scroll - Selection"
 const INTERACT_INPUT = "E - Interact"
 
 const INTERACT_DISTANCE := 5
@@ -59,9 +59,9 @@ var turrets : Dictionary
 
 
 func _ready() -> void:
-	Global.set_random_storage(true)
 	# gives the player their starting weapon
 	_set_new_weapon()
+	Global.set_random_storage(true)
 
 
 func _physics_process(delta: float) -> void:
@@ -148,16 +148,29 @@ func _interaction_handeling(ray_collider : Node) -> void:
 
 # handels the player changing modes
 func _player_mode_handeling() -> void:
-	if Input.is_action_just_pressed("weapon_mode"):
+	if (
+		Input.is_action_just_pressed("weapon_mode") and 
+		not Global.player_mode == Global.PLAYER_MODES.WEAPON
+	):
 		Global.player_mode = Global.PLAYER_MODES.WEAPON
 		_remove_holagram(true)
 	
-	if Input.is_action_just_pressed("build_mode") and not Global.at_ship:
+	if (
+		Input.is_action_just_pressed("build_mode") and 
+		not Global.at_ship and 
+		not Global.player_mode == Global.PLAYER_MODES.BUILDING
+	):
 		Global.player_mode = Global.PLAYER_MODES.BUILDING
+		building_selection.visible = true
 		building_selection.load_selection()
 		building_selection.set_process(true)
+		turret_grid._toggle_build_mode(true)
 	
-	if Input.is_action_just_pressed("install_mode") and not Global.at_ship:
+	if (
+		Input.is_action_just_pressed("install_mode") and 
+		not Global.at_ship and
+		not Global.player_mode == Global.PLAYER_MODES.INSTALLING
+	):
 		Global.player_mode = Global.PLAYER_MODES.INSTALLING
 		_remove_holagram(true)
 
@@ -166,17 +179,10 @@ func _player_mode_handeling() -> void:
 # handels all build related logic from toggling modes and placement logic
 func _build_mode_handeling(ray_collider : Node) -> void:
 	var build_ray_collider = build_ray.get_collider()
+	var current_build_selected : String
 	
-	# toggles build mode and spawns/deletes the turret holagram'
-	
-	if Global.player_mode == Global.PLAYER_MODES.BUILDING:
-		turret_grid._toggle_build_mode(true)
-	
-	if (
-		Global.player_mode == Global.PLAYER_MODES.BUILDING and 
-		not Global.picking_up_builds and 
-		not turret_holagram
-		):
+	# if there is no turret holagram create one and add
+	if Global.player_mode == Global.PLAYER_MODES.BUILDING and not turret_holagram:
 		gun_piviot.visible = false
 		turret_holagram = turret_holagram_scene.instantiate()
 		add_sibling(turret_holagram)
@@ -192,81 +198,100 @@ func _build_mode_handeling(ray_collider : Node) -> void:
 		building_selection.change_build_mode()
 	
 	
-	# toggles picking up when in build mode
-	if Input.is_action_just_pressed("pick_up_build_toggle"):
-		Global.picking_up_builds = not Global.picking_up_builds
-		
-		if turret_holagram:
-			turret_holagram.visible = not Global.picking_up_builds
-		
-		if Global.picking_up_builds:
-			build_label.text = PICK_UP_TEXT
-		else:
-			build_label.text = PLACE_TEXT
+	# toggle visibility of the holagram if there are no turret or bases to be placed
+	match Global.current_build_mode:
+		Global.BUILD_MODES.TURRET:
+			if selected_turret:
+				turret_holagram.visible = false
+				current_build_selected = selected_turret
+				
+		Global.BUILD_MODES.BASE:
+			if selected_base:
+				turret_holagram.visible = false
+				current_build_selected = selected_base
 	
 	
 	# snaps the holagram onto a turret slot if the slot is unlocked and toggles
 	# 2D elements
-	if not Global.picking_up_builds:
-		if _check_valid_placement(ray_collider):
-			var prexisting_build := false
-			
-			# checks if there is a prexisting build there and if there is changes
-			# the text to say replace instead of place
-			match Global.current_build_mode:
-				Global.BUILD_MODES.TURRET:
-					turret_holagram.global_position = (
-						ray_collider.turret_origin_point.global_position
-						)
-					
-					if ray_collider.turret:
-						prexisting_build = true
-				
-				Global.BUILD_MODES.BASE:
-					turret_holagram.global_position = ray_collider.global_position
-					
-					if ray_collider.base:
-						prexisting_build = true
-			
-			
-			
-			if global_position.distance_to(ray_collider.global_position) < BUILD_RANGE:
-				turret_holagram.valid_position = true
-				if prexisting_build:
-					build_label.text = REPLACE_TEXT
-				else:
-					build_label.text = PLACE_TEXT
-				
-			else:
-				build_label.text = MOVE_CLOSER_TEXT
-				turret_holagram.valid_position = false
-			
-			
-			build_overlay.visible = true
+	if _check_valid_placement(ray_collider) and current_build_selected:
+		var prexisting_build := false
 		
-		elif turret_holagram:
+		# checks if there is a prexisting build there and if there is changes
+		# the text to say replace instead of place
+		match Global.current_build_mode:
+			Global.BUILD_MODES.TURRET:
+				turret_holagram.visible = true
+				turret_holagram.global_position = (
+					ray_collider.turret_origin_point.global_position
+					)
+				
+				if ray_collider.turret:
+					prexisting_build = true
+			
+			Global.BUILD_MODES.BASE:
+				turret_holagram.visible = true
+				turret_holagram.global_position = ray_collider.global_position
+				
+				# ray collider is the turret slot so just checks if there is a base or not
+				if ray_collider.base:
+					prexisting_build = true
+		
+		# sets the text of the overlay
+		
+		if global_position.distance_to(ray_collider.global_position) < BUILD_RANGE:
+			turret_holagram.valid_position = true
+			if prexisting_build:
+				build_label.text = REPLACE_TEXT
+			else:
+				build_label.text = PLACE_TEXT
+			
+		else:
+			build_label.text = MOVE_CLOSER_TEXT
+			turret_holagram.valid_position = false
+		
+		
+		build_overlay.visible = true
+	
+	elif turret_holagram and current_build_selected:
 			# puts the holagram where the player is looking but marks it invalid
 			if aim_ray.is_colliding():
 				turret_holagram.global_position = aim_ray.get_collision_point()
 				turret_holagram.visible = true
+				
 			else:
 				turret_holagram.visible = false
 			
 			turret_holagram.valid_position = false
 			build_overlay.visible = false
-		
-	else:
-		if build_ray_collider:
-			build_overlay.visible = true
-		else:
-			build_overlay.visible = false
 	
 	
-	if Input.is_action_pressed("place_or_remove"):
+	# placement
+	if Input.is_action_pressed("place") and current_build_selected:
+		if (
+		_check_valid_placement(ray_collider) and 
+		global_position.distance_to(ray_collider.global_position) < BUILD_RANGE
+			):
+			var can_place := false
+			
+			match Global.current_build_mode:
+				Global.BUILD_MODES.TURRET:
+					if ray_collider.can_place_turret:
+						if HelperFunctions.check_for_item(DataRegistry.items[selected_turret]):
+							ray_collider.place_selected_turret(selected_turret)
+							can_place = true
+				
+				Global.BUILD_MODES.BASE:
+					if ray_collider.can_place_base:
+						if HelperFunctions.check_for_item(DataRegistry.items[selected_base]):
+							ray_collider.build_base(selected_base)
+							can_place = true
+			
+			if can_place:
+				building_selection.placed_build()
 	
-		if Global.picking_up_builds:
-		
-			if (
+	# picking up builds
+	if Input.is_action_just_pressed("pick_up_build"):
+		if (
 			can_remove_build and
 			build_ray_collider and 
 			global_position.distance_to(build_ray_collider.global_position) < BUILD_RANGE
@@ -275,27 +300,13 @@ func _build_mode_handeling(ray_collider : Node) -> void:
 				can_remove_build = false
 				
 				build_ray_collider.pick_up()
+				building_selection.selected_cell.update_amount()
 				
 				if build_ray_collider.build_type == Global.BUILD_TYPES.BASE:
 					build_ray_collider.slot.base_removed()
 				
 				await get_tree().create_timer(REMOVE_BUILD_DELAY).timeout
 				can_remove_build = true
-			
-		else:
-			if (
-			_check_valid_placement(ray_collider) and 
-			global_position.distance_to(ray_collider.global_position) < BUILD_RANGE
-				):
-				
-				match Global.current_build_mode:
-					Global.BUILD_MODES.TURRET:
-						ray_collider.place_selected_turret(selected_turret)
-					
-					Global.BUILD_MODES.BASE:
-						ray_collider.build_base(selected_base)
-				
-				building_selection.placed_build()
 
 
 # checkes if the current posiiton of the turret is valid to be placed
@@ -306,9 +317,6 @@ func _check_valid_placement(ray_collider : Node) -> bool:
 		):
 		
 		return false
-	
-	if Global.picking_up_builds:
-		return true
 	
 	match Global.current_build_mode:
 		Global.BUILD_MODES.TURRET:
@@ -330,11 +338,8 @@ func _remove_holagram(change_mode : bool = false) -> void:
 		turret_holagram.queue_free()
 	build_overlay.visible = false
 	
-	if change_mode:
-		Global.picking_up_builds = false
-		
-		if not Global.at_ship:
-			turret_grid._toggle_build_mode(false)
+	if change_mode and not Global.at_ship:
+		turret_grid._toggle_build_mode(false)
 
 
 # WEAPONS CONTROL ------------------------------------------------------------
@@ -370,7 +375,7 @@ func _shoot() -> void:
 				hit_overlay.visible = true
 				await get_tree().create_timer(HIT_OVERLAY_TIME).timeout
 				hit_overlay.visible = false
-				Global.spawn_temp_sound(weapon_resource.hit_resource)
+				HelperFunctions.spawn_temp_sound(weapon_resource.hit_resource)
 			
 	else:
 		# if nothing is hit, shoot to the end of the ray instead
@@ -382,8 +387,8 @@ func _shoot() -> void:
 	# draws the bullet trail from the weapon to the target point
 	var from = weapon.bullet_spawn.global_position
 	
-	Global.create_bullet_trail(from, to, DataRegistry.bullet_trail[weapon_name])
-	Global.spawn_temp_sound(weapon_resource.shoot_resource, from)
+	HelperFunctions.create_bullet_trail(from, to, DataRegistry.bullet_trail[weapon_name])
+	HelperFunctions.spawn_temp_sound(weapon_resource.shoot_resource, from)
 
 
 func _set_new_weapon() -> void:
@@ -398,6 +403,7 @@ func _on_shoot_timer_timeout() -> void:
 	can_shoot = true
 
 
+# PICKING UP DROPS -----------------------------------------------------------
 func _on_pick_up_area_body_entered(body: Node3D) -> void:
 	# starts pick up movement when a valid drop touches the pickup area
 	if body in get_tree().get_nodes_in_group(DROPS_GROUP_NAME) and body.valid:

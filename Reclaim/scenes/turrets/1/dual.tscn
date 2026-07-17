@@ -41,6 +41,7 @@ cooldown_timer = NodePath("cool_down_timer")
 turret_range_area = NodePath("turret_range_area")
 turret_range_coll = NodePath("turret_range_area/turret_range_coll")
 turret_resource = ExtResource("2_wikfi")
+build = "dual"
 metadata/build = false
 
 [node name="body" type="MeshInstance3D" parent="." unique_id=1853312379]

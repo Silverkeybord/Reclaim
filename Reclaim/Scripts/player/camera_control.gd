@@ -41,10 +41,7 @@ func _input(event: InputEvent) -> void:
 		return
 	
 	if event is InputEventMouseButton:
-		if (
-			not (Input.is_action_pressed("change_selected_build") and 
-			Global.player_mode == Global.PLAYER_MODES.BUILDING)
-		):
+		if Global.player_mode != Global.PLAYER_MODES.BUILDING:
 			_zoom_in_out(event)
 	
 	

@@ -11,11 +11,11 @@ size = Vector3(4, 0.5, 4)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mp5w8"]
 albedo_color = Color(0.4883154, 0.4883154, 0.48831534, 1)
 
-[node name="plate_base" type="StaticBody3D" unique_id=1474219556]
+[node name="plate" type="StaticBody3D" unique_id=1474219556]
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("1_xnw3s")
-build = "plate_base"
+build = "plate"
 build_type = 1
 metadata/build = false
 

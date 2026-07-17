@@ -6,4 +6,8 @@ extends Node
 
 
 func pick_up() -> void:
+	var item_resource : ItemData = DataRegistry.items[build]
+	
+	HelperFunctions.get_current_storage()[item_resource.tier][item_resource.key] += 1
+	
 	queue_free()

@@ -18,8 +18,8 @@ func shoot(target : CharacterBody3D) -> void:
 	var shot_origin = right_marker if left_last_barrel_shot else left_marker
 	left_last_barrel_shot = not left_last_barrel_shot
 	
-	Global.create_bullet_trail(shot_origin.global_position, target_position)
-	Global.spawn_temp_sound(
+	HelperFunctions.create_bullet_trail(shot_origin.global_position, target_position)
+	HelperFunctions.spawn_temp_sound(
 		turret_resource.shooting_sound.pick_random(), 
 		shot_origin.global_position
 		)

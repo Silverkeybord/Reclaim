@@ -23,6 +23,7 @@ const INSTANT_SCROLL_REQUIRMENT := 5
 @export var cell_number : int
 @export var build_selection : CanvasLayer
 @export var cell_properties : Dictionary
+
 @export_group("values")
 @export var item_resource : ItemData
 
@@ -44,9 +45,9 @@ func setup() -> void:
 
 
 func update_amount() -> void:
-	var storage = Global.get_current_storage()
+	var storage = HelperFunctions.get_current_storage()
 	amount = storage[item_resource.tier].get(item_resource.key, 0)
-	amount_label.text = Global.return_amount_shorthand(amount)
+	amount_label.text = HelperFunctions.return_amount_shorthand(amount)
 	
 	# you can get booleans from this
 	visible = amount > 0
@@ -54,7 +55,6 @@ func update_amount() -> void:
 
 func move(direction : int, tween_time : float) -> void:
 	cell_position += direction
-	#print("cell : ", item_resource.key, " - is at position : ", cell_position)
 	
 	if direction == 1:
 		if cell_position < POS_TWEEN_REQUIRMENTS[0] or cell_position > POS_TWEEN_REQUIRMENTS[1]:
@@ -75,6 +75,10 @@ func move(direction : int, tween_time : float) -> void:
 	await get_tree().create_timer(tween_time).timeout
 
 
-
 func item_placed() -> void:
+	amount = HelperFunctions.get_current_storage()[item_resource.tier].get(item_resource.key, 0)
+	
 	update_amount()
+	
+	if amount <= 0:
+		build_selection.remove_cell_in_place()

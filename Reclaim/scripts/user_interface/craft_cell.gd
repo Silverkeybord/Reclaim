@@ -38,7 +38,7 @@ func check_requirements() -> void:
 	can_craft = true
 	for requirement : RequirementsTemplate in craft_data.requirements:
 		var have_enough = true
-		var current_storage : Dictionary = Global.get_current_storage()
+		var current_storage : Dictionary = HelperFunctions.get_current_storage()
 		
 		if current_storage[requirement.item.tier].has(requirement.item.key):
 			if current_storage[requirement.item.tier][requirement.item.key] < requirement.amount:

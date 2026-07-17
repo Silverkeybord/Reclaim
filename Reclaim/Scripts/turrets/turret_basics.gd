@@ -77,8 +77,8 @@ func shoot(target : CharacterBody3D) -> void:
 	else:
 		target.hit(turret_resource.damage)
 	
-	Global.create_bullet_trail(bullet_spawn.global_position, target_position)
-	Global.spawn_temp_sound(
+	HelperFunctions.create_bullet_trail(bullet_spawn.global_position, target_position)
+	HelperFunctions.spawn_temp_sound(
 		turret_resource.shooting_sound.pick_random(), 
 		bullet_spawn.global_position
 		)

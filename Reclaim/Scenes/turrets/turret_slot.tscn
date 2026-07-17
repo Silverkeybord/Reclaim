@@ -9,11 +9,12 @@ size = Vector3(4, 0.5, 4)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_uuoed"]
 data = PackedVector3Array(-2, 0.25, 2, 2, 0.25, 2, -2, -0.25, 2, 2, 0.25, 2, 2, -0.25, 2, -2, -0.25, 2, 2, 0.25, -2, -2, 0.25, -2, 2, -0.25, -2, -2, 0.25, -2, -2, -0.25, -2, 2, -0.25, -2, 2, 0.25, 2, 2, 0.25, -2, 2, -0.25, 2, 2, 0.25, -2, 2, -0.25, -2, 2, -0.25, 2, -2, 0.25, -2, -2, 0.25, 2, -2, -0.25, -2, -2, 0.25, 2, -2, -0.25, 2, -2, -0.25, -2, 2, 0.25, 2, -2, 0.25, 2, 2, 0.25, -2, -2, 0.25, 2, -2, 0.25, -2, 2, 0.25, -2, -2, -0.25, 2, 2, -0.25, 2, -2, -0.25, -2, 2, -0.25, 2, 2, -0.25, -2, -2, -0.25, -2)
 
-[node name="turret_slot" type="Area3D" unique_id=1466227755 node_paths=PackedStringArray("place_cooldown", "turret_origin_point", "mesh") groups=["turret_slots"]]
+[node name="turret_slot" type="Area3D" unique_id=1466227755 node_paths=PackedStringArray("turret_place_cooldown", "base_place_cooldown", "turret_origin_point", "mesh") groups=["turret_slots"]]
 monitoring = false
 monitorable = false
 script = ExtResource("1_uuoed")
-place_cooldown = NodePath("place_cooldown")
+turret_place_cooldown = NodePath("turret_place_cooldown")
+base_place_cooldown = NodePath("base_place_cooldown")
 turret_origin_point = NodePath("turret_origin_point")
 mesh = NodePath("MeshInstance3D")
 
@@ -29,6 +30,13 @@ shape = SubResource("ConcavePolygonShape3D_uuoed")
 [node name="turret_origin_point" type="Marker3D" parent="." unique_id=295025494]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
-[node name="place_cooldown" type="Timer" parent="." unique_id=271016058]
+[node name="turret_place_cooldown" type="Timer" parent="." unique_id=271016058]
+wait_time = 0.5
+one_shot = true
 
-[connection signal="timeout" from="place_cooldown" to="." method="_on_place_cooldown_timeout"]
+[node name="base_place_cooldown" type="Timer" parent="." unique_id=1890905658]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="turret_place_cooldown" to="." method="_on_turret_place_cooldown_timeout"]
+[connection signal="timeout" from="base_place_cooldown" to="." method="_on_base_place_cooldown_timeout"]

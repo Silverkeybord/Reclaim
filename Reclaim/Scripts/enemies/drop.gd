@@ -136,7 +136,7 @@ func _give_random_movement() -> void:
 
 ## add the drop into the storage of the player
 func _pick_up() -> void:
-	Global.spawn_temp_sound(pickup_sounds.pick_random())
+	HelperFunctions.spawn_temp_sound(pickup_sounds.pick_random())
 	
 	if Global.sector_storage[item_resource.tier].has(item_resource.key):
 		Global.sector_storage[item_resource.tier][item_resource.key] += 1

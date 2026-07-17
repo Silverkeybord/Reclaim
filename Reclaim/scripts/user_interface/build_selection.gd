@@ -14,6 +14,8 @@ const MARKER_KEY := "marker"
 const SCALE_KEY := "scale"
 const MODULATE_KEY := "modulate"
 
+const GOT_NOTHING := "NOTHING..."
+
 const MIN_CELL_POSITION := -3
 const MAX_CELL_POSITION := 3
 
@@ -23,8 +25,6 @@ const SCROLL_SPEED_FACTOR := 0.015
 const SCROLL_SPEED_DETECTION_TIME := 0.05
 
 const MIN_SCROLL_POSITION := 0
-
-const INSTANT_SCROLL_REQUIRMENT := 4
 
 @export var build_cell_scene : PackedScene
 @export var selected_name : Label
@@ -45,8 +45,8 @@ var base_scroll_position := MIN_SCROLL_POSITION
 var turret_max_scroll_position : int
 var base_max_scroll_position : int
 
-var active_turret_cell : Array[BuildSelectionCell]
-var active_base_cell : Array[BuildSelectionCell]
+var active_turret_cells : Array[BuildSelectionCell]
+var active_base_cells : Array[BuildSelectionCell]
 var turret_cells : Dictionary
 var base_cells : Dictionary
 
@@ -123,34 +123,50 @@ func _ready() -> void:
 			new_build_cell.setup()
 			new_build_cell.visible = false
 			new_build_cell.scale = scale
-	
-	# minus one because on the last loop the index will still go up
-	turret_max_scroll_position = turret_cell_index - 1
-	base_max_scroll_position = base_cell_index - 1
 
 
 func _process(_delta: float) -> void:
 	if selected_cell:
 		selected_name.text = selected_cell.name
+	else:
+		selected_name.text = GOT_NOTHING
 
 
 func load_selection() -> void:
-	var available_turrets = Global._get_items_from_type(Global.ITEM_TYPES.TURRET)
-	var available_bases = Global._get_items_from_type(Global.ITEM_TYPES.BASE)
+	var available_turrets = HelperFunctions.get_items_from_type(Global.ITEM_TYPES.TURRET)
+	var available_bases = HelperFunctions.get_items_from_type(Global.ITEM_TYPES.BASE)
 	
-	_load_type(available_turrets, active_turret_cell, turret_cells, turret_scroll_position)
-	_load_type(available_bases, active_base_cell, base_cells, base_scroll_position)
+	turret_max_scroll_position = _load_type(
+		available_turrets, active_turret_cells, turret_cells, turret_scroll_position
+		)
+	
+	base_max_scroll_position = _load_type(
+		available_bases, active_base_cells, base_cells, base_scroll_position
+		)
 	
 	change_build_mode()
 	
-	selected_cell = active_turret_cell[turret_scroll_position]
+	if active_turret_cells:
+		selected_cell = active_turret_cells[turret_scroll_position]
+	else:
+		selected_cell = null
 
 
-func _load_type(available : Dictionary, active : Array, cells : Dictionary, scroll_shift : int):
+func _load_type(
+	available : Dictionary, 
+	active : Array, 
+	cells : Dictionary, 
+	scroll_shift : int
+	) -> int:
+	
+	var loops := 0
 	var index_position := scroll_shift
 	
 	for tier in available:
 		for build in available[tier]:
+			if available[tier][build] == 0:
+				continue
+			
 			var cell : BuildSelectionCell = cells[build]
 			var marker : Marker2D
 			if index_position < MIN_CELL_POSITION:
@@ -170,25 +186,22 @@ func _load_type(available : Dictionary, active : Array, cells : Dictionary, scro
 			
 			if not cell in active:
 				active.append(cell)
+			
 			cell.cell_position = index_position
 			cell.position = marker.position
 			index_position -= 1
+			loops += 1
+	
+	return loops -1
 
 
 func _input(event: InputEvent) -> void:
 	if Global.player_mode != Global.PLAYER_MODES.BUILDING:
-		return
-	
-	if Input.is_action_just_released("change_selected_build"):
 		visible = false
-	
-	if Input.is_action_just_pressed("change_selected_build"):
-		visible = true
-		load_selection()
+		return
 	
 	if (
 		event is InputEventMouseButton and
-		Input.is_action_pressed("change_selected_build") and 
 		Global.player_mode == Global.PLAYER_MODES.BUILDING and
 		not moving_cells
 	):
@@ -199,6 +212,14 @@ func _input(event: InputEvent) -> void:
 func scroll(event : InputEventMouseButton) -> void:
 	var scroll_direction : int
 	
+	match Global.current_build_mode:
+		Global.BUILD_MODES.TURRET:
+			if not active_turret_cells:
+				return
+		Global.BUILD_MODES.BASE:
+			if not active_base_cells:
+				return
+	
 	if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 		match Global.current_build_mode:
 			Global.BUILD_MODES.TURRET:
@@ -206,7 +227,7 @@ func scroll(event : InputEventMouseButton) -> void:
 					scroll_direction = -1
 					if not scroll_speed_buffer_active:
 						turret_scroll_position += scroll_direction
-						selected_cell = active_turret_cell[turret_scroll_position]
+						selected_cell = active_turret_cells[turret_scroll_position]
 						player.selected_turret = selected_cell.name
 				
 			Global.BUILD_MODES.BASE:
@@ -214,7 +235,7 @@ func scroll(event : InputEventMouseButton) -> void:
 					scroll_direction = -1
 					if not scroll_speed_buffer_active:
 						base_scroll_position += scroll_direction
-						selected_cell = active_turret_cell[base_max_scroll_position]
+						selected_cell = active_turret_cells[base_max_scroll_position]
 						player.selected_base = selected_cell.name
 	
 	elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
@@ -224,7 +245,7 @@ func scroll(event : InputEventMouseButton) -> void:
 					scroll_direction = 1
 					if not scroll_speed_buffer_active:
 						turret_scroll_position += scroll_direction
-						selected_cell = active_turret_cell[turret_scroll_position]
+						selected_cell = active_turret_cells[turret_scroll_position]
 						player.selected_turret = selected_cell.name
 				
 			Global.BUILD_MODES.BASE:
@@ -232,44 +253,17 @@ func scroll(event : InputEventMouseButton) -> void:
 					scroll_direction = 1
 					if not scroll_speed_buffer_active:
 						base_scroll_position += scroll_direction
-						selected_cell = active_turret_cell[base_scroll_position]
+						selected_cell = active_turret_cells[base_scroll_position]
 						player.selected_base = selected_cell.name
 	
 	if scroll_direction == 0:
 		return
 	
 	var cells_to_move = (
-		active_turret_cell 
+		active_turret_cells 
 		if Global.current_build_mode == Global.BUILD_MODES.TURRET else 
-		active_base_cell
+		active_base_cells
 		)
-	
-	# when the player scrolls while the cells are already moveing it queues another scroll
-	## to happen right after
-	#scroll_detections += scroll_direction
-	#
-	#if abs(scroll_detections) >= INSTANT_SCROLL_REQUIRMENT:
-		#print(cells_to_move)
-		#match Global.current_build_mode:
-			#Global.BUILD_MODES.TURRET:
-				#if (
-				#turret_scroll_position < turret_max_scroll_position and 
-				#turret_scroll_position > MIN_SCROLL_POSITION
-					#):
-					#turret_scroll_position += scroll_direction
-					#scroll_detections = 0
-					#for cell in cells_to_move:
-						#cell.toggle_instant_scroll()
-			#
-			#Global.BUILD_MODES.TURRET:
-				#if (
-				#base_scroll_position < turret_max_scroll_position and 
-				#base_scroll_position > MIN_SCROLL_POSITION
-					#):
-					#base_scroll_position += scroll_direction
-					#scroll_detections = 0
-					#for cell in cells_to_move:
-						#cell.toggle_instant_scroll()
 	
 	scroll_speed_deduction += SCROLL_SPEED_FACTOR
 	
@@ -300,30 +294,71 @@ func scroll(event : InputEventMouseButton) -> void:
 func change_build_mode() -> void:
 	match Global.current_build_mode:
 		Global.BUILD_MODES.TURRET:
-			for cell in active_base_cell:
+			for cell in active_base_cells:
 				cell.visible = false
 			
-			for cell in active_turret_cell:
+			for cell in active_turret_cells:
 				cell.visible = true
 			
-			selected_cell = active_turret_cell[turret_scroll_position]
-			player.selected_turret = selected_cell.name
+			if active_turret_cells:
+				selected_cell = active_turret_cells[turret_scroll_position]
+				player.selected_turret = selected_cell.name
+			else:
+				selected_cell = null
+				player.selected_turret = ""
 		
 		Global.BUILD_MODES.BASE:
-			for cell in active_turret_cell:
+			for cell in active_turret_cells:
 				cell.visible = false
 			
-			for cell in active_base_cell:
+			for cell in active_base_cells:
 				cell.visible = true
 			
-			selected_cell = active_base_cell[base_scroll_position]
-			player.selected_base = selected_cell.name
-	
+			if active_base_cells:
+				selected_cell = active_base_cells[base_scroll_position]
+				player.selected_base = selected_cell.name
+			else:
+				selected_cell = null
+				player.selected_turret = ""
 
 
 func placed_build() -> void:
-	var current_storage = Global.get_current_storage()
+	var current_storage = HelperFunctions.get_current_storage()
 	var item = selected_cell.item_resource
 	current_storage[item.tier][selected_cell.name] -= 1
 	
 	selected_cell.item_placed()
+
+
+func remove_cell_in_place() -> void:
+	var cells_array: Array[BuildSelectionCell]
+	match Global.current_build_mode:
+		Global.BUILD_MODES.TURRET: 
+			cells_array = active_turret_cells
+		Global.BUILD_MODES.BASE:   
+			cells_array = active_base_cells
+	
+	var remove_cell_index: int = cells_array.find(selected_cell)
+	cells_array.pop_at(remove_cell_index)
+	
+	if remove_cell_index == 0:
+		selected_cell = null
+	elif remove_cell_index + 1 == cells_array.size():
+		selected_cell = cells_array[remove_cell_index - 1]
+	elif remove_cell_index > 0:
+		selected_cell = cells_array[remove_cell_index]
+	
+	var cells_to_snap: Array[BuildSelectionCell] = cells_array.slice(remove_cell_index)
+	
+	for cell in cells_to_snap:
+		cell.cell_position += 1
+		
+		if cell.cell_position < MIN_CELL_POSITION:
+			cell.position = cell_properties[MIN_CELL_POSITION][MARKER_KEY].position
+			cell.scale = cell_properties[MIN_CELL_POSITION][SCALE_KEY]
+			cell.modulate = cell_properties[MIN_CELL_POSITION][MODULATE_KEY]
+			
+		else:
+			cell.position = cell_properties[cell.cell_position][MARKER_KEY].position
+			cell.scale = cell_properties[cell.cell_position][SCALE_KEY]
+			cell.modulate = cell_properties[cell.cell_position][MODULATE_KEY]

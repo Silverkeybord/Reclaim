@@ -77,7 +77,7 @@ func fin_loading() -> void:
 
 func hit(hit_damage : float, crit : bool = false) -> void:
 	health -= hit_damage
-	Global.create_damage_indicator(global_position, hit_damage, crit)
+	HelperFunctions.create_damage_indicator(global_position, hit_damage, crit)
 	if health <= 0 and not is_dead:
 		_die()
 
