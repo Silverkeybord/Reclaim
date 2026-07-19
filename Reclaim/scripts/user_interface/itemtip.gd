@@ -53,15 +53,15 @@ func show_itemtip(item : ItemData, amount : int, type : int) -> void:
 		Global.ITEM_TYPES.RESOURCES:
 			current_tip = resources_tip
 			resources_tip.visible = true
-			resource_name_label.text = Global.get_display_name(item.key)
+			resource_name_label.text = HelperFunctions.get_display_name(item.key)
 			resource_value_label.text = VALUE_TEXT + str(item.value)
 			resource_weight_label.text = WEIGHT_TEXT + str(item.weight)
-			resource_amount_label.text = AMOUNT_TEXT + Global.comma_number(amount) + X_TEXT
+			resource_amount_label.text = AMOUNT_TEXT + HelperFunctions.comma_number(amount) + X_TEXT
 			
 		Global.ITEM_TYPES.TURRET:
 			current_tip = turrets_tip
 			turrets_tip.visible = true
-			turret_name_label.text = "- " + Global.get_display_name(item.key) + " -"
+			turret_name_label.text = "- " + HelperFunctions.get_display_name(item.key) + " -"
 			turret_value_label.text = VALUE_TEXT + str(item.value)
 			turret_weight_label.text = WEIGHT_TEXT + str(item.weight)
 			
@@ -72,7 +72,7 @@ func show_itemtip(item : ItemData, amount : int, type : int) -> void:
 			
 			turret_ability_label.text = ABILITY_TEXT + turret_info.ability
 			turret_damage_label.text = (
-				DAMAGE_TEXT + Global.return_amount_shorthand(turret_info.damage))
+				DAMAGE_TEXT + HelperFunctions.return_amount_shorthand(turret_info.damage))
 				
 			turret_fire_rate_label.text = (
 				FIRE_RATE_TEXT + str(turret_info.get_firerate()) + SECONDS_TEXT)

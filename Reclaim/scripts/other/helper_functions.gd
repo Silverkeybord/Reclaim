@@ -24,10 +24,10 @@ const SHORTHAND_THRESHOLDS: Dictionary = {
 	3: "K",
 }
 
-const TEMP_SOUND_SCENE: PackedScene = preload("res://scenes/misc/temp_sound_scene.tscn")
-const TEMP_SOUND_SCENE_3D: PackedScene = preload("res://scenes/misc/temp_sound_scene_3D.tscn")
+const TEMP_SOUND_SCENE: PackedScene = preload("res://scenes/other/temp_sound_scene.tscn")
+const TEMP_SOUND_SCENE_3D: PackedScene = preload("res://scenes/other/temp_sound_scene_3D.tscn")
 const BULLET_TRAIL_SCENE: PackedScene = preload("res://scenes/turrets/bullet_trail.tscn")
-const DAMAGE_INDICATOR_SCENE: PackedScene = preload("res://scenes/misc/damage_indicator.tscn")
+const DAMAGE_INDICATOR_SCENE: PackedScene = preload("res://scenes/other/damage_indicator.tscn")
 
 # =============================================================================
 # STATIC STATE (shared counters)

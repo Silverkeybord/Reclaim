@@ -125,7 +125,7 @@ func craft(craft_data : CraftData = current_displayed_requirments) -> void:
 	if not current_displayed_requirments:
 		return
 	
-	var current_storage = Global.get_current_storage()
+	var current_storage = HelperFunctions.get_current_storage()
 	
 	for requirment : RequirementsTemplate in craft_data.requirements:
 		current_storage[requirment.item.tier][requirment.item.key] -= requirment.amount

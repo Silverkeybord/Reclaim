@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dqyq25yfp2bk0"
-path="res://.godot/imported/samnd.png-658f46e622630b6b54bc421629d3a391.ctex"
+uid="uid://df4x6dr3c13nf"
+path="res://.godot/imported/shield_health_background.png-013ac1372b0ae44cc290cdaf0ff6622e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://2d_assets/referece_images/samnd.png"
-dest_files=["res://.godot/imported/samnd.png-658f46e622630b6b54bc421629d3a391.ctex"]
+source_file="res://2d_assets/shield/shield_health_background.png"
+dest_files=["res://.godot/imported/shield_health_background.png-013ac1372b0ae44cc290cdaf0ff6622e.ctex"]
 
 [params]
 

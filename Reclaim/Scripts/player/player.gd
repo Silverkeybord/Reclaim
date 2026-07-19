@@ -1,13 +1,15 @@
 class_name Player
 extends CharacterBody3D
 
-const PLAYER_MODE_INPUTS = "1 - Weapon
-2 - Building
-3 - Installation"
-const BUILDING_INPUTS = "M2 - Pick up Builds
-F - Change Builds
+const PLACE_ANIMATION_KEY := "build_placed"
+
+const WEAPON_MODE_INPUT := "1 - Weapon"
+const BUILD_MODE_INPUT := "2 - Building"
+const INSTALL_MODE_INPUT := "3 - Installation"
+const BUILDING_INPUTS := "F - Change Builds
+M2 - Pick up Builds
 Scroll - Selection"
-const INTERACT_INPUT = "E - Interact"
+const INTERACT_INPUT := "E - Interact"
 
 const INTERACT_DISTANCE := 5
 const BUILD_RANGE := 25
@@ -31,8 +33,11 @@ const MOVE_CLOSER_TEXT := "MOVE CLOSER"
 @export var hit_overlay : Control
 @export var aim_ray : RayCast3D
 @export var build_ray : RayCast3D
-@export var gun_piviot : Node3D
 @export var shooting_timer : Timer
+@export var arm_piviot : Node3D
+@export var gun_piviot : Node3D
+@export var hammmer_piviot : Node3D
+@export var wrench_piviot : Node3D
 
 @export_group("turrets")
 @export var turret_holagram_scene : PackedScene
@@ -45,6 +50,7 @@ const MOVE_CLOSER_TEXT := "MOVE CLOSER"
 @export var build_label : Label
 @export var input_tip : Label
 @export var building_selection : CanvasLayer
+@export var user_interface_animations : AnimationPlayer
 
 var turret_holagram : Node3D
 
@@ -112,7 +118,14 @@ func _input_tip_updating() -> void:
 		input_tip_output.append(BUILDING_INPUTS)
 	
 	if not Global.at_ship:
-		input_tip_output.append(PLAYER_MODE_INPUTS)
+		if Global.player_mode != Global.PLAYER_MODES.WEAPON:
+			input_tip_output.append(WEAPON_MODE_INPUT)
+		
+		if Global.player_mode != Global.PLAYER_MODES.BUILDING:
+			input_tip_output.append(BUILD_MODE_INPUT)
+		
+		if Global.player_mode != Global.PLAYER_MODES.INSTALLING:
+			input_tip_output.append(INSTALL_MODE_INPUT)
 	
 	if Global.player_mode != Global.PLAYER_MODES.BUILDING:
 		input_tip_output.append(INTERACT_INPUT)
@@ -154,6 +167,7 @@ func _player_mode_handeling() -> void:
 	):
 		Global.player_mode = Global.PLAYER_MODES.WEAPON
 		_remove_holagram(true)
+		toggle_player_mode_item(gun_piviot)
 	
 	if (
 		Input.is_action_just_pressed("build_mode") and 
@@ -165,6 +179,7 @@ func _player_mode_handeling() -> void:
 		building_selection.load_selection()
 		building_selection.set_process(true)
 		turret_grid._toggle_build_mode(true)
+		toggle_player_mode_item(hammmer_piviot)
 	
 	if (
 		Input.is_action_just_pressed("install_mode") and 
@@ -173,6 +188,16 @@ func _player_mode_handeling() -> void:
 	):
 		Global.player_mode = Global.PLAYER_MODES.INSTALLING
 		_remove_holagram(true)
+		toggle_player_mode_item(wrench_piviot)
+
+
+# make all other items invisible and make the piviot visible
+func toggle_player_mode_item(piviot : Node3D) -> void:
+	gun_piviot.visible = false
+	hammmer_piviot.visible = false
+	wrench_piviot.visible = false
+	
+	piviot.visible = true
 
 
 # BUILDING -------------------------------------------------------------------
@@ -253,16 +278,21 @@ func _build_mode_handeling(ray_collider : Node) -> void:
 		build_overlay.visible = true
 	
 	elif turret_holagram and current_build_selected:
-			# puts the holagram where the player is looking but marks it invalid
-			if aim_ray.is_colliding():
-				turret_holagram.global_position = aim_ray.get_collision_point()
-				turret_holagram.visible = true
-				
-			else:
-				turret_holagram.visible = false
+		# puts the holagram where the player is looking but marks it invalid
+		if aim_ray.is_colliding() and current_build_selected:
+			turret_holagram.global_position = aim_ray.get_collision_point()
+			turret_holagram.visible = true
 			
-			turret_holagram.valid_position = false
-			build_overlay.visible = false
+		else:
+			turret_holagram.visible = false
+			
+		
+		turret_holagram.valid_position = false
+		build_overlay.visible = false
+	
+	else:
+		turret_holagram.visible = false
+		build_overlay.visible = false
 	
 	
 	# placement
@@ -272,6 +302,8 @@ func _build_mode_handeling(ray_collider : Node) -> void:
 		global_position.distance_to(ray_collider.global_position) < BUILD_RANGE
 			):
 			var can_place := false
+			
+			user_interface_animations.play(PLACE_ANIMATION_KEY)
 			
 			match Global.current_build_mode:
 				Global.BUILD_MODES.TURRET:
@@ -289,6 +321,7 @@ func _build_mode_handeling(ray_collider : Node) -> void:
 			if can_place:
 				building_selection.placed_build()
 	
+	
 	# picking up builds
 	if Input.is_action_just_pressed("pick_up_build"):
 		if (
@@ -300,7 +333,7 @@ func _build_mode_handeling(ray_collider : Node) -> void:
 				can_remove_build = false
 				
 				build_ray_collider.pick_up()
-				building_selection.selected_cell.update_amount()
+				building_selection.load_selection()
 				
 				if build_ray_collider.build_type == Global.BUILD_TYPES.BASE:
 					build_ray_collider.slot.base_removed()

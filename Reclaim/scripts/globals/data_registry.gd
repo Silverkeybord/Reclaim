@@ -32,7 +32,7 @@ func _ready() -> void:
 	_load_folder(BULLET_TRAIL_PATH, bullet_trail)
 	_load_folder(ITEMS_PATH, items, true)
 	
-	print("fin loading files")
+	print(" -- fin loading files -- ")
 
 
 func _load_folder(path: String, dict: Dictionary, recursive: bool = false) -> void:

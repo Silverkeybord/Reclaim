@@ -118,6 +118,8 @@ var enemies : int = 0
 # META UPGRADES / COUNCIL AUTHORIZATION -------------------------------------
 var ship_level := 8
 var turret_slots := 1
+var shield_strengh := 1
+
 
 # INVENORY + CURRENCY -------------------------------------------------------
 var cubits : int = 0

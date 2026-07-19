@@ -25,25 +25,25 @@ position_positive_2 = NodePath("2")
 position_positive_3 = NodePath("3")
 
 [node name="-3" type="Marker2D" parent="." unique_id=8868560]
-position = Vector2(775, 419)
+position = Vector2(775, 425)
 
 [node name="-2" type="Marker2D" parent="." unique_id=1284029205]
-position = Vector2(727, 419)
+position = Vector2(727, 425)
 
 [node name="-1" type="Marker2D" parent="." unique_id=162727788]
-position = Vector2(674, 416)
+position = Vector2(674, 422)
 
 [node name="0" type="Marker2D" parent="." unique_id=174386681]
-position = Vector2(613, 413)
+position = Vector2(613, 419)
 
 [node name="1" type="Marker2D" parent="." unique_id=1040092118]
-position = Vector2(557, 416)
+position = Vector2(557, 422)
 
 [node name="2" type="Marker2D" parent="." unique_id=1371279081]
-position = Vector2(509, 419)
+position = Vector2(509, 425)
 
 [node name="3" type="Marker2D" parent="." unique_id=2055275172]
-position = Vector2(461, 419)
+position = Vector2(461, 425)
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=700583171]
 anchors_preset = 15
@@ -52,8 +52,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 1
-theme_override_constants/margin_top = 401
-theme_override_constants/margin_bottom = 240
+theme_override_constants/margin_top = 407
+theme_override_constants/margin_bottom = 234
 metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
@@ -78,12 +78,12 @@ metadata/_edit_lock_ = true
 
 [node name="selected_name" type="Label" parent="." unique_id=1323956833]
 anchors_preset = -1
-anchor_top = 0.65902776
+anchor_top = 0.67291665
 anchor_right = 1.0
-anchor_bottom = 0.6770833
-offset_top = 3.0517578e-05
+anchor_bottom = 0.6909722
 grow_horizontal = 2
 grow_vertical = 2
 text = "DARK MATTER TURRET"
 label_settings = SubResource("LabelSettings_g4v7s")
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true

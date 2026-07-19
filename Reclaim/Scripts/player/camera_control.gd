@@ -18,7 +18,7 @@ const Z_AXIS_THIRD_PERSON_POSITION := Vector3(0, 1.25, 0)
 @export_group("in scene")
 @export var player: CharacterBody3D
 @export var spring_arm: SpringArm3D
-@export var gun_piviot : Node3D
+@export var arm_piviot : Node3D
 @export var z_axis_spring_arm : SpringArm3D
 
 var pitch := 0.0
@@ -59,7 +59,7 @@ func _pan_and_pitch(event) -> void:
 	pitch -= event.relative.y * sensitivity
 	pitch = clamp(pitch, MIN_PITCH, MAX_PITCH)
 	rotation.x = pitch
-	gun_piviot.rotation.x = pitch
+	arm_piviot.rotation.x = pitch
 
 
 # Controls zooming in and out

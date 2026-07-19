@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://1t8lful3kj2t"]
+
+[ext_resource type="PackedScene" uid="uid://cw2qdwiswtfo3" path="res://3d_assets/player/installatoin_wrench.glb" id="1_dj6mb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j0yjo"]
+albedo_color = Color(0.47843137, 0.5019608, 0.5254902, 1)
+
+[node name="installatoin_wrench" unique_id=1669557964 instance=ExtResource("1_dj6mb")]
+
+[node name="Cube" parent="." index="0" unique_id=1572586827]
+surface_material_override/0 = SubResource("StandardMaterial3D_j0yjo")

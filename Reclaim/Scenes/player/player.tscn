@@ -6,11 +6,11 @@
 [ext_resource type="Texture2D" uid="uid://b0sbhjjkojgb0" path="res://2d_assets/reticles/interact_reticle.png" id="3_mxepk"]
 [ext_resource type="PackedScene" uid="uid://deasukscym312" path="res://scenes/weapons/gun.tscn" id="4_xxarj"]
 [ext_resource type="FontFile" uid="uid://q3206aq7b5tl" path="res://other_assets/fonts/uni_sans/Uni Sans Heavy.otf" id="5_ca0mu"]
+[ext_resource type="PackedScene" uid="uid://1t8lful3kj2t" path="res://scenes/player/installatoin_wrench.tscn" id="5_gx1jg"]
 [ext_resource type="Texture2D" uid="uid://bc52l5qd5bkcq" path="res://2d_assets/reticles/normal_reticle.png" id="5_xxarj"]
 [ext_resource type="LabelSettings" uid="uid://did6nhlhj082r" path="res://other_assets/label_settings/help_text.tres" id="8_5gtgg"]
 [ext_resource type="Texture2D" uid="uid://dmaj8a3oki02e" path="res://2d_assets/reticles/remove_overlay.png" id="8_6k3cy"]
 [ext_resource type="PackedScene" uid="uid://bqdl5iwhoay06" path="res://scenes/user_interface/fps_label.tscn" id="10_h17s1"]
-[ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="12_fm80t"]
 [ext_resource type="PackedScene" uid="uid://5wiwx78yrbjr" path="res://scenes/user_interface/build_selection.tscn" id="12_gx1jg"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e41v5"]
@@ -28,6 +28,15 @@ albedo_color = Color(0.8117647, 0.8117647, 0.8117647, 0.44313726)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_5gtgg"]
 
+[sub_resource type="BoxMesh" id="BoxMesh_yf5fn"]
+size = Vector3(0.125, 0.3, 0.125)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b26q7"]
+albedo_color = Color(0.47914928, 0.5023035, 0.5254449, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_57qmd"]
+size = Vector3(0.2, 0.2, 0.4)
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_xxarj"]
 radius = 10.0
 
@@ -38,10 +47,108 @@ border_width_right = 6
 corner_radius_top_right = 20
 corner_detail = 1
 
-[sub_resource type="LabelSettings" id="LabelSettings_je7p5"]
-font = ExtResource("12_fm80t")
+[sub_resource type="Animation" id="Animation_gx1jg"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/build_overlay/interact_reticle:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.1, 0, 0.1, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/build_overlay/interact_reticle:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.1, 0, 0.1, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/build_overlay/interact_reticle2:scale:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.1, 0, 0.1, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasLayer/build_overlay/interact_reticle2:scale:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.1, 0, 0.1, 0),
+"times": PackedFloat32Array(0)
+}
 
-[node name="player" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "hit_overlay", "aim_ray", "build_ray", "gun_piviot", "shooting_timer", "build_overlay", "build_label", "input_tip", "building_selection") groups=["player"]]
+[sub_resource type="Animation" id="Animation_ugbui"]
+resource_name = "build_placed"
+length = 0.2
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/build_overlay/interact_reticle:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2),
+"points": PackedFloat32Array(1, -0.1, 0, 0.033333335, 0.19836068, 1.2, -0.06666666, -0.00059843063, 0.016666181, 0.00014960332, 1, -0.03333333, 0.20148325, 0, 0),
+"times": PackedFloat32Array(0, 0.1, 0.2)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/build_overlay/interact_reticle:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2),
+"points": PackedFloat32Array(1, -0.1, 0, 0.033333335, 0.19836068, 1.2, -0.06666666, -0.00059843063, 0.016666181, 0.00014960332, 1, -0.03333333, 0.2001822, 0, 0),
+"times": PackedFloat32Array(0, 0.1, 0.2)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/build_overlay/interact_reticle2:scale:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2),
+"points": PackedFloat32Array(1, -0.1, 0, 0.033333335, 0.19810045, 1.2, -0.06666666, -0.00033831596, 0.016666511, 8.4578205e-05, 1, -0.03333333, 0.20070267, 0, 0),
+"times": PackedFloat32Array(0, 0.1, 0.2)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasLayer/build_overlay/interact_reticle2:scale:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2),
+"points": PackedFloat32Array(1, -0.1, 0, 0.033333335, 0.19862092, 1.2, -0.06666666, -7.8082085e-05, 0.01666666, 1.9520514e-05, 1, -0.03333333, 0.20044243, 0, 0),
+"times": PackedFloat32Array(0, 0.1, 0.2)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fcs02"]
+_data = {
+&"RESET": SubResource("Animation_gx1jg"),
+&"build_placed": SubResource("Animation_ugbui")
+}
+
+[node name="player" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "hit_overlay", "aim_ray", "build_ray", "shooting_timer", "arm_piviot", "gun_piviot", "hammmer_piviot", "wrench_piviot", "build_overlay", "build_label", "input_tip", "building_selection", "user_interface_animations") groups=["player"]]
 collision_layer = 2
 collision_mask = 79
 script = ExtResource("1_eo61r")
@@ -49,13 +156,17 @@ interact_overlay = NodePath("CanvasLayer/interact_overlay")
 hit_overlay = NodePath("CanvasLayer/hit_overlay")
 aim_ray = NodePath("SpringArm3D2/SpringArm3D/aim_ray")
 build_ray = NodePath("SpringArm3D2/SpringArm3D/build_ray")
-gun_piviot = NodePath("gun_piviot")
-shooting_timer = NodePath("gun_piviot/shoot_timer")
+shooting_timer = NodePath("arm_piviot/gun_piviot/shoot_timer")
+arm_piviot = NodePath("arm_piviot")
+gun_piviot = NodePath("arm_piviot/gun_piviot")
+hammmer_piviot = NodePath("arm_piviot/hammer_piviot")
+wrench_piviot = NodePath("arm_piviot/wrench_piviot")
 turret_holagram_scene = ExtResource("2_6upyo")
 build_overlay = NodePath("CanvasLayer/build_overlay")
 build_label = NodePath("CanvasLayer/build_overlay/Label")
 input_tip = NodePath("CanvasLayer/input_tips/MarginContainer/input_tip")
 building_selection = NodePath("CanvasLayer/build_selection")
+user_interface_animations = NodePath("CanvasLayer/UI_animations")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=125637870]
 shape = SubResource("BoxShape3D_e41v5")
@@ -75,14 +186,14 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 1
 shape = SubResource("SphereShape3D_qek5x")
 spring_length = 0.75
 
-[node name="SpringArm3D" type="SpringArm3D" parent="SpringArm3D2" unique_id=1017678808 node_paths=PackedStringArray("player", "spring_arm", "gun_piviot", "z_axis_spring_arm")]
+[node name="SpringArm3D" type="SpringArm3D" parent="SpringArm3D2" unique_id=1017678808 node_paths=PackedStringArray("player", "spring_arm", "arm_piviot", "z_axis_spring_arm")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -3.278354e-08, 0, 0.75)
 shape = SubResource("SphereShape3D_5gtgg")
 spring_length = 10.0
 script = ExtResource("2_mxepk")
 player = NodePath("../..")
 spring_arm = NodePath(".")
-gun_piviot = NodePath("../../gun_piviot")
+arm_piviot = NodePath("../../arm_piviot")
 z_axis_spring_arm = NodePath("..")
 
 [node name="Third person" type="Camera3D" parent="SpringArm3D2/SpringArm3D" unique_id=918761004]
@@ -100,15 +211,37 @@ target_position = Vector3(0, 0, -150)
 collision_mask = 4
 collide_with_areas = true
 
-[node name="gun_piviot" type="Node3D" parent="." unique_id=2066967989]
+[node name="arm_piviot" type="Node3D" parent="." unique_id=3113373]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.65, 0.1, 0)
 
-[node name="pistol" parent="gun_piviot" unique_id=1312602602 node_paths=PackedStringArray("player") instance=ExtResource("4_xxarj")]
-player = NodePath("../..")
+[node name="gun_piviot" type="Node3D" parent="arm_piviot" unique_id=2066967989]
+
+[node name="pistol" parent="arm_piviot/gun_piviot" unique_id=1312602602 node_paths=PackedStringArray("player") instance=ExtResource("4_xxarj")]
+player = NodePath("../../..")
 metadata/_edit_lock_ = true
 
-[node name="shoot_timer" type="Timer" parent="gun_piviot" unique_id=1614041456]
+[node name="shoot_timer" type="Timer" parent="arm_piviot/gun_piviot" unique_id=1614041456]
 wait_time = 0.2
+
+[node name="hammer_piviot" type="Node3D" parent="arm_piviot" unique_id=488417548]
+visible = false
+
+[node name="hammer_mesh" type="Node3D" parent="arm_piviot/hammer_piviot" unique_id=1980128357]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="arm_piviot/hammer_piviot/hammer_mesh" unique_id=366230718]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0)
+mesh = SubResource("BoxMesh_yf5fn")
+surface_material_override/0 = SubResource("StandardMaterial3D_b26q7")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="arm_piviot/hammer_piviot/hammer_mesh" unique_id=311105435]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0570667, 0)
+mesh = SubResource("BoxMesh_57qmd")
+
+[node name="wrench_piviot" type="Node3D" parent="arm_piviot" unique_id=2104987985]
+visible = false
+
+[node name="installatoin_wrench" parent="arm_piviot/wrench_piviot" unique_id=1669557964 instance=ExtResource("5_gx1jg")]
+transform = Transform3D(-4.371139e-08, -1, 0, -4.371139e-08, 1.9106855e-15, -1, 1, -4.371139e-08, -4.371139e-08, 0.05, 0, 0)
 
 [node name="pick_up_area" type="Area3D" parent="." unique_id=1724560040 groups=["drop"]]
 visible = false
@@ -297,12 +430,16 @@ theme_override_constants/margin_bottom = 5
 
 [node name="input_tip" type="Label" parent="CanvasLayer/input_tips/MarginContainer" unique_id=1361217528]
 layout_mode = 2
-label_settings = SubResource("LabelSettings_je7p5")
+label_settings = ExtResource("8_5gtgg")
 
-[node name="FPS counter" parent="." unique_id=1336845062 instance=ExtResource("10_h17s1")]
+[node name="FPS counter" parent="CanvasLayer" unique_id=1336845062 instance=ExtResource("10_h17s1")]
 offset_left = 5.0
 offset_right = 45.0
 label_settings = ExtResource("8_5gtgg")
 
-[connection signal="timeout" from="gun_piviot/shoot_timer" to="." method="_on_shoot_timer_timeout"]
+[node name="UI_animations" type="AnimationPlayer" parent="CanvasLayer" unique_id=1425390205]
+root_node = NodePath("../..")
+libraries/ = SubResource("AnimationLibrary_fcs02")
+
+[connection signal="timeout" from="arm_piviot/gun_piviot/shoot_timer" to="." method="_on_shoot_timer_timeout"]
 [connection signal="body_entered" from="pick_up_area" to="." method="_on_pick_up_area_body_entered"]

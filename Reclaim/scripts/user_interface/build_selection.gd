@@ -127,14 +127,20 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if selected_cell:
-		selected_name.text = selected_cell.name
+		selected_name.text = selected_cell.item_resource.key
 	else:
 		selected_name.text = GOT_NOTHING
+		match Global.current_build_mode: 
+			Global.BUILD_MODES.TURRET:
+				player.selected_turret = ""
+			Global.BUILD_MODES.BASE:
+				player.selected_base = ""
 
 
 func load_selection() -> void:
 	var available_turrets = HelperFunctions.get_items_from_type(Global.ITEM_TYPES.TURRET)
 	var available_bases = HelperFunctions.get_items_from_type(Global.ITEM_TYPES.BASE)
+	
 	
 	turret_max_scroll_position = _load_type(
 		available_turrets, active_turret_cells, turret_cells, turret_scroll_position
@@ -146,10 +152,18 @@ func load_selection() -> void:
 	
 	change_build_mode()
 	
-	if active_turret_cells:
-		selected_cell = active_turret_cells[turret_scroll_position]
-	else:
-		selected_cell = null
+	match Global.current_build_mode:
+		Global.BUILD_MODES.TURRET:
+			if active_turret_cells:
+				selected_cell = active_turret_cells[turret_scroll_position]
+			else:
+				selected_cell = null
+		
+		Global.BUILD_MODES.BASE:
+			if active_base_cells:
+				selected_cell = active_base_cells[base_scroll_position]
+			else:
+				selected_cell = null
 
 
 func _load_type(
@@ -187,6 +201,7 @@ func _load_type(
 			if not cell in active:
 				active.append(cell)
 			
+			cell.update_amount()
 			cell.cell_position = index_position
 			cell.position = marker.position
 			index_position -= 1
@@ -228,7 +243,7 @@ func scroll(event : InputEventMouseButton) -> void:
 					if not scroll_speed_buffer_active:
 						turret_scroll_position += scroll_direction
 						selected_cell = active_turret_cells[turret_scroll_position]
-						player.selected_turret = selected_cell.name
+						player.selected_turret = selected_cell.item_resource.key
 				
 			Global.BUILD_MODES.BASE:
 				if base_scroll_position > MIN_SCROLL_POSITION:
@@ -236,7 +251,7 @@ func scroll(event : InputEventMouseButton) -> void:
 					if not scroll_speed_buffer_active:
 						base_scroll_position += scroll_direction
 						selected_cell = active_turret_cells[base_max_scroll_position]
-						player.selected_base = selected_cell.name
+						player.selected_base = selected_cell.item_resource.key
 	
 	elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 		match Global.current_build_mode:
@@ -246,7 +261,7 @@ func scroll(event : InputEventMouseButton) -> void:
 					if not scroll_speed_buffer_active:
 						turret_scroll_position += scroll_direction
 						selected_cell = active_turret_cells[turret_scroll_position]
-						player.selected_turret = selected_cell.name
+						player.selected_turret = selected_cell.item_resource.key
 				
 			Global.BUILD_MODES.BASE:
 				if base_scroll_position < base_max_scroll_position:
@@ -254,7 +269,7 @@ func scroll(event : InputEventMouseButton) -> void:
 					if not scroll_speed_buffer_active:
 						base_scroll_position += scroll_direction
 						selected_cell = active_turret_cells[base_scroll_position]
-						player.selected_base = selected_cell.name
+						player.selected_base = selected_cell.item_resource.key
 	
 	if scroll_direction == 0:
 		return
@@ -302,7 +317,7 @@ func change_build_mode() -> void:
 			
 			if active_turret_cells:
 				selected_cell = active_turret_cells[turret_scroll_position]
-				player.selected_turret = selected_cell.name
+				player.selected_turret = selected_cell.item_resource.key
 			else:
 				selected_cell = null
 				player.selected_turret = ""
@@ -316,7 +331,7 @@ func change_build_mode() -> void:
 			
 			if active_base_cells:
 				selected_cell = active_base_cells[base_scroll_position]
-				player.selected_base = selected_cell.name
+				player.selected_base = selected_cell.item_resource.key
 			else:
 				selected_cell = null
 				player.selected_turret = ""
@@ -325,7 +340,7 @@ func change_build_mode() -> void:
 func placed_build() -> void:
 	var current_storage = HelperFunctions.get_current_storage()
 	var item = selected_cell.item_resource
-	current_storage[item.tier][selected_cell.name] -= 1
+	current_storage[item.tier][selected_cell.item_resource.key] -= 1
 	
 	selected_cell.item_placed()
 
