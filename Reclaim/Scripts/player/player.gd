@@ -1,6 +1,8 @@
 class_name Player
 extends CharacterBody3D
 
+const GRAVITY := 40
+
 const PLACE_ANIMATION_KEY := "build_placed"
 
 const WEAPON_MODE_INPUT := "1 - Weapon"
@@ -24,9 +26,12 @@ const PLACE_TEXT := "CLICK TO PLACE"
 const REPLACE_TEXT := "CLICK TO REPLACE"
 const MOVE_CLOSER_TEXT := "MOVE CLOSER"
 
+const PICK_UP_COOLDOWN := 2.0
+
 @export_group("player stat")
 @export var jump_velocity := 20.0
 @export var move_speed := 14.0
+@export var in_shield := false
 
 @export_group("in scene")
 @export var interact_overlay : Control
@@ -34,6 +39,9 @@ const MOVE_CLOSER_TEXT := "MOVE CLOSER"
 @export var aim_ray : RayCast3D
 @export var build_ray : RayCast3D
 @export var shooting_timer : Timer
+@export var pick_up_area : Area3D
+
+@export_subgroup("Piviots")
 @export var arm_piviot : Node3D
 @export var gun_piviot : Node3D
 @export var hammmer_piviot : Node3D
@@ -61,8 +69,6 @@ var weapon_resource : WeaponData
 
 var can_remove_build := true
 
-var turrets : Dictionary
-
 
 func _ready() -> void:
 	# gives the player their starting weapon
@@ -72,7 +78,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
-		velocity.y -= Global.GRAVITY * delta
+		velocity.y -= GRAVITY * delta
 	else:
 		velocity.y = 0.0
 	
@@ -333,6 +339,7 @@ func _build_mode_handeling(ray_collider : Node) -> void:
 				can_remove_build = false
 				
 				build_ray_collider.pick_up()
+				
 				building_selection.load_selection()
 				
 				if build_ray_collider.build_type == Global.BUILD_TYPES.BASE:

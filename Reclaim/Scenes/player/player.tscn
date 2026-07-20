@@ -148,7 +148,7 @@ _data = {
 &"build_placed": SubResource("Animation_ugbui")
 }
 
-[node name="player" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "hit_overlay", "aim_ray", "build_ray", "shooting_timer", "arm_piviot", "gun_piviot", "hammmer_piviot", "wrench_piviot", "build_overlay", "build_label", "input_tip", "building_selection", "user_interface_animations") groups=["player"]]
+[node name="player" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "hit_overlay", "aim_ray", "build_ray", "shooting_timer", "pick_up_area", "arm_piviot", "gun_piviot", "hammmer_piviot", "wrench_piviot", "build_overlay", "build_label", "input_tip", "building_selection", "user_interface_animations") groups=["player"]]
 collision_layer = 2
 collision_mask = 79
 script = ExtResource("1_eo61r")
@@ -157,6 +157,7 @@ hit_overlay = NodePath("CanvasLayer/hit_overlay")
 aim_ray = NodePath("SpringArm3D2/SpringArm3D/aim_ray")
 build_ray = NodePath("SpringArm3D2/SpringArm3D/build_ray")
 shooting_timer = NodePath("arm_piviot/gun_piviot/shoot_timer")
+pick_up_area = NodePath("pick_up_area")
 arm_piviot = NodePath("arm_piviot")
 gun_piviot = NodePath("arm_piviot/gun_piviot")
 hammmer_piviot = NodePath("arm_piviot/hammer_piviot")
@@ -247,6 +248,8 @@ transform = Transform3D(-4.371139e-08, -1, 0, -4.371139e-08, 1.9106855e-15, -1, 
 visible = false
 collision_layer = 0
 collision_mask = 128
+monitoring = false
+monitorable = false
 
 [node name="pick_up_shape" type="CollisionShape3D" parent="pick_up_area" unique_id=713600423]
 shape = SubResource("SphereShape3D_xxarj")

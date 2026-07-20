@@ -1,13 +1,13 @@
 class_name BaseEnemy
-
 extends CharacterBody3D
-## Moves towards the extraction pod and handles enemy death.
 
 signal died(enemy: BaseEnemy)
 
 const NONE_TYPE_DROP : String = "none"
 const LOAD_BUFFER : float = 0.5
 const SIZE_BASE_STAT_FACTOR : float = 0.5
+# 80m/s/s
+const GRAVITY := 80
 
 @export var valid := false
 
@@ -30,6 +30,10 @@ var drops : Dictionary
 
 
 func _physics_process(delta: float) -> void:
+	movement(delta)
+
+
+func movement(delta : float) -> void:
 	if extraction_pod == null or is_dead:
 		return
 	
@@ -39,7 +43,7 @@ func _physics_process(delta: float) -> void:
 	velocity = direction * speed 
 	
 	if not is_on_floor():
-		velocity.y -= Global.GRAVITY * delta
+		velocity.y -= GRAVITY * delta
 	else:
 		velocity.y = 0.0
 	
@@ -53,7 +57,7 @@ func fin_loading() -> void:
 	# so turrets dont target it when its is instianted at 0, 0, 0
 	await get_tree().create_timer(LOAD_BUFFER).timeout
 	
-	# the enemys spawn half in the floor so adding half their radius will put them on the floor
+	# the enemys spawn half in the floor so adding their radius will put them on the floor
 	global_position.y += size / 2
 	
 	set_process(true)

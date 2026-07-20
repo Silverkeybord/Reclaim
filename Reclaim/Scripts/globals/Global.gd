@@ -34,7 +34,6 @@ enum PLAYER_MODES {
 
 # MISC --------------------------------------------------------------------
 const SAVE_PATH : String = "user://reclaim.save"
-const GRAVITY : float = 40.0
 const TIER_CONFIG : Dictionary = {
 	1 : {
 		"color" : Color(0.541, 0.561, 0.596),

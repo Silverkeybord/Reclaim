@@ -1,5 +1,8 @@
 extends Control
 
+const HIT_FLASH_COLOR := Color("ffffffff")
+const HIT_FLASH_TIME := 0.2
+
 const BLUE_HEALTH_COLOR := Color("afffffff")
 const GREEN_HEALTH_COLOR := Color("B9FFAF")
 const YELLOW_HEALTH_COLOR := Color("FFFF88")
@@ -25,9 +28,7 @@ const EMPTY_TALL_SEGMENT := preload("res://2d_assets/shield/empty_tall_segment.p
 
 @export var wave_time_label : Label
 @export var all_segment_control : Control
-
-@export var max_shield_health : float
-@export var current_shield_health : float
+@export var shield : Node3D
 
 @export_group("Segment Controls")
 @export var left_small : Control
@@ -64,12 +65,11 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	wave_time_label.text = RUN_TIME_TEXT + str(int(round(Global.sector_run_time)))
 	
-	current_shield_health = randi_range(0, max_shield_health)
 	_update_visuals()
 
 
 func _update_visuals() -> void:
-	var ratio = clampf(current_shield_health / max_shield_health, 0.0, 1.0)
+	var ratio = clampf(shield.shield_health / shield.max_shield_health, 0.0, 1.0)
 	
 	var marks := HEALTH_BAR_COLOR_MARKS.keys()
 	
@@ -101,3 +101,13 @@ func _update_visuals() -> void:
 				texture_rect_percentage_lookup[segment_decimal][side].texture = EMPTY_SMALL_SEGMENT
 			else:
 				texture_rect_percentage_lookup[segment_decimal][side].texture = SMALL_SEGMENT
+
+
+func _hit_flash() -> void:
+	var hit_tween = create_tween()
+	var original_color = all_segment_control.modulate
+	var target_color = lerp(original_color, HIT_FLASH_COLOR, 0.5)
+	
+	hit_tween.tween_property(all_segment_control, "modulate", target_color, HIT_FLASH_TIME)
+	hit_tween.tween_property(all_segment_control, "modulate", original_color, HIT_FLASH_TIME)
+	

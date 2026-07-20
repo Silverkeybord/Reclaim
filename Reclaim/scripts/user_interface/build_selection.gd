@@ -141,13 +141,12 @@ func load_selection() -> void:
 	var available_turrets = HelperFunctions.get_items_from_type(Global.ITEM_TYPES.TURRET)
 	var available_bases = HelperFunctions.get_items_from_type(Global.ITEM_TYPES.BASE)
 	
-	
 	turret_max_scroll_position = _load_type(
-		available_turrets, active_turret_cells, turret_cells, turret_scroll_position
+		available_turrets, turret_cells, turret_scroll_position, Global.BUILD_MODES.TURRET
 		)
 	
 	base_max_scroll_position = _load_type(
-		available_bases, active_base_cells, base_cells, base_scroll_position
+		available_bases, base_cells, base_scroll_position, Global.BUILD_MODES.BASE
 		)
 	
 	change_build_mode()
@@ -168,13 +167,14 @@ func load_selection() -> void:
 
 func _load_type(
 	available : Dictionary, 
-	active : Array, 
 	cells : Dictionary, 
-	scroll_shift : int
+	scroll_shift : int,
+	build_type : int
 	) -> int:
 	
 	var loops := 0
 	var index_position := scroll_shift
+	var active : Array[BuildSelectionCell]
 	
 	for tier in available:
 		for build in available[tier]:
@@ -198,14 +198,20 @@ func _load_type(
 				cell.scale = cell_properties[index_position][SCALE_KEY]
 				cell.modulate = cell_properties[index_position][MODULATE_KEY]
 			
-			if not cell in active:
-				active.append(cell)
+			active.append(cell)
 			
 			cell.update_amount()
 			cell.cell_position = index_position
 			cell.position = marker.position
 			index_position -= 1
 			loops += 1
+	
+	match build_type:
+		Global.BUILD_MODES.TURRET:
+			active_turret_cells = active
+		
+		Global.BUILD_MODES.BASE:
+			active_base_cells = active
 	
 	return loops -1
 
@@ -250,7 +256,7 @@ func scroll(event : InputEventMouseButton) -> void:
 					scroll_direction = -1
 					if not scroll_speed_buffer_active:
 						base_scroll_position += scroll_direction
-						selected_cell = active_turret_cells[base_max_scroll_position]
+						selected_cell = active_base_cells[base_max_scroll_position]
 						player.selected_base = selected_cell.item_resource.key
 	
 	elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
@@ -268,7 +274,7 @@ func scroll(event : InputEventMouseButton) -> void:
 					scroll_direction = 1
 					if not scroll_speed_buffer_active:
 						base_scroll_position += scroll_direction
-						selected_cell = active_turret_cells[base_scroll_position]
+						selected_cell = active_base_cells[base_scroll_position]
 						player.selected_base = selected_cell.item_resource.key
 	
 	if scroll_direction == 0:
@@ -334,7 +340,7 @@ func change_build_mode() -> void:
 				player.selected_base = selected_cell.item_resource.key
 			else:
 				selected_cell = null
-				player.selected_turret = ""
+				player.selected_base = ""
 
 
 func placed_build() -> void:

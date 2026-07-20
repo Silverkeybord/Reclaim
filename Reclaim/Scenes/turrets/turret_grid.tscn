@@ -4,9 +4,11 @@
 [ext_resource type="PackedScene" uid="uid://cnw48lbuq7otc" path="res://scenes/turrets/turret_slot.tscn" id="1_ob1ec"]
 
 [node name="turret_grid" type="Node3D" unique_id=1489577349]
+visible = false
 script = ExtResource("1_7rygc")
 
 [node name="level1" type="Node3D" parent="." unique_id=1268469189]
+visible = false
 
 [node name="turret_slot2" parent="level1" unique_id=2141199729 instance=ExtResource("1_ob1ec")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 20)
