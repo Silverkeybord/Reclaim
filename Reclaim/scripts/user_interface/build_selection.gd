@@ -141,6 +141,20 @@ func load_selection() -> void:
 	var available_turrets = HelperFunctions.get_items_from_type(Global.ITEM_TYPES.TURRET)
 	var available_bases = HelperFunctions.get_items_from_type(Global.ITEM_TYPES.BASE)
 	
+	# Keep the currently selected build centred when inventory changes, such as
+	# after picking up a placed build.
+	turret_scroll_position = _get_scroll_position(
+		available_turrets, player.selected_turret, turret_scroll_position
+	)
+	base_scroll_position = _get_scroll_position(
+		available_bases, player.selected_base, base_scroll_position
+	)
+	
+	for cell in turret_cells.values():
+		cell.visible = false
+	for cell in base_cells.values():
+		cell.visible = false
+	
 	turret_max_scroll_position = _load_type(
 		available_turrets, turret_cells, turret_scroll_position, Global.BUILD_MODES.TURRET
 		)
@@ -150,19 +164,26 @@ func load_selection() -> void:
 		)
 	
 	change_build_mode()
+
+
+func _get_scroll_position(
+	available: Dictionary, preferred_key: String, current_position: int
+	) -> int:
+	var item_count := 0
+	var preferred_position := -1
 	
-	match Global.current_build_mode:
-		Global.BUILD_MODES.TURRET:
-			if active_turret_cells:
-				selected_cell = active_turret_cells[turret_scroll_position]
-			else:
-				selected_cell = null
-		
-		Global.BUILD_MODES.BASE:
-			if active_base_cells:
-				selected_cell = active_base_cells[base_scroll_position]
-			else:
-				selected_cell = null
+	for tier in available:
+		for build in available[tier]:
+			if available[tier][build] <= 0:
+				continue
+			if build == preferred_key:
+				preferred_position = item_count
+			item_count += 1
+	
+	if preferred_position >= 0:
+		return preferred_position
+	
+	return clampi(current_position, MIN_SCROLL_POSITION, max(item_count - 1, MIN_SCROLL_POSITION))
 
 
 func _load_type(
@@ -178,31 +199,15 @@ func _load_type(
 	
 	for tier in available:
 		for build in available[tier]:
-			if available[tier][build] == 0:
+			if available[tier][build] <= 0:
 				continue
 			
 			var cell : BuildSelectionCell = cells[build]
-			var marker : Marker2D
-			if index_position < MIN_CELL_POSITION:
-				marker = cell_properties[MIN_CELL_POSITION][MARKER_KEY]
-				cell.scale = cell_properties[MIN_CELL_POSITION][SCALE_KEY]
-				cell.modulate = cell_properties[MIN_CELL_POSITION][MODULATE_KEY]
-				
-			elif index_position > MAX_CELL_POSITION:
-				marker = cell_properties[MAX_CELL_POSITION][MARKER_KEY]
-				cell.scale = cell_properties[MAX_CELL_POSITION][SCALE_KEY]
-				cell.modulate = cell_properties[MAX_CELL_POSITION][MODULATE_KEY]
-				
-			else:
-				marker = cell_properties[index_position][MARKER_KEY]
-				cell.scale = cell_properties[index_position][SCALE_KEY]
-				cell.modulate = cell_properties[index_position][MODULATE_KEY]
 			
 			active.append(cell)
 			
 			cell.update_amount()
-			cell.cell_position = index_position
-			cell.position = marker.position
+			_set_cell_position(cell, index_position)
 			index_position -= 1
 			loops += 1
 	
@@ -214,6 +219,23 @@ func _load_type(
 			active_base_cells = active
 	
 	return loops -1
+
+
+func _set_cell_position(cell: BuildSelectionCell, position_index: int) -> void:
+	var marker_index := clampi(position_index, MIN_CELL_POSITION, MAX_CELL_POSITION)
+	var marker: Marker2D = cell_properties[marker_index][MARKER_KEY]
+	
+	cell.cell_position = position_index
+	cell.position = marker.position
+	cell.scale = cell_properties[marker_index][SCALE_KEY]
+	cell.modulate = cell_properties[marker_index][MODULATE_KEY]
+
+
+func _layout_cells(cells: Array[BuildSelectionCell], selected_index: int) -> void:
+	var position_index := selected_index
+	for cell in cells:
+		_set_cell_position(cell, position_index)
+		position_index -= 1
 
 
 func _input(event: InputEvent) -> void:
@@ -256,7 +278,7 @@ func scroll(event : InputEventMouseButton) -> void:
 					scroll_direction = -1
 					if not scroll_speed_buffer_active:
 						base_scroll_position += scroll_direction
-						selected_cell = active_base_cells[base_max_scroll_position]
+						selected_cell = active_base_cells[base_scroll_position]
 						player.selected_base = selected_cell.item_resource.key
 	
 	elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
@@ -344,6 +366,9 @@ func change_build_mode() -> void:
 
 
 func placed_build() -> void:
+	if not selected_cell:
+		return
+	
 	var current_storage = HelperFunctions.get_current_storage()
 	var item = selected_cell.item_resource
 	current_storage[item.tier][selected_cell.item_resource.key] -= 1
@@ -360,26 +385,34 @@ func remove_cell_in_place() -> void:
 			cells_array = active_base_cells
 	
 	var remove_cell_index: int = cells_array.find(selected_cell)
+	if remove_cell_index < 0:
+		return
+	
 	cells_array.pop_at(remove_cell_index)
 	
-	if remove_cell_index == 0:
+	if cells_array.is_empty():
 		selected_cell = null
-	elif remove_cell_index + 1 == cells_array.size():
-		selected_cell = cells_array[remove_cell_index - 1]
-	elif remove_cell_index > 0:
-		selected_cell = cells_array[remove_cell_index]
+		match Global.current_build_mode:
+			Global.BUILD_MODES.TURRET:
+				turret_scroll_position = MIN_SCROLL_POSITION
+				turret_max_scroll_position = -1
+				player.selected_turret = ""
+			Global.BUILD_MODES.BASE:
+				base_scroll_position = MIN_SCROLL_POSITION
+				base_max_scroll_position = -1
+				player.selected_base = ""
+		return
 	
-	var cells_to_snap: Array[BuildSelectionCell] = cells_array.slice(remove_cell_index)
+	var next_selected_index: int = min(remove_cell_index, cells_array.size() - 1)
+	selected_cell = cells_array[next_selected_index]
+	_layout_cells(cells_array, next_selected_index)
 	
-	for cell in cells_to_snap:
-		cell.cell_position += 1
-		
-		if cell.cell_position < MIN_CELL_POSITION:
-			cell.position = cell_properties[MIN_CELL_POSITION][MARKER_KEY].position
-			cell.scale = cell_properties[MIN_CELL_POSITION][SCALE_KEY]
-			cell.modulate = cell_properties[MIN_CELL_POSITION][MODULATE_KEY]
-			
-		else:
-			cell.position = cell_properties[cell.cell_position][MARKER_KEY].position
-			cell.scale = cell_properties[cell.cell_position][SCALE_KEY]
-			cell.modulate = cell_properties[cell.cell_position][MODULATE_KEY]
+	match Global.current_build_mode:
+		Global.BUILD_MODES.TURRET:
+			turret_scroll_position = next_selected_index
+			turret_max_scroll_position = cells_array.size() - 1
+			player.selected_turret = selected_cell.item_resource.key
+		Global.BUILD_MODES.BASE:
+			base_scroll_position = next_selected_index
+			base_max_scroll_position = cells_array.size() - 1
+			player.selected_base = selected_cell.item_resource.key

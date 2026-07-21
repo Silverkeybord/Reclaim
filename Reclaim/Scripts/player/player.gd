@@ -302,7 +302,7 @@ func _build_mode_handeling(ray_collider : Node) -> void:
 	
 	
 	# placement
-	if Input.is_action_pressed("place") and current_build_selected:
+	if Input.is_action_just_pressed("place") and current_build_selected:
 		if (
 		_check_valid_placement(ray_collider) and 
 		global_position.distance_to(ray_collider.global_position) < BUILD_RANGE
@@ -315,14 +315,12 @@ func _build_mode_handeling(ray_collider : Node) -> void:
 				Global.BUILD_MODES.TURRET:
 					if ray_collider.can_place_turret:
 						if HelperFunctions.check_for_item(DataRegistry.items[selected_turret]):
-							ray_collider.place_selected_turret(selected_turret)
-							can_place = true
+							can_place = ray_collider.place_selected_turret(selected_turret)
 				
 				Global.BUILD_MODES.BASE:
 					if ray_collider.can_place_base:
 						if HelperFunctions.check_for_item(DataRegistry.items[selected_base]):
-							ray_collider.build_base(selected_base)
-							can_place = true
+							can_place = ray_collider.build_base(selected_base)
 			
 			if can_place:
 				building_selection.placed_build()

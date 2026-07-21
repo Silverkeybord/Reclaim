@@ -4,9 +4,9 @@ extends Resource
 @export var key : String
 
 @export_group("Spawn Rates", "spawn_")
-@export var spawn_start_rate : float
-@export var spawn_end_rate : float
-@export var spawn_clear_rate : float = 10.0
+@export var spawn_start_interval : float
+@export var spawn_end_interval : float
+@export var spawn_clear_interval : float = 10.0
 
 @export_group("Cluster Sizes", "cluster_")
 @export var cluster_start_size : int

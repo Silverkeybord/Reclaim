@@ -1,7 +1,8 @@
 extends Control
 
 const HIT_FLASH_COLOR := Color("ffffffff")
-const HIT_FLASH_TIME := 0.2
+const HEAL_FLAHS_COLOR := Color("00ff00ff")
+const FLASH_TIME := 0.05
 
 const BLUE_HEALTH_COLOR := Color("afffffff")
 const GREEN_HEALTH_COLOR := Color("B9FFAF")
@@ -26,11 +27,18 @@ const TALL_SEGMENT := preload("res://2d_assets/shield/tall_segment.png")
 const EMPTY_SMALL_SEGMENT := preload("res://2d_assets/shield/empty_side_segment.png")
 const EMPTY_TALL_SEGMENT := preload("res://2d_assets/shield/empty_tall_segment.png")
 
-@export var wave_time_label : Label
-@export var all_segment_control : Control
-@export var shield : Node3D
+@export var shield : SectorShield
+
+@export var run_time_label : Label
+@export var shield_health_label : Label
+@export var show_health_timer : Timer
+
+@export var health_change_indicator : PackedScene
+@export var max_indicatoin_marker : Marker2D
+@export var min_indicatoin_marker : Marker2D
 
 @export_group("Segment Controls")
+@export var all_segment_control : Control
 @export var left_small : Control
 @export var right_small : Control
 @export var left_tall : Control
@@ -63,12 +71,15 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	wave_time_label.text = RUN_TIME_TEXT + str(int(round(Global.sector_run_time)))
+	run_time_label.text = RUN_TIME_TEXT + str(int(round(Global.sector_run_time)))
 	
-	_update_visuals()
+	var current_health := HelperFunctions.return_amount_shorthand(shield.shield_health) 
+	var max_health = HelperFunctions.return_amount_shorthand(shield.max_shield_health) 
+	
+	shield_health_label.text = (current_health + " / " + max_health)
 
 
-func _update_visuals() -> void:
+func update_visuals(change : float, is_damage := true) -> void:
 	var ratio = clampf(shield.shield_health / shield.max_shield_health, 0.0, 1.0)
 	
 	var marks := HEALTH_BAR_COLOR_MARKS.keys()
@@ -101,6 +112,13 @@ func _update_visuals() -> void:
 				texture_rect_percentage_lookup[segment_decimal][side].texture = EMPTY_SMALL_SEGMENT
 			else:
 				texture_rect_percentage_lookup[segment_decimal][side].texture = SMALL_SEGMENT
+	
+	if is_damage:
+		_hit_flash()
+	else:
+		_heal_flash()
+	
+	_make_health_indicator(change, is_damage)
 
 
 func _hit_flash() -> void:
@@ -108,6 +126,42 @@ func _hit_flash() -> void:
 	var original_color = all_segment_control.modulate
 	var target_color = lerp(original_color, HIT_FLASH_COLOR, 0.5)
 	
-	hit_tween.tween_property(all_segment_control, "modulate", target_color, HIT_FLASH_TIME)
-	hit_tween.tween_property(all_segment_control, "modulate", original_color, HIT_FLASH_TIME)
+	hit_tween.tween_property(all_segment_control, "modulate", target_color, FLASH_TIME)
+	hit_tween.tween_property(all_segment_control, "modulate", original_color, FLASH_TIME)
 	
+	run_time_label.visible = false
+	shield_health_label.visible = true
+	
+	show_health_timer.start()
+
+
+func _heal_flash() -> void:
+	var hit_tween = create_tween()
+	var original_color = all_segment_control.modulate
+	var target_color = lerp(original_color, HEAL_FLAHS_COLOR, 0.5)
+	
+	hit_tween.tween_property(all_segment_control, "modulate", target_color, FLASH_TIME)
+	hit_tween.tween_property(all_segment_control, "modulate", original_color, FLASH_TIME)
+	
+	run_time_label.visible = false
+	shield_health_label.visible = true
+	
+	show_health_timer.start()
+
+
+func _on_show_health_timer_timeout() -> void:
+	run_time_label.visible = true
+	shield_health_label.visible = false
+
+
+func _make_health_indicator(change : float, is_damage := true) -> void:
+	var new_indicator = health_change_indicator.instantiate()
+	add_child(new_indicator)
+	
+	new_indicator.position = Vector2(
+		randf_range(min_indicatoin_marker.position.x, max_indicatoin_marker.position.x),
+		randf_range(min_indicatoin_marker.position.y, max_indicatoin_marker.position.y)
+		)
+	
+	var text = str(-change) if is_damage else str("+", change)
+	new_indicator.setup(text, is_damage)

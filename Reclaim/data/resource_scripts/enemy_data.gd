@@ -9,6 +9,8 @@ extends Resource
 @export var damage : int
 ## meters per second toward the target
 @export var speed : float
+## time inbetween each attack
+@export var attack_interval : float = 2.5
 
 @export_group("Drops")
 @export var min_drops : int = 1

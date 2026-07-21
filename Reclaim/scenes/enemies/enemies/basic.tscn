@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://bsspjwwk4bvma"]
 
-[ext_resource type="Script" uid="uid://2m7df3t2upw4" path="res://scripts/enemies/base_enemy.gd" id="1_wbq3y"]
-[ext_resource type="PackedScene" uid="uid://qtk76i5mawjs" path="res://scenes/enemies/drop.tscn" id="2_8e3ao"]
+[ext_resource type="Script" uid="uid://2m7df3t2upw4" path="res://scripts/enemies/base_enemy.gd" id="1_aac1k"]
+[ext_resource type="Resource" uid="uid://dckqhslpr4ebc" path="res://data/enemies/basic.tres" id="2_jhgej"]
+[ext_resource type="PackedScene" uid="uid://qtk76i5mawjs" path="res://scenes/enemies/drop.tscn" id="2_nikgd"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_notgg"]
 
@@ -15,12 +16,14 @@ height = 0.9
 transparency = 1
 albedo_color = Color(0.8117647, 0.8117647, 0.8117647, 0.44313726)
 
-[node name="enemy" type="CharacterBody3D" unique_id=1676880902 node_paths=PackedStringArray("collision_shape")]
-collision_layer = 8
+[node name="enemy" type="CharacterBody3D" unique_id=1676880902 node_paths=PackedStringArray("collision_shape", "attack_timer")]
+collision_layer = 0
 collision_mask = 33
-script = ExtResource("1_wbq3y")
+script = ExtResource("1_aac1k")
+enemy_resource = ExtResource("2_jhgej")
+drops_scene = ExtResource("2_nikgd")
 collision_shape = NodePath("CollisionShape3D")
-drops_scene = ExtResource("2_8e3ao")
+attack_timer = NodePath("attack_timer")
 metadata/enemy = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=219369272]
@@ -34,3 +37,9 @@ mesh = SubResource("SphereMesh_cpjt6")
 [node name="outer" type="MeshInstance3D" parent="ball_mesh" unique_id=1847667074]
 mesh = SubResource("SphereMesh_we58l")
 surface_material_override/0 = SubResource("StandardMaterial3D_slefu")
+
+[node name="attack_timer" type="Timer" parent="." unique_id=34766232]
+wait_time = 2.5
+one_shot = true
+
+[connection signal="timeout" from="attack_timer" to="." method="_on_attack_timer_timeout"]

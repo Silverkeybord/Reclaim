@@ -95,9 +95,10 @@ environment = ExtResource("4_dncc7")
 
 [node name="turret_grid" parent="consistant" unique_id=1489577349 instance=ExtResource("5_cm411")]
 
-[node name="enemy_spawner" parent="consistant" unique_id=51836272 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("7_8ty32")]
+[node name="enemy_spawner" parent="consistant" unique_id=51836272 node_paths=PackedStringArray("extraction_pod", "sector_shield") instance=ExtResource("7_8ty32")]
 extraction_pod = NodePath("../../map/extraction_pod")
 map = "remote_island"
+sector_shield = NodePath("../sector_sheild")
 
 [node name="crafting_table" parent="consistant" unique_id=1786656130 instance=ExtResource("6_xkk3y")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2.5, 0, 0)
@@ -105,11 +106,12 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2.5
 [node name="storage_container" parent="consistant" unique_id=59214671 instance=ExtResource("7_on62q")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2.5, 0, 0)
 
-[node name="sector_sheild" parent="consistant" unique_id=911350069 instance=ExtResource("8_on62q")]
+[node name="sector_sheild" parent="consistant" unique_id=911350069 node_paths=PackedStringArray("run_ui") instance=ExtResource("8_on62q")]
+run_ui = NodePath("../CanvasLayer/run_ui")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="consistant" unique_id=1474839785]
 
-[node name="wave_ui" parent="consistant/CanvasLayer" unique_id=1725702450 node_paths=PackedStringArray("shield") instance=ExtResource("5_nic26")]
+[node name="run_ui" parent="consistant/CanvasLayer" unique_id=1725702450 node_paths=PackedStringArray("shield") instance=ExtResource("5_nic26")]
 shield = NodePath("../../sector_sheild")
 
 [node name="enemy_spawn_markers" type="Node" parent="." unique_id=1301469332]

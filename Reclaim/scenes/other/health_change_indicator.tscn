@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bgekwqf1seqvo"]
+
+[ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="1_q5xe4"]
+[ext_resource type="Script" uid="uid://ttr5s7fb2nar" path="res://scripts/other/health_change_indicator.gd" id="2_l3vle"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_w8pa8"]
+font = ExtResource("1_q5xe4")
+outline_size = 6
+outline_color = Color(0.3254902, 0.3254902, 0.3254902, 0.78039217)
+
+[node name="health_change_indicator" type="Label" unique_id=1635951994]
+visible = false
+offset_right = 16.0
+offset_bottom = 17.0
+text = "+5"
+label_settings = SubResource("LabelSettings_w8pa8")
+script = ExtResource("2_l3vle")

@@ -15,6 +15,8 @@ const SPAWN_MARKERS_GROUP : String = "enemy_spawn_markers"
 ## The map this is placed on
 @export var map : String
 
+@export var sector_shield : SectorShield
+
 var wave_resource : WaveData
 var difficulty_mult : int
 
@@ -36,12 +38,17 @@ func _ready() -> void:
 	
 	
 	# Calculates ratios
-	spawn_rate = wave_resource.spawn_start_rate
+	spawn_rate = wave_resource.spawn_start_interval
 	normal_size_ratio = _get_time_raito(wave_resource.start_size, wave_resource.end_size)
-	spawn_rate_ratio = _get_time_raito(wave_resource.spawn_start_rate, wave_resource.spawn_end_rate)
-	cluster_rate_ratio = _get_time_raito(wave_resource.cluster_start_size, wave_resource.cluster_end_size)
+	spawn_rate_ratio = _get_time_raito(
+		wave_resource.spawn_start_interval, wave_resource.spawn_end_interval
+		)
+	cluster_rate_ratio = _get_time_raito(
+		wave_resource.cluster_start_size, wave_resource.cluster_end_size
+		)
 	commander_size_raito = _get_time_raito(
-		wave_resource.commander_start_size, wave_resource.commander_end_size)
+		wave_resource.commander_start_size, wave_resource.commander_end_size
+		)
 	
 	spawn_nodes = get_tree().get_nodes_in_group(SPAWN_MARKERS_GROUP)
 	spawn_timer.start(spawn_rate)
@@ -56,7 +63,7 @@ func _process(delta: float) -> void:
 func _on_spawn_timer_timeout() -> void:
 	# calculate dynamic values based on active run time
 	cluster_size = wave_resource.cluster_start_size - round(run_time * cluster_rate_ratio)
-	spawn_rate = wave_resource.spawn_start_rate - (run_time * spawn_rate_ratio)
+	spawn_rate = wave_resource.spawn_start_interval - (run_time * spawn_rate_ratio)
 	spawn_timer.start(spawn_rate)
 	
 	if Global.enemies >= Global.MAX_SPHERES:
@@ -78,6 +85,7 @@ func _on_spawn_timer_timeout() -> void:
 		)
 	commander.scale *= commander.size
 	commander.is_commander = true
+	commander.sector_shield = sector_shield
 	
 	commander.global_position = _spawn_in_radus(
 		random_spawn_node.global_position, 
@@ -94,6 +102,7 @@ func _on_spawn_timer_timeout() -> void:
 		new_enemy.enemy_resource = _get_enemy_type_resource()
 		
 		new_enemy.extraction_pod = extraction_pod
+		new_enemy.sector_shield = sector_shield
 		new_enemy.size = (
 			wave_resource.start_size +
 			Global.sector_run_time * normal_size_ratio +
@@ -146,4 +155,3 @@ func _get_enemy_type_resource():
 
 func _get_time_raito(start_value: float, end_value: float) -> float:
 	return (end_value - start_value) / wave_resource.end_time
-	

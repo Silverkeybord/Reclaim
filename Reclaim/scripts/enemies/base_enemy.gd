@@ -3,6 +3,8 @@ extends CharacterBody3D
 
 signal died(enemy: BaseEnemy)
 
+const ENEMY_LAYER := 4
+
 const NONE_TYPE_DROP : String = "none"
 const LOAD_BUFFER : float = 0.5
 const SIZE_BASE_STAT_FACTOR : float = 0.5
@@ -12,25 +14,31 @@ const GRAVITY := 80
 @export var valid := false
 
 @export var enemy_resource : EnemyData
-@export var is_commander : bool = false
-@export var size : float
 
 @export var extraction_pod : Node3D
-@export var collision_shape: CollisionShape3D
+@export var sector_shield : SectorShield
 
 @export var drops_scene : PackedScene
 
+@export_group("Enemy Stats")
 @export var health : float
+@export var is_commander : bool = false
+@export var size : float
+
+@export_group("In Scene")
+@export var collision_shape: CollisionShape3D
+@export var attack_timer : Timer
 
 var is_dead := false
 var damage : int
 var speed : float
 
-var drops : Dictionary
+var can_attack := false 
 
 
 func _physics_process(delta: float) -> void:
-	movement(delta)
+	if not can_attack:
+		movement(delta)
 
 
 func movement(delta : float) -> void:
@@ -60,6 +68,7 @@ func fin_loading() -> void:
 	# the enemys spawn half in the floor so adding their radius will put them on the floor
 	global_position.y += size / 2
 	
+	set_collision_layer_value(ENEMY_LAYER, true)
 	set_process(true)
 	set_physics_process(true)
 	
@@ -75,6 +84,7 @@ func fin_loading() -> void:
 	health = round(enemy_resource.health * mult)
 	damage = round(enemy_resource.damage * mult)
 	speed = enemy_resource.speed
+	attack_timer.wait_time = enemy_resource.attack_interval
 	
 	valid = true
 
@@ -143,3 +153,23 @@ func _get_drop_type_resource():
 				return null
 			else:
 				return DataRegistry.items[drop_probability_info.drop_name.key]
+
+
+# attacking logic 
+func start_attacking() -> void:
+	attack_timer.start()
+	_attack()
+
+
+func stop_attacking() -> void: 
+	attack_timer.stop()
+
+
+func _attack() -> void:
+	sector_shield.hit_shield(damage)
+	attack_timer.start()
+
+
+func _on_attack_timer_timeout() -> void:
+	if can_attack:
+		_attack()

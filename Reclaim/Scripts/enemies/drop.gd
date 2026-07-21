@@ -113,6 +113,7 @@ func prime_pick_up() -> void:
 	linear_velocity = Vector3.ZERO
 	# turns off ground collision so the drop can fly into the player
 	set_collision_mask_value(GROUND_COLLISION_LAYER, false)
+	set_collision_mask_value(DROP_COLLISION_LAYER, false)
 	
 	being_picked_up = true
 	freeze = false

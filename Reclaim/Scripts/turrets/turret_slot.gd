@@ -28,17 +28,17 @@ var can_place_turret := true
 var can_place_base := true
 
 
-func place_selected_turret(turret_type : String) -> void:
+func place_selected_turret(turret_type : String) -> bool:
 	if not can_place_turret or not base:
-		return
+		return false
+	
+	if not turret_scenes.has(turret_type):
+		push_error("Turret not found in array when placed: %s" % turret_type)
+		return false
 	
 	can_place_turret = false
 	
 	current_turret = turret_type
-	
-	if not turret_scenes.has(current_turret):
-		push_error("Turret not found in array when placed")
-		return
 	
 	turret_place_cooldown.start()
 	
@@ -50,11 +50,16 @@ func place_selected_turret(turret_type : String) -> void:
 	HelperFunctions.add_to_root_node(turret)
 	turret.global_position = turret_origin_point.global_position
 	turret.global_rotation = turret_origin_point.global_rotation
+	return true
 
 
-func build_base(base_type : String) -> void:
+func build_base(base_type : String) -> bool:
 	if not can_place_base:
-		return
+		return false
+	
+	if not base_scenes.has(base_type):
+		push_error("Base not found in array when placed: %s" % base_type)
+		return false
 	
 	can_place_base = false
 	
@@ -72,6 +77,7 @@ func build_base(base_type : String) -> void:
 	mesh.visible = false
 	
 	base_place_cooldown.start()
+	return true
 
 
 func base_removed() -> void:

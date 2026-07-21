@@ -27,13 +27,14 @@ radial_segments = 32
 rings = 16
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_yf5fn"]
-radius = 27.0
+radius = 26.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_g4v7s"]
-radius = 25.5
+radius = 26.5
 
-[node name="sector_sheild" type="Node3D" unique_id=911350069]
+[node name="sector_sheild" type="Node3D" unique_id=911350069 node_paths=PackedStringArray("heal_timer")]
 script = ExtResource("1_n3gv3")
+heal_timer = NodePath("heal_timer")
 
 [node name="outter" type="CSGMesh3D" parent="." unique_id=270756843]
 mesh = SubResource("SphereMesh_g4v7s")
@@ -54,10 +55,14 @@ shape = SubResource("SphereShape3D_yf5fn")
 
 [node name="shield_area" type="Area3D" parent="." unique_id=296061323]
 collision_layer = 0
-collision_mask = 2
+collision_mask = 10
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="shield_area" unique_id=853352657]
 shape = SubResource("SphereShape3D_g4v7s")
 
+[node name="heal_timer" type="Timer" parent="." unique_id=1717529869]
+one_shot = true
+
 [connection signal="body_entered" from="shield_area" to="." method="_on_shield_area_body_entered"]
 [connection signal="body_exited" from="shield_area" to="." method="_on_shield_area_body_exited"]
+[connection signal="timeout" from="heal_timer" to="." method="_on_heal_timer_timeout"]
