@@ -5,6 +5,7 @@ const HAVE_INDICATIONS : Dictionary = {
 	false : preload("res://2d_assets/crafting/not_enough_resources.png"),
 	true : preload("res://2d_assets/crafting/enough_resources.png")
 }
+const MIN_REQUIRED_AMOUNT := 1
 
 @export var item_data : ItemData
 @export var amount_required : int = 10
@@ -16,6 +17,12 @@ const HAVE_INDICATIONS : Dictionary = {
 
 
 func update_value() -> void:
+	if not HelperFunctions.is_valid_item(item_data):
+		visible = false
+		have_enough = false
+		return
+	
+	amount_required = max(amount_required, MIN_REQUIRED_AMOUNT)
 	name = item_data.key
 	add_theme_stylebox_override(
 		"panel", Global.TIER_CONFIG[item_data.tier]["style"]
@@ -29,15 +36,10 @@ func update_value() -> void:
 
 
 func check_requirement() -> bool:
-	var current_storage : Dictionary = HelperFunctions.get_current_storage()
-	
-	if current_storage[item_data.tier].has(item_data.key):
-		if current_storage[item_data.tier][item_data.key] >= amount_required:
-			have_enough = true
-		else:
-			have_enough = false
-	else:
+	if not HelperFunctions.is_valid_item(item_data):
 		have_enough = false
+	else:
+		have_enough = HelperFunctions.has_item_amount(item_data, amount_required)
 	
 	have_indication.texture = HAVE_INDICATIONS[have_enough]
 	return have_enough

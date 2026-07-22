@@ -1,5 +1,9 @@
 extends Control
 
+const EXTRACTING_TEXT := "extracting in : "
+
+const HIT_LERP_WEIGHT := 0.5
+const HEAL_LERP_WEIGHT := 0.3
 const HIT_FLASH_COLOR := Color("ffffffff")
 const HEAL_FLAHS_COLOR := Color("00ff00ff")
 const FLASH_TIME := 0.05
@@ -31,6 +35,7 @@ const EMPTY_TALL_SEGMENT := preload("res://2d_assets/shield/empty_tall_segment.p
 
 @export var run_time_label : Label
 @export var shield_health_label : Label
+@export var extraction_timer_label : Label
 @export var show_health_timer : Timer
 
 @export var health_change_indicator : PackedScene
@@ -77,6 +82,11 @@ func _process(_delta: float) -> void:
 	var max_health = HelperFunctions.return_amount_shorthand(shield.max_shield_health) 
 	
 	shield_health_label.text = (current_health + " / " + max_health)
+	
+	if shield.shield_overdrive:
+		extraction_timer_label.text = (
+			EXTRACTING_TEXT + str(int(ceil(shield.overdrive_timer.time_left)))
+			)
 
 
 func update_visuals(change : float, is_damage := true) -> void:
@@ -124,13 +134,14 @@ func update_visuals(change : float, is_damage := true) -> void:
 func _hit_flash() -> void:
 	var hit_tween = create_tween()
 	var original_color = all_segment_control.modulate
-	var target_color = lerp(original_color, HIT_FLASH_COLOR, 0.5)
+	var target_color = lerp(original_color, HIT_FLASH_COLOR, HIT_LERP_WEIGHT)
 	
 	hit_tween.tween_property(all_segment_control, "modulate", target_color, FLASH_TIME)
 	hit_tween.tween_property(all_segment_control, "modulate", original_color, FLASH_TIME)
 	
-	run_time_label.visible = false
-	shield_health_label.visible = true
+	if not shield.shield_overdrive:
+		run_time_label.visible = false
+		shield_health_label.visible = true
 	
 	show_health_timer.start()
 
@@ -138,7 +149,7 @@ func _hit_flash() -> void:
 func _heal_flash() -> void:
 	var hit_tween = create_tween()
 	var original_color = all_segment_control.modulate
-	var target_color = lerp(original_color, HEAL_FLAHS_COLOR, 0.5)
+	var target_color = lerp(original_color, HEAL_FLAHS_COLOR, HEAL_LERP_WEIGHT)
 	
 	hit_tween.tween_property(all_segment_control, "modulate", target_color, FLASH_TIME)
 	hit_tween.tween_property(all_segment_control, "modulate", original_color, FLASH_TIME)
@@ -150,11 +161,15 @@ func _heal_flash() -> void:
 
 
 func _on_show_health_timer_timeout() -> void:
-	run_time_label.visible = true
-	shield_health_label.visible = false
+	if not shield.shield_overdrive:
+		run_time_label.visible = true
+		shield_health_label.visible = false
 
 
 func _make_health_indicator(change : float, is_damage := true) -> void:
+	if shield.shield_overdrive:
+		return
+	
 	var new_indicator = health_change_indicator.instantiate()
 	add_child(new_indicator)
 	
@@ -163,5 +178,13 @@ func _make_health_indicator(change : float, is_damage := true) -> void:
 		randf_range(min_indicatoin_marker.position.y, max_indicatoin_marker.position.y)
 		)
 	
-	var text = str(-change) if is_damage else str("+", change)
+	var change_text = HelperFunctions.return_amount_shorthand(change)
+	
+	var text = str("-", change_text) if is_damage else str("+", change_text)
 	new_indicator.setup(text, is_damage)
+
+
+func start_overdrive() -> void:
+	extraction_timer_label.visible = true
+	run_time_label.visible = false
+	shield_health_label.visible = false

@@ -23,6 +23,11 @@ const REQUIRMENT_CELLS_GROUP := "requirment_cells"
 
 const OPEN_ANIMATION := "open_crafting"
 const CLOSE_ANIMATION := "close_crafting"
+const WEIGHT_LABEL_PREFIX := "Weight: "
+const VALUE_LABEL_PREFIX := "Value: "
+const AMOUNT_LABEL_PREFIX := "Amount: "
+const CRAFT_TIME_LABEL_PREFIX := "Craft Time: "
+const MIN_CRAFT_AMOUNT := 1
 
 @export var crafting_animations : AnimationPlayer
 @export var crafting_storage : PanelContainer
@@ -75,10 +80,18 @@ var ship_level_requirments : Dictionary = {
 
 func _ready() -> void:
 	for recipe_key : String in DataRegistry.crafting:
-		var item_key = DataRegistry.crafting[recipe_key].crafted_item.key
-		var level = DataRegistry.crafting[recipe_key].required_ship_level
+		var recipe : CraftData = DataRegistry.crafting[recipe_key]
+		if not _is_valid_recipe(recipe):
+			push_error("Invalid crafting recipe skipped: %s" % recipe_key)
+			continue
 		
-		ship_level_requirments[level][item_key] = DataRegistry.crafting[recipe_key]
+		var item_key = recipe.crafted_item.key
+		var level = recipe.required_ship_level
+		if not ship_level_requirments.has(level):
+			push_error("Crafting recipe has invalid ship level: %s" % recipe_key)
+			continue
+		
+		ship_level_requirments[level][item_key] = recipe
 	
 	load_crafting()
 
@@ -122,22 +135,18 @@ func close_crafting() -> void:
 # Loading and Crafting ======================================================
 ## crafts the item from the craft data given
 func craft(craft_data : CraftData = current_displayed_requirments) -> void:
-	if not current_displayed_requirments:
+	if not _can_craft(craft_data):
 		return
 	
 	var current_storage = HelperFunctions.get_current_storage()
 	
 	for requirment : RequirementsTemplate in craft_data.requirements:
-		current_storage[requirment.item.tier][requirment.item.key] -= requirment.amount
+		HelperFunctions.remove_item_from_storage(
+			requirment.item, requirment.amount, current_storage
+		)
 	
-	if current_storage[craft_data.crafted_item.tier].has(craft_data.crafted_item.key):
-		current_storage[craft_data.crafted_item.tier][craft_data.crafted_item.key] += (
-			craft_data.craft_amount
-			)
-	else:
-		current_storage[craft_data.crafted_item.tier][craft_data.crafted_item.key] = (
-			craft_data.craft_amount
-			)
+	HelperFunctions.add_item_to_storage(
+		craft_data.crafted_item, craft_data.craft_amount, current_storage)
 
 	update_crafting_display()
 
@@ -152,6 +161,9 @@ func load_crafting() -> void:
 			for recipe_key : String in ship_level_requirments[ship_level]:
 				var recipe : CraftData = ship_level_requirments[ship_level][recipe_key]
 				var item_type = recipe.crafted_item.type
+				if not tab_vboxs.has(item_type):
+					continue
+				
 				var tab_vbox = tab_vboxs[item_type]
 				var section : CraftingSelection
 				
@@ -202,7 +214,7 @@ func update_crafting_display() -> void:
 
 # Craft Selection and Requirments Controlling ===============================
 func display_requirements_for(craft_data : CraftData, can_craft : bool) -> void:
-	if not Global.crafting_open:
+	if not Global.crafting_open or not _is_valid_recipe(craft_data):
 		return
 	
 	current_displayed_requirments = craft_data
@@ -213,10 +225,11 @@ func display_requirements_for(craft_data : CraftData, can_craft : bool) -> void:
 	style.bg_color = Global.TIER_CONFIG[craft_data.crafted_item.tier]["color"]
 	image_background.add_theme_stylebox_override("panel", style)
 	
-	weight_stat.text = "Weight: " + HelperFunctions.comma_number(craft_data.crafted_item.weight)
-	value_stat.text = "Value: " + str(craft_data.crafted_item.value)
-	amount_stat.text = "Amount: " + str(craft_data.craft_amount)
-	craft_time_stat.text = "Craft Time: " + str(craft_data.craft_time)
+	weight_stat.text = WEIGHT_LABEL_PREFIX + HelperFunctions.comma_number(
+		craft_data.crafted_item.weight)
+	value_stat.text = VALUE_LABEL_PREFIX + str(craft_data.crafted_item.value)
+	amount_stat.text = AMOUNT_LABEL_PREFIX + str(craft_data.craft_amount)
+	craft_time_stat.text = CRAFT_TIME_LABEL_PREFIX + str(craft_data.craft_time)
 	description.text = craft_data.description
 	
 	for cell in get_tree().get_nodes_in_group(REQUIRMENT_CELLS_GROUP):
@@ -225,12 +238,17 @@ func display_requirements_for(craft_data : CraftData, can_craft : bool) -> void:
 	# gets a sorted list of all requirments sorted from t1 - t5 then alphabetacally
 	var sorted_requirements = craft_data.requirements.duplicate()
 	sorted_requirements.sort_custom(func(a, b):
+		if a == null or b == null or a.item == null or b.item == null:
+			return false
 		if a.item.tier != b.item.tier:
 			return a.item.tier < b.item.tier
 		return a.item.key.nocasecmp_to(b.item.key) < 0
 	)
 	
 	for requirment in sorted_requirements:
+		if requirment == null or not HelperFunctions.is_valid_item(requirment.item):
+			continue
+		
 		var new_requirment : RecipeRequirement = recipe_requirments_scene.instantiate()
 		new_requirment.item_data = requirment.item
 		new_requirment.amount_required = requirment.amount
@@ -279,3 +297,32 @@ func _on_modules_tab_button_pressed() -> void:
 
 func _on_resourses_tab_button_pressed() -> void:
 	_change_to_tab(TABS.RESOURCES)
+
+
+func _is_valid_recipe(craft_data : CraftData) -> bool:
+	if craft_data == null or not HelperFunctions.is_valid_item(craft_data.crafted_item):
+		return false
+	
+	if craft_data.craft_amount < MIN_CRAFT_AMOUNT:
+		return false
+	
+	for requirment : RequirementsTemplate in craft_data.requirements:
+		if (
+			requirment == null
+			or not HelperFunctions.is_valid_item(requirment.item)
+			or requirment.amount < MIN_CRAFT_AMOUNT
+		):
+			return false
+	
+	return true
+
+
+func _can_craft(craft_data : CraftData) -> bool:
+	if not _is_valid_recipe(craft_data):
+		return false
+	
+	for requirment : RequirementsTemplate in craft_data.requirements:
+		if not HelperFunctions.has_item_amount(requirment.item, requirment.amount):
+			return false
+	
+	return true

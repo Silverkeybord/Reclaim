@@ -9,6 +9,10 @@ const RESEARCH_PATH : String = "res://data/research/"
 const CRAFTING_PATH : String = "res://data/crafting/"
 const BULLET_TRAIL_PATH : String = "res://data/bullet_trails/"
 const ITEMS_PATH : String = "res://data/items/"
+const RESOURCE_FILE_EXTENSION := ".tres"
+const PATH_SEPARATOR := "/"
+const KEY_PROPERTY := "key"
+const FINISHED_LOADING_MESSAGE := " -- fin loading files -- "
 
 var turrets : Dictionary
 var modules : Dictionary
@@ -32,7 +36,7 @@ func _ready() -> void:
 	_load_folder(BULLET_TRAIL_PATH, bullet_trail)
 	_load_folder(ITEMS_PATH, items, true)
 	
-	print(" -- fin loading files -- ")
+	print(FINISHED_LOADING_MESSAGE)
 
 
 func _load_folder(path: String, dict: Dictionary, recursive: bool = false) -> void:
@@ -52,11 +56,15 @@ func _load_folder(path: String, dict: Dictionary, recursive: bool = false) -> vo
 	var file = directory.get_next() 
 	
 	while file != "":
-		if file.ends_with(".tres"):
+		if file.ends_with(RESOURCE_FILE_EXTENSION):
 			var res = load(path + file)
-			dict[res.key] = res
+			var key = res.get(KEY_PROPERTY) if res != null else ""
+			if key == null or str(key).is_empty():
+				push_error("DataRegistry: invalid resource at path: " + path + file)
+			else:
+				dict[key] = res
 		
 		elif recursive and directory.current_is_dir() and not file.begins_with("."):
-			_load_folder(path + file + "/", dict, true)
+			_load_folder(path + file + PATH_SEPARATOR, dict, true)
 		
 		file = directory.get_next()

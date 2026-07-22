@@ -6,5 +6,5 @@ extends Builds
 
 
 func check_for_turret() -> void:
-	if slot.turret:
+	if slot and slot.turret:
 		slot.turret.pick_up()

@@ -4,6 +4,7 @@ const INVENTORY_CELLS_SCENE : PackedScene = preload("res://scenes/user_interface
 const OPEN_ANIMATION := "open_storage"
 const CLOSE_ANIMATION := "close_storage"
 const SCROLL_AMOUNT := 50
+const MIN_SCROLL := 0
 
 @export var item_tip : CanvasLayer
 @export var item_parent : Node
@@ -21,6 +22,10 @@ func _ready() -> void:
 
 
 func _load_all_cells() -> void:
+	if item_parent == null:
+		push_error("Storage UI item parent is missing.")
+		return
+	
 	# Sort all items by tier
 	var all_items : Array = DataRegistry.items.values()
 	all_items.sort_custom(func(a : ItemData, b : ItemData) -> bool:
@@ -28,6 +33,9 @@ func _load_all_cells() -> void:
 	)
 	
 	for item : ItemData in all_items:
+		if not HelperFunctions.is_valid_item(item):
+			continue
+		
 		var new_cell : StorageCell = INVENTORY_CELLS_SCENE.instantiate()
 		item_parent.add_child(new_cell)
 		new_cell.item_resource = item
@@ -48,10 +56,13 @@ func _input(event: InputEvent) -> void:
 	if not Global.storage_open:
 		return
 	
-	if event is InputEventMouseButton and event.pressed and not crafting_inventory:
+	if event is InputEventMouseButton and event.pressed and not crafting_inventory and scroll_container:
 		match event.button_index:
 			MOUSE_BUTTON_WHEEL_UP:
-				scroll_container.scroll_vertical -= SCROLL_AMOUNT
+				scroll_container.scroll_vertical = max(
+					scroll_container.scroll_vertical - SCROLL_AMOUNT,
+					MIN_SCROLL
+				)
 			MOUSE_BUTTON_WHEEL_DOWN:
 				scroll_container.scroll_vertical += SCROLL_AMOUNT
 	

@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://b31irr6awo2x4" path="res://textures_and_materials/maps/basic floor.png" id="4_cm411"]
 [ext_resource type="Environment" uid="uid://dm5if30giejut" path="res://other_assets/environments/remote_island.tres" id="4_dncc7"]
 [ext_resource type="PackedScene" uid="uid://crcipf2r035mw" path="res://scenes/turrets/turret_grid.tscn" id="5_cm411"]
-[ext_resource type="PackedScene" uid="uid://c6q58efe0i7xg" path="res://scenes/user_interface/wave_ui.tscn" id="5_nic26"]
 [ext_resource type="PackedScene" uid="uid://cm7cq456gvpot" path="res://scenes/interactable/crafting_table.tscn" id="6_xkk3y"]
 [ext_resource type="PackedScene" uid="uid://b5bywo714ymes" path="res://scenes/enemies/enemy_spawner.tscn" id="7_8ty32"]
 [ext_resource type="PackedScene" uid="uid://dy5epdlb81c0u" path="res://scenes/interactable/storage_container.tscn" id="7_on62q"]
@@ -68,9 +67,28 @@ uv1_triplanar = true
 
 [node name="consistant" type="Node" parent="." unique_id=1321206802]
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="consistant" unique_id=1594097371]
+environment = ExtResource("4_dncc7")
+
 [node name="CharacterBody3D" parent="consistant" unique_id=961430667 node_paths=PackedStringArray("turret_grid") instance=ExtResource("2_2kokt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.938994, 0)
 turret_grid = NodePath("../turret_grid")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="consistant" unique_id=1822254416]
+transform = Transform3D(0.757738, 0.5674767, 0.3221855, 0.08507007, -0.5754151, 0.8134254, 0.64699024, -0.58895487, -0.48428902, 35.769802, 29.314838, -6.688738)
+light_color = Color(0.7254902, 1, 1, 1)
+light_energy = 0.3
+shadow_enabled = true
+
+[node name="turret_grid" parent="consistant" unique_id=1489577349 instance=ExtResource("5_cm411")]
+
+[node name="enemy_spawner" parent="consistant" unique_id=51836272 node_paths=PackedStringArray("extraction_pod", "sector_shield") instance=ExtResource("7_8ty32")]
+extraction_pod = NodePath("../extraction_pod")
+map = "remote_island"
+sector_shield = NodePath("../sector_sheild")
+
+[node name="sector_sheild" parent="consistant" unique_id=911350069 node_paths=PackedStringArray("extractoion_pod") instance=ExtResource("8_on62q")]
+extractoion_pod = NodePath("../extraction_pod")
 
 [node name="player_barrier" type="StaticBody3D" parent="consistant" unique_id=1069759614]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.963074, 0)
@@ -84,35 +102,14 @@ transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
 shape = SubResource("ConcavePolygonShape3D_8ty32")
 debug_color = Color(0.91764706, 0, 0.7058824, 1)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="consistant" unique_id=1822254416]
-transform = Transform3D(0.757738, 0.5674767, 0.3221855, 0.08507007, -0.5754151, 0.8134254, 0.64699024, -0.58895487, -0.48428902, 35.769802, 29.314838, -6.688738)
-light_color = Color(0.7254902, 1, 1, 1)
-light_energy = 0.3
-shadow_enabled = true
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="consistant" unique_id=1594097371]
-environment = ExtResource("4_dncc7")
-
-[node name="turret_grid" parent="consistant" unique_id=1489577349 instance=ExtResource("5_cm411")]
-
-[node name="enemy_spawner" parent="consistant" unique_id=51836272 node_paths=PackedStringArray("extraction_pod", "sector_shield") instance=ExtResource("7_8ty32")]
-extraction_pod = NodePath("../../map/extraction_pod")
-map = "remote_island"
-sector_shield = NodePath("../sector_sheild")
+[node name="extraction_pod" parent="consistant" unique_id=497679076 instance=ExtResource("4_5wxe1")]
+metadata/_edit_lock_ = true
 
 [node name="crafting_table" parent="consistant" unique_id=1786656130 instance=ExtResource("6_xkk3y")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2.5, 0, 0)
 
 [node name="storage_container" parent="consistant" unique_id=59214671 instance=ExtResource("7_on62q")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2.5, 0, 0)
-
-[node name="sector_sheild" parent="consistant" unique_id=911350069 node_paths=PackedStringArray("run_ui") instance=ExtResource("8_on62q")]
-run_ui = NodePath("../CanvasLayer/run_ui")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="consistant" unique_id=1474839785]
-
-[node name="run_ui" parent="consistant/CanvasLayer" unique_id=1725702450 node_paths=PackedStringArray("shield") instance=ExtResource("5_nic26")]
-shield = NodePath("../../sector_sheild")
 
 [node name="enemy_spawn_markers" type="Node" parent="." unique_id=1301469332]
 
@@ -214,9 +211,6 @@ debug_color = Color(0, 0, 0, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6, 0)
 mesh = SubResource("PlaneMesh_er87e")
 surface_material_override/0 = SubResource("StandardMaterial3D_2kokt")
-metadata/_edit_lock_ = true
-
-[node name="extraction_pod" parent="map" unique_id=497679076 instance=ExtResource("4_5wxe1")]
 metadata/_edit_lock_ = true
 
 [node name="floor" type="StaticBody3D" parent="map" unique_id=526321324 groups=["ground"]]

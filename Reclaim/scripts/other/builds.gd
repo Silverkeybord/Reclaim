@@ -6,9 +6,13 @@ extends Node
 
 
 func pick_up() -> void:
-	var item_resource : ItemData = DataRegistry.items[build]
+	if build.is_empty() or not DataRegistry.items.has(build):
+		push_error("Build item not found when picking up: %s" % build)
+		return
 	
-	HelperFunctions.get_current_storage()[item_resource.tier][item_resource.key] += 1
+	var item_resource : ItemData = DataRegistry.items[build]
+	if not HelperFunctions.add_item_to_storage(item_resource):
+		return
 	
 	if build_type == Global.BUILD_TYPES.BASE:
 		check_for_turret()

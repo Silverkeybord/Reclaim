@@ -16,6 +16,7 @@ const POS_TWEEN_REQUIRMENTS = [-2, 3]
 const NEG_TWEEN_REQUIRMENTS = [-3, 2]
 
 const INSTANT_SCROLL_REQUIRMENT := 5
+const MIN_AMOUNT := 0
 
 ## actual position of the cell
 @export var cell_position : int
@@ -37,16 +38,25 @@ var instant_scroll : bool = false
 
 
 func setup() -> void:
+	if not HelperFunctions.is_valid_item(item_resource):
+		visible = false
+		return
+	
 	update_amount()
 	
-	cell_texture.texture = BUILDING_CELLS[item_resource.tier]
+	if BUILDING_CELLS.has(item_resource.tier):
+		cell_texture.texture = BUILDING_CELLS[item_resource.tier]
 	
 	item_texture.texture = item_resource.get_item_texture()
 
 
 func update_amount() -> void:
-	var storage = HelperFunctions.get_current_storage()
-	amount = storage[item_resource.tier].get(item_resource.key, 0)
+	if not HelperFunctions.is_valid_item(item_resource):
+		amount = MIN_AMOUNT
+		visible = false
+		return
+	
+	amount = HelperFunctions.get_item_amount(item_resource)
 	amount_label.text = HelperFunctions.return_amount_shorthand(amount)
 	
 	# you can get booleans from this
@@ -54,6 +64,9 @@ func update_amount() -> void:
 
 
 func move(direction : int, tween_time : float) -> void:
+	if direction == 0 or not cell_properties.has(cell_position + direction):
+		return
+	
 	cell_position += direction
 	
 	if direction == 1:
@@ -64,7 +77,7 @@ func move(direction : int, tween_time : float) -> void:
 			return
 	
 	var target_scale = cell_properties[cell_position]["scale"]
-	var target_position = cell_properties[cell_position]["marker"].global_position
+	var target_position = cell_properties[cell_position]["marker"].position
 	var target_modulate = cell_properties[cell_position]["modulate"]
 	
 	var move_tween = create_tween().set_parallel(true)
@@ -76,7 +89,7 @@ func move(direction : int, tween_time : float) -> void:
 
 
 func item_placed() -> void:
-	amount = HelperFunctions.get_current_storage()[item_resource.tier].get(item_resource.key, 0)
+	amount = HelperFunctions.get_item_amount(item_resource)
 	
 	update_amount()
 	

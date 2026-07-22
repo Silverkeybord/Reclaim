@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bsf5b7ordla2o"]
 
 [ext_resource type="Script" uid="uid://b03p5xisdih3g" path="res://scripts/other/sector_shield.gd" id="1_n3gv3"]
+[ext_resource type="PackedScene" uid="uid://c6q58efe0i7xg" path="res://scenes/user_interface/wave_ui.tscn" id="2_ob7rg"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_g4v7s"]
 radius = 27.0
@@ -32,8 +33,10 @@ radius = 26.0
 [sub_resource type="SphereShape3D" id="SphereShape3D_g4v7s"]
 radius = 26.5
 
-[node name="sector_sheild" type="Node3D" unique_id=911350069 node_paths=PackedStringArray("heal_timer")]
+[node name="sector_sheild" type="Node3D" unique_id=911350069 node_paths=PackedStringArray("run_ui", "overdrive_timer", "heal_timer")]
 script = ExtResource("1_n3gv3")
+run_ui = NodePath("CanvasLayer/wave_ui")
+overdrive_timer = NodePath("overdrive_timer")
 heal_timer = NodePath("heal_timer")
 
 [node name="outter" type="CSGMesh3D" parent="." unique_id=270756843]
@@ -60,9 +63,19 @@ collision_mask = 10
 [node name="CollisionShape3D" type="CollisionShape3D" parent="shield_area" unique_id=853352657]
 shape = SubResource("SphereShape3D_g4v7s")
 
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=558362362]
+
+[node name="wave_ui" parent="CanvasLayer" unique_id=1725702450 node_paths=PackedStringArray("shield") instance=ExtResource("2_ob7rg")]
+shield = NodePath("../..")
+
 [node name="heal_timer" type="Timer" parent="." unique_id=1717529869]
+one_shot = true
+
+[node name="overdrive_timer" type="Timer" parent="." unique_id=1421136252]
+wait_time = 10.0
 one_shot = true
 
 [connection signal="body_entered" from="shield_area" to="." method="_on_shield_area_body_entered"]
 [connection signal="body_exited" from="shield_area" to="." method="_on_shield_area_body_exited"]
 [connection signal="timeout" from="heal_timer" to="." method="_on_heal_timer_timeout"]
+[connection signal="timeout" from="overdrive_timer" to="." method="_on_overdrive_timer_timeout"]

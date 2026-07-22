@@ -5,6 +5,7 @@ const CELLS_TEXTURE_KEY := "cells"
 const RESOURCES_KEY := "resources"
 const TURRETS_KEY := "turrets"
 const MODULES_KEY := "modules"
+const DEFAULT_AMOUNT := 0
 
 @export_group("values")
 @export var item_resource : ItemData
@@ -21,6 +22,10 @@ var amount : int
 
 
 func setup() -> void:
+	if not HelperFunctions.is_valid_item(item_resource):
+		visible = false
+		return
+	
 	update_amount()
 	
 	var textures : Dictionary = Global.TIER_CONFIG[item_resource.tier][CELLS_TEXTURE_KEY]
@@ -40,9 +45,12 @@ func setup() -> void:
 
 
 func update_amount() -> void:
-	var storage = Global.ship_storage if Global.at_ship else Global.sector_storage
-	# If key value dosen't exist return 0
-	amount = storage[item_resource.tier].get(item_resource.key, 0)
+	if not HelperFunctions.is_valid_item(item_resource):
+		amount = DEFAULT_AMOUNT
+		visible = false
+		return
+	
+	amount = HelperFunctions.get_item_amount(item_resource)
 	amount_label.text = HelperFunctions.return_amount_shorthand(amount)
 	
 	# you can get booleans from this
@@ -50,7 +58,11 @@ func update_amount() -> void:
 
 
 func _on_mouse_entered() -> void:
-	item_tip.show_itemtip(item_resource, amount, item_resource.type)
+	if not HelperFunctions.is_valid_item(item_resource):
+		return
+	
+	if item_tip:
+		item_tip.show_itemtip(item_resource, amount, item_resource.type)
 	
 	if item_resource.type == Global.ITEM_TYPES.RESOURCES:
 		resource_highlight_overlay.visible = true
@@ -59,7 +71,11 @@ func _on_mouse_entered() -> void:
 
 
 func _on_mouse_exited() -> void:
-	item_tip.hide_itemtip()
+	if item_tip:
+		item_tip.hide_itemtip()
+	
+	if not HelperFunctions.is_valid_item(item_resource):
+		return
 	
 	if item_resource.type == Global.ITEM_TYPES.RESOURCES:
 		resource_highlight_overlay.visible = false

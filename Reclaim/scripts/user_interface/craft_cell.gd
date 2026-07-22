@@ -23,12 +23,19 @@ var valid_last_click : bool = false
 
 
 func _ready() -> void:
-	double_click_timer.wait_time = DOUBLE_CLICK_TIME
+	if double_click_timer:
+		double_click_timer.wait_time = DOUBLE_CLICK_TIME
 	#Global.set_random_storage()
 	set_up()
 
 
 func set_up() -> void:
+	if craft_data == null or craft_data.crafted_item == null:
+		disabled = true
+		can_craft = false
+		cant_craft_overlay.visible = true
+		return
+	
 	item_image.texture = craft_data.crafted_item.get_item_texture()
 	
 	check_requirements()
@@ -36,15 +43,18 @@ func set_up() -> void:
 
 func check_requirements() -> void:
 	can_craft = true
+	if craft_data == null or craft_data.crafted_item == null:
+		can_craft = false
+		cant_craft_overlay.visible = true
+		return
+	
 	for requirement : RequirementsTemplate in craft_data.requirements:
-		var have_enough = true
-		var current_storage : Dictionary = HelperFunctions.get_current_storage()
+		if requirement == null or not HelperFunctions.is_valid_item(requirement.item):
+			can_craft = false
+			continue
 		
-		if current_storage[requirement.item.tier].has(requirement.item.key):
-			if current_storage[requirement.item.tier][requirement.item.key] < requirement.amount:
-				have_enough = false
-				can_craft = false
-		else:
+		var have_enough := HelperFunctions.has_item_amount(requirement.item, requirement.amount)
+		if not have_enough:
 			can_craft = false
 		
 		craft_requirements[requirement.item] = have_enough
@@ -61,8 +71,9 @@ func _on_pressed() -> void:
 	
 	if valid_last_click and can_craft:
 		crafting_menu.craft(craft_data)
-		double_click_timer.stop()
-		double_click_timer.start()
+		if double_click_timer:
+			double_click_timer.stop()
+			double_click_timer.start()
 
 
 func _on_double_click_timer_timeout() -> void:
@@ -71,4 +82,5 @@ func _on_double_click_timer_timeout() -> void:
 
 func _on_button_up() -> void:
 	valid_last_click = true
-	double_click_timer.start()
+	if double_click_timer:
+		double_click_timer.start()

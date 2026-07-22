@@ -34,6 +34,15 @@ enum PLAYER_MODES {
 
 # MISC --------------------------------------------------------------------
 const SAVE_PATH : String = "user://reclaim.save"
+const SAVE_SHIP_STORAGE_KEY := "ship_storage"
+const SAVE_CUBITS_KEY := "cubits"
+const SAVE_COUNCIL_AUTHORIZATION_KEY := "council_authorization"
+const SAVE_TURRET_SLOTS_KEY := "turret_slots"
+const TEST_STORAGE_MIN_AMOUNT := 3
+const TEST_STORAGE_MAX_AMOUNT := 3
+const TEST_SHIP_STORAGE_MIN_AMOUNT := 1
+const TEST_SHIP_STORAGE_MAX_AMOUNT := 999
+const TEST_STORAGE_EXPONENT := 0
 const TIER_CONFIG : Dictionary = {
 	1 : {
 		"color" : Color(0.541, 0.561, 0.596),
@@ -149,13 +158,18 @@ var extraction_storage : Dictionary = {
 func set_random_storage(set_sector_storage = false) -> void:
 	for key in DataRegistry.items:
 		var resource = DataRegistry.items[key]
+		if not HelperFunctions.is_valid_item(resource):
+			continue
+		
 		if set_sector_storage:
 			sector_storage[resource.tier][key] = (
-				randi_range(3, 3) * (10 ** (randi_range(0, 0)))
+				randi_range(TEST_STORAGE_MIN_AMOUNT, TEST_STORAGE_MAX_AMOUNT)
+				* (10 ** TEST_STORAGE_EXPONENT)
 				)
 		else:
 			ship_storage[resource.tier][key] = (
-				randi_range(1, 999) * (10 ** (randi_range(0, 0)))
+				randi_range(TEST_SHIP_STORAGE_MIN_AMOUNT, TEST_SHIP_STORAGE_MAX_AMOUNT)
+				* (10 ** TEST_STORAGE_EXPONENT)
 				)
 
 
@@ -175,13 +189,16 @@ func set_mouse_captured() -> void:
 ## Saves the current game data to the path
 func save_game():
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+	if file == null:
+		push_error("Could not open save file for writing: %s" % SAVE_PATH)
+		return
 	
 	var save_data = {
 		# storage / storage
-		"ship_storage" : ship_storage,
-		"cubits" : cubits,
-		"council_authorization" : {
-			"turret_slots" : turret_slots
+		SAVE_SHIP_STORAGE_KEY : ship_storage,
+		SAVE_CUBITS_KEY : cubits,
+		SAVE_COUNCIL_AUTHORIZATION_KEY : {
+			SAVE_TURRET_SLOTS_KEY : turret_slots
 		}
 		
 	}
@@ -196,11 +213,23 @@ func load_game():
 	
 	
 	var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
-	var data = file.get_var()
+	if file == null:
+		push_error("Could not open save file for reading: %s" % SAVE_PATH)
+		return
 	
-	ship_storage = data["ship_storage"]
-	cubits = data["cubits"]
-	turret_slots = data["council_authorization"]["turret_slots"]
+	var data = file.get_var()
+	if typeof(data) != TYPE_DICTIONARY:
+		push_error("Save file did not contain valid save data.")
+		return
+	
+	if data.has(SAVE_SHIP_STORAGE_KEY):
+		ship_storage = data[SAVE_SHIP_STORAGE_KEY]
+	
+	cubits = int(data.get(SAVE_CUBITS_KEY, cubits))
+	
+	var council_authorization = data.get(SAVE_COUNCIL_AUTHORIZATION_KEY, {})
+	if typeof(council_authorization) == TYPE_DICTIONARY:
+		turret_slots = int(council_authorization.get(SAVE_TURRET_SLOTS_KEY, turret_slots))
 
 
 ## Deleats the game data completly removing the save file
