@@ -1,6 +1,9 @@
 class_name RecipeRequirement
 extends PanelContainer
 
+const PANEL_NAME := "panel"
+const STYLE_KEY := "style"
+const SLASH_TEXT := "/"
 const HAVE_INDICATIONS : Dictionary = {
 	false : preload("res://2d_assets/crafting/not_enough_resources.png"),
 	true : preload("res://2d_assets/crafting/enough_resources.png")
@@ -22,13 +25,17 @@ func update_value() -> void:
 		have_enough = false
 		return
 	
+	var current_amount = HelperFunctions.get_item_amount(item_data)
 	amount_required = max(amount_required, MIN_REQUIRED_AMOUNT)
 	name = item_data.key
 	add_theme_stylebox_override(
-		"panel", Global.TIER_CONFIG[item_data.tier]["style"]
+		PANEL_NAME, Global.TIER_CONFIG[item_data.tier][STYLE_KEY]
 		)
+	
 	item_image.texture = item_data.get_item_texture()
 	label.text = (
+		HelperFunctions.return_amount_shorthand(current_amount) + 
+		SLASH_TEXT + 
 		HelperFunctions.return_amount_shorthand(amount_required) + 
 		" " + HelperFunctions.get_display_name(item_data.key)
 		)
