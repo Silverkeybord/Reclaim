@@ -8,7 +8,7 @@ var left_last_barrel_shot := true
 
 func shoot(target : CharacterBody3D) -> void:
 	var target_position := target.global_position
-	turret_piviot_point.look_at(target_position)
+	turret_pivot_point .look_at(target_position)
 	
 	if turret_resource.get_critical():
 		target.hit(turret_resource.damage * turret_resource.critical_multiplier, true)

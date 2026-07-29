@@ -1,11 +1,7 @@
 [gd_scene format=3 uid="uid://dx6bjy4kgj6s3"]
 
-[ext_resource type="Script" uid="uid://d2gjbxqj7bl38" path="res://scripts/user_interface/crafting_ui.gd" id="1_0a7d0"]
-[ext_resource type="Texture2D" uid="uid://pbbu4dvx70dy" path="res://2d_assets/storage/inventory_background.png" id="2_7uxoi"]
-[ext_resource type="Script" uid="uid://b1l4ahi8t0smt" path="res://scripts/user_interface/storage_ui.gd" id="2_scvtr"]
+[ext_resource type="Script" uid="uid://d2gjbxqj7bl38" path="res://scripts/user_interface/crafting/crafting_ui.gd" id="1_0a7d0"]
 [ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="2_xasgv"]
-[ext_resource type="Texture2D" uid="uid://cupp0rbdyfemt" path="res://2d_assets/crafting/inventory_craftin_wedge.png" id="4_6ikml"]
-[ext_resource type="Texture2D" uid="uid://cynugc2vvvslx" path="res://2d_assets/crafting/connector.png" id="4_k2ynt"]
 [ext_resource type="Texture2D" uid="uid://cykia00d2ecko" path="res://2d_assets/crafting/active_turret_tab.png" id="7_uc2av"]
 [ext_resource type="Texture2D" uid="uid://kgqrfiwvetbo" path="res://2d_assets/crafting/inactive_modules_tab.png" id="10_6uax1"]
 [ext_resource type="Texture2D" uid="uid://07rb2r6jvxk1" path="res://2d_assets/crafting/crafting_ui_background.png" id="10_u4imy"]
@@ -15,37 +11,11 @@
 [ext_resource type="Texture2D" uid="uid://wbdpq7cxeel8" path="res://2d_assets/crafting/craft button.png" id="13_7uxoi"]
 [ext_resource type="Theme" uid="uid://d1ugo0ioarh2o" path="res://other_assets/styles/scrollbar.tres" id="13_scvtr"]
 [ext_resource type="PackedScene" uid="uid://hgi3y5catplc" path="res://scenes/user_interface/recepie_requirment.tscn" id="13_uc2av"]
-[ext_resource type="Script" uid="uid://bb1xlwb46h5mt" path="res://scripts/user_interface/crafting_selection_vbox.gd" id="14_6uax1"]
+[ext_resource type="Script" uid="uid://bb1xlwb46h5mt" path="res://scripts/user_interface/crafting/crafting_selection_vbox.gd" id="14_6uax1"]
 [ext_resource type="PackedScene" uid="uid://dqgjh854m2igs" path="res://scenes/user_interface/itemtip.tscn" id="16_6ikml"]
 [ext_resource type="Texture2D" uid="uid://cxpnn7sljdano" path="res://2d_assets/items/bases/plate.png" id="17_6uax1"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_57qmd"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_scvtr"]
-font = ExtResource("2_xasgv")
-font_size = 26
-font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6uax1"]
-bg_color = Color(0.5568628, 0.5568628, 0.5568628, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iwo3t"]
-bg_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(0.65882355, 0.65882355, 0.65882355, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yf5fn"]
 
@@ -239,11 +209,10 @@ _data = {
 &"open_crafting": SubResource("Animation_u4imy")
 }
 
-[node name="crafting_ui" type="CanvasLayer" unique_id=881350527 node_paths=PackedStringArray("crafting_animations", "crafting_storage", "craft_name", "image_background", "requirement_image", "weight_stat", "value_stat", "amount_stat", "craft_time_stat", "description", "requirments_hflow", "craft_button", "craft_overlay", "turrets_tab", "modules_tab", "resources_tab", "turrets_vbox", "modules_vbox", "resources_vbox", "turrets_tab_scroll", "modules_tab_scroll", "resources_tab_scroll")]
+[node name="crafting_ui" type="CanvasLayer" unique_id=881350527 node_paths=PackedStringArray("crafting_animations", "craft_name", "image_background", "requirement_image", "weight_stat", "value_stat", "amount_stat", "craft_time_stat", "description", "requirments_hflow", "craft_button", "craft_overlay", "turrets_tab", "modules_tab", "resources_tab", "turrets_vbox", "modules_vbox", "resources_vbox", "turrets_tab_scroll", "modules_tab_scroll", "resources_tab_scroll")]
 layer = 2
 script = ExtResource("1_0a7d0")
 crafting_animations = NodePath("AnimationPlayer")
-crafting_storage = NodePath("ui_root/whole_ui/crafting_hbox/crafting_inventory")
 recipe_requirments_scene = ExtResource("13_uc2av")
 craft_name = NodePath("ui_root/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/craft_name")
 image_background = NodePath("ui_root/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/requirments_stats_and_image/requirments_image_margin/image_background")
@@ -282,7 +251,7 @@ offset_bottom = -0.0007324219
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("13_scvtr")
-theme_override_constants/margin_left = 50
+theme_override_constants/margin_left = 80
 theme_override_constants/margin_top = 50
 theme_override_constants/margin_bottom = 50
 metadata/_edit_use_anchors_ = true
@@ -297,96 +266,6 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_g4v7s")
 [node name="crafting_hbox" type="HBoxContainer" parent="ui_root/whole_ui" unique_id=116542552]
 layout_mode = 2
 theme_override_constants/separation = 0
-
-[node name="crafting_inventory" type="PanelContainer" parent="ui_root/whole_ui/crafting_hbox" unique_id=273333935 node_paths=PackedStringArray("item_tip", "item_parent")]
-visible = false
-custom_minimum_size = Vector2(330, 0)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_57qmd")
-script = ExtResource("2_scvtr")
-item_tip = NodePath("../../../../itemtip")
-item_parent = NodePath("../connector/inventory_scroll_container/inventory_hflow_continer")
-crafting_inventory = true
-
-[node name="inventory_background" type="TextureRect" parent="ui_root/whole_ui/crafting_hbox/crafting_inventory" unique_id=334332849]
-layout_mode = 2
-texture = ExtResource("2_7uxoi")
-
-[node name="MarginContainer" type="MarginContainer" parent="ui_root/whole_ui/crafting_hbox/crafting_inventory" unique_id=1600878597]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 14
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 21
-
-[node name="inventory_vbox" type="VBoxContainer" parent="ui_root/whole_ui/crafting_hbox/crafting_inventory/MarginContainer" unique_id=14296893]
-layout_mode = 2
-theme_override_constants/separation = 6
-
-[node name="inventory_title" type="Label" parent="ui_root/whole_ui/crafting_hbox/crafting_inventory/MarginContainer/inventory_vbox" unique_id=40955609]
-custom_minimum_size = Vector2(0, 36)
-layout_mode = 2
-text = "Storage"
-label_settings = SubResource("LabelSettings_scvtr")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="inventory_divider_margin" type="MarginContainer" parent="ui_root/whole_ui/crafting_hbox/crafting_inventory/MarginContainer/inventory_vbox" unique_id=1294007133]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_right = 15
-
-[node name="inventory_divider" type="Panel" parent="ui_root/whole_ui/crafting_hbox/crafting_inventory/MarginContainer/inventory_vbox/inventory_divider_margin" unique_id=292785676]
-custom_minimum_size = Vector2(0, 12)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_6uax1")
-
-[node name="inventory_cells_background" type="PanelContainer" parent="ui_root/whole_ui/crafting_hbox/crafting_inventory/MarginContainer/inventory_vbox" unique_id=1788652865]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_iwo3t")
-
-[node name="MarginContainer" type="MarginContainer" parent="ui_root/whole_ui/crafting_hbox/crafting_inventory/MarginContainer/inventory_vbox/inventory_cells_background" unique_id=1000581961]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 10
-
-[node name="corner_wedge_margin" type="MarginContainer" parent="ui_root/whole_ui/crafting_hbox/crafting_inventory" unique_id=108563482]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/margin_top = 545
-
-[node name="inventory_corner_wedge" type="TextureRect" parent="ui_root/whole_ui/crafting_hbox/crafting_inventory/corner_wedge_margin" unique_id=1963506128]
-layout_mode = 2
-texture = ExtResource("4_6ikml")
-stretch_mode = 2
-
-[node name="connector" type="TextureRect" parent="ui_root/whole_ui/crafting_hbox" unique_id=1485261882]
-visible = false
-custom_maximum_size = Vector2(-1, 590)
-propagate_maximum_size = true
-layout_mode = 2
-texture = ExtResource("4_k2ynt")
-stretch_mode = 5
-
-[node name="inventory_scroll_container" type="ScrollContainer" parent="ui_root/whole_ui/crafting_hbox/connector" unique_id=1768728650]
-layout_mode = 0
-offset_left = -310.0
-offset_top = 88.0
-offset_right = -25.0
-offset_bottom = 585.0
-follow_focus = true
-
-[node name="inventory_hflow_continer" type="HFlowContainer" parent="ui_root/whole_ui/crafting_hbox/connector/inventory_scroll_container" unique_id=92783126]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/h_separation = 8
-theme_override_constants/v_separation = 8
 
 [node name="crafting" type="PanelContainer" parent="ui_root/whole_ui/crafting_hbox" unique_id=1117483818]
 custom_minimum_size = Vector2(680, 0)
@@ -690,7 +569,6 @@ theme_override_constants/margin_top = 0
 
 [node name="description" type="Label" parent="ui_root/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/description_margin" unique_id=2079196357]
 custom_minimum_size = Vector2(200, 60)
-custom_maximum_size = Vector2(230, -1)
 layout_mode = 2
 text = "No description yet"
 label_settings = SubResource("LabelSettings_odlx4")

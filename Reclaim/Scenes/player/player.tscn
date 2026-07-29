@@ -148,7 +148,7 @@ _data = {
 &"build_placed": SubResource("Animation_ugbui")
 }
 
-[node name="player" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "hit_overlay", "aim_ray", "build_ray", "shooting_timer", "pick_up_area", "arm_piviot", "gun_piviot", "hammmer_piviot", "wrench_piviot", "build_overlay", "build_label", "input_tip", "building_selection", "user_interface_animations") groups=["player"]]
+[node name="player" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "hit_overlay", "aim_ray", "build_ray", "shooting_timer", "pick_up_area", "arm_pivot", "gun_pivot", "hammer_pivot", "wrench_pivot", "build_overlay", "build_label", "input_tip", "building_selection", "user_interface_animations") groups=["player"]]
 collision_layer = 2
 collision_mask = 79
 script = ExtResource("1_eo61r")
@@ -158,10 +158,10 @@ aim_ray = NodePath("SpringArm3D2/SpringArm3D/aim_ray")
 build_ray = NodePath("SpringArm3D2/SpringArm3D/build_ray")
 shooting_timer = NodePath("arm_piviot/gun_piviot/shoot_timer")
 pick_up_area = NodePath("pick_up_area")
-arm_piviot = NodePath("arm_piviot")
-gun_piviot = NodePath("arm_piviot/gun_piviot")
-hammmer_piviot = NodePath("arm_piviot/hammer_piviot")
-wrench_piviot = NodePath("arm_piviot/wrench_piviot")
+arm_pivot = NodePath("arm_piviot")
+gun_pivot = NodePath("arm_piviot/gun_piviot")
+hammer_pivot = NodePath("arm_piviot/hammer_piviot")
+wrench_pivot = NodePath("arm_piviot/wrench_piviot")
 turret_holagram_scene = ExtResource("2_6upyo")
 build_overlay = NodePath("CanvasLayer/build_overlay")
 build_label = NodePath("CanvasLayer/build_overlay/Label")
@@ -187,14 +187,14 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 1
 shape = SubResource("SphereShape3D_qek5x")
 spring_length = 0.75
 
-[node name="SpringArm3D" type="SpringArm3D" parent="SpringArm3D2" unique_id=1017678808 node_paths=PackedStringArray("player", "spring_arm", "arm_piviot", "z_axis_spring_arm")]
+[node name="SpringArm3D" type="SpringArm3D" parent="SpringArm3D2" unique_id=1017678808 node_paths=PackedStringArray("player", "spring_arm", "arm_pivot", "z_axis_spring_arm")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -3.278354e-08, 0, 0.75)
 shape = SubResource("SphereShape3D_5gtgg")
 spring_length = 10.0
 script = ExtResource("2_mxepk")
 player = NodePath("../..")
 spring_arm = NodePath(".")
-arm_piviot = NodePath("../../arm_piviot")
+arm_pivot = NodePath("../../arm_piviot")
 z_axis_spring_arm = NodePath("..")
 
 [node name="Third person" type="Camera3D" parent="SpringArm3D2/SpringArm3D" unique_id=918761004]

@@ -96,7 +96,7 @@ const MAX_DROPS : int = 250
 const MAX_SPHERES : int = 300
 
 # =============================================================================
-# VARIBLES ===================================================================
+# VARIABLES ===================================================================
 # =============================================================================
 
 # LOGIC --------------------------------------------------------------------
@@ -126,10 +126,10 @@ var enemies : int = 0
 # META UPGRADES / COUNCIL AUTHORIZATION -------------------------------------
 var ship_level := 8
 var turret_slots := 1
-var shield_strengh := 1
+var shield_strength := 1
 
 
-# INVENORY + CURRENCY -------------------------------------------------------
+# INVENTORY + CURRENCY -------------------------------------------------------
 var cubits : int = 0
 var sector_storage : Dictionary = {
 	1 : {},
@@ -173,7 +173,7 @@ func set_random_storage(set_sector_storage = false) -> void:
 				)
 
 
-## Sets the moust of the player to be unlocked or locked bassed on its last value
+## Sets the mouse of the player to be unlocked or locked bassed on its last value
 func set_mouse_captured() -> void:
 	mouse_captured = not mouse_captured
 	
@@ -184,7 +184,7 @@ func set_mouse_captured() -> void:
 
 
 # =============================================================================
-# SAVEING, LODING, AND RESETING GAME DATA =====================================
+# SAVING, LOADING, AND RESETING GAME DATA =====================================
 # =============================================================================
 ## Saves the current game data to the path
 func save_game():
@@ -208,7 +208,7 @@ func save_game():
 
 ## Loads the data from the saved folder if there is one
 func load_game():
-	if !FileAccess.file_exists(SAVE_PATH):
+	if not FileAccess.file_exists(SAVE_PATH):
 		return
 	
 	
@@ -232,7 +232,7 @@ func load_game():
 		turret_slots = int(council_authorization.get(SAVE_TURRET_SLOTS_KEY, turret_slots))
 
 
-## Deleats the game data completly removing the save file
+## Deletes the game data completely, removing the save file
 func reset_game():
 	if FileAccess.file_exists(SAVE_PATH):
 		DirAccess.remove_absolute(ProjectSettings.globalize_path(SAVE_PATH))

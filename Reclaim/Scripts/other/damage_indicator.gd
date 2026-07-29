@@ -4,7 +4,7 @@ const NORMAL_COLOR := Color(1.0, 0.514, 0.447)
 const CRITICAL_COLOR := Color(1.0, 0.26, 0.199, 1.0)
 
 const FADE_OUT_ANIMATION_TIME := 0.3
-const FADE_OUT_ANIMAITON_NAME := "fade_out"
+const FADE_OUT_ANIMATION_NAME := "fade_out"
 
 const MAGNITUDE_SCALE_MULT := 0.2
 const MAGNITUDE_POS_MULT := 0.5
@@ -35,10 +35,10 @@ func init() -> void:
 		floori(log(damage) / log(HelperFunctions.ORDER_OF_MAGNITUDE) 
 		+ HelperFunctions.SHORT_HAND_NUDGE)
 		)
-	var life = randf_range(MIN_LIFE, MAX_LIFE)
+	var life := randf_range(MIN_LIFE, MAX_LIFE)
 	
-	var rise_tween = create_tween()
-	var end_pos = Vector3(
+	var rise_tween := create_tween()
+	var end_pos := Vector3(
 		randf_range(-HOZ_OFFSET, HOZ_OFFSET), 
 		randf_range(MIN_RISE, MAX_RISE) + (magnitude * MAGNITUDE_POS_MULT), 
 		randf_range(-HOZ_OFFSET, HOZ_OFFSET)
@@ -61,7 +61,7 @@ func init() -> void:
 	scale_tween.tween_property(self, "scale", scale * end_scale, life)
 	
 	await get_tree().create_timer(life - FADE_OUT_ANIMATION_TIME).timeout
-	animation_player.play(FADE_OUT_ANIMAITON_NAME)
+	animation_player.play(FADE_OUT_ANIMATION_NAME)
 	
 	await animation_player.animation_finished
 	HelperFunctions.damage_indications -= 1

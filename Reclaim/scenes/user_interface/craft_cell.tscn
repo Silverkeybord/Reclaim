@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cxjg2nfs7kh11"]
 
-[ext_resource type="Script" uid="uid://ccf72kbp75o6s" path="res://scripts/user_interface/craft_cell.gd" id="1_ksw0y"]
+[ext_resource type="Script" uid="uid://ccf72kbp75o6s" path="res://scripts/user_interface/crafting/craft_cell.gd" id="1_ksw0y"]
 [ext_resource type="Resource" uid="uid://ke1h4l1ko4bj" path="res://data/items/resources/tier1/basic_material.tres" id="2_i2d25"]
 [ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="3_u08vh"]
 [ext_resource type="Resource" uid="uid://sp02wx0d0gfn" path="res://data/items/resources/tier1/dirt.tres" id="4_w8jtf"]

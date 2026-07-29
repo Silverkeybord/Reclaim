@@ -12,7 +12,7 @@ const MIN_SCROLL := 0
 @export var storage_animations : AnimationPlayer
 @export var scroll_container : ScrollContainer
 
-# item_key -> StorageCell, built once at ready
+# item_key -> BaseStorageCell, built once at ready
 var displayed_cells : Dictionary = {}
 
 
@@ -36,7 +36,7 @@ func _load_all_cells() -> void:
 		if not HelperFunctions.is_valid_item(item):
 			continue
 		
-		var new_cell : StorageCell = INVENTORY_CELLS_SCENE.instantiate()
+		var new_cell : BaseStorageCell = INVENTORY_CELLS_SCENE.instantiate()
 		item_parent.add_child(new_cell)
 		new_cell.item_resource = item
 		new_cell.item_tip = item_tip
@@ -48,7 +48,7 @@ func _load_all_cells() -> void:
 # just toggles visibility
 func update_storage() -> void:
 	for item_key : String in displayed_cells:
-		var cell : StorageCell = displayed_cells[item_key]
+		var cell : BaseStorageCell = displayed_cells[item_key]
 		cell.update_amount()
 
 

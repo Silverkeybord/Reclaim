@@ -26,7 +26,7 @@ var spawn_nodes : Array[Node]
 
 var cluster_rate_ratio : float # The cluster decay in terms of time alive
 var cluster_size : int
-var commander_size_raito : float
+var commander_size_ratio : float
 var normal_size_ratio : float
 
 var run_time := 0.0
@@ -39,14 +39,14 @@ func _ready() -> void:
 	
 	# Calculates ratios
 	spawn_rate = wave_resource.spawn_start_interval
-	normal_size_ratio = _get_time_raito(wave_resource.start_size, wave_resource.end_size)
-	spawn_rate_ratio = _get_time_raito(
+	normal_size_ratio = _get_time_ratio(wave_resource.start_size, wave_resource.end_size)
+	spawn_rate_ratio = _get_time_ratio(
 		wave_resource.spawn_start_interval, wave_resource.spawn_end_interval
 		)
-	cluster_rate_ratio = _get_time_raito(
+	cluster_rate_ratio = _get_time_ratio(
 		wave_resource.cluster_start_size, wave_resource.cluster_end_size
 		)
-	commander_size_raito = _get_time_raito(
+	commander_size_ratio = _get_time_ratio(
 		wave_resource.commander_start_size, wave_resource.commander_end_size
 		)
 	
@@ -80,19 +80,19 @@ func _on_spawn_timer_timeout() -> void:
 	commander.extraction_pod = extraction_pod
 	commander.size = (
 		wave_resource.commander_start_size + 
-		Global.sector_run_time * commander_size_raito + 
+		Global.sector_run_time * commander_size_ratio + 
 		randf_range(0, wave_resource.commander_random_additional_size)
 		)
 	commander.scale *= commander.size
 	commander.is_commander = true
 	commander.sector_shield = sector_shield
 	
-	commander.global_position = _spawn_in_radus(
+	commander.global_position = _spawn_in_radius(
 		random_spawn_node.global_position, 
 		wave_resource.cluster_spawn_radius, 
 		commander.size
 	)
-	commander.fin_loading()
+	commander.finish_loading()
 	
 	# Squad Cluster Spawning Loop
 	for x in range(cluster_size):
@@ -106,10 +106,10 @@ func _on_spawn_timer_timeout() -> void:
 		new_enemy.size = (
 			wave_resource.start_size +
 			Global.sector_run_time * normal_size_ratio +
-			randf_range(-wave_resource.random_aditional_size, wave_resource.random_aditional_size)
+			randf_range(-wave_resource.random_additional_size, wave_resource.random_additional_size)
 			)
 		new_enemy.scale *= new_enemy.size
-		new_enemy.global_position = _spawn_in_radus(
+		new_enemy.global_position = _spawn_in_radius(
 			Vector3(
 				commander.global_position.x,
 				random_spawn_node.global_position.y,
@@ -119,11 +119,11 @@ func _on_spawn_timer_timeout() -> void:
 			new_enemy.size,
 			commander.size
 		)
-		new_enemy.fin_loading()
+		new_enemy.finish_loading()
 
 
 # Helper function to calculate a random XZ position within a given radius
-func _spawn_in_radus(
+func _spawn_in_radius(
 	center_position: Vector3, 
 	max_radius: float, 
 	size : float,
@@ -153,5 +153,5 @@ func _get_enemy_type_resource():
 			return DataRegistry.enemies[enemy_weight_info.enemy_name]
 
 
-func _get_time_raito(start_value: float, end_value: float) -> float:
+func _get_time_ratio(start_value: float, end_value: float) -> float:
 	return (end_value - start_value) / wave_resource.end_time

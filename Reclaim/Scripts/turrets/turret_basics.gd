@@ -17,7 +17,7 @@ const FIRST_SHOT_TIMER_WAIT := 0.01
 
 @export_group("in scene")
 @export var main_body : Node3D
-@export var turret_piviot_point : Node3D
+@export var turret_pivot_point : Node3D
 @export var bullet_spawn : Marker3D
 @export var cooldown_timer : Timer
 @export var turret_range_area : TurretRangeArea
@@ -25,9 +25,9 @@ const FIRST_SHOT_TIMER_WAIT := 0.01
 
 @export_group("turret_stats")
 @export var turret_resource : TurretData
-# when godot detects that the varible will be changed from the timer ending
-# and settings teh value to false it runs the code underneath value is the 
-# value its going to be set to then some basic logic is run to optimise code
+# when godot detects that the variable will be changed from the timer ending
+# and settings the value to false it runs the code underneath value is the 
+# value its going to be set to then some basic logic is run to optmise code
 @export var place_cooldown_active := true:
 	set(value):
 		place_cooldown_active = value
@@ -65,12 +65,13 @@ func _shooting_logic() -> void:
 	if target == null or not is_instance_valid(target):
 		return
 	
+	print(target)
 	shoot(target)
 
 
 func shoot(target : CharacterBody3D) -> void:
 	var target_position := target.global_position
-	turret_piviot_point.look_at(target_position)
+	turret_pivot_point.look_at(target_position)
 	
 	if turret_resource.get_critical():
 		target.hit(turret_resource.damage * turret_resource.critical_multiplier, true)

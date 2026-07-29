@@ -6,6 +6,8 @@ enum TABS {
 	RESOURCES
 }
 
+const COLOR_KEY := "color"
+
 const ACTIVE_TURRETS_TAB := preload("res://2d_assets/crafting/active_turret_tab.png")
 const ACTIVE_MODULES_TAB := preload("res://2d_assets/crafting/active_modules_tab.png")
 const ACTIVE_RESOURCE_TAB := preload("res://2d_assets/crafting/active_resources_tab.png")
@@ -19,7 +21,7 @@ const SECTION_SELECTION_SCENE := preload(
 	)
 
 const CRAFT_CELLS_GROUP := "craft_cells"
-const REQUIRMENT_CELLS_GROUP := "requirment_cells"
+const REQUIREMENT_CELLS_GROUP := "requirment_cells"
 
 const OPEN_ANIMATION := "open_crafting"
 const CLOSE_ANIMATION := "close_crafting"
@@ -30,7 +32,6 @@ const CRAFT_TIME_LABEL_PREFIX := "Craft Time: "
 const MIN_CRAFT_AMOUNT := 1
 
 @export var crafting_animations : AnimationPlayer
-@export var crafting_storage : PanelContainer
 
 @export_group("Requirments")
 @export var current_displayed_requirments : CraftData
@@ -195,7 +196,7 @@ func update_crafting_display() -> void:
 		return
 	
 	var can_craft := true
-	for cell : RecipeRequirement in get_tree().get_nodes_in_group(REQUIRMENT_CELLS_GROUP):
+	for cell : RecipeRequirement in get_tree().get_nodes_in_group(REQUIREMENT_CELLS_GROUP):
 		if not cell.check_requirement():
 			craft_overlay.visible = true
 			can_craft = false
@@ -205,8 +206,6 @@ func update_crafting_display() -> void:
 	
 	if not current_displayed_requirments:
 		craft_overlay.visible = true
-	
-	crafting_storage.update_storage()
 	
 	for cell : CraftCell in get_tree().get_nodes_in_group(CRAFT_CELLS_GROUP): 
 		cell.check_requirements()
@@ -222,7 +221,7 @@ func display_requirements_for(craft_data : CraftData, can_craft : bool) -> void:
 	requirement_image.texture = craft_data.crafted_item.get_item_texture()
 	
 	var style : StyleBoxFlat = image_background.get_theme_stylebox("panel").duplicate()
-	style.bg_color = Global.TIER_CONFIG[craft_data.crafted_item.tier]["color"]
+	style.bg_color = Global.TIER_CONFIG[craft_data.crafted_item.tier][COLOR_KEY]
 	image_background.add_theme_stylebox_override("panel", style)
 	
 	weight_stat.text = WEIGHT_LABEL_PREFIX + HelperFunctions.comma_number(
@@ -232,7 +231,7 @@ func display_requirements_for(craft_data : CraftData, can_craft : bool) -> void:
 	craft_time_stat.text = CRAFT_TIME_LABEL_PREFIX + str(craft_data.craft_time)
 	description.text = craft_data.description
 	
-	for cell in get_tree().get_nodes_in_group(REQUIRMENT_CELLS_GROUP):
+	for cell in get_tree().get_nodes_in_group(REQUIREMENT_CELLS_GROUP):
 		cell.queue_free()
 	
 	# gets a sorted list of all requirments sorted from t1 - t5 then alphabetacally
@@ -254,14 +253,14 @@ func display_requirements_for(craft_data : CraftData, can_craft : bool) -> void:
 		new_requirment.amount_required = requirment.amount
 		new_requirment.update_value()
 		requirments_hflow.add_child(new_requirment)
-		new_requirment.add_to_group(REQUIRMENT_CELLS_GROUP)
+		new_requirment.add_to_group(REQUIREMENT_CELLS_GROUP)
 	
 	craft_overlay.visible = not can_craft
 	craft_button.disabled = not can_craft
 
 
 # Tab Controlling ============================================================
-func _change_to_tab(new_tab) -> void:
+func _change_to_tab(new_tab : TABS) -> void:
 	if not Global.crafting_open:
 		return
 	

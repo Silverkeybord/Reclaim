@@ -1,4 +1,4 @@
-class_name StorageCell
+class_name BaseStorageCell
 extends Control
 
 const CELLS_TEXTURE_KEY := "cells"

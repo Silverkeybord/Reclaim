@@ -41,7 +41,7 @@ static var damage_indications: int = 0
 # =============================================================================
 # ROOT / SPAWN HELPERS
 # =============================================================================
-## adds the node to the root node of the current scene or the node that is in the group
+## Adds the node to the root node of the current scene or the node that is in the group
 ## of root nodes in the current scene
 static func add_to_root_node(node: Node) -> void:
 	if node == null:

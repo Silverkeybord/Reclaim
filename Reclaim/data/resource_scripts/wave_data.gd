@@ -26,7 +26,7 @@ extends Resource
 ## end base size of all non commanders at the end of clearing a sector
 @export var end_size : float = 1.3
 ## random aditional size to all non commanders
-@export var random_aditional_size : float = 0.2
+@export var random_additional_size : float = 0.2
 ## the max distance from the spawn marker the commander will spawn at
 @export var cluster_spawn_radius : float
 ## the max distance form the commander the normal enemies will spawn at

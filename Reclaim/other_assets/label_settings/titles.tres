@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" format=3 uid="uid://c6mrm0na28c5g"]
+
+[ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="1_rgrus"]
+
+[resource]
+font = ExtResource("1_rgrus")
+font_size = 24
+font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)

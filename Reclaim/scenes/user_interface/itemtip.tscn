@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dqgjh854m2igs"]
 
-[ext_resource type="Script" uid="uid://i4ef0cepag1h" path="res://scripts/user_interface/itemtip.gd" id="1_nhpud"]
+[ext_resource type="Script" uid="uid://i4ef0cepag1h" path="res://scripts/user_interface/storage/itemtip.gd" id="1_nhpud"]
 [ext_resource type="Texture2D" uid="uid://ssroq0w4ai6r" path="res://2d_assets/storage/resources_tip_background.png" id="2_puydn"]
 [ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="3_oswdm"]
 [ext_resource type="Texture2D" uid="uid://bjh26snyavx76" path="res://2d_assets/storage/turret_tip_background.png" id="4_puydn"]

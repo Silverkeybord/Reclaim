@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://jvgkff2pr1rj"]
 
 [ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="1_e5l8p"]
-[ext_resource type="Script" uid="uid://4ay68rj8dgkv" path="res://scripts/user_interface/crafting_selection_sections.gd" id="1_xmf41"]
+[ext_resource type="Script" uid="uid://4ay68rj8dgkv" path="res://scripts/user_interface/crafting/crafting_selection_sections.gd" id="1_xmf41"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yf5fn"]
 border_width_left = 4

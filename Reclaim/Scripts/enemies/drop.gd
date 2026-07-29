@@ -1,6 +1,7 @@
 extends RigidBody3D
 
-const TIER_DESPAWN_MULT := 20 # seconds before desawning multipyled by the interger value of the rarity
+# seconds before despawning multiplyed by the integer value of the rarity
+const TIER_DESPAWN_MULT := 20 
 
 const DESPAWN_SCALE := Vector3(0.1, 0.1, 0.1)
 const DESPAWN_TWEEN_TIME := 0.5
@@ -44,8 +45,8 @@ var on_ground : bool = false
 var being_picked_up : bool = false
 var picked_up : bool = false
 
-# starting speedgame
-var speed = 3
+# starting pick up speed
+var speed : float = 3.0
 
 
 func _ready() -> void:
@@ -138,8 +139,4 @@ func _give_random_movement() -> void:
 ## add the drop into the storage of the player
 func _pick_up() -> void:
 	HelperFunctions.spawn_temp_sound(pickup_sounds.pick_random())
-	
-	if Global.sector_storage[item_resource.tier].has(item_resource.key):
-		Global.sector_storage[item_resource.tier][item_resource.key] += 1
-	else:
-		Global.sector_storage[item_resource.tier][item_resource.key] = 1
+	HelperFunctions.add_item_to_storage(item_resource)

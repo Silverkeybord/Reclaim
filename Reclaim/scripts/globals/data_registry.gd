@@ -12,7 +12,7 @@ const ITEMS_PATH : String = "res://data/items/"
 const RESOURCE_FILE_EXTENSION := ".tres"
 const PATH_SEPARATOR := "/"
 const KEY_PROPERTY := "key"
-const FINISHED_LOADING_MESSAGE := " -- fin loading files -- "
+const FINISHED_LOADING_MESSAGE := " -- finished loading files -- "
 
 var turrets : Dictionary
 var modules : Dictionary
@@ -45,13 +45,13 @@ func _load_folder(path: String, dict: Dictionary, recursive: bool = false) -> vo
 	
 	var directory = DirAccess.open(path)
 	
-	# check for valid directoryectory
-	if not directory:
+	# Check for valid directory
+	if not directory: 
 		push_error("DataRegistry: could not open path: " + path)
 		return
 	
-	# if recursive is and file is a folder it will will recursivly search that folder
-	# putting it in the same dict
+	# If recursive is true and file is a directory, recursively searches that directory,
+	# placing resources into the same dictionary.
 	directory.list_dir_begin()
 	var file = directory.get_next() 
 	

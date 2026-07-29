@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dry5quv0ak5ck"]
 
-[ext_resource type="Script" uid="uid://bio1gj5y2teq4" path="res://scripts/user_interface/build_selection_cell.gd" id="1_m1r4k"]
+[ext_resource type="Script" uid="uid://bio1gj5y2teq4" path="res://scripts/user_interface/build_selection/build_selection_cell.gd" id="1_m1r4k"]
 [ext_resource type="Texture2D" uid="uid://c3p43fip0vogy" path="res://2d_assets/building/building_rough_cell.png" id="2_m1r4k"]
 [ext_resource type="Texture2D" uid="uid://bguj48j4chxxo" path="res://2d_assets/items/none.png" id="3_m1r4k"]
 [ext_resource type="FontFile" uid="uid://q3206aq7b5tl" path="res://other_assets/fonts/uni_sans/Uni Sans Heavy.otf" id="4_h3nwr"]
@@ -12,6 +12,7 @@ outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
 [node name="building_cell" type="Control" unique_id=1715849231 node_paths=PackedStringArray("cell_texture", "item_texture", "amount_label")]
+visible = false
 custom_minimum_size = Vector2(50, 50)
 custom_maximum_size = Vector2(50, 50)
 layout_mode = 3

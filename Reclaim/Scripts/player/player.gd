@@ -41,11 +41,11 @@ const PICK_UP_COOLDOWN := 2.0
 @export var shooting_timer : Timer
 @export var pick_up_area : Area3D
 
-@export_subgroup("Piviots")
-@export var arm_piviot : Node3D
-@export var gun_piviot : Node3D
-@export var hammmer_piviot : Node3D
-@export var wrench_piviot : Node3D
+@export_subgroup("pivots")
+@export var arm_pivot : Node3D
+@export var gun_pivot : Node3D
+@export var hammer_pivot : Node3D
+@export var wrench_pivot : Node3D
 
 @export_group("turrets")
 @export var turret_holagram_scene : PackedScene
@@ -153,16 +153,17 @@ func _input_tip_updating() -> void:
 # for all interactions that toggles a ui indicator that you can interact
 func _interaction_handeling(ray_collider : Node) -> void:
 	# shows the interact ui when looking at something interactable
-	if (ray_collider in get_tree().get_nodes_in_group("interactable") and 
+	if (
+		ray_collider in get_tree().get_nodes_in_group("interactable") and 
 		global_position.distance_to(ray_collider.global_position) < INTERACT_DISTANCE
-		):
+	):
 		interact_overlay.visible = true
 		
 		if Input.is_action_just_pressed("interact"):
 			ray_collider.interact()
 		
 	else:
-		interact_overlay.visible =  false
+		interact_overlay.visible = false
 
 
 # handels the player changing modes
@@ -173,7 +174,7 @@ func _player_mode_handeling() -> void:
 	):
 		Global.player_mode = Global.PLAYER_MODES.WEAPON
 		_remove_holagram(true)
-		toggle_player_mode_item(gun_piviot)
+		toggle_player_mode_item(gun_pivot)
 	
 	if (
 		Input.is_action_just_pressed("build_mode") and 
@@ -185,7 +186,7 @@ func _player_mode_handeling() -> void:
 		building_selection.load_selection()
 		building_selection.set_process(true)
 		turret_grid._toggle_build_mode(true)
-		toggle_player_mode_item(hammmer_piviot)
+		toggle_player_mode_item(hammer_pivot)
 	
 	if (
 		Input.is_action_just_pressed("install_mode") and 
@@ -194,16 +195,16 @@ func _player_mode_handeling() -> void:
 	):
 		Global.player_mode = Global.PLAYER_MODES.INSTALLING
 		_remove_holagram(true)
-		toggle_player_mode_item(wrench_piviot)
+		toggle_player_mode_item(wrench_pivot)
 
 
-# make all other items invisible and make the piviot visible
-func toggle_player_mode_item(piviot : Node3D) -> void:
-	gun_piviot.visible = false
-	hammmer_piviot.visible = false
-	wrench_piviot.visible = false
+# make all other items invisible and make the pivot visible
+func toggle_player_mode_item(pivot : Node3D) -> void:
+	gun_pivot.visible = false
+	hammer_pivot.visible = false
+	wrench_pivot.visible = false
 	
-	piviot.visible = true
+	pivot.visible = true
 
 
 # BUILDING -------------------------------------------------------------------
@@ -214,7 +215,7 @@ func _build_mode_handeling(ray_collider : Node) -> void:
 	
 	# if there is no turret holagram create one and add
 	if Global.player_mode == Global.PLAYER_MODES.BUILDING and not turret_holagram:
-		gun_piviot.visible = false
+		gun_pivot.visible = false
 		turret_holagram = turret_holagram_scene.instantiate()
 		add_sibling(turret_holagram)
 		interact_overlay.visible = false
@@ -371,7 +372,7 @@ func _check_valid_placement(ray_collider : Node) -> bool:
 
 # just removes the holagram when changing build modes and toggles when changing mode
 func _remove_holagram(change_mode : bool = false) -> void:
-	gun_piviot.visible = true
+	gun_pivot.visible = true
 	if turret_holagram:
 		turret_holagram.queue_free()
 	build_overlay.visible = false
@@ -431,7 +432,7 @@ func _shoot() -> void:
 
 func _set_new_weapon() -> void:
 	# gets the weapon node and its data from DataRegistry
-	weapon = gun_piviot.get_child(GUN_CHILD_INDEX)
+	weapon = gun_pivot.get_child(GUN_CHILD_INDEX)
 	weapon_resource = DataRegistry.weapon[weapon_name]
 	
 	shooting_timer.wait_time = weapon_resource.cool_down

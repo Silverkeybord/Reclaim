@@ -58,7 +58,7 @@ func movement(delta : float) -> void:
 	move_and_slide()
 
 
-func fin_loading() -> void:
+func finish_loading() -> void:
 	set_process(false)
 	set_physics_process(false)
 	
@@ -80,7 +80,7 @@ func fin_loading() -> void:
 	
 	# sets stats
 	# mulitplys the base stats by their size by half
-	var mult = 1 + ((size - 1) / SIZE_BASE_STAT_FACTOR)
+	var mult := 1 + ((size - 1) / SIZE_BASE_STAT_FACTOR)
 	health = round(enemy_resource.health * mult)
 	damage = round(enemy_resource.damage * mult)
 	speed = enemy_resource.speed
@@ -137,7 +137,7 @@ func _spawn_drops() -> void:
 			new_drop.global_position = global_position
 
 
-func _get_drop_type_resource():
+func _get_drop_type_resource() -> ItemData:
 	var total_weight := 0
 	
 	for drop_probability_info : DropWeight in enemy_resource.drop_table:
@@ -147,12 +147,14 @@ func _get_drop_type_resource():
 	
 	for drop_probability_info : DropWeight in enemy_resource.drop_table:
 		roll -= drop_probability_info.weight
-	
+		
 		if roll <= 0:
 			if drop_probability_info.drop_name.key == NONE_TYPE_DROP:
 				return null
 			else:
 				return DataRegistry.items[drop_probability_info.drop_name.key]
+	
+	return null
 
 
 # attacking logic 

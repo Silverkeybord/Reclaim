@@ -1,4 +1,4 @@
-class_name basic_wepon
+class_name BasicWeapon
 
 extends Node3D
 

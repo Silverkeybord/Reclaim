@@ -1,8 +1,8 @@
 extends Node3D
 # Controls the player's camera rotation and zoom distance.
 
-const MIN_PITCH: float = -PI/2 + 0.1
-const MAX_PITCH: float = PI/2 - 0.3
+const MIN_PITCH: float = -PI / 2 + 0.1
+const MAX_PITCH: float = PI / 2 - 0.3
 
 const ZOOM_SPEED := 0.5
 const MAX_ZOOM := 15.0
@@ -18,7 +18,7 @@ const Z_AXIS_THIRD_PERSON_POSITION := Vector3(0, 1.25, 0)
 @export_group("in scene")
 @export var player: CharacterBody3D
 @export var spring_arm: SpringArm3D
-@export var arm_piviot : Node3D
+@export var arm_pivot : Node3D
 @export var z_axis_spring_arm : SpringArm3D
 
 var pitch := 0.0
@@ -51,7 +51,7 @@ func _input(event: InputEvent) -> void:
 
 
 # Controls camera movement
-func _pan_and_pitch(event) -> void:
+func _pan_and_pitch(event : InputEvent) -> void:
 	# Horizontal mouse movement rotates the player body.
 	player.rotation.y -= event.relative.x * sensitivity
 	
@@ -59,7 +59,7 @@ func _pan_and_pitch(event) -> void:
 	pitch -= event.relative.y * sensitivity
 	pitch = clamp(pitch, MIN_PITCH, MAX_PITCH)
 	rotation.x = pitch
-	arm_piviot.rotation.x = pitch
+	arm_pivot.rotation.x = pitch
 
 
 # Controls zooming in and out

@@ -4,7 +4,10 @@ extends Node3D
 const PLAYER_GROUP_NAME := "player"
 const ENEMY_METADATA_KEY := "enemy"
 
-@export var extractoion_pod : StaticBody3D
+const BASE_HEAL_AMOUNT := 5.0
+const BASE_HEAL_INTERVAL := 2.5
+
+@export var extraction_pod : StaticBody3D
 
 @export var run_ui : Control
 
@@ -15,8 +18,8 @@ const ENEMY_METADATA_KEY := "enemy"
 @export var max_shield_health : float = 100
 
 @export_group("Heal Varibles")
-@export var heal_interval : float = 2.5
-@export var heal_amount : float = 5
+@export var heal_interval : float = BASE_HEAL_INTERVAL
+@export var heal_amount : float = BASE_HEAL_AMOUNT
 @export var heal_timer : Timer
 
 var shield_overdrive := false
@@ -37,7 +40,8 @@ func hit_shield(damage : float) -> void:
 	if not shield_overdrive:
 		heal_timer.start()
 	
-	run_ui.update_visuals(damage)
+	if run_ui:
+		run_ui.update_visuals(damage)
 
 
 func heal_shield(heal : float) -> void:
@@ -73,7 +77,7 @@ func _on_shield_area_body_exited(body: Node3D) -> void:
 		body.stop_attacking()
 
 
-func _on_heal_timer_timeout() -> void:
+func _on_heal_timer_timeout() -> void:	
 	heal_timer.wait_time = heal_interval
 	heal_shield(heal_amount)
 
@@ -86,4 +90,5 @@ func _start_overdrive() -> void:
 
 
 func _on_overdrive_timer_timeout() -> void:
-	extractoion_pod.extract()
+	if extraction_pod:
+		extraction_pod.extract()

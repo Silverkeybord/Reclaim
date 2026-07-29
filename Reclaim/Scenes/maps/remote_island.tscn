@@ -87,8 +87,8 @@ extraction_pod = NodePath("../extraction_pod")
 map = "remote_island"
 sector_shield = NodePath("../sector_sheild")
 
-[node name="sector_sheild" parent="consistant" unique_id=911350069 node_paths=PackedStringArray("extractoion_pod") instance=ExtResource("8_on62q")]
-extractoion_pod = NodePath("../extraction_pod")
+[node name="sector_sheild" parent="consistant" unique_id=911350069 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("8_on62q")]
+extraction_pod = NodePath("../extraction_pod")
 
 [node name="player_barrier" type="StaticBody3D" parent="consistant" unique_id=1069759614]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.963074, 0)
