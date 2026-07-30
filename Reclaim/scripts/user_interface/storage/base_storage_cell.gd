@@ -19,6 +19,7 @@ const DEFAULT_AMOUNT := 0
 @export var full_highlight_overlay : Panel
 
 var amount : int 
+var mouse_in_cell := false
 
 
 func setup() -> void:
@@ -58,11 +59,13 @@ func update_amount() -> void:
 
 
 func _on_mouse_entered() -> void:
-	if not HelperFunctions.is_valid_item(item_resource):
+	if not item_tip:
 		return
 	
-	if item_tip:
-		item_tip.show_itemtip(item_resource, amount, item_resource.type)
+	mouse_in_cell = true
+	toggle_mouse_detection(mouse_in_cell)
+	
+	item_tip.show_itemtip(item_resource, amount, item_resource.type)
 	
 	if item_resource.type == Global.ITEM_TYPES.RESOURCES:
 		resource_highlight_overlay.visible = true
@@ -74,10 +77,14 @@ func _on_mouse_exited() -> void:
 	if item_tip:
 		item_tip.hide_itemtip()
 	
-	if not HelperFunctions.is_valid_item(item_resource):
-		return
+	mouse_in_cell = false
+	toggle_mouse_detection(mouse_in_cell)
 	
 	if item_resource.type == Global.ITEM_TYPES.RESOURCES:
 		resource_highlight_overlay.visible = false
 	else:
 		full_highlight_overlay.visible = false
+
+
+func toggle_mouse_detection(_toggle : bool) -> void:
+	pass

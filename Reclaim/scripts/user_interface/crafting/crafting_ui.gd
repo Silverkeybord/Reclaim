@@ -7,6 +7,7 @@ enum TABS {
 }
 
 const COLOR_KEY := "color"
+const PANEL_OVERRIDE_KEY := "panel"
 
 const ACTIVE_TURRETS_TAB := preload("res://2d_assets/crafting/active_turret_tab.png")
 const ACTIVE_MODULES_TAB := preload("res://2d_assets/crafting/active_modules_tab.png")
@@ -220,9 +221,9 @@ func display_requirements_for(craft_data : CraftData, can_craft : bool) -> void:
 	craft_name.text = HelperFunctions.get_display_name(craft_data.crafted_item.key)
 	requirement_image.texture = craft_data.crafted_item.get_item_texture()
 	
-	var style : StyleBoxFlat = image_background.get_theme_stylebox("panel").duplicate()
+	var style : StyleBoxFlat = image_background.get_theme_stylebox(PANEL_OVERRIDE_KEY).duplicate()
 	style.bg_color = Global.TIER_CONFIG[craft_data.crafted_item.tier][COLOR_KEY]
-	image_background.add_theme_stylebox_override("panel", style)
+	image_background.add_theme_stylebox_override(PANEL_OVERRIDE_KEY, style)
 	
 	weight_stat.text = WEIGHT_LABEL_PREFIX + HelperFunctions.comma_number(
 		craft_data.crafted_item.weight)

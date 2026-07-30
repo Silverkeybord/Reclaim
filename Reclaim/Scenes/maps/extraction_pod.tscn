@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c08otjhflwli2"]
 
 [ext_resource type="Script" uid="uid://cylk3rgeiwoin" path="res://scripts/interactable/extraction_pod.gd" id="1_1jnoh"]
+[ext_resource type="PackedScene" uid="uid://cjuoaw83nlkpf" path="res://scenes/user_interface/extraction_ui.tscn" id="2_8bb2x"]
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_s88e6"]
 data = PackedVector3Array(-1, 1.5, 1, 1, 1.5, 1, -1, -1.5, 1, 1, 1.5, 1, 1, -1.5, 1, -1, -1.5, 1, 1, 1.5, -1, -1, 1.5, -1, 1, -1.5, -1, -1, 1.5, -1, -1, -1.5, -1, 1, -1.5, -1, 1, 1.5, 1, 1, 1.5, -1, 1, -1.5, 1, 1, 1.5, -1, 1, -1.5, -1, 1, -1.5, 1, -1, 1.5, -1, -1, 1.5, 1, -1, -1.5, -1, -1, 1.5, 1, -1, -1.5, 1, -1, -1.5, -1, 1, 1.5, 1, -1, 1.5, 1, 1, 1.5, -1, -1, 1.5, 1, -1, 1.5, -1, 1, 1.5, -1, -1, -1.5, 1, 1, -1.5, 1, -1, -1.5, -1, 1, -1.5, 1, 1, -1.5, -1, -1, -1.5, -1)
@@ -11,10 +12,11 @@ size = Vector3(2, 3, 2)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gmvgx"]
 albedo_color = Color(0.28118682, 0.28118688, 0.28118682, 1)
 
-[node name="extraction_pod" type="StaticBody3D" unique_id=1786656130 groups=["interactable"]]
+[node name="extraction_pod" type="StaticBody3D" unique_id=1786656130 node_paths=PackedStringArray("extraction_ui") groups=["interactable"]]
 collision_layer = 17
 collision_mask = 17
 script = ExtResource("1_1jnoh")
+extraction_ui = NodePath("extraction_ui")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1609859238]
 transform = Transform3D(0.9999996, 0.00077972515, -0.00048514424, -0.00077950873, 0.9999996, 0.00042610476, 0.0004854919, -0.0004257086, 0.99999976, 0, 1.5, 0)
@@ -24,3 +26,6 @@ shape = SubResource("ConcavePolygonShape3D_s88e6")
 transform = Transform3D(0.9999996, 0.00077972515, -0.00048514424, -0.00077950873, 0.9999996, 0.00042610476, 0.0004854919, -0.0004257086, 0.99999976, 0, 1.5, 0)
 mesh = SubResource("BoxMesh_sht5i")
 surface_material_override/0 = SubResource("StandardMaterial3D_gmvgx")
+
+[node name="extraction_ui" parent="." unique_id=1130211310 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("2_8bb2x")]
+extraction_pod = NodePath("..")

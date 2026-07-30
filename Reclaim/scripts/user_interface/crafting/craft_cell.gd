@@ -1,5 +1,5 @@
 class_name CraftCell
-extends Button
+extends ExpandButtons
 
 const DOUBLE_CLICK_TIME : float = 0.3
 const CAN_CRAFT_TEXTURES : Dictionary = {
@@ -65,6 +65,8 @@ func check_requirements() -> void:
 func _on_pressed() -> void:
 	if not crafting_menu:
 		return
+	
+	play_press_sound()
 	
 	if crafting_menu.current_displayed_requirments != craft_data:
 		crafting_menu.display_requirements_for(craft_data, can_craft)

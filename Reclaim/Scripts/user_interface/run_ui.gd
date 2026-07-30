@@ -7,6 +7,7 @@ const HEAL_LERP_WEIGHT := 0.3
 const HIT_FLASH_COLOR := Color("ffffffff")
 const HEAL_FLAHS_COLOR := Color("00ff00ff")
 const FLASH_TIME := 0.05
+const MODULATE_PROPERTY := "modulate"
 
 const BLUE_HEALTH_COLOR := Color("afffffff")
 const GREEN_HEALTH_COLOR := Color("B9FFAF")
@@ -136,8 +137,8 @@ func _hit_flash() -> void:
 	var original_color = all_segment_control.modulate
 	var target_color = lerp(original_color, HIT_FLASH_COLOR, HIT_LERP_WEIGHT)
 	
-	hit_tween.tween_property(all_segment_control, "modulate", target_color, FLASH_TIME)
-	hit_tween.tween_property(all_segment_control, "modulate", original_color, FLASH_TIME)
+	hit_tween.tween_property(all_segment_control, MODULATE_PROPERTY, target_color, FLASH_TIME)
+	hit_tween.tween_property(all_segment_control, MODULATE_PROPERTY, original_color, FLASH_TIME)
 	
 	if not shield.shield_overdrive:
 		run_time_label.visible = false

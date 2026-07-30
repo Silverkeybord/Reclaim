@@ -9,6 +9,7 @@ const HAVE_INDICATIONS : Dictionary = {
 	true : preload("res://2d_assets/crafting/enough_resources.png")
 }
 const MIN_REQUIRED_AMOUNT := 1
+const SPACE_TEXT := " "
 
 @export var item_data : ItemData
 @export var amount_required : int = 10
@@ -37,7 +38,7 @@ func update_value() -> void:
 		HelperFunctions.return_amount_shorthand(current_amount) + 
 		SLASH_TEXT + 
 		HelperFunctions.return_amount_shorthand(amount_required) + 
-		" " + HelperFunctions.get_display_name(item_data.key)
+		SPACE_TEXT + HelperFunctions.get_display_name(item_data.key)
 		)
 	check_requirement()
 

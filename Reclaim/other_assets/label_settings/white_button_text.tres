@@ -1,0 +1,7 @@
+[gd_resource type="LabelSettings" format=3 uid="uid://cvekg5ow7wvpg"]
+
+[ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="1_1e7b7"]
+
+[resource]
+font = ExtResource("1_1e7b7")
+font_size = 18

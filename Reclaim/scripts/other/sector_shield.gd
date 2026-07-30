@@ -83,6 +83,7 @@ func _on_heal_timer_timeout() -> void:
 
 
 func _start_overdrive() -> void:
+	Global.shield_overdrive = true
 	shield_overdrive = true
 	overdrive_timer.start()
 	
@@ -90,5 +91,6 @@ func _start_overdrive() -> void:
 
 
 func _on_overdrive_timer_timeout() -> void:
+	Global.shield_overdrive = false
 	if extraction_pod:
 		extraction_pod.extract()

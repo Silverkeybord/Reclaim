@@ -32,68 +32,87 @@ enum PLAYER_MODES {
 # CONSTANTS ===================================================================
 # =============================================================================
 
+# PATHS & DEFAULTS --------------------------------------------------------
+const SAVE_PATH: String = "user://reclaim.save"
+const DEFAULT_SECTOR_PATH: String = "res://scenes/maps/remote_island.tscn"
+
+# SAVE KEYS ---------------------------------------------------------------
+const SAVE_SHIP_STORAGE_KEY: String = "ship_storage"
+const SAVE_CUBITS_KEY: String = "cubits"
+const SAVE_COUNCIL_AUTHORIZATION_KEY: String = "council_authorization"
+const SAVE_TURRET_SLOTS_KEY: String = "turret_slots"
+
+# TIER CONFIG KEYS --------------------------------------------------------
+const KEY_COLOR: String = "color"
+const KEY_STYLE: String = "style"
+const KEY_CELLS: String = "cells"
+const KEY_RESOURCES: String = "resources"
+const KEY_TURRETS: String = "turrets"
+const KEY_MODULES: String = "modules"
+
+# ERROR MESSAGES ----------------------------------------------------------
+const ERR_SAVE_WRITE: String = "Could not open save file for writing: %s"
+const ERR_SAVE_READ: String = "Could not open save file for reading: %s"
+const ERR_SAVE_INVALID: String = "Save file did not contain valid save data."
+
 # MISC --------------------------------------------------------------------
-const SAVE_PATH : String = "user://reclaim.save"
-const SAVE_SHIP_STORAGE_KEY := "ship_storage"
-const SAVE_CUBITS_KEY := "cubits"
-const SAVE_COUNCIL_AUTHORIZATION_KEY := "council_authorization"
-const SAVE_TURRET_SLOTS_KEY := "turret_slots"
-const TEST_STORAGE_MIN_AMOUNT := 3
-const TEST_STORAGE_MAX_AMOUNT := 3
-const TEST_SHIP_STORAGE_MIN_AMOUNT := 1
-const TEST_SHIP_STORAGE_MAX_AMOUNT := 999
-const TEST_STORAGE_EXPONENT := 0
-const TIER_CONFIG : Dictionary = {
-	1 : {
-		"color" : Color(0.541, 0.561, 0.596),
-		"style" : preload("res://other_assets/crafting_styles/t1_style.tres"),
-		"cells" : {
-			"resources" : preload("res://2d_assets/storage/resource_cells/rough_cell.png"),
-			"turrets" : preload("res://2d_assets/storage/turret_cells/rough_cell.png"),
-			"modules" : preload("res://2d_assets/storage/module_cells/rough_cell.png")
+const TEST_STORAGE_MIN_AMOUNT: int = 3
+const TEST_STORAGE_MAX_AMOUNT: int = 3
+const TEST_SHIP_STORAGE_MIN_AMOUNT: int = 1
+const TEST_SHIP_STORAGE_MAX_AMOUNT: int = 999
+const TEST_STORAGE_EXPONENT: int = 0
+
+const TIER_CONFIG: Dictionary = {
+	1: {
+		KEY_COLOR: Color(0.541, 0.561, 0.596),
+		KEY_STYLE: preload("res://other_assets/crafting_styles/t1_style.tres"),
+		KEY_CELLS: {
+			KEY_RESOURCES: preload("res://2d_assets/storage/resource_cells/rough_cell.png"),
+			KEY_TURRETS: preload("res://2d_assets/storage/turret_cells/rough_cell.png"),
+			KEY_MODULES: preload("res://2d_assets/storage/module_cells/rough_cell.png")
 		}
 	},
-	2 : {
-		"color" : Color(0.29, 0.871, 0.502),
-		"style" : preload("res://other_assets/crafting_styles/t2_style.tres"),
-		"cells" : {
-			"resources" : preload("res://2d_assets/storage/resource_cells/plain_cell.png"),
-			"turrets" : preload("res://2d_assets/storage/turret_cells/plain_cell.png"),
-			"modules" : preload("res://2d_assets/storage/module_cells/plain_cell.png")
+	2: {
+		KEY_COLOR: Color(0.29, 0.871, 0.502),
+		KEY_STYLE: preload("res://other_assets/crafting_styles/t2_style.tres"),
+		KEY_CELLS: {
+			KEY_RESOURCES: preload("res://2d_assets/storage/resource_cells/plain_cell.png"),
+			KEY_TURRETS: preload("res://2d_assets/storage/turret_cells/plain_cell.png"),
+			KEY_MODULES: preload("res://2d_assets/storage/module_cells/plain_cell.png")
 		}
 	},
-	3 : {
-		"color" : Color(0.29, 0.557, 0.996),
-		"style" : preload("res://other_assets/crafting_styles/t3_style.tres"),
-		"cells" : {
-			"resources" : preload("res://2d_assets/storage/resource_cells/usefull_cell.png"),
-			"turrets" : preload("res://2d_assets/storage/turret_cells/useful_cell.png"),
-			"modules" : preload("res://2d_assets/storage/module_cells/usefull_cell.png")
+	3: {
+		KEY_COLOR: Color(0.29, 0.557, 0.996),
+		KEY_STYLE: preload("res://other_assets/crafting_styles/t3_style.tres"),
+		KEY_CELLS: {
+			KEY_RESOURCES: preload("res://2d_assets/storage/resource_cells/usefull_cell.png"),
+			KEY_TURRETS: preload("res://2d_assets/storage/turret_cells/useful_cell.png"),
+			KEY_MODULES: preload("res://2d_assets/storage/module_cells/usefull_cell.png")
 		}
 	},
-	4 : {
-		"color" : Color(1.0, 0.847, 0.243),
-		"style" : preload("res://other_assets/crafting_styles/t4_style.tres"),
-		"cells" : {
-			"resources" : preload("res://2d_assets/storage/resource_cells/valuable_cell.png"),
-			"turrets" : preload("res://2d_assets/storage/turret_cells/valuable_cell.png"),
-			"modules" : preload("res://2d_assets/storage/module_cells/valuable_cell.png")
+	4: {
+		KEY_COLOR: Color(1.0, 0.847, 0.243),
+		KEY_STYLE: preload("res://other_assets/crafting_styles/t4_style.tres"),
+		KEY_CELLS: {
+			KEY_RESOURCES: preload("res://2d_assets/storage/resource_cells/valuable_cell.png"),
+			KEY_TURRETS: preload("res://2d_assets/storage/turret_cells/valuable_cell.png"),
+			KEY_MODULES: preload("res://2d_assets/storage/module_cells/valuable_cell.png")
 		}
 	},
-	5 : {
-		"color" : Color(0.937, 0.267, 0.267),
-		"style" : preload("res://other_assets/crafting_styles/t5_style.tres"),
-		"cells" : {
-			"resources" : preload("res://2d_assets/storage/resource_cells/extraordinary_cell.png"),
-			"turrets" : preload("res://2d_assets/storage/turret_cells/extraordinary_cell.png"),
-			"modules" : preload("res://2d_assets/storage/module_cells/extraordinary_cell.png")
+	5: {
+		KEY_COLOR: Color(0.937, 0.267, 0.267),
+		KEY_STYLE: preload("res://other_assets/crafting_styles/t5_style.tres"),
+		KEY_CELLS: {
+			KEY_RESOURCES: preload("res://2d_assets/storage/resource_cells/extraordinary_cell.png"),
+			KEY_TURRETS: preload("res://2d_assets/storage/turret_cells/extraordinary_cell.png"),
+			KEY_MODULES: preload("res://2d_assets/storage/module_cells/extraordinary_cell.png")
 		}
 	}
 }
 
 # CAPS --------------------------------------------------------------------
-const MAX_DROPS : int = 250
-const MAX_SPHERES : int = 300
+const MAX_DROPS: int = 250
+const MAX_SPHERES: int = 300
 
 # =============================================================================
 # VARIABLES ===================================================================
@@ -105,57 +124,57 @@ var current_build_mode := BUILD_MODES.TURRET
 var at_ship := true
 var mouse_captured := true
 
-# USER INTERFACE
+# USER INTERFACE -----------------------------------------------------------
 var paused := false
 var ui_open := false
+var market_open := false
 var storage_open := false
 var crafting_open := false
-var research_open := false
-var market_open := false
-
-# var hidden_item_tip := false Testing 
+var extraction_open := false
+var authorization_open := false
 
 # SECTOR RELATED ------------------------------------------------------------
-var selected_sector : String
-var selected_sector_path := "res://scenes/maps/remote_island.tscn"
-var sector_run_time : float
+var selected_sector: String
+var selected_sector_path: String = DEFAULT_SECTOR_PATH
+var sector_run_time: float
+var shield_overdrive: bool = false
 
 # ENEMIES
-var enemies : int = 0
+var enemies: int = 0
 
 # META UPGRADES / COUNCIL AUTHORIZATION -------------------------------------
-var ship_level := 8
-var turret_slots := 1
-var shield_strength := 1
+var ship_level: int = 8
+var turret_slots: int = 1
+var shield_strength: int = 1
 
 
 # INVENTORY + CURRENCY -------------------------------------------------------
-var cubits : int = 0
-var sector_storage : Dictionary = {
-	1 : {},
-	2 : {},
-	3 : {},
-	4 : {},
-	5 : {}
+var cubits: int = 0
+var sector_storage: Dictionary = {
+	1: {},
+	2: {},
+	3: {},
+	4: {},
+	5: {}
 }
-var ship_storage : Dictionary = {
-	1 : {},
-	2 : {},
-	3 : {},
-	4 : {},
-	5 : {}
+var ship_storage: Dictionary = {
+	1: {},
+	2: {},
+	3: {},
+	4: {},
+	5: {}
 }
-var extraction_storage : Dictionary = {
-	1 : {},
-	2 : {},
-	3 : {},
-	4 : {},
-	5 : {}
+var extraction_storage: Dictionary = {
+	1: {},
+	2: {},
+	3: {},
+	4: {},
+	5: {}
 }
 
 
 ## Temp testing function to fill storage
-func set_random_storage(set_sector_storage = false) -> void:
+func set_random_storage(set_sector_storage: bool = false) -> void:
 	for key in DataRegistry.items:
 		var resource = DataRegistry.items[key]
 		if not HelperFunctions.is_valid_item(resource):
@@ -187,39 +206,37 @@ func set_mouse_captured() -> void:
 # SAVING, LOADING, AND RESETING GAME DATA =====================================
 # =============================================================================
 ## Saves the current game data to the path
-func save_game():
-	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+func save_game() -> void:
+	var file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	if file == null:
-		push_error("Could not open save file for writing: %s" % SAVE_PATH)
+		push_error(ERR_SAVE_WRITE % SAVE_PATH)
 		return
 	
-	var save_data = {
+	var save_data := {
 		# storage / storage
-		SAVE_SHIP_STORAGE_KEY : ship_storage,
-		SAVE_CUBITS_KEY : cubits,
-		SAVE_COUNCIL_AUTHORIZATION_KEY : {
-			SAVE_TURRET_SLOTS_KEY : turret_slots
+		SAVE_SHIP_STORAGE_KEY: ship_storage,
+		SAVE_CUBITS_KEY: cubits,
+		SAVE_COUNCIL_AUTHORIZATION_KEY: {
+			SAVE_TURRET_SLOTS_KEY: turret_slots
 		}
-		
 	}
 	
 	file.store_var(save_data)
 
 
 ## Loads the data from the saved folder if there is one
-func load_game():
+func load_game() -> void:
 	if not FileAccess.file_exists(SAVE_PATH):
 		return
 	
-	
-	var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
+	var file := FileAccess.open(SAVE_PATH, FileAccess.READ)
 	if file == null:
-		push_error("Could not open save file for reading: %s" % SAVE_PATH)
+		push_error(ERR_SAVE_READ % SAVE_PATH)
 		return
 	
 	var data = file.get_var()
 	if typeof(data) != TYPE_DICTIONARY:
-		push_error("Save file did not contain valid save data.")
+		push_error(ERR_SAVE_INVALID)
 		return
 	
 	if data.has(SAVE_SHIP_STORAGE_KEY):
@@ -233,7 +250,7 @@ func load_game():
 
 
 ## Deletes the game data completely, removing the save file
-func reset_game():
+func reset_game() -> void:
 	if FileAccess.file_exists(SAVE_PATH):
 		DirAccess.remove_absolute(ProjectSettings.globalize_path(SAVE_PATH))
 	get_tree().quit()

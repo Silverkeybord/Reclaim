@@ -1,14 +1,23 @@
+class_name ExtractionUI
 extends CanvasLayer
 
-const FIRST_COLOR := Color(0.768, 0.968, 0.947, 1.0)
-const SECOND_COLOR := Color(0.149, 0.892, 0.869, 1.0)
-const THIRD_COLOR := Color(0.425, 0.865, 0.747, 1.0)
-const FOURTH_COLOR := Color(0.776, 0.776, 0.0, 1.0)
-const FITH_COLOR := Color(1.0, 0.271, 0.0, 1.0)
+const ANIMATION_OPEN := "open_extraction"
+const ANIMATION_CLOSE := "close_extraction"
+
+const EXTRACTION_CELL_SCENE : PackedScene = preload(
+	"res://scenes/user_interface/extraction_cell.tscn")
+
+const FIRST_COLOR := Color("dbffffff")
+const SECOND_COLOR := Color("c8ebffff")
+const THIRD_COLOR := Color("B9FFAF")
+const FOURTH_COLOR := Color("FFFF88")
+const FITH_COLOR := Color("FFBA7E")
+const MAX_COLOR := Color("FF7E7E")
 
 const FITHS_RATIO_DIVISOR := 0.2
 
 # each number is multiplyed by 0.2 for the ratio. using intergets for better precision
+# so 1 means under 0.2
 const EXTRACTION_BAR_COLOR_RATIOS := {
 	1 : FIRST_COLOR,
 	2 : SECOND_COLOR,
@@ -17,36 +26,82 @@ const EXTRACTION_BAR_COLOR_RATIOS := {
 	5 : FITH_COLOR
 }
 
+@export var extraction_pod : StaticBody3D
+@export var extraction_animations : AnimationPlayer
+
+@export_group("Extraction UI")
+@export var item_tip : CanvasLayer
 @export var extraction_bar : ProgressBar
 @export var total_label : Label
 @export var weight_label : Label
+@export var help_display : PanelContainer
 @export var sector_hflow : HFlowContainer
 @export var extraction_hflow : HFlowContainer
 
-var current_weight : float
-var max_weight : float
+var storage_cells := {}
+var extraction_cells := {}
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	set_process(false)
+	storage_cells = Storage.load_all_cells(
+		sector_hflow, EXTRACTION_CELL_SCENE, item_tip, self)
+	extraction_cells = Storage.load_all_cells(
+		extraction_hflow, EXTRACTION_CELL_SCENE, item_tip, self)
+	
+	for cell : ExtractionCell in extraction_hflow.get_children():
+		cell.in_storage = false
+	
 	open_ui()
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	if current_weight > 0:
+	if extraction_bar.value > 0 and extraction_bar.value < extraction_bar.max_value:
 		var extraction_weight_ratio = extraction_bar.value / extraction_bar.max_value
 		var color_key = int(ceil(extraction_weight_ratio / FITHS_RATIO_DIVISOR))
 		
 		extraction_bar.modulate = EXTRACTION_BAR_COLOR_RATIOS[color_key]
+		
+	elif extraction_bar.value == extraction_bar.max_value:
+		extraction_bar.modulate = MAX_COLOR
 
 
 func open_ui() -> void:
-	current_weight = 0
-	max_weight = 100
-	
-	extraction_bar.max_value = max_weight
-	extraction_bar.value = current_weight
+	extraction_bar.value = 0 # TEMP
+	extraction_bar.max_value = 100 # TEMP
 	
 	set_process(true)
+	Global.ui_open = true
+	Global.extraction_open = true
+	Global.set_mouse_captured()
+	extraction_animations.play(ANIMATION_OPEN)
+
+
+func close_ui() -> void:
+	set_process(false)
+	Global.ui_open = false
+	Global.extraction_open = false
+	Global.set_mouse_captured()
+	extraction_animations.play(ANIMATION_CLOSE)
+
+
+func load_sector_storage() -> void:
+	for item in Global.extraction_storage:
+		pass
+	
+	for item in Global.sector_storage:
+		storage_cells[item].update_amount()
+
+
+# Help icon showing -----------------------------------------------------------
+func _on_help_icon_mouse_entered() -> void:
+	help_display.visible = true
+
+
+func _on_help_icon_mouse_exited() -> void:
+	help_display.visible = false
+
+
+# Extract and Cancel Buttons --------------------------------------------------
+func _on_extract_button_pressed() -> void:
+	extraction_pod.extract()

@@ -97,6 +97,7 @@ custom_maximum_size = Vector2(70, 70)
 anchors_preset = -1
 anchor_right = 0.0546875
 anchor_bottom = 0.097222224
+offset_transform_enabled = true
 theme_override_styles/normal = SubResource("StyleBoxFlat_mnj7u")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ecock")
 theme_override_styles/hover = SubResource("StyleBoxFlat_ksw0y")
@@ -132,5 +133,7 @@ metadata/_edit_use_anchors_ = true
 one_shot = true
 
 [connection signal="button_up" from="." to="." method="_on_button_up"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="pressed" from="." to="." method="_on_pressed"]
 [connection signal="timeout" from="double_click_timer" to="." method="_on_double_click_timer_timeout"]

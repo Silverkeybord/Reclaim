@@ -5,13 +5,18 @@
 [ext_resource type="Texture2D" uid="uid://dbblaaid5dlw5" path="res://2d_assets/extraction/help_icon.png" id="2_vsh8a"]
 [ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="3_04trr"]
 [ext_resource type="Texture2D" uid="uid://colmmsj7tl08u" path="res://2d_assets/extraction/preset_button.png" id="4_to6po"]
+[ext_resource type="LabelSettings" uid="uid://bgvc5k57qsgaq" path="res://other_assets/label_settings/basic_text.tres" id="4_uu56b"]
 [ext_resource type="Texture2D" uid="uid://b28pscglyfqyx" path="res://2d_assets/extraction/middle_connectors.png" id="5_04trr"]
 [ext_resource type="LabelSettings" uid="uid://c6mrm0na28c5g" path="res://other_assets/label_settings/titles.tres" id="5_ckfe1"]
+[ext_resource type="Script" uid="uid://clkeopwsevljj" path="res://scripts/user_interface/expand_buttons.gd" id="7_an0yc"]
 [ext_resource type="Texture2D" uid="uid://drcpipg5cmsks" path="res://2d_assets/extraction/decor.png" id="7_ml4rt"]
+[ext_resource type="LabelSettings" uid="uid://cvekg5ow7wvpg" path="res://other_assets/label_settings/white_button_text.tres" id="7_o2hgm"]
 [ext_resource type="Texture2D" uid="uid://ommteilkbvo2" path="res://2d_assets/extraction/sections_decor.png" id="7_xxkdv"]
+[ext_resource type="Texture2D" uid="uid://ba61jwpncwlom" path="res://2d_assets/extraction/clear_selection_button.png" id="8_an0yc"]
 [ext_resource type="Texture2D" uid="uid://bpxosd45jnywn" path="res://2d_assets/extraction/side_box.png" id="8_xxkdv"]
 [ext_resource type="Texture2D" uid="uid://dk23whls5qlpo" path="res://2d_assets/extraction/extract button.png" id="9_u7mrq"]
 [ext_resource type="Texture2D" uid="uid://dokvrvdet2fhs" path="res://2d_assets/extraction/cancel_button.png" id="10_hv5k6"]
+[ext_resource type="Script" uid="uid://bt7v0mmk03p15" path="res://scripts/user_interface/extraction/extract_highlight_button.gd" id="16_an0yc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4v7s"]
 bg_color = Color(0.84313726, 0.84313726, 0.84313726, 1)
@@ -27,6 +32,23 @@ corner_radius_bottom_left = 20
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3gngh"]
+bg_color = Color(0.84313726, 0.84313726, 0.84313726, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.5176471, 0.5176471, 0.5176471, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_13jd1"]
+font = ExtResource("3_04trr")
+font_size = 14
+font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+
 [sub_resource type="LabelSettings" id="LabelSettings_g4v7s"]
 font = ExtResource("3_04trr")
 font_size = 32
@@ -39,16 +61,16 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yf5fn"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_13jd1"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_yf5fn"]
-font = ExtResource("3_04trr")
-font_size = 18
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o2hgm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_an0yc"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d0u6y"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3gngh"]
-bg_color = Color(0.84313726, 0.84313726, 0.84313726, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uu56b"]
+bg_color = Color(0.78039217, 0.8784314, 0.78039217, 1)
 border_width_left = 4
 border_width_top = 4
 border_width_right = 4
@@ -98,28 +120,145 @@ font = ExtResource("3_04trr")
 font_size = 32
 font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d0u6y"]
+bg_color = Color(0.85125333, 0.9193298, 0.850927, 0.19215687)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+corner_detail = 1
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fcnqv"]
 
-[node name="extraction_ui" type="CanvasLayer" unique_id=1130211310 node_paths=PackedStringArray("extraction_bar", "total_label", "weight_label", "sector_hflow")]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dlomj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v1oal"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_xxkdv"]
+font = ExtResource("3_04trr")
+font_size = 26
+font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_an0yc"]
+bg_color = Color(0.85125333, 0.9193298, 0.850927, 0.19215687)
+corner_radius_top_left = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 1
+
+[sub_resource type="Animation" id="Animation_an0yc"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ui_root:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-720, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ui_root:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_lqiho"]
+resource_name = "close_extraction"
+length = 0.8
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ui_root:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0.1, -600, -720, -0.6, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.8)
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ui_root:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_13jd1"]
+resource_name = "open_extraction"
+length = 0.8
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ui_root:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 0),
+"points": PackedFloat32Array(-720, 0, 0, 0.1, 600, 0, -0.6, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.8)
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ui_root:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lqiho"]
+_data = {
+&"RESET": SubResource("Animation_an0yc"),
+&"close_extraction": SubResource("Animation_lqiho"),
+&"open_extraction": SubResource("Animation_13jd1")
+}
+
+[node name="extraction_ui" type="CanvasLayer" unique_id=1130211310 node_paths=PackedStringArray("extraction_animations", "item_tip", "extraction_bar", "total_label", "weight_label", "help_display", "sector_hflow", "extraction_hflow")]
 script = ExtResource("1_xxkdv")
+extraction_animations = NodePath("extraction_animations")
+item_tip = NodePath("itemtip")
 extraction_bar = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/storage_indication/extraction_bar")
 total_label = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/TextureRect/total_weight")
 weight_label = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/weight_label")
-sector_hflow = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/sector_storage/MarginContainer/VBoxContainer/HFlowContainer")
+help_display = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display")
+sector_hflow = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/sector_storage/MarginContainer/VBoxContainer/sector_hflow")
+extraction_hflow = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/extraction_storage/MarginContainer/VBoxContainer/extraction_hflow")
 
 [node name="itemtip" parent="." unique_id=854836766 instance=ExtResource("1_8eks6")]
 
 [node name="ui_root" type="MarginContainer" parent="." unique_id=1259262818]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -720.0
+offset_bottom = -720.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 165
 theme_override_constants/margin_top = 60
 theme_override_constants/margin_right = 165
 theme_override_constants/margin_bottom = 60
-metadata/_edit_use_anchors_ = true
 
 [node name="extraction_backing" type="PanelContainer" parent="ui_root" unique_id=1398196514]
 layout_mode = 2
@@ -147,12 +286,77 @@ layout_mode = 2
 texture = ExtResource("2_vsh8a")
 stretch_mode = 2
 
+[node name="help_display" type="PanelContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon" unique_id=424539384]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_left = 44.0
+offset_top = -1.0
+offset_right = 179.0
+offset_bottom = 30.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_3gngh")
+
+[node name="MarginContainer" type="MarginContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display" unique_id=704225997]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer" unique_id=1089254597]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Label" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer/VBoxContainer" unique_id=369397827]
+layout_mode = 2
+text = "Left Click - move 1
+Right Click - move 10
+Shift Click - move Max"
+label_settings = ExtResource("4_uu56b")
+
+[node name="Label3" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer/VBoxContainer" unique_id=399849600]
+layout_mode = 2
+text = "Presets"
+label_settings = ExtResource("4_uu56b")
+
+[node name="MarginContainer" type="MarginContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer/VBoxContainer" unique_id=510062877]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = -4
+
+[node name="Label2" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer/VBoxContainer/MarginContainer" unique_id=1214028742]
+layout_mode = 2
+text = "Presets add onto what 
+you already have in your
+extraction selection. It
+wont clera your current 
+selection"
+label_settings = SubResource("LabelSettings_13jd1")
+
+[node name="Label4" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer/VBoxContainer" unique_id=1608947960]
+layout_mode = 2
+text = "Best Value"
+label_settings = ExtResource("4_uu56b")
+
+[node name="MarginContainer2" type="MarginContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer/VBoxContainer" unique_id=618072346]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = -4
+
+[node name="Label2" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer/VBoxContainer/MarginContainer2" unique_id=1725794731]
+layout_mode = 2
+text = "This preset chooses the
+most amout of value to 
+ratio of weight"
+label_settings = SubResource("LabelSettings_13jd1")
+
 [node name="Label" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header" unique_id=2136127503]
 layout_mode = 2
 text = "Extraction"
 label_settings = SubResource("LabelSettings_g4v7s")
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_lock_ = true
 
 [node name="divider" type="Panel" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer" unique_id=1595541694]
 custom_minimum_size = Vector2(900, 12)
@@ -165,9 +369,16 @@ theme_override_constants/separation = 7
 alignment = 1
 
 [node name="most_valuable_preset" type="Button" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons" unique_id=1143756787]
+texture_filter = 1
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_yf5fn")
+offset_transform_enabled = true
+theme_override_colors/icon_normal_color = Color(0.88235295, 0.88235295, 0.88235295, 1)
+theme_override_colors/icon_pressed_color = Color(1, 1, 1, 0.78431374)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_13jd1")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_o2hgm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_an0yc")
 icon = ExtResource("4_to6po")
+script = ExtResource("7_an0yc")
 
 [node name="Label" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_valuable_preset" unique_id=2088173329]
 layout_mode = 1
@@ -177,17 +388,24 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Most Valuable"
-label_settings = SubResource("LabelSettings_yf5fn")
+label_settings = ExtResource("7_o2hgm")
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="highest_tier_preset" type="Button" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons" unique_id=57128379]
+[node name="highest_tier_preset" type="Button" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons" unique_id=1857448485]
+texture_filter = 1
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_yf5fn")
+offset_transform_enabled = true
+theme_override_colors/icon_normal_color = Color(0.88235295, 0.88235295, 0.88235295, 1)
+theme_override_colors/icon_pressed_color = Color(1, 1, 1, 0.78431374)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_13jd1")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_o2hgm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_an0yc")
 icon = ExtResource("4_to6po")
+script = ExtResource("7_an0yc")
 
-[node name="Label" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/highest_tier_preset" unique_id=2114895259]
+[node name="Label" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/highest_tier_preset" unique_id=938331701]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -195,17 +413,24 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Highest Tier"
-label_settings = SubResource("LabelSettings_yf5fn")
+label_settings = ExtResource("7_o2hgm")
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="most_items_preset" type="Button" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons" unique_id=1883356226]
+[node name="most_items_preset" type="Button" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons" unique_id=411901213]
+texture_filter = 1
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_yf5fn")
+offset_transform_enabled = true
+theme_override_colors/icon_normal_color = Color(0.88235295, 0.88235295, 0.88235295, 1)
+theme_override_colors/icon_pressed_color = Color(1, 1, 1, 0.78431374)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_13jd1")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_o2hgm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_an0yc")
 icon = ExtResource("4_to6po")
+script = ExtResource("7_an0yc")
 
-[node name="Label" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_items_preset" unique_id=1375423125]
+[node name="Label" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_items_preset" unique_id=1569159998]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -213,17 +438,24 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Most Items"
-label_settings = SubResource("LabelSettings_yf5fn")
+label_settings = ExtResource("7_o2hgm")
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="best_value_preset" type="Button" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons" unique_id=116108748]
+[node name="best_value" type="Button" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons" unique_id=1182309756]
+texture_filter = 1
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_yf5fn")
+offset_transform_enabled = true
+theme_override_colors/icon_normal_color = Color(0.88235295, 0.88235295, 0.88235295, 1)
+theme_override_colors/icon_pressed_color = Color(1, 1, 1, 0.78431374)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_13jd1")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_o2hgm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_an0yc")
 icon = ExtResource("4_to6po")
+script = ExtResource("7_an0yc")
 
-[node name="Label" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/best_value_preset" unique_id=1984266190]
+[node name="Label" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/best_value" unique_id=237911529]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -231,25 +463,32 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Best Value"
-label_settings = SubResource("LabelSettings_yf5fn")
+label_settings = ExtResource("7_o2hgm")
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="clear_selection" type="Button" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons" unique_id=924758753]
+[node name="clear_selection" type="Button" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons" unique_id=1404842273]
+texture_filter = 1
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_yf5fn")
-icon = ExtResource("4_to6po")
+offset_transform_enabled = true
+theme_override_colors/icon_normal_color = Color(0.88235295, 0.88235295, 0.88235295, 1)
+theme_override_colors/icon_pressed_color = Color(1, 1, 1, 0.78431374)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_13jd1")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_o2hgm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_an0yc")
+icon = ExtResource("8_an0yc")
+script = ExtResource("7_an0yc")
 
-[node name="Label" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/clear_selection" unique_id=1324325327]
+[node name="Label" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/clear_selection" unique_id=1853658517]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Clear Selected"
-label_settings = SubResource("LabelSettings_yf5fn")
+text = "Clear Selection"
+label_settings = ExtResource("7_o2hgm")
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
@@ -289,9 +528,11 @@ layout_mode = 2
 text = "Sector Storage"
 label_settings = ExtResource("5_ckfe1")
 
-[node name="HFlowContainer" type="HFlowContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/sector_storage/MarginContainer/VBoxContainer" unique_id=974834084]
+[node name="sector_hflow" type="HFlowContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/sector_storage/MarginContainer/VBoxContainer" unique_id=974834084]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
 
 [node name="middle_connectors" type="TextureRect" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer" unique_id=1427580758]
 layout_mode = 2
@@ -300,10 +541,38 @@ size_flags_vertical = 4
 texture = ExtResource("5_04trr")
 stretch_mode = 2
 
-[node name="extraction_storage" type="PanelContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer" unique_id=1591432192]
+[node name="extraction_storage" type="PanelContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer" unique_id=500802180]
 custom_minimum_size = Vector2(430, 350)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_3gngh")
+theme_override_styles/panel = SubResource("StyleBoxFlat_uu56b")
+
+[node name="MarginContainer" type="MarginContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/extraction_storage" unique_id=1109609631]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/extraction_storage/MarginContainer" unique_id=547015679]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/extraction_storage/MarginContainer/VBoxContainer" unique_id=1262838085]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 0
+
+[node name="Label" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/extraction_storage/MarginContainer/VBoxContainer/MarginContainer" unique_id=1118990254]
+layout_mode = 2
+text = "Extraction"
+label_settings = ExtResource("5_ckfe1")
+
+[node name="extraction_hflow" type="HFlowContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/extraction_storage/MarginContainer/VBoxContainer" unique_id=891659839]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
 
 [node name="storage_indication" type="PanelContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/storages" unique_id=1580240170]
 custom_minimum_size = Vector2(24, 338)
@@ -318,8 +587,7 @@ layout_mode = 2
 size_flags_vertical = 1
 theme_override_styles/background = SubResource("StyleBoxEmpty_7numd")
 theme_override_styles/fill = SubResource("StyleBoxFlat_p1u0y")
-step = 1.0
-value = 41.0
+step = 0.1
 fill_mode = 3
 show_percentage = false
 
@@ -378,14 +646,17 @@ label_settings = SubResource("LabelSettings_u7mrq")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="extract_button" type="Button" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=480868908]
+[node name="extract_button" type="Button" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=480868908 node_paths=PackedStringArray("highlight")]
 texture_filter = 1
 layout_mode = 2
+offset_transform_enabled = true
 theme_override_styles/normal = SubResource("StyleBoxEmpty_3gngh")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_3gngh")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_3gngh")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_fcnqv")
 icon = ExtResource("9_u7mrq")
+script = ExtResource("16_an0yc")
+highlight = NodePath("extract_highlight")
 
 [node name="Label" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/extract_button" unique_id=1292968384]
 layout_mode = 1
@@ -399,12 +670,28 @@ label_settings = SubResource("LabelSettings_hv5k6")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="cancel_button" type="Button" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=796364733]
+[node name="extract_highlight" type="Panel" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/extract_button" unique_id=1852263917]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_d0u6y")
+
+[node name="cancel_button" type="Button" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=796364733 node_paths=PackedStringArray("highlight")]
 texture_filter = 1
 layout_mode = 2
 size_flags_vertical = 4
+offset_transform_enabled = true
 theme_override_styles/normal = SubResource("StyleBoxEmpty_fcnqv")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_dlomj")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_v1oal")
 icon = ExtResource("10_hv5k6")
+script = ExtResource("16_an0yc")
+highlight = NodePath("cancel_highlight")
 
 [node name="Label" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/cancel_button" unique_id=1220591488]
 layout_mode = 1
@@ -414,6 +701,45 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Cancel"
-label_settings = SubResource("LabelSettings_u7mrq")
+label_settings = SubResource("LabelSettings_xxkdv")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="cancel_highlight" type="Panel" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/cancel_button" unique_id=913176136]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_an0yc")
+
+[node name="extraction_animations" type="AnimationPlayer" parent="." unique_id=753986411]
+libraries/ = SubResource("AnimationLibrary_lqiho")
+
+[connection signal="mouse_entered" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon" to="." method="_on_help_icon_mouse_entered"]
+[connection signal="mouse_exited" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon" to="." method="_on_help_icon_mouse_exited"]
+[connection signal="mouse_entered" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_valuable_preset" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_valuable_preset" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_valuable_preset" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_valuable_preset" method="_on_mouse_exited"]
+[connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_valuable_preset" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_valuable_preset" method="_on_pressed"]
+[connection signal="mouse_entered" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/highest_tier_preset" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/highest_tier_preset" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/highest_tier_preset" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/highest_tier_preset" method="_on_mouse_exited"]
+[connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/highest_tier_preset" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/highest_tier_preset" method="_on_pressed"]
+[connection signal="mouse_entered" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_items_preset" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_items_preset" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_items_preset" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_items_preset" method="_on_mouse_exited"]
+[connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_items_preset" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_items_preset" method="_on_pressed"]
+[connection signal="mouse_entered" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/best_value" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/best_value" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/best_value" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/best_value" method="_on_mouse_exited"]
+[connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/best_value" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/best_value" method="_on_pressed"]
+[connection signal="mouse_entered" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/clear_selection" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/clear_selection" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/clear_selection" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/clear_selection" method="_on_mouse_exited"]
+[connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/clear_selection" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/clear_selection" method="_on_pressed"]
+[connection signal="mouse_entered" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/extract_button" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/extract_button" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/extract_button" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/extract_button" method="_on_mouse_exited"]
+[connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/extract_button" to="." method="_on_extract_button_pressed"]
+[connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/extract_button" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/extract_button" method="_on_pressed"]
+[connection signal="mouse_entered" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/cancel_button" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/cancel_button" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/cancel_button" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/cancel_button" method="_on_mouse_exited"]
+[connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/cancel_button" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/cancel_button" method="_on_pressed"]

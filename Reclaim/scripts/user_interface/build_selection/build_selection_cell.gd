@@ -70,7 +70,7 @@ func move(direction: int, tween_time: float) -> void:
 	
 	cell_position += direction
 	
-	var visual_index := clampi(cell_position, -3, 3)
+	var visual_index := clampi(cell_position, MIN_VISIBLE_POS, MAX_VISIBLE_POS)
 	
 	if not cell_properties.has(visual_index):
 		visible = false
@@ -81,7 +81,7 @@ func move(direction: int, tween_time: float) -> void:
 	var target_position: Vector2 = properties[MARKER_KEY].position
 	var target_modulate: Color = properties[MODULATE_KEY]
 	
-	var should_be_visible := cell_position >= -3 and cell_position <= 3
+	var should_be_visible := cell_position >= MIN_VISIBLE_POS and cell_position <= MAX_VISIBLE_POS
 	visible = should_be_visible
 	
 	var move_tween := create_tween().set_parallel(true)

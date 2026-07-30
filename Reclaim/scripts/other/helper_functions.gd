@@ -5,14 +5,17 @@ extends RefCounted
 # CONSTANTS
 # =============================================================================
 
+# Groups & Data Keys
 const ROOT_NODES_GROUP: String = "root_nodes"
 const DEFAULT_BULLET_TRAIL_KEY: String = "default"
 
+# Numeric & Sizing Limits
 const MAX_SOUNDS: int = 50
 const MAX_DAMAGE_INDICATIONS: int = 100
 const DEFAULT_ITEM_AMOUNT: int = 0
 const DEFAULT_ITEM_CHANGE: int = 1
 
+# Formatting & Shorthand
 const MAX_TEXT: String = "MAX"
 const ORDER_OF_MAGNITUDE: int = 10
 const HUNDRED_THRESHOLD: int = 3
@@ -20,12 +23,25 @@ const COMMA_FREQUENCY: int = 3
 const SHORT_HAND_NUDGE: float = 1e-9
 const MAX_SHORTHAND_MAGNITUDE: int = 12
 
+const BILLION_SUFFIX: String = "B"
+const MILLION_SUFFIX: String = "M"
+const THOUSAND_SUFFIX: String = "K"
+
 const SHORTHAND_THRESHOLDS: Dictionary = {
-	9: "B",
-	6: "M",
-	3: "K",
+	9: BILLION_SUFFIX,
+	6: MILLION_SUFFIX,
+	3: THOUSAND_SUFFIX,
 }
 
+# String Symbols & Formats
+const EMPTY_STRING: String = ""
+const UNDERSCORE_SEPARATOR: String = "_"
+const SPACE_SEPARATOR: String = " "
+const MINUS_SIGN: String = "-"
+const COMMA_SEPARATOR: String = ","
+const DECIMAL_FORMAT: String = "%d.%d"
+
+# Preloaded Scenes
 const TEMP_SOUND_SCENE: PackedScene = preload("res://scenes/other/temp_sound_scene.tscn")
 const TEMP_SOUND_SCENE_3D: PackedScene = preload("res://scenes/other/temp_sound_scene_3D.tscn")
 const BULLET_TRAIL_SCENE: PackedScene = preload("res://scenes/turrets/bullet_trail.tscn")
@@ -121,7 +137,7 @@ static func return_amount_shorthand(value: float) -> String:
 	
 	var magnitude: int = floori(log(value) / log(ORDER_OF_MAGNITUDE) + SHORT_HAND_NUDGE)
 	var magnitude_divisor: int = DEFAULT_ITEM_AMOUNT
-	var suffix: String = ""
+	var suffix: String = EMPTY_STRING
 	var decimal_point_needed: bool = false
 	
 	if magnitude < HUNDRED_THRESHOLD:
@@ -144,7 +160,7 @@ static func return_amount_shorthand(value: float) -> String:
 		var remainder: int = tenth % 10
 		if remainder == 0:
 			return str(whole) + suffix
-		return "%d.%d" % [whole, remainder] + suffix
+		return DECIMAL_FORMAT % [whole, remainder] + suffix
 	
 	return str(floori(value / (ORDER_OF_MAGNITUDE ** magnitude_divisor))) + suffix
 
@@ -152,12 +168,12 @@ static func return_amount_shorthand(value: float) -> String:
 ## removed underscores and captlizes the next letter
 static func get_display_name(input: String) -> String:
 	if input.is_empty():
-		return ""
+		return EMPTY_STRING
 	
-	var words := input.split("_")
+	var words := input.split(UNDERSCORE_SEPARATOR)
 	for i in words.size():
 		words[i] = words[i].capitalize()
-	return " ".join(words)
+	return SPACE_SEPARATOR.join(words)
 
 
 ## puts commas every 3 numbers
@@ -165,12 +181,12 @@ static func comma_number(num: int) -> String:
 	if num >= (ORDER_OF_MAGNITUDE ** MAX_SHORTHAND_MAGNITUDE):
 		return MAX_TEXT
 	
-	var if_negetive := "-" if num < 0 else ""
+	var if_negetive := MINUS_SIGN if num < 0 else EMPTY_STRING
 	var text := str(absi(num))
-	var result := ""
+	var result := EMPTY_STRING
 	
 	while text.length() > COMMA_FREQUENCY:
-		result = "," + text.substr(text.length() - COMMA_FREQUENCY) + result
+		result = COMMA_SEPARATOR + text.substr(text.length() - COMMA_FREQUENCY) + result
 		text = text.substr(0, text.length() - COMMA_FREQUENCY)
 	
 	return if_negetive + text + result
@@ -186,6 +202,7 @@ static func get_current_storage() -> Dictionary:
 	return Global.sector_storage
 
 
+## checks if the item resource is not null and has a valid key and tier
 static func is_valid_item(item_resource: ItemData) -> bool:
 	return (
 		item_resource != null
@@ -194,12 +211,14 @@ static func is_valid_item(item_resource: ItemData) -> bool:
 	)
 
 
+## returns either the passed storage dictionary or the current active storage if empty
 static func _get_storage(storage: Dictionary = {}) -> Dictionary:
 	if storage.is_empty():
 		return get_current_storage()
 	return storage
 
 
+## gets the amount of a specific item in the target storage
 static func get_item_amount(item_resource: ItemData, storage: Dictionary = {}) -> int:
 	if not is_valid_item(item_resource):
 		return DEFAULT_ITEM_AMOUNT
@@ -214,6 +233,7 @@ static func get_item_amount(item_resource: ItemData, storage: Dictionary = {}) -
 	)
 
 
+## checks if the target storage contains at least a certain amount of an item
 static func has_item_amount(
 	item_resource: ItemData,
 	amount: int = DEFAULT_ITEM_CHANGE,
@@ -224,6 +244,7 @@ static func has_item_amount(
 	return get_item_amount(item_resource, storage) >= amount
 
 
+## adds a specific amount of an item to the target storage
 static func add_item_to_storage(
 	item_resource: ItemData,
 	amount: int = DEFAULT_ITEM_CHANGE,
@@ -242,6 +263,7 @@ static func add_item_to_storage(
 	return true
 
 
+## removes a specific amount of an item from the target storage if there is enough
 static func remove_item_from_storage(
 	item_resource: ItemData,
 	amount: int = DEFAULT_ITEM_CHANGE,
@@ -274,7 +296,7 @@ static func get_items_from_type(item_type) -> Dictionary:
 			
 			if DataRegistry.items[item_key].type == item_type:
 				items[tier][item_key] = current_storage[tier][item_key]
-
+	
 	return items
 
 

@@ -11,6 +11,7 @@ const RANGE_TEXT := "Range : "
 const ABILITY_TEXT := "Ability : "
 const EFFECT_TEXT := "Effect : "
 const TIER_TEXT := "Tier : "
+const TURRET_NAME_FORMAT := "- %s -"
 
 const X_TEXT := "x"
 const SECONDS_TEXT := " s"
@@ -61,7 +62,7 @@ func show_itemtip(item : ItemData, amount : int, type : int) -> void:
 		Global.ITEM_TYPES.TURRET:
 			current_tip = turrets_tip
 			turrets_tip.visible = true
-			turret_name_label.text = "- " + HelperFunctions.get_display_name(item.key) + " -"
+			turret_name_label.text = TURRET_NAME_FORMAT % HelperFunctions.get_display_name(item.key)
 			turret_value_label.text = VALUE_TEXT + str(item.value)
 			turret_weight_label.text = WEIGHT_TEXT + str(item.weight)
 			

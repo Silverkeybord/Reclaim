@@ -13,7 +13,7 @@ const MARKER_KEY := "marker"
 const SCALE_KEY := "scale"
 const MODULATE_KEY := "modulate"
 const GOT_NOTHING := "NOTHING..."
-const EMPTY_SELECTOIN := ""
+const EMPTY_SELECTION := ""
 const MIN_CELL_POSITION := -3
 const MAX_CELL_POSITION := 3
 const MAX_TWEEN_SPEED := 0.15
@@ -132,9 +132,9 @@ func _process(_delta: float) -> void:
 		selected_name.text = GOT_NOTHING
 		match Global.current_build_mode:
 			Global.BUILD_MODES.TURRET:
-				player.selected_turret = EMPTY_SELECTOIN
+				player.selected_turret = EMPTY_SELECTION
 			Global.BUILD_MODES.BASE:
-				player.selected_base = EMPTY_SELECTOIN
+				player.selected_base = EMPTY_SELECTION
 
 
 func load_selection() -> void:
@@ -350,7 +350,7 @@ func change_build_mode() -> void:
 				player.selected_turret = selected_cell.item_resource.key
 			else:
 				selected_cell = null
-				player.selected_turret = EMPTY_SELECTOIN
+				player.selected_turret = EMPTY_SELECTION
 			
 		Global.BUILD_MODES.BASE:
 			for cell in active_turret_cells:
@@ -363,7 +363,7 @@ func change_build_mode() -> void:
 				player.selected_base = selected_cell.item_resource.key
 			else:
 				selected_cell = null
-				player.selected_base = EMPTY_SELECTOIN
+				player.selected_base = EMPTY_SELECTION
 
 
 func placed_build() -> void:
@@ -398,11 +398,11 @@ func remove_cell_in_place() -> void:
 			Global.BUILD_MODES.TURRET:
 				turret_scroll_position = MIN_SCROLL_POSITION
 				turret_max_scroll_position = EMPTY_SCROLL_POSITION
-				player.selected_turret = EMPTY_SELECTOIN
+				player.selected_turret = EMPTY_SELECTION
 			Global.BUILD_MODES.BASE:
 				base_scroll_position = MIN_SCROLL_POSITION
 				base_max_scroll_position = EMPTY_SCROLL_POSITION
-				player.selected_base = EMPTY_SELECTOIN
+				player.selected_base = EMPTY_SELECTION
 		return
 	
 	var next_selected_index: int = min(remove_cell_index, cells_array.size() - 1)
