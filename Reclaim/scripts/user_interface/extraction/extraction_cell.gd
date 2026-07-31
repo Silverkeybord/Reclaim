@@ -29,6 +29,22 @@ func _process(_delta: float) -> void:
 		_move_to_other(MOVE_FIVE)
 
 
+func update_amount() -> void:
+	if not HelperFunctions.is_valid_item(item_resource):
+		amount = DEFAULT_AMOUNT
+		visible = false
+		return
+	
+	if in_storage:
+		amount = HelperFunctions.get_item_amount(item_resource)
+	else:
+		amount = HelperFunctions.get_item_amount(item_resource, Global.extraction_storage)
+	
+	amount_label.text = HelperFunctions.return_amount_shorthand(amount)
+	
+	visible = amount > 0
+
+
 func _move_to_other(move_amount : int) -> void:
 	if move_amount == MOVE_MAX:
 		pass

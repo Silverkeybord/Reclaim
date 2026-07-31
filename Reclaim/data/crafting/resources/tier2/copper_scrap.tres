@@ -29,3 +29,6 @@ required_ship_level = 6
 requirements = Array[ExtResource("req_script")]([SubResource("req_0"), SubResource("req_1"), SubResource("req_2")])
 crafted_item = ExtResource("crafted")
 craft_amount = 50
+description = "This is an item in a game you can craft from the game called reclaim made by a
+final year high school student.
+"

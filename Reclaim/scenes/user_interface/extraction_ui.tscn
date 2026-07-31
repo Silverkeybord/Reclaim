@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://bpxosd45jnywn" path="res://2d_assets/extraction/side_box.png" id="8_xxkdv"]
 [ext_resource type="Texture2D" uid="uid://dk23whls5qlpo" path="res://2d_assets/extraction/extract button.png" id="9_u7mrq"]
 [ext_resource type="Texture2D" uid="uid://dokvrvdet2fhs" path="res://2d_assets/extraction/cancel_button.png" id="10_hv5k6"]
+[ext_resource type="Theme" uid="uid://ctvnq5mcrq5dr" path="res://other_assets/themes/no_scroll_bar.tres" id="11_13jd1"]
 [ext_resource type="Script" uid="uid://bt7v0mmk03p15" path="res://scripts/user_interface/extraction/extract_highlight_button.gd" id="16_an0yc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4v7s"]
@@ -80,6 +81,10 @@ corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lqiho"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_klnfc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_57qmd"]
 bg_color = Color(0.3529412, 0.3529412, 0.3529412, 1)
@@ -233,7 +238,8 @@ _data = {
 &"open_extraction": SubResource("Animation_13jd1")
 }
 
-[node name="extraction_ui" type="CanvasLayer" unique_id=1130211310 node_paths=PackedStringArray("extraction_animations", "item_tip", "extraction_bar", "total_label", "weight_label", "help_display", "sector_hflow", "extraction_hflow")]
+[node name="cancel_button" type="CanvasLayer" unique_id=1130211310 node_paths=PackedStringArray("extraction_animations", "item_tip", "extraction_bar", "total_label", "weight_label", "help_display", "sector_hflow", "extraction_hflow")]
+layer = 2
 script = ExtResource("1_xxkdv")
 extraction_animations = NodePath("extraction_animations")
 item_tip = NodePath("itemtip")
@@ -241,8 +247,8 @@ extraction_bar = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContai
 total_label = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/TextureRect/total_weight")
 weight_label = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/weight_label")
 help_display = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display")
-sector_hflow = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/sector_storage/MarginContainer/VBoxContainer/sector_hflow")
-extraction_hflow = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/extraction_storage/MarginContainer/VBoxContainer/extraction_hflow")
+sector_hflow = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/sector_storage/MarginContainer/VBoxContainer/ScrollContainer/sector_hflow")
+extraction_hflow = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/extraction_storage/MarginContainer/VBoxContainer/ScrollContainer/extraction_hflow")
 
 [node name="itemtip" parent="." unique_id=854836766 instance=ExtResource("1_8eks6")]
 
@@ -528,8 +534,14 @@ layout_mode = 2
 text = "Sector Storage"
 label_settings = ExtResource("5_ckfe1")
 
-[node name="sector_hflow" type="HFlowContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/sector_storage/MarginContainer/VBoxContainer" unique_id=974834084]
+[node name="ScrollContainer" type="ScrollContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/sector_storage/MarginContainer/VBoxContainer" unique_id=1276571147]
 layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("11_13jd1")
+
+[node name="sector_hflow" type="HFlowContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/sector_storage/MarginContainer/VBoxContainer/ScrollContainer" unique_id=974834084]
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10
@@ -568,8 +580,15 @@ layout_mode = 2
 text = "Extraction"
 label_settings = ExtResource("5_ckfe1")
 
-[node name="extraction_hflow" type="HFlowContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/extraction_storage/MarginContainer/VBoxContainer" unique_id=891659839]
+[node name="ScrollContainer" type="ScrollContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/extraction_storage/MarginContainer/VBoxContainer" unique_id=461847887]
 layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_lqiho")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_klnfc")
+
+[node name="extraction_hflow" type="HFlowContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/extraction_storage/MarginContainer/VBoxContainer/ScrollContainer" unique_id=891659839]
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10
@@ -742,4 +761,5 @@ libraries/ = SubResource("AnimationLibrary_lqiho")
 [connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/extract_button" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/extract_button" method="_on_pressed"]
 [connection signal="mouse_entered" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/cancel_button" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/cancel_button" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/cancel_button" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/cancel_button" method="_on_mouse_exited"]
+[connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/cancel_button" to="." method="_on_cancel_button_pressed"]
 [connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/cancel_button" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/cancel_button" method="_on_pressed"]

@@ -10,7 +10,7 @@
 [ext_resource type="LabelSettings" uid="uid://2e243et27feg" path="res://other_assets/label_settings/crafting_requirments_stats.tres" id="12_7uxoi"]
 [ext_resource type="Texture2D" uid="uid://ckkntno5yp5sl" path="res://2d_assets/crafting/stats_stroke.png" id="12_uc2av"]
 [ext_resource type="Texture2D" uid="uid://wbdpq7cxeel8" path="res://2d_assets/crafting/craft button.png" id="13_7uxoi"]
-[ext_resource type="Theme" uid="uid://d1ugo0ioarh2o" path="res://other_assets/styles/scrollbar.tres" id="13_scvtr"]
+[ext_resource type="Theme" uid="uid://d1ugo0ioarh2o" path="res://other_assets/themes/scrollbar.tres" id="13_scvtr"]
 [ext_resource type="PackedScene" uid="uid://hgi3y5catplc" path="res://scenes/user_interface/recepie_requirment.tscn" id="13_uc2av"]
 [ext_resource type="Script" uid="uid://bb1xlwb46h5mt" path="res://scripts/user_interface/crafting/crafting_selection_vbox.gd" id="14_6uax1"]
 [ext_resource type="PackedScene" uid="uid://dqgjh854m2igs" path="res://scenes/user_interface/itemtip.tscn" id="16_6ikml"]
@@ -98,11 +98,9 @@ corner_radius_bottom_left = 8
 font = ExtResource("2_xasgv")
 font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_odlx4"]
-line_spacing = 0.0
-font = ExtResource("2_xasgv")
-font_size = 14
-font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7uxoi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6ikml"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tj3mw"]
 bg_color = Color(0.7019608, 0.7019608, 0.7019608, 1)
@@ -248,8 +246,8 @@ anchor_right = 1.0054687
 anchor_bottom = 2.0
 offset_left = 6.5
 offset_top = -1440.0
-offset_right = -6.5
-offset_bottom = -1440.0007
+offset_right = -405.5
+offset_bottom = -1447.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("13_scvtr")
@@ -572,17 +570,20 @@ label_settings = SubResource("LabelSettings_iwo3t")
 [node name="description_margin" type="MarginContainer" parent="ui_root/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox" unique_id=1946015790]
 layout_mode = 2
 theme_override_constants/margin_left = 26
-theme_override_constants/margin_top = 0
+theme_override_constants/margin_top = -4
 
-[node name="description" type="Label" parent="ui_root/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/description_margin" unique_id=2079196357]
+[node name="description" type="RichTextLabel" parent="ui_root/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/description_margin" unique_id=1254253447]
 custom_minimum_size = Vector2(200, 60)
+custom_maximum_size = Vector2(-1, 60)
 layout_mode = 2
-text = "No description yet"
-label_settings = SubResource("LabelSettings_odlx4")
+theme_override_colors/default_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_fonts/normal_font = ExtResource("2_xasgv")
+theme_override_font_sizes/normal_font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxEmpty_7uxoi")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_6ikml")
+text = "No description avaliable"
 horizontal_alignment = 1
 vertical_alignment = 1
-autowrap_mode = 3
-clip_text = true
 
 [node name="requirments_margin" type="MarginContainer" parent="ui_root/whole_ui/crafting_hbox/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox" unique_id=1161069611]
 layout_mode = 2

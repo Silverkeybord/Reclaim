@@ -8,6 +8,7 @@ const SCROLL_AMOUNT := 50
 const MIN_SCROLL := 0
 
 const INTERACT_INPUT := "interact"
+const CLOSE_UI_INPUT := "close_ui"
 
 const MISSING_CELL_PARENT_ERROR := "Storage UI item parent is missing."
 
@@ -21,8 +22,14 @@ var displayed_cells : Dictionary = {}
 
 
 func _ready() -> void:
+	set_process(false)
 	displayed_cells = load_all_cells(item_parent, INVENTORY_CELLS_SCENE, item_tip)
 	update_storage()
+
+
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed(CLOSE_UI_INPUT):
+		storage_close()
 
 
 static func load_all_cells(
@@ -82,34 +89,20 @@ func _input(event: InputEvent) -> void:
 				)
 			MOUSE_BUTTON_WHEEL_DOWN:
 				scroll_container.scroll_vertical += SCROLL_AMOUNT
-	
-	if Input.is_action_just_pressed(INTERACT_INPUT):
-		open_or_close()
 
 
-func open_or_close() -> void:
-	if not crafting_inventory:
-		if storage_animations.is_playing():
-			return
-	else:
-		return
-	
-	if Global.storage_open:
-		close_storage()
-	else:
-		open_storage()
-
-
-func open_storage() -> void:
+func storage_open() -> void:
 	Global.ui_open = true
 	Global.storage_open = true
+	set_process(true)
 	update_storage()
 	if not crafting_inventory:
 		storage_animations.play(OPEN_ANIMATION)
 
 
-func close_storage() -> void:
+func storage_close() -> void:
 	Global.ui_open = false
 	Global.storage_open = false
+	set_process(false)
 	if not crafting_inventory:
 		storage_animations.play(CLOSE_ANIMATION)

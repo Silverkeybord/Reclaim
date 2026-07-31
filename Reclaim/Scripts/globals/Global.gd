@@ -193,8 +193,11 @@ func set_random_storage(set_sector_storage: bool = false) -> void:
 
 
 ## Sets the mouse of the player to be unlocked or locked bassed on its last value
-func set_mouse_captured() -> void:
-	mouse_captured = not mouse_captured
+func set_mouse_captured(set_mode : bool = false, set_value : bool = false) -> void:
+	if set_mode:
+		mouse_captured = set_value
+	else:
+		mouse_captured = not mouse_captured
 	
 	if mouse_captured:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)

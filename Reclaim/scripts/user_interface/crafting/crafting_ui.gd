@@ -32,6 +32,8 @@ const AMOUNT_LABEL_PREFIX := "Amount: "
 const CRAFT_TIME_LABEL_PREFIX := "Craft Time: "
 const MIN_CRAFT_AMOUNT := 1
 
+const CLOSE_UI_INPUT := "close_ui"
+
 @export var crafting_animations : AnimationPlayer
 
 @export_group("Requirments")
@@ -44,7 +46,7 @@ const MIN_CRAFT_AMOUNT := 1
 @export var value_stat : Label
 @export var amount_stat : Label
 @export var craft_time_stat : Label
-@export var description : Label
+@export var description : RichTextLabel
 @export var requirments_hflow : HFlowContainer
 @export var craft_button : Button
 @export var craft_overlay : MarginContainer
@@ -81,6 +83,9 @@ var ship_level_requirments : Dictionary = {
 
 
 func _ready() -> void:
+	set_process(false)
+	description.get_v_scroll_bar().visible = false
+	
 	for recipe_key : String in DataRegistry.crafting:
 		var recipe : CraftData = DataRegistry.crafting[recipe_key]
 		if not _is_valid_recipe(recipe):
@@ -99,39 +104,26 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	if not Global.crafting_open:
-		return
-	
-	if Input.is_action_just_pressed("interact"):
-		open_or_close()
+	if Input.is_action_just_pressed(CLOSE_UI_INPUT):
+		close_crafting()
 
 
 # UI control ================================================================
-func open_or_close() -> void:
-	if crafting_animations.is_playing():
-		return
-	
-	Global.set_mouse_captured()
-	
-	if Global.crafting_open:
-		close_crafting()
-	else:
-		open_crafting()
-
-
 func open_crafting() -> void:
 	Global.ui_open = true
 	Global.crafting_open = true
-	
+	Global.set_mouse_captured()
+	set_process(true)
 	update_crafting_display()
 	crafting_animations.play(OPEN_ANIMATION)
 
 
 func close_crafting() -> void:
+	set_process(false)
+	Global.set_mouse_captured()
+	crafting_animations.play(CLOSE_ANIMATION)
 	Global.ui_open = false
 	Global.crafting_open = false
-	
-	crafting_animations.play(CLOSE_ANIMATION)
 
 
 # Loading and Crafting ======================================================

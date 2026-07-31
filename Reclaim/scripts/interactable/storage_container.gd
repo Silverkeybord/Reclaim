@@ -8,7 +8,7 @@ const CLOSE_DISTANCE := 10.0
 
 
 func interact() -> void:
-	storage_ui.open_or_close()
+	storage_ui.storage_open()
 
 
 func _process(_delta: float) -> void:

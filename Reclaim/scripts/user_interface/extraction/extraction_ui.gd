@@ -49,10 +49,9 @@ func _ready() -> void:
 	extraction_cells = Storage.load_all_cells(
 		extraction_hflow, EXTRACTION_CELL_SCENE, item_tip, self)
 	
-	for cell : ExtractionCell in extraction_hflow.get_children():
+	for key : String in extraction_cells:
+		var cell : ExtractionCell = extraction_cells[key]
 		cell.in_storage = false
-	
-	open_ui()
 
 
 func _process(_delta: float) -> void:
@@ -75,22 +74,28 @@ func open_ui() -> void:
 	Global.extraction_open = true
 	Global.set_mouse_captured()
 	extraction_animations.play(ANIMATION_OPEN)
+	load_extraction_cells()
 
 
 func close_ui() -> void:
 	set_process(false)
+	extraction_animations.play(ANIMATION_CLOSE)
+	Global.set_mouse_captured()
+	
+	await extraction_animations.animation_finished
+	
 	Global.ui_open = false
 	Global.extraction_open = false
-	Global.set_mouse_captured()
-	extraction_animations.play(ANIMATION_CLOSE)
 
 
-func load_sector_storage() -> void:
-	for item in Global.extraction_storage:
-		pass
+func load_extraction_cells() -> void:
+	for tier in Global.sector_storage:
+		for item in Global.sector_storage[tier]:
+			pass
 	
-	for item in Global.sector_storage:
-		storage_cells[item].update_amount()
+	for tier in Global.sector_storage:
+		for item in Global.sector_storage[tier]:
+			storage_cells[item].update_amount()
 
 
 # Help icon showing -----------------------------------------------------------
@@ -105,3 +110,7 @@ func _on_help_icon_mouse_exited() -> void:
 # Extract and Cancel Buttons --------------------------------------------------
 func _on_extract_button_pressed() -> void:
 	extraction_pod.extract()
+
+
+func _on_cancel_button_pressed() -> void:
+	close_ui()
