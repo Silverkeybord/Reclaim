@@ -1,13 +1,32 @@
 [gd_scene format=3 uid="uid://bsf5b7ordla2o"]
 
 [ext_resource type="Script" uid="uid://b03p5xisdih3g" path="res://scripts/other/sector_shield.gd" id="1_n3gv3"]
-[ext_resource type="PackedScene" uid="uid://c6q58efe0i7xg" path="res://scenes/user_interface/wave_ui.tscn" id="2_ob7rg"]
+[ext_resource type="Shader" uid="uid://c8ewhf2mpm8fx" path="res://other_assets/shaders/sector_shield.gdshader" id="2_68m1w"]
+[ext_resource type="PackedScene" uid="uid://c6q58efe0i7xg" path="res://scenes/user_interface/run_ui.tscn" id="2_ob7rg"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_g4v7s"]
 radius = 27.0
 height = 54.0
 radial_segments = 16
 rings = 8
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2bfc7"]
+render_priority = 0
+shader = ExtResource("2_68m1w")
+shader_parameter/shield_color = Color(0.4, 0.9, 1, 0.25)
+shader_parameter/health = 1.0
+shader_parameter/fresnel_strength = 3.5
+shader_parameter/fresnel_power = 4.0
+shader_parameter/scan_speed = 1.8
+shader_parameter/scan_density = 70.0
+shader_parameter/pulse_speed = 2.0
+shader_parameter/grid_size = 35.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_yf5fn"]
+radius = 26.0
+height = 52.0
+radial_segments = 32
+rings = 16
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_3gngh"]
 frequency = 0.004
@@ -20,12 +39,6 @@ transparency = 1
 shading_mode = 0
 albedo_color = Color(0.7294118, 1, 1, 0.41568628)
 refraction_texture = SubResource("NoiseTexture2D_d0u6y")
-
-[sub_resource type="SphereMesh" id="SphereMesh_yf5fn"]
-radius = 26.0
-height = 52.0
-radial_segments = 32
-rings = 16
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_yf5fn"]
 radius = 26.0
@@ -41,7 +54,7 @@ heal_timer = NodePath("heal_timer")
 
 [node name="outter" type="CSGMesh3D" parent="." unique_id=270756843]
 mesh = SubResource("SphereMesh_g4v7s")
-material = SubResource("StandardMaterial3D_3gngh")
+material = SubResource("ShaderMaterial_2bfc7")
 
 [node name="inner" type="CSGMesh3D" parent="outter" unique_id=318298863]
 operation = 2

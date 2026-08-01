@@ -29,14 +29,14 @@ data = PackedVector3Array(-0.39999998, 0.39999998, 1, 0.39999998, 0.39999998, 1,
 height = 10.0
 radius = 25.0
 
-[node name="dual" type="StaticBody3D" unique_id=88525916 node_paths=PackedStringArray("left_marker", "right_marker", "main_body", "turret_piviot_point", "cooldown_timer", "turret_range_area", "turret_range_coll")]
+[node name="dual" type="StaticBody3D" unique_id=88525916 node_paths=PackedStringArray("left_marker", "right_marker", "main_body", "turret_pivot_point", "cooldown_timer", "turret_range_area", "turret_range_coll")]
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("1_11lst")
 left_marker = NodePath("head_piviot_point/left_barrel/bullet_spawn")
 right_marker = NodePath("head_piviot_point/right_barrel/bullet_spawn")
 main_body = NodePath(".")
-turret_piviot_point = NodePath("head_piviot_point")
+turret_pivot_point = NodePath("head_piviot_point")
 cooldown_timer = NodePath("cool_down_timer")
 turret_range_area = NodePath("turret_range_area")
 turret_range_coll = NodePath("turret_range_area/turret_range_coll")

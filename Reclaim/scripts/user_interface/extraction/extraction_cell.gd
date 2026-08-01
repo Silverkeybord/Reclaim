@@ -7,7 +7,8 @@ const SHIFT_TOGGLE := "shift"
 
 const MOVE_ONE := 1
 const MOVE_FIVE := 5
-const MOVE_MAX := -1
+const MOVE_TWENTY_FIVE := 25
+const MOVE_MAX := 0
 
 @export var extraction_ui : CanvasLayer
 @export var in_storage : bool = true
@@ -21,12 +22,15 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed(LEFT_CLICK):
 		
 		if Input.is_action_pressed(SHIFT_TOGGLE):
-			_move_to_other(MOVE_MAX)
+			_move_to_other(MOVE_TWENTY_FIVE)
 		else:
 			_move_to_other(MOVE_ONE)
 	
 	elif Input.is_action_just_pressed(RIGHT_CLICK):
-		_move_to_other(MOVE_FIVE)
+		if Input.is_action_pressed(SHIFT_TOGGLE):
+			_move_to_other(MOVE_MAX)
+		else:
+			_move_to_other(MOVE_FIVE)
 
 
 func update_amount() -> void:
@@ -46,8 +50,7 @@ func update_amount() -> void:
 
 
 func _move_to_other(move_amount : int) -> void:
-	if move_amount == MOVE_MAX:
-		pass
+	extraction_ui.move_item(in_storage, move_amount, item_resource)
 
 
 func toggle_mouse_detection(toggle : bool) -> void:

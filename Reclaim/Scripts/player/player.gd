@@ -109,12 +109,10 @@ var weapon_name: String = DEFAULT_WEAPON_NAME
 var weapon_resource: WeaponData = null
 var can_remove_build: bool = true
 
-# =============================================================================
-# LIFECYCLE
-# =============================================================================
 
 func _ready() -> void:
 	_set_new_weapon()
+	Global.set_random_storage(true)
 
 
 func _physics_process(delta: float) -> void:

@@ -316,8 +316,9 @@ theme_override_constants/separation = 4
 [node name="Label" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer/VBoxContainer" unique_id=369397827]
 layout_mode = 2
 text = "Left Click - move 1
-Right Click - move 10
-Shift Click - move Max"
+Right Click - move 5
+Shift  Click - move 25
+Shift Right Click - Max"
 label_settings = ExtResource("4_uu56b")
 
 [node name="Label3" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer/VBoxContainer" unique_id=399849600]
@@ -335,7 +336,7 @@ layout_mode = 2
 text = "Presets add onto what 
 you already have in your
 extraction selection. It
-wont clera your current 
+won't clear your current 
 selection"
 label_settings = SubResource("LabelSettings_13jd1")
 
@@ -742,18 +743,23 @@ libraries/ = SubResource("AnimationLibrary_lqiho")
 [connection signal="mouse_exited" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon" to="." method="_on_help_icon_mouse_exited"]
 [connection signal="mouse_entered" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_valuable_preset" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_valuable_preset" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_valuable_preset" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_valuable_preset" method="_on_mouse_exited"]
+[connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_valuable_preset" to="." method="_on_most_valuable_preset_pressed"]
 [connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_valuable_preset" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_valuable_preset" method="_on_pressed"]
 [connection signal="mouse_entered" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/highest_tier_preset" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/highest_tier_preset" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/highest_tier_preset" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/highest_tier_preset" method="_on_mouse_exited"]
+[connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/highest_tier_preset" to="." method="_on_highest_tier_preset_pressed"]
 [connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/highest_tier_preset" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/highest_tier_preset" method="_on_pressed"]
 [connection signal="mouse_entered" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_items_preset" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_items_preset" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_items_preset" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_items_preset" method="_on_mouse_exited"]
+[connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_items_preset" to="." method="_on_most_items_preset_pressed"]
 [connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_items_preset" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_items_preset" method="_on_pressed"]
 [connection signal="mouse_entered" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/best_value" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/best_value" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/best_value" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/best_value" method="_on_mouse_exited"]
+[connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/best_value" to="." method="_on_best_value_pressed"]
 [connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/best_value" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/best_value" method="_on_pressed"]
 [connection signal="mouse_entered" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/clear_selection" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/clear_selection" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/clear_selection" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/clear_selection" method="_on_mouse_exited"]
+[connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/clear_selection" to="." method="_on_clear_selection_pressed"]
 [connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/clear_selection" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/clear_selection" method="_on_pressed"]
 [connection signal="mouse_entered" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/extract_button" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/extract_button" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/extract_button" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/extract_button" method="_on_mouse_exited"]

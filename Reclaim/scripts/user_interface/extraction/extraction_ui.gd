@@ -16,6 +16,13 @@ const MAX_COLOR := Color("FF7E7E")
 
 const FITHS_RATIO_DIVISOR := 0.2
 
+const MAX_MOVE_AMOUNT := 0
+
+const CLOSE_UI_INPUT := "close_ui"
+
+const WEIGHT_FORMAT := "--- Weight %s/%s kg ---"
+const TOTAL_FORMAT := "Total : %s"
+
 # each number is multiplyed by 0.2 for the ratio. using intergets for better precision
 # so 1 means under 0.2
 const EXTRACTION_BAR_COLOR_RATIOS := {
@@ -41,6 +48,8 @@ const EXTRACTION_BAR_COLOR_RATIOS := {
 var storage_cells := {}
 var extraction_cells := {}
 
+var total_stored_weight : int = 0
+
 
 func _ready() -> void:
 	set_process(false)
@@ -63,24 +72,30 @@ func _process(_delta: float) -> void:
 		
 	elif extraction_bar.value == extraction_bar.max_value:
 		extraction_bar.modulate = MAX_COLOR
+	
+	if Input.is_action_just_pressed(CLOSE_UI_INPUT):
+		close_ui()
 
 
 func open_ui() -> void:
+	if extraction_animations.is_playing():
+		return
+	
 	extraction_bar.value = 0 # TEMP
 	extraction_bar.max_value = 100 # TEMP
 	
-	set_process(true)
-	Global.ui_open = true
-	Global.extraction_open = true
-	Global.set_mouse_captured()
+	_set_open_or_close(true)
 	extraction_animations.play(ANIMATION_OPEN)
 	load_extraction_cells()
 
 
+# General loading and functoins -----------------------------------------------
 func close_ui() -> void:
-	set_process(false)
+	if extraction_animations.is_playing():
+		return
+	
+	_set_open_or_close(false)
 	extraction_animations.play(ANIMATION_CLOSE)
-	Global.set_mouse_captured()
 	
 	await extraction_animations.animation_finished
 	
@@ -88,14 +103,29 @@ func close_ui() -> void:
 	Global.extraction_open = false
 
 
+func _set_open_or_close(toggle : bool) -> void:
+	Global.ui_open = toggle
+	Global.extraction_open = toggle
+	set_process(toggle)
+	Global.set_mouse_captured(true, not toggle)
+
+
 func load_extraction_cells() -> void:
 	for tier in Global.sector_storage:
 		for item in Global.sector_storage[tier]:
 			pass
 	
-	for tier in Global.sector_storage:
-		for item in Global.sector_storage[tier]:
-			storage_cells[item].update_amount()
+	var sector_storage_items = HelperFunctions.get_item_from_storage(Global.sector_storage)
+	for item in sector_storage_items:
+		var item_data : ItemData = DataRegistry.items[item]
+		storage_cells[item].update_amount()
+		total_stored_weight += item_data.weight * sector_storage_items[item]
+	
+	total_label.text = TOTAL_FORMAT % HelperFunctions.return_amount_shorthand(total_stored_weight)
+	weight_label.text = WEIGHT_FORMAT % [
+		HelperFunctions.return_amount_shorthand(extraction_bar.value), 
+		HelperFunctions.return_amount_shorthand(extraction_bar.max_value)
+		]
 
 
 # Help icon showing -----------------------------------------------------------
@@ -114,3 +144,73 @@ func _on_extract_button_pressed() -> void:
 
 func _on_cancel_button_pressed() -> void:
 	close_ui()
+
+
+# Moving items and checking ---------------------------------------------------
+func move_item(in_storage : bool, move_amount : int, item : ItemData) -> void:
+	if not item:
+		return
+	
+	var item_amount : int
+	
+	if in_storage:
+		item_amount = Global.sector_storage[item.tier].get(item.key)
+	else:
+		item_amount = Global.extraction_storage[item.tier].get(item.key)
+	
+	if move_amount > item_amount:
+		move_amount = item_amount
+	
+	if move_amount == MAX_MOVE_AMOUNT:
+		move_amount = item_amount
+	
+	var move_weight : int = move_amount * item.weight
+	
+	if in_storage:
+		if move_weight > extraction_bar.max_value - extraction_bar.value:
+			var remaining_weight = extraction_bar.max_value - extraction_bar.value
+			move_amount = floori(remaining_weight / item.weight)
+			move_weight = move_amount * item.weight
+		
+		if move_amount != 0:
+			HelperFunctions.add_item_to_storage(item, move_amount, Global.extraction_storage)
+			HelperFunctions.remove_item_from_storage(item, move_amount, Global.sector_storage)
+			storage_cells[item.key].update_amount()
+			extraction_cells[item.key].update_amount()
+			extraction_bar.value += move_weight
+		
+	else:
+		HelperFunctions.add_item_to_storage(item, move_amount, Global.sector_storage)
+		HelperFunctions.remove_item_from_storage(item, move_amount, Global.extraction_storage)
+		storage_cells[item.key].update_amount()
+		extraction_cells[item.key].update_amount()
+		extraction_bar.value -= move_weight
+	
+	weight_label.text = WEIGHT_FORMAT % [extraction_bar.value, extraction_bar.max_value]
+
+
+# Presets --------------------------------------------------------------------
+func _on_most_valuable_preset_pressed() -> void:
+	
+	pass # Replace with function body.
+
+
+func _on_highest_tier_preset_pressed() -> void:
+	
+	pass # Replace with function body.
+
+
+func _on_most_items_preset_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_best_value_pressed() -> void:
+	pass
+
+
+# clears extraction storage
+func _on_clear_selection_pressed() -> void:
+	var items = HelperFunctions.get_item_from_storage(Global.extraction_storage)
+	
+	for item in items:
+		move_item(false, 0, DataRegistry.items[item])

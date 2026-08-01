@@ -9,4 +9,5 @@ key = "coal"
 size = Vector3(0.4, 0.35, 0.4)
 tier = 2
 item_texture = ExtResource("1_8af7e")
+weight = 2
 metadata/_custom_type_script = "uid://cgqvvu75ctfva"

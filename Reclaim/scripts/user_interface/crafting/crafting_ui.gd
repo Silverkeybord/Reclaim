@@ -110,20 +110,27 @@ func _process(_delta: float) -> void:
 
 # UI control ================================================================
 func open_crafting() -> void:
-	Global.ui_open = true
-	Global.crafting_open = true
-	Global.set_mouse_captured()
-	set_process(true)
+	if crafting_animations.is_playing():
+		return
+	
+	_set_open_or_close(true)
 	update_crafting_display()
 	crafting_animations.play(OPEN_ANIMATION)
 
 
 func close_crafting() -> void:
-	set_process(false)
-	Global.set_mouse_captured()
+	if crafting_animations.is_playing():
+		return
+	
+	_set_open_or_close(false)
 	crafting_animations.play(CLOSE_ANIMATION)
-	Global.ui_open = false
-	Global.crafting_open = false
+
+
+func _set_open_or_close(toggle : bool) -> void:
+	Global.ui_open = toggle
+	Global.crafting_open = toggle
+	set_process(toggle)
+	Global.set_mouse_captured(true, not toggle)
 
 
 # Loading and Crafting ======================================================

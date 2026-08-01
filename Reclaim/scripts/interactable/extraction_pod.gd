@@ -10,5 +10,6 @@ func interact() -> void:
 
 
 func extract() -> void:
+	Global.set_mouse_captured(true, true)
 	Global.at_ship = true
 	get_tree().change_scene_to_file(ship_scene)

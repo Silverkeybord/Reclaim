@@ -303,3 +303,17 @@ static func get_items_from_type(item_type) -> Dictionary:
 ## checks if an item is in the current storage
 static func check_for_item(item_resource: ItemData) -> bool:
 	return has_item_amount(item_resource)
+
+
+## returns item value pairs from a storage
+static func get_item_from_storage(storage : Dictionary) -> Dictionary:
+	if not storage:
+		storage = get_current_storage()
+	
+	var item_value_pairs : Dictionary
+	
+	for tier in storage:
+		for item_name in storage[tier]:
+			item_value_pairs[item_name] = storage[tier][item_name]
+	
+	return item_value_pairs

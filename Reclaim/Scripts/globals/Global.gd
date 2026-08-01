@@ -56,10 +56,8 @@ const ERR_SAVE_READ: String = "Could not open save file for reading: %s"
 const ERR_SAVE_INVALID: String = "Save file did not contain valid save data."
 
 # MISC --------------------------------------------------------------------
-const TEST_STORAGE_MIN_AMOUNT: int = 3
-const TEST_STORAGE_MAX_AMOUNT: int = 3
-const TEST_SHIP_STORAGE_MIN_AMOUNT: int = 1
-const TEST_SHIP_STORAGE_MAX_AMOUNT: int = 999
+const TEST_STORAGE_MIN_AMOUNT: int = 100
+const TEST_STORAGE_MAX_AMOUNT: int = 999
 const TEST_STORAGE_EXPONENT: int = 0
 
 const TIER_CONFIG: Dictionary = {
@@ -187,7 +185,7 @@ func set_random_storage(set_sector_storage: bool = false) -> void:
 				)
 		else:
 			ship_storage[resource.tier][key] = (
-				randi_range(TEST_SHIP_STORAGE_MIN_AMOUNT, TEST_SHIP_STORAGE_MAX_AMOUNT)
+				randi_range(TEST_STORAGE_MIN_AMOUNT, TEST_STORAGE_MAX_AMOUNT)
 				* (10 ** TEST_STORAGE_EXPONENT)
 				)
 

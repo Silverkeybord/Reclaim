@@ -65,11 +65,11 @@ func _shooting_logic() -> void:
 	if target == null or not is_instance_valid(target):
 		return
 	
-	print(target)
 	shoot(target)
 
 
-func shoot(target : CharacterBody3D) -> void:
+func shoot(target : BaseEnemy) -> void:
+	print(target)
 	var target_position := target.global_position
 	turret_pivot_point.look_at(target_position)
 	
@@ -97,6 +97,16 @@ func _pick_target(enemies: Array[BaseEnemy]) -> BaseEnemy:
 				):
 					closest = enemy
 			return closest
+		
+		SHOOTING_METHODS.CLOSEST:
+			var farthest = enemies[0]
+			for enemy in enemies:
+				if (
+				main_body.global_position.distance_to(enemy.global_position) > 
+				main_body.global_position.distance_to(farthest.global_position)
+				):
+					farthest = enemy
+			return farthest
 		
 		SHOOTING_METHODS.FIRST:
 			# First enemy to enter range (earliest in the array)
