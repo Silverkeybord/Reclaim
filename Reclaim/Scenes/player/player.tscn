@@ -148,7 +148,7 @@ _data = {
 &"build_placed": SubResource("Animation_ugbui")
 }
 
-[node name="player" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "hit_overlay", "aim_ray", "build_ray", "shooting_timer", "pick_up_area", "arm_pivot", "gun_pivot", "hammer_pivot", "wrench_pivot", "build_overlay", "build_label", "input_tip", "building_selection", "user_interface_animations") groups=["player"]]
+[node name="player" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "hit_overlay", "aim_ray", "build_ray", "shooting_timer", "pick_up_area", "arm_pivot", "gun_pivot", "hammer_pivot", "wrench_pivot", "canvas_root", "build_overlay", "build_label", "input_tip", "building_selection", "user_interface_animations") groups=["player"]]
 collision_layer = 2
 collision_mask = 79
 script = ExtResource("1_eo61r")
@@ -163,6 +163,7 @@ gun_pivot = NodePath("arm_piviot/gun_piviot")
 hammer_pivot = NodePath("arm_piviot/hammer_piviot")
 wrench_pivot = NodePath("arm_piviot/wrench_piviot")
 turret_holagram_scene = ExtResource("2_6upyo")
+canvas_root = NodePath("CanvasLayer")
 build_overlay = NodePath("CanvasLayer/build_overlay")
 build_label = NodePath("CanvasLayer/build_overlay/Label")
 input_tip = NodePath("CanvasLayer/input_tips/MarginContainer/input_tip")

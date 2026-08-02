@@ -66,6 +66,7 @@ const PICK_UP_COOLDOWN: float = 2.0
 # EXPORTS
 # =============================================================================
 
+
 @export_group("Player Stats")
 @export var jump_velocity: float = 20.0
 @export var move_speed: float = 14.0
@@ -92,6 +93,7 @@ const PICK_UP_COOLDOWN: float = 2.0
 @export var selected_base: String = ""
 
 @export_group("2D UI Elements")
+@export var canvas_root : CanvasLayer
 @export var build_overlay: Control
 @export var build_label: Label
 @export var input_tip: Label
@@ -116,6 +118,9 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if Global.major_animation_playing:
+		return
+	
 	if not is_on_floor():
 		velocity.y -= GRAVITY * delta
 	else:
@@ -137,6 +142,12 @@ func _physics_process(delta: float) -> void:
 
 
 func _process(_delta: float) -> void:
+	if Global.major_animation_playing:
+		canvas_root.visible = false
+	
+	if not canvas_root.visible:
+		canvas_root.visible = true
+	
 	_shoot_control()
 	_player_mode_handling()
 	_input_tip_updating()

@@ -21,7 +21,6 @@ const MAX_MOVE_AMOUNT := 0
 const CLOSE_UI_INPUT := "close_ui"
 
 const WEIGHT_FORMAT := "--- Weight %s/%s kg ---"
-const TOTAL_FORMAT := "Total : %s"
 
 # each number is multiplyed by 0.2 for the ratio. using intergets for better precision
 # so 1 means under 0.2
@@ -37,9 +36,9 @@ const EXTRACTION_BAR_COLOR_RATIOS := {
 @export var extraction_animations : AnimationPlayer
 
 @export_group("Extraction UI")
+@export var total_weight : TextureRect
 @export var item_tip : CanvasLayer
 @export var extraction_bar : ProgressBar
-@export var total_label : Label
 @export var weight_label : Label
 @export var help_display : PanelContainer
 @export var sector_hflow : HFlowContainer
@@ -47,8 +46,6 @@ const EXTRACTION_BAR_COLOR_RATIOS := {
 
 var storage_cells := {}
 var extraction_cells := {}
-
-var total_stored_weight : int = 0
 
 
 func _ready() -> void:
@@ -69,7 +66,7 @@ func _process(_delta: float) -> void:
 		var color_key = int(ceil(extraction_weight_ratio / FITHS_RATIO_DIVISOR))
 		
 		extraction_bar.modulate = EXTRACTION_BAR_COLOR_RATIOS[color_key]
-		
+	
 	elif extraction_bar.value == extraction_bar.max_value:
 		extraction_bar.modulate = MAX_COLOR
 	
@@ -117,24 +114,14 @@ func load_extraction_cells() -> void:
 	
 	var sector_storage_items = HelperFunctions.get_item_from_storage(Global.sector_storage)
 	for item in sector_storage_items:
-		var item_data : ItemData = DataRegistry.items[item]
 		storage_cells[item].update_amount()
-		total_stored_weight += item_data.weight * sector_storage_items[item]
 	
-	total_label.text = TOTAL_FORMAT % HelperFunctions.return_amount_shorthand(total_stored_weight)
+	total_weight.update_weight_label()
+	
 	weight_label.text = WEIGHT_FORMAT % [
 		HelperFunctions.return_amount_shorthand(extraction_bar.value), 
 		HelperFunctions.return_amount_shorthand(extraction_bar.max_value)
 		]
-
-
-# Help icon showing -----------------------------------------------------------
-func _on_help_icon_mouse_entered() -> void:
-	help_display.visible = true
-
-
-func _on_help_icon_mouse_exited() -> void:
-	help_display.visible = false
 
 
 # Extract and Cancel Buttons --------------------------------------------------

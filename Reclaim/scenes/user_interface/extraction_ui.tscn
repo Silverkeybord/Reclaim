@@ -4,10 +4,12 @@
 [ext_resource type="Script" uid="uid://tad6048775br" path="res://scripts/user_interface/extraction/extraction_ui.gd" id="1_xxkdv"]
 [ext_resource type="Texture2D" uid="uid://dbblaaid5dlw5" path="res://2d_assets/extraction/help_icon.png" id="2_vsh8a"]
 [ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="3_04trr"]
+[ext_resource type="Script" uid="uid://j6u6e0uh2cq3" path="res://scripts/user_interface/help_icon.gd" id="4_lqiho"]
 [ext_resource type="Texture2D" uid="uid://colmmsj7tl08u" path="res://2d_assets/extraction/preset_button.png" id="4_to6po"]
 [ext_resource type="LabelSettings" uid="uid://bgvc5k57qsgaq" path="res://other_assets/label_settings/basic_text.tres" id="4_uu56b"]
 [ext_resource type="Texture2D" uid="uid://b28pscglyfqyx" path="res://2d_assets/extraction/middle_connectors.png" id="5_04trr"]
 [ext_resource type="LabelSettings" uid="uid://c6mrm0na28c5g" path="res://other_assets/label_settings/titles.tres" id="5_ckfe1"]
+[ext_resource type="StyleBox" uid="uid://dacpcfrv5ymbo" path="res://other_assets/styles/base_ui_panels.tres" id="5_fb72p"]
 [ext_resource type="Script" uid="uid://clkeopwsevljj" path="res://scripts/user_interface/expand_buttons.gd" id="7_an0yc"]
 [ext_resource type="Texture2D" uid="uid://drcpipg5cmsks" path="res://2d_assets/extraction/decor.png" id="7_ml4rt"]
 [ext_resource type="LabelSettings" uid="uid://cvekg5ow7wvpg" path="res://other_assets/label_settings/white_button_text.tres" id="7_o2hgm"]
@@ -18,6 +20,10 @@
 [ext_resource type="Texture2D" uid="uid://dokvrvdet2fhs" path="res://2d_assets/extraction/cancel_button.png" id="10_hv5k6"]
 [ext_resource type="Theme" uid="uid://ctvnq5mcrq5dr" path="res://other_assets/themes/no_scroll_bar.tres" id="11_13jd1"]
 [ext_resource type="Script" uid="uid://bt7v0mmk03p15" path="res://scripts/user_interface/extraction/extract_highlight_button.gd" id="16_an0yc"]
+[ext_resource type="Script" uid="uid://b7ranqgnvit4m" path="res://scripts/user_interface/extraction/total_weight.gd" id="18_nkewb"]
+[ext_resource type="StyleBox" uid="uid://oyfwh8cxgij4" path="res://other_assets/styles/base_button_normal.tres" id="19_q0cy0"]
+[ext_resource type="StyleBox" uid="uid://p4bumkdahx6n" path="res://other_assets/styles/base_button_pressed.tres" id="20_82ivg"]
+[ext_resource type="StyleBox" uid="uid://dfnlbikp4agtb" path="res://other_assets/styles/base_button_hover.tres" id="21_vifx8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4v7s"]
 bg_color = Color(0.84313726, 0.84313726, 0.84313726, 1)
@@ -32,18 +38,6 @@ corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3gngh"]
-bg_color = Color(0.84313726, 0.84313726, 0.84313726, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(0.5176471, 0.5176471, 0.5176471, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
 
 [sub_resource type="LabelSettings" id="LabelSettings_13jd1"]
 font = ExtResource("3_04trr")
@@ -114,6 +108,130 @@ font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 font = ExtResource("3_04trr")
 font_size = 22
 font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_wu3y2"]
+font = ExtResource("3_04trr")
+font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iyh4d"]
+bg_color = Color(0.541, 0.561, 0.596, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.65882355, 0.65882355, 0.65882355, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fb72p"]
+bg_color = Color(0.6150879, 0.6338201, 0.6675233, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.65882355, 0.65882355, 0.65882355, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k04vf"]
+bg_color = Color(0.29, 0.871, 0.502, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.65882355, 0.65882355, 0.65882355, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nkewb"]
+bg_color = Color(0.33138722, 0.9395363, 0.54937786, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.65882355, 0.65882355, 0.65882355, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1uunt"]
+bg_color = Color(0.29, 0.557, 0.996, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.65882355, 0.65882355, 0.65882355, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q0cy0"]
+bg_color = Color(0.39510638, 0.62305754, 0.9977873, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.65882355, 0.65882355, 0.65882355, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_28550"]
+bg_color = Color(1, 0.847, 0.243, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.65882355, 0.65882355, 0.65882355, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_82ivg"]
+bg_color = Color(0.9999998, 0.89965403, 0.5471833, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.65882355, 0.65882355, 0.65882355, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t0t4p"]
+bg_color = Color(0.937, 0.267, 0.267, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.65882355, 0.65882355, 0.65882355, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vifx8"]
+bg_color = Color(0.96839887, 0.40123886, 0.376807, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.65882355, 0.65882355, 0.65882355, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3gngh"]
 
@@ -238,13 +356,13 @@ _data = {
 &"open_extraction": SubResource("Animation_13jd1")
 }
 
-[node name="cancel_button" type="CanvasLayer" unique_id=1130211310 node_paths=PackedStringArray("extraction_animations", "item_tip", "extraction_bar", "total_label", "weight_label", "help_display", "sector_hflow", "extraction_hflow")]
+[node name="cancel_button" type="CanvasLayer" unique_id=1130211310 node_paths=PackedStringArray("extraction_animations", "total_weight", "item_tip", "extraction_bar", "weight_label", "help_display", "sector_hflow", "extraction_hflow")]
 layer = 2
 script = ExtResource("1_xxkdv")
 extraction_animations = NodePath("extraction_animations")
+total_weight = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight")
 item_tip = NodePath("itemtip")
 extraction_bar = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/storage_indication/extraction_bar")
-total_label = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/TextureRect/total_weight")
 weight_label = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/weight_label")
 help_display = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display")
 sector_hflow = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/sector_storage/MarginContainer/VBoxContainer/ScrollContainer/sector_hflow")
@@ -285,12 +403,14 @@ theme_override_constants/separation = 8
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_g4v7s")
 
-[node name="help_icon" type="TextureRect" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header" unique_id=1587906742]
+[node name="help_icon" type="TextureRect" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header" unique_id=1587906742 node_paths=PackedStringArray("help_display")]
 texture_filter = 1
 custom_maximum_size = Vector2(40, 40)
 layout_mode = 2
 texture = ExtResource("2_vsh8a")
 stretch_mode = 2
+script = ExtResource("4_lqiho")
+help_display = NodePath("help_display")
 
 [node name="help_display" type="PanelContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon" unique_id=424539384]
 visible = false
@@ -300,7 +420,7 @@ offset_left = 44.0
 offset_top = -1.0
 offset_right = 179.0
 offset_bottom = 30.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_3gngh")
+theme_override_styles/panel = ExtResource("5_fb72p")
 
 [node name="MarginContainer" type="MarginContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display" unique_id=704225997]
 layout_mode = 2
@@ -511,7 +631,7 @@ theme_override_constants/separation = -4
 [node name="sector_storage" type="PanelContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer" unique_id=594236235]
 custom_minimum_size = Vector2(430, 350)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_3gngh")
+theme_override_styles/panel = ExtResource("5_fb72p")
 
 [node name="MarginContainer" type="MarginContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/sector_storage" unique_id=1754104857]
 layout_mode = 2
@@ -646,15 +766,28 @@ vertical_alignment = 1
 layout_mode = 2
 theme_override_constants/separation = 150
 
-[node name="TextureRect" type="TextureRect" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1733374135]
+[node name="total_weight" type="TextureRect" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1733374135 node_paths=PackedStringArray("extraction_ui", "selection_menu", "total_weight", "hide_timer", "resources_button", "turrets_button", "modules_button", "t1", "t2", "t3", "t4", "t5")]
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
 texture = ExtResource("8_xxkdv")
 stretch_mode = 2
+script = ExtResource("18_nkewb")
+extraction_ui = NodePath("../../../../../../../..")
+selection_menu = NodePath("selction_menu")
+total_weight = NodePath("total_weight")
+hide_timer = NodePath("Timer")
+resources_button = NodePath("selction_menu/MarginContainer/VBoxContainer/toggle_resources")
+turrets_button = NodePath("selction_menu/MarginContainer/VBoxContainer/toggle_turrets")
+modules_button = NodePath("selction_menu/MarginContainer/VBoxContainer/toggle_modules")
+t1 = NodePath("selction_menu/MarginContainer/VBoxContainer/HBoxContainer/T1")
+t2 = NodePath("selction_menu/MarginContainer/VBoxContainer/HBoxContainer/T2")
+t3 = NodePath("selction_menu/MarginContainer/VBoxContainer/HBoxContainer/T3")
+t4 = NodePath("selction_menu/MarginContainer/VBoxContainer/HBoxContainer/T4")
+t5 = NodePath("selction_menu/MarginContainer/VBoxContainer/HBoxContainer/T5")
 
-[node name="total_weight" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/TextureRect" unique_id=183288858]
+[node name="total_weight" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight" unique_id=183288858]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -665,6 +798,172 @@ text = "Total : 100kg"
 label_settings = SubResource("LabelSettings_u7mrq")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="selction_menu" type="PanelContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight" unique_id=358875624]
+visible = false
+custom_minimum_size = Vector2(205, -1)
+custom_maximum_size = Vector2(205, -1)
+layout_mode = 0
+offset_top = -157.0
+offset_right = 205.0
+offset_bottom = -4.0
+theme_override_styles/panel = ExtResource("5_fb72p")
+
+[node name="MarginContainer" type="MarginContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight/selction_menu" unique_id=1640594291]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight/selction_menu/MarginContainer" unique_id=515226634]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Label" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight/selction_menu/MarginContainer/VBoxContainer" unique_id=356162402]
+layout_mode = 2
+mouse_filter = 1
+text = "Weight Consideratoins"
+label_settings = SubResource("LabelSettings_wu3y2")
+
+[node name="toggle_resources" type="Button" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight/selction_menu/MarginContainer/VBoxContainer" unique_id=1460950048]
+layout_mode = 2
+mouse_filter = 1
+theme_override_colors/font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_colors/font_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_colors/font_hover_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_fonts/font = ExtResource("3_04trr")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = ExtResource("19_q0cy0")
+theme_override_styles/pressed = ExtResource("20_82ivg")
+theme_override_styles/hover = ExtResource("21_vifx8")
+toggle_mode = true
+text = "Resources"
+
+[node name="toggle_turrets" type="Button" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight/selction_menu/MarginContainer/VBoxContainer" unique_id=261450627]
+layout_mode = 2
+mouse_filter = 1
+theme_override_colors/font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_colors/font_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_colors/font_hover_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_fonts/font = ExtResource("3_04trr")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = ExtResource("19_q0cy0")
+theme_override_styles/pressed = ExtResource("20_82ivg")
+theme_override_styles/hover = ExtResource("21_vifx8")
+toggle_mode = true
+button_pressed = true
+text = "Turrets"
+
+[node name="toggle_modules" type="Button" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight/selction_menu/MarginContainer/VBoxContainer" unique_id=316183753]
+layout_mode = 2
+mouse_filter = 1
+theme_override_colors/font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_colors/font_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_colors/font_hover_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_fonts/font = ExtResource("3_04trr")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = ExtResource("19_q0cy0")
+theme_override_styles/pressed = ExtResource("20_82ivg")
+theme_override_styles/hover = ExtResource("21_vifx8")
+toggle_mode = true
+button_pressed = true
+text = "Modules"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight/selction_menu/MarginContainer/VBoxContainer" unique_id=1523918187]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="T1" type="Button" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight/selction_menu/MarginContainer/VBoxContainer/HBoxContainer" unique_id=21251769]
+custom_minimum_size = Vector2(32, 30)
+custom_maximum_size = Vector2(32, 30)
+layout_mode = 2
+mouse_filter = 1
+theme_override_colors/font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_colors/font_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_colors/font_hover_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_fonts/font = ExtResource("3_04trr")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_iyh4d")
+theme_override_styles/pressed = ExtResource("20_82ivg")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fb72p")
+toggle_mode = true
+text = " T1 "
+
+[node name="T2" type="Button" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight/selction_menu/MarginContainer/VBoxContainer/HBoxContainer" unique_id=583871942]
+custom_minimum_size = Vector2(32, 30)
+custom_maximum_size = Vector2(32, 30)
+layout_mode = 2
+mouse_filter = 1
+theme_override_colors/font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_colors/font_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_colors/font_hover_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_fonts/font = ExtResource("3_04trr")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_k04vf")
+theme_override_styles/pressed = ExtResource("20_82ivg")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nkewb")
+toggle_mode = true
+text = " T2 "
+
+[node name="T3" type="Button" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight/selction_menu/MarginContainer/VBoxContainer/HBoxContainer" unique_id=552301942]
+custom_minimum_size = Vector2(32, 30)
+custom_maximum_size = Vector2(32, 30)
+layout_mode = 2
+mouse_filter = 1
+theme_override_colors/font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_colors/font_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_colors/font_hover_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_fonts/font = ExtResource("3_04trr")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_1uunt")
+theme_override_styles/pressed = ExtResource("20_82ivg")
+theme_override_styles/hover = SubResource("StyleBoxFlat_q0cy0")
+toggle_mode = true
+text = " T3 "
+
+[node name="T4" type="Button" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight/selction_menu/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1086675127]
+custom_minimum_size = Vector2(32, 30)
+custom_maximum_size = Vector2(32, 30)
+layout_mode = 2
+mouse_filter = 1
+theme_override_colors/font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_colors/font_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_colors/font_hover_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_fonts/font = ExtResource("3_04trr")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_28550")
+theme_override_styles/pressed = ExtResource("20_82ivg")
+theme_override_styles/hover = SubResource("StyleBoxFlat_82ivg")
+toggle_mode = true
+text = " T4 "
+
+[node name="T5" type="Button" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight/selction_menu/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1586967820]
+custom_minimum_size = Vector2(32, 30)
+custom_maximum_size = Vector2(32, 30)
+layout_mode = 2
+mouse_filter = 1
+theme_override_colors/font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_colors/font_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_colors/font_hover_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+theme_override_fonts/font = ExtResource("3_04trr")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_t0t4p")
+theme_override_styles/pressed = ExtResource("20_82ivg")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vifx8")
+toggle_mode = true
+text = " T5 "
+
+[node name="Timer" type="Timer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight" unique_id=7755943]
+one_shot = true
 
 [node name="extract_button" type="Button" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=480868908 node_paths=PackedStringArray("highlight")]
 texture_filter = 1
@@ -677,6 +976,7 @@ theme_override_styles/disabled = SubResource("StyleBoxFlat_fcnqv")
 icon = ExtResource("9_u7mrq")
 script = ExtResource("16_an0yc")
 highlight = NodePath("extract_highlight")
+highlight_overlay_toggle = false
 
 [node name="Label" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/extract_button" unique_id=1292968384]
 layout_mode = 1
@@ -739,8 +1039,8 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_an0yc")
 [node name="extraction_animations" type="AnimationPlayer" parent="." unique_id=753986411]
 libraries/ = SubResource("AnimationLibrary_lqiho")
 
-[connection signal="mouse_entered" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon" to="." method="_on_help_icon_mouse_entered"]
-[connection signal="mouse_exited" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon" to="." method="_on_help_icon_mouse_exited"]
+[connection signal="mouse_entered" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon" method="_on_mouse_exited"]
 [connection signal="mouse_entered" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_valuable_preset" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_valuable_preset" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_valuable_preset" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_valuable_preset" method="_on_mouse_exited"]
 [connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_valuable_preset" to="." method="_on_most_valuable_preset_pressed"]
@@ -761,6 +1061,19 @@ libraries/ = SubResource("AnimationLibrary_lqiho")
 [connection signal="mouse_exited" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/clear_selection" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/clear_selection" method="_on_mouse_exited"]
 [connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/clear_selection" to="." method="_on_clear_selection_pressed"]
 [connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/clear_selection" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/clear_selection" method="_on_pressed"]
+[connection signal="mouse_entered" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight/selction_menu" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight" method="_on_selction_menu_mouse_entered"]
+[connection signal="mouse_exited" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight/selction_menu" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight" method="_on_selction_menu_mouse_exited"]
+[connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight/selction_menu/MarginContainer/VBoxContainer/toggle_resources" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight" method="_on_toggle_resources_pressed"]
+[connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight/selction_menu/MarginContainer/VBoxContainer/toggle_turrets" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight" method="_on_toggle_turrets_pressed"]
+[connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight/selction_menu/MarginContainer/VBoxContainer/toggle_modules" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight" method="_on_toggle_modules_pressed"]
+[connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight/selction_menu/MarginContainer/VBoxContainer/HBoxContainer/T1" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight" method="_on_t_1_pressed"]
+[connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight/selction_menu/MarginContainer/VBoxContainer/HBoxContainer/T2" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight" method="_on_t_2_pressed"]
+[connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight/selction_menu/MarginContainer/VBoxContainer/HBoxContainer/T3" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight" method="_on_t_3_pressed"]
+[connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight/selction_menu/MarginContainer/VBoxContainer/HBoxContainer/T4" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight" method="_on_t_4_pressed"]
+[connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight/selction_menu/MarginContainer/VBoxContainer/HBoxContainer/T5" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight" method="_on_t_5_pressed"]
+[connection signal="timeout" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight/Timer" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight" method="_on_timer_timeout"]
 [connection signal="mouse_entered" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/extract_button" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/extract_button" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/extract_button" to="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/extract_button" method="_on_mouse_exited"]
 [connection signal="pressed" from="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/extract_button" to="." method="_on_extract_button_pressed"]

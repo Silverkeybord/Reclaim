@@ -121,6 +121,7 @@ var player_mode := PLAYER_MODES.WEAPON
 var current_build_mode := BUILD_MODES.TURRET
 var at_ship := true
 var mouse_captured := true
+var major_animation_playing := false
 
 # USER INTERFACE -----------------------------------------------------------
 var paused := false

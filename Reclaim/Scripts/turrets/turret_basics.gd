@@ -69,7 +69,6 @@ func _shooting_logic() -> void:
 
 
 func shoot(target : BaseEnemy) -> void:
-	print(target)
 	var target_position := target.global_position
 	turret_pivot_point.look_at(target_position)
 	

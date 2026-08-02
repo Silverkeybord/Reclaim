@@ -363,7 +363,7 @@ _data = {
 &"extraction_overdrive": SubResource("Animation_82pi0")
 }
 
-[node name="run_ui" type="Control" unique_id=1725702450 node_paths=PackedStringArray("run_time_label", "shield_health_label", "extraction_timer_label", "show_health_timer", "overdrive_animation_player", "all_segment_control", "left_small", "right_small", "left_tall", "right_tall")]
+[node name="run_ui" type="Control" unique_id=1725702450 node_paths=PackedStringArray("run_time_label", "shield_health_label", "extraction_timer_label", "show_health_timer", "max_indication_marker", "min_indication_marker", "overdrive_animation_player", "all_segment_control", "left_small", "right_small", "left_tall", "right_tall")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -378,6 +378,8 @@ shield_health_label = NodePath("MarginContainer/shield_health")
 extraction_timer_label = NodePath("MarginContainer/extraction_timer")
 show_health_timer = NodePath("show_health_timer")
 health_change_indicator = ExtResource("2_vrobe")
+max_indication_marker = NodePath("max_indication_position")
+min_indication_marker = NodePath("min_indication_position")
 overdrive_animation_player = NodePath("AnimationPlayer")
 all_segment_control = NodePath("all_segment_control")
 left_small = NodePath("all_segment_control/left_small")

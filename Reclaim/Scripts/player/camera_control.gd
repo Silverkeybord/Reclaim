@@ -43,13 +43,13 @@ func _ready() -> void:
 
 # Input function converting mouse movement into camera movement
 func _input(event: InputEvent) -> void:
-	if Global.crafting_open:
+	if Global.crafting_open or Global.extraction_open or Global.major_animation_playing:
 		return
 	
 	if event is InputEventMouseMotion and Global.mouse_captured:
 		_pan_and_pitch(event)
 	
-	if Global.storage_open or Global.extraction_open:
+	if Global.storage_open:
 		return
 	
 	if event is InputEventMouseButton:
@@ -58,6 +58,7 @@ func _input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed(ACTION_TOGGLE_MOUSE_CAPTURE):
 		Global.set_mouse_captured()
+
 
 # =============================================================================
 # HELPER FUNCTIONS

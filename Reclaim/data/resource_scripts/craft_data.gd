@@ -13,9 +13,21 @@ extends Resource
 ## the resulting amout of the crafted item gained when crafted
 @export var craft_amount : int = 1
 ## a description of what you are crafting
-@export var description : String = "
-This is an item in a game you can craft from the game called reclaim made by a
-final year high school student.
-"
+@export var description : String = "This is an item in a game you can craft from the game called 
+reclaim made by a final year high school student."
 ## time taken to craft the item
 @export var craft_time : float = 0.05
+
+## other requirments
+@export_group("Other Requirments")
+var needed_check := false
+
+## the authorisation corrorsponding to the receipe
+@export_enum(
+	"weapon_authorisation",
+	"turret_authorisation",
+	"module_authorisation"
+) var authorisation : String
+
+## level needed
+@export var authorisation_level : int = 1

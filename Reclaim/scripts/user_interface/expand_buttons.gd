@@ -44,5 +44,5 @@ func _on_pressed() -> void:
 func play_press_sound() -> void:
 	var new_stream = AudioStreamPlayer.new()
 	new_stream.stream = PRESS_SOUND
-	add_child(new_stream)
+	HelperFunctions.add_to_root_node(new_stream)
 	new_stream.play()

@@ -26,13 +26,17 @@ const REQUIREMENT_CELLS_GROUP := "requirment_cells"
 
 const OPEN_ANIMATION := "open_crafting"
 const CLOSE_ANIMATION := "close_crafting"
-const WEIGHT_LABEL_PREFIX := "Weight: "
-const VALUE_LABEL_PREFIX := "Value: "
+const DPS_LABEL_PREFIX := "DPS : "
+const ABILITY_LABEL_PREFIX := "Ability : "
 const AMOUNT_LABEL_PREFIX := "Amount: "
 const CRAFT_TIME_LABEL_PREFIX := "Craft Time: "
-const MIN_CRAFT_AMOUNT := 1
 
 const CLOSE_UI_INPUT := "close_ui"
+
+const CRAFT_ONE := 1
+const CRAFT_FIVE := 5
+const CRAFT_TWENTY_FIVE := 25
+const CRAFT_MAX := 0
 
 @export var crafting_animations : AnimationPlayer
 
@@ -42,14 +46,22 @@ const CLOSE_UI_INPUT := "close_ui"
 @export var craft_name : Label
 @export var image_background : PanelContainer
 @export var requirement_image : TextureRect
-@export var weight_stat : Label
-@export var value_stat : Label
-@export var amount_stat : Label
-@export var craft_time_stat : Label
-@export var description : RichTextLabel
 @export var requirments_hflow : HFlowContainer
 @export var craft_button : Button
 @export var craft_overlay : MarginContainer
+
+@export_subgroup("Requirment Text")
+@export var amount_stat : Label
+@export var craft_time_stat : Label
+@export var dps_stat : Label
+@export var ability_stat : Label
+@export var description : RichTextLabel
+
+@export_subgroup("Craft Mults")
+@export var one_times : Button
+@export var five_times : Button
+@export var twentyfive_times : Button
+@export var max_times : Button
 
 @export_group("Crafting Tabs")
 @export var turrets_tab : Button
@@ -68,7 +80,16 @@ const CLOSE_UI_INPUT := "close_ui"
 	Global.ITEM_TYPES.MODULE : modules_vbox,
 	Global.ITEM_TYPES.RESOURCES : resources_vbox
 }
+@onready var button_mults : Dictionary ={
+	one_times : CRAFT_ONE,
+	five_times : CRAFT_FIVE,
+	twentyfive_times : CRAFT_TWENTY_FIVE,
+	max_times : CRAFT_MAX
+}
+@onready var current_mult_pressed : Button = one_times
 
+var craft_mult : int = 1
+var max_mult : int = 0
 var current_tab = TABS.TURRETS
 var ship_level_requirments : Dictionary = {
 	1 : {},
@@ -135,20 +156,23 @@ func _set_open_or_close(toggle : bool) -> void:
 
 # Loading and Crafting ======================================================
 ## crafts the item from the craft data given
-func craft(craft_data : CraftData = current_displayed_requirments) -> void:
+func craft() -> void:
+	var craft_data : CraftData = current_displayed_requirments
+	
 	if not _can_craft(craft_data):
 		return
 	
 	var current_storage = HelperFunctions.get_current_storage()
+	var resulting_craft_mult = craft_mult if not max_mult else max_mult
 	
 	for requirment : RequirementsTemplate in craft_data.requirements:
 		HelperFunctions.remove_item_from_storage(
-			requirment.item, requirment.amount, current_storage
-		)
+			requirment.item, requirment.amount * resulting_craft_mult, current_storage
+			)
 	
 	HelperFunctions.add_item_to_storage(
-		craft_data.crafted_item, craft_data.craft_amount, current_storage)
-
+		craft_data.crafted_item, craft_data.craft_amount * resulting_craft_mult, current_storage)
+	
 	update_crafting_display()
 
 
@@ -195,9 +219,21 @@ func update_crafting_display() -> void:
 	if not Global.crafting_open:
 		return
 	
+	var craft_requirments : Array[RequirementsTemplate]
+	var max_crafting_amounts : Array[int]
+	
+	if craft_mult == 0 and current_displayed_requirments:
+		craft_requirments = current_displayed_requirments.requirements
+		
+		for requirment : RequirementsTemplate in craft_requirments:
+			var item_amount = HelperFunctions.get_item_amount(requirment.item)
+			max_crafting_amounts.append(floori(float(item_amount) / float(requirment.amount)))
+		
+		max_mult = max_crafting_amounts.min()
+	
 	var can_craft := true
 	for cell : RecipeRequirement in get_tree().get_nodes_in_group(REQUIREMENT_CELLS_GROUP):
-		if not cell.check_requirement():
+		if not cell.check_requirement(craft_mult if craft_mult else max_mult):
 			craft_overlay.visible = true
 			can_craft = false
 	
@@ -209,6 +245,31 @@ func update_crafting_display() -> void:
 	
 	for cell : CraftCell in get_tree().get_nodes_in_group(CRAFT_CELLS_GROUP): 
 		cell.check_requirements()
+
+
+func _is_valid_recipe(craft_data : CraftData) -> bool:
+	if craft_data == null or not HelperFunctions.is_valid_item(craft_data.crafted_item):
+		return false
+	
+	for requirment : RequirementsTemplate in craft_data.requirements:
+		if (
+			requirment == null
+			or not HelperFunctions.is_valid_item(requirment.item)
+		):
+			return false
+	
+	return true
+
+
+func _can_craft(craft_data : CraftData) -> bool:
+	if not _is_valid_recipe(craft_data):
+		return false
+	
+	for requirment : RequirementsTemplate in craft_data.requirements:
+		if not HelperFunctions.has_item_amount(requirment.item, requirment.amount):
+			return false
+	
+	return true
 
 
 # Craft Selection and Requirments Controlling ===============================
@@ -224,11 +285,24 @@ func display_requirements_for(craft_data : CraftData, can_craft : bool) -> void:
 	style.bg_color = Global.TIER_CONFIG[craft_data.crafted_item.tier][COLOR_KEY]
 	image_background.add_theme_stylebox_override(PANEL_OVERRIDE_KEY, style)
 	
-	weight_stat.text = WEIGHT_LABEL_PREFIX + HelperFunctions.comma_number(
-		craft_data.crafted_item.weight)
-	value_stat.text = VALUE_LABEL_PREFIX + str(craft_data.crafted_item.value)
-	amount_stat.text = AMOUNT_LABEL_PREFIX + str(craft_data.craft_amount)
-	craft_time_stat.text = CRAFT_TIME_LABEL_PREFIX + str(craft_data.craft_time)
+	match craft_data.crafted_item.type:
+		Global.ITEM_TYPES.RESOURCES:
+			show_stat_labels([amount_stat, craft_time_stat])
+			amount_stat.text = AMOUNT_LABEL_PREFIX + str(craft_data.craft_amount)
+			craft_time_stat.text = CRAFT_TIME_LABEL_PREFIX + str(craft_data.craft_time)
+		Global.ITEM_TYPES.TURRET:
+			show_stat_labels([craft_time_stat, dps_stat, ability_stat])
+			amount_stat.text = AMOUNT_LABEL_PREFIX + str(craft_data.craft_amount)
+			craft_time_stat.text = CRAFT_TIME_LABEL_PREFIX + str(craft_data.craft_time)
+			var turret_data : TurretData = DataRegistry.turrets[craft_data.crafted_item.key]
+			dps_stat.text = DPS_LABEL_PREFIX + str(
+				HelperFunctions.return_amount_shorthand(turret_data.get_damage_per_second())
+				)
+			ability_stat.text = ABILITY_LABEL_PREFIX + turret_data.ability
+		Global.ITEM_TYPES.MODULE:
+			show_stat_labels([craft_time_stat])
+			pass
+	
 	description.text = craft_data.description
 	
 	for cell in get_tree().get_nodes_in_group(REQUIREMENT_CELLS_GROUP):
@@ -251,12 +325,48 @@ func display_requirements_for(craft_data : CraftData, can_craft : bool) -> void:
 		var new_requirment : RecipeRequirement = recipe_requirments_scene.instantiate()
 		new_requirment.item_data = requirment.item
 		new_requirment.amount_required = requirment.amount
-		new_requirment.update_value()
+		new_requirment.check_requirement(craft_mult)
 		requirments_hflow.add_child(new_requirment)
 		new_requirment.add_to_group(REQUIREMENT_CELLS_GROUP)
 	
 	craft_overlay.visible = not can_craft
 	craft_button.disabled = not can_craft
+
+
+func show_stat_labels(labels : Array[Label]) -> void:
+	craft_time_stat.visible = false
+	amount_stat.visible = false
+	dps_stat.visible = false
+	ability_stat.visible = false
+	
+	for label in labels:
+		label.visible = true
+
+
+func _on_one_times_pressed() -> void:
+	_change_mult_to(one_times)
+
+
+func _on_five_times_pressed() -> void:
+	_change_mult_to(five_times)
+
+
+func _on_twentyfive_times_pressed() -> void:
+	_change_mult_to(twentyfive_times)
+
+
+func _on_max_pressed() -> void:
+	_change_mult_to(max_times)
+
+
+func _change_mult_to(button : Button) -> void:
+	max_mult = 0
+	current_mult_pressed.button_pressed = false
+	current_mult_pressed = button
+	current_mult_pressed.button_pressed = true
+	craft_mult = button_mults[button]
+	
+	update_crafting_display()
 
 
 # Tab Controlling ============================================================
@@ -296,32 +406,3 @@ func _on_modules_tab_button_pressed() -> void:
 
 func _on_resourses_tab_button_pressed() -> void:
 	_change_to_tab(TABS.RESOURCES)
-
-
-func _is_valid_recipe(craft_data : CraftData) -> bool:
-	if craft_data == null or not HelperFunctions.is_valid_item(craft_data.crafted_item):
-		return false
-	
-	if craft_data.craft_amount < MIN_CRAFT_AMOUNT:
-		return false
-	
-	for requirment : RequirementsTemplate in craft_data.requirements:
-		if (
-			requirment == null
-			or not HelperFunctions.is_valid_item(requirment.item)
-			or requirment.amount < MIN_CRAFT_AMOUNT
-		):
-			return false
-	
-	return true
-
-
-func _can_craft(craft_data : CraftData) -> bool:
-	if not _is_valid_recipe(craft_data):
-		return false
-	
-	for requirment : RequirementsTemplate in craft_data.requirements:
-		if not HelperFunctions.has_item_amount(requirment.item, requirment.amount):
-			return false
-	
-	return true

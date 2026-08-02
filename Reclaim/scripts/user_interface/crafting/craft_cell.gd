@@ -7,6 +7,8 @@ const CAN_CRAFT_TEXTURES : Dictionary = {
 	false : preload("res://2d_assets/crafting/cant_craft_cell.png")
 }
 
+const DOUBLE_CLICK_CRAFT_AMOUNT : int = 1
+
 @export var craft_data : CraftData
 
 @export_group("In Scene")
@@ -72,7 +74,7 @@ func _on_pressed() -> void:
 		crafting_menu.display_requirements_for(craft_data, can_craft)
 	
 	if valid_last_click and can_craft:
-		crafting_menu.craft(craft_data)
+		crafting_menu.craft()
 		if double_click_timer:
 			double_click_timer.stop()
 			double_click_timer.start()

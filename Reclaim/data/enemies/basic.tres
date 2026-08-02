@@ -48,8 +48,8 @@ metadata/_custom_type_script = "uid://cqm7b8e0xdrh5"
 [resource]
 script = ExtResource("2_6lcrm")
 key = "basic"
-health = 20
-damage = 3
+health = 5
+damage = 2
 speed = 5.0
 min_drops = 2
 max_drops = 4
