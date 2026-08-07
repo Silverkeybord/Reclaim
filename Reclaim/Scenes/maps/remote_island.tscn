@@ -62,19 +62,9 @@ uv1_triplanar = true
 
 [node name="consistant" type="Node" parent="." unique_id=1321206802]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="consistant" unique_id=1594097371]
-environment = ExtResource("4_dncc7")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="consistant" unique_id=1822254416]
-transform = Transform3D(0.757738, 0.5674767, 0.3221855, 0.08507007, -0.5754151, 0.8134254, 0.64699024, -0.58895487, -0.48428902, 35.769802, 29.314838, -6.688738)
-light_color = Color(0.7254902, 1, 1, 1)
-light_energy = 0.3
-shadow_enabled = true
-
-[node name="enemy_spawner" parent="consistant" unique_id=51836272 node_paths=PackedStringArray("extraction_pod", "sector_shield") instance=ExtResource("7_8ty32")]
-extraction_pod = NodePath("")
+[node name="enemy_spawner" parent="consistant" unique_id=51836272 node_paths=PackedStringArray("sector_elements") instance=ExtResource("7_8ty32")]
+sector_elements = NodePath("../sector_elements")
 map = "remote_island"
-sector_shield = NodePath("")
 
 [node name="player_barrier" type="StaticBody3D" parent="consistant" unique_id=1069759614]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.963074, 0)
@@ -89,6 +79,7 @@ shape = SubResource("ConcavePolygonShape3D_8ty32")
 debug_color = Color(0.91764706, 0, 0.7058824, 1)
 
 [node name="sector_elements" parent="consistant" unique_id=1141916938 instance=ExtResource("3_lr34o")]
+sector_name = "--- Remote Island ---"
 
 [node name="enemy_spawn_markers" type="Node" parent="." unique_id=1301469332]
 
@@ -234,3 +225,12 @@ transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, 0.067, -
 mesh = SubResource("BoxMesh_7wlnk")
 surface_material_override/0 = SubResource("StandardMaterial3D_0k5vl")
 metadata/_edit_lock_ = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="map" unique_id=1594097371]
+environment = ExtResource("4_dncc7")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="map" unique_id=1822254416]
+transform = Transform3D(0.757738, 0.5674767, 0.32218546, 0.08507007, -0.5754151, 0.81342524, 0.64699024, -0.58895487, -0.48428908, 35.769802, 29.314838, -6.688738)
+light_color = Color(0.7254902, 1, 1, 1)
+light_energy = 0.3
+shadow_enabled = true

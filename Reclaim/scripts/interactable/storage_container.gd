@@ -8,7 +8,7 @@ const CLOSE_DISTANCE := 10.0
 
 
 func interact() -> void:
-	storage_ui.storage_open()
+	storage_ui.open_ui()
 
 
 func _process(_delta: float) -> void:
@@ -16,4 +16,4 @@ func _process(_delta: float) -> void:
 		return
 	
 	if global_position.distance_to(player.global_position) > CLOSE_DISTANCE:
-		storage_ui.open_or_close()
+		storage_ui.close_ui()

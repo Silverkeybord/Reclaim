@@ -47,6 +47,9 @@ const TEMP_SOUND_SCENE_3D: PackedScene = preload("res://scenes/other/temp_sound_
 const BULLET_TRAIL_SCENE: PackedScene = preload("res://scenes/turrets/bullet_trail.tscn")
 const DAMAGE_INDICATOR_SCENE: PackedScene = preload("res://scenes/other/damage_indicator.tscn")
 
+# Other 
+const TIERS := 5
+
 # =============================================================================
 # STATIC STATE (shared counters)
 # =============================================================================
@@ -221,9 +224,11 @@ static func _get_storage(storage: Dictionary = {}) -> Dictionary:
 ## gets the amount of a specific item in the target storage
 static func get_item_amount(item_resource: ItemData, storage: Dictionary = {}) -> int:
 	if not is_valid_item(item_resource):
+		# fall back
 		return DEFAULT_ITEM_AMOUNT
 	
 	var target_storage := _get_storage(storage)
+	
 	if not target_storage.has(item_resource.tier):
 		return DEFAULT_ITEM_AMOUNT
 	
@@ -250,10 +255,11 @@ static func add_item_to_storage(
 	amount: int = DEFAULT_ITEM_CHANGE,
 	storage: Dictionary = {}
 ) -> bool:
-	if not is_valid_item(item_resource) or amount <= DEFAULT_ITEM_AMOUNT:
+	if not is_valid_item(item_resource) or amount <= DEFAULT_ITEM_AMOUNT or storage.is_read_only():
 		return false
 	
 	var target_storage := _get_storage(storage)
+	
 	if not target_storage.has(item_resource.tier):
 		target_storage[item_resource.tier] = {}
 	
@@ -317,3 +323,12 @@ static func get_item_from_storage(storage : Dictionary) -> Dictionary:
 			item_value_pairs[item_name] = storage[tier][item_name]
 	
 	return item_value_pairs
+
+
+## returns a fresh editable/writable dictionary for when clearing storages
+static func get_clean_storage() -> Dictionary:
+	var storage : Dictionary
+	for x in range(1, TIERS + 1):
+		storage[x] = {}
+	
+	return storage

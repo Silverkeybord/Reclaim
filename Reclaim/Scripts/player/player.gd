@@ -114,7 +114,6 @@ var can_remove_build: bool = true
 
 func _ready() -> void:
 	_set_new_weapon()
-	Global.set_random_storage(true)
 
 
 func _physics_process(delta: float) -> void:
@@ -144,6 +143,7 @@ func _physics_process(delta: float) -> void:
 func _process(_delta: float) -> void:
 	if Global.major_animation_playing:
 		canvas_root.visible = false
+		return
 	
 	if not canvas_root.visible:
 		canvas_root.visible = true

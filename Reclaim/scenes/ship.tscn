@@ -1,5 +1,6 @@
 [gd_scene format=4 uid="uid://cykue4k22xfxa"]
 
+[ext_resource type="Script" uid="uid://blsj5eumdtvbo" path="res://scripts/ship.gd" id="1_7j21i"]
 [ext_resource type="PackedScene" uid="uid://dwm2mxns3x5wt" path="res://scenes/player/player.tscn" id="1_m75ec"]
 [ext_resource type="PackedScene" uid="uid://cm7cq456gvpot" path="res://scenes/interactable/crafting_table.tscn" id="2_f0cws"]
 [ext_resource type="PackedScene" uid="uid://p33w1llwyou3" path="res://scenes/interactable/research_table.tscn" id="3_w1oif"]
@@ -21,6 +22,7 @@ _surfaces = [{
 data = PackedVector3Array(-20, -1, -10, 20, -1, -10, -20, 19, -10, -20, -1, -10, -20, 19, 10, -20, -1, 10, -20, -1, -10, -20, -1, 10, 20, -1, 10, -20, -1, -10, -20, 19, -10, -20, 19, 10, -20, 19, -10, 20, 19, -10, -20, 19, 10, -20, -1, 10, -20, 19, 10, 20, 19, 10, -20, -1, -10, 20, -1, 10, 20, -1, -10, 20, -1, -10, 20, -1, 10, 20, 19, -10, -20, -1, 10, 20, 19, 10, 20, -1, 10, -20, 19, -10, 20, -1, -10, 20, 19, -10, -20, 19, 10, 20, 19, -10, 20, 19, 10, 20, -1, 10, 20, 19, 10, 20, 19, -10, -19, 0, -9, -19, 18, -9, 19, 0, -9, -19, 0, -9, -19, 0, 9, -19, 18, 9, -19, 0, -9, 19, 0, 9, -19, 0, 9, -19, 0, -9, -19, 18, 9, -19, 18, -9, -19, 18, -9, -19, 18, 9, 19, 18, -9, -19, 0, 9, 19, 18, 9, -19, 18, 9, -19, 0, -9, 19, 0, -9, 19, 0, 9, 19, 0, -9, 19, 18, -9, 19, 0, 9, -19, 0, 9, 19, 0, 9, 19, 18, 9, -19, 18, -9, 19, 18, -9, 19, 0, -9, -19, 18, 9, 19, 18, 9, 19, 18, -9, 19, 0, 9, 19, 18, -9, 19, 18, 9)
 
 [node name="ship" type="Node3D" unique_id=965132915 groups=["root_nodes"]]
+script = ExtResource("1_7j21i")
 
 [node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="." unique_id=1907386961]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.009134293, 0.009200096, -0.027325988)

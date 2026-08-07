@@ -74,7 +74,7 @@ func _on_pressed() -> void:
 		crafting_menu.display_requirements_for(craft_data, can_craft)
 	
 	if valid_last_click and can_craft:
-		crafting_menu.craft()
+		crafting_menu.craft(true)
 		if double_click_timer:
 			double_click_timer.stop()
 			double_click_timer.start()

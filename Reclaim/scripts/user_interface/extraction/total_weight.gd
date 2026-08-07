@@ -70,6 +70,7 @@ func update_weight_label() -> void:
 	total_weight.text = TOTAL_FORMAT % HelperFunctions.return_amount_shorthand(weight)
 
 
+# total displayed weight filtering --------------------------------------------
 func _on_toggle_resources_pressed() -> void:
 	resources_included = not resources_button.button_pressed
 	update_weight_label()

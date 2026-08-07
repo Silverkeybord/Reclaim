@@ -7,6 +7,7 @@ const ENEMY_METADATA_KEY := "enemy"
 const BASE_HEAL_AMOUNT := 5.0
 const BASE_HEAL_INTERVAL := 2.5
 
+@export var sector_elements : Node3D
 @export var extraction_pod : StaticBody3D
 
 @export var run_ui : Control
@@ -87,6 +88,7 @@ func _start_overdrive() -> void:
 	shield_overdrive = true
 	overdrive_timer.start()
 	
+	sector_elements.start_overdrive()
 	run_ui.start_overdrive()
 
 

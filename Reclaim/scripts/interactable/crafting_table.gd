@@ -4,4 +4,4 @@ extends StaticBody3D
 
 
 func interact() -> void:
-	crafting_ui.open_crafting()
+	crafting_ui.open_ui()

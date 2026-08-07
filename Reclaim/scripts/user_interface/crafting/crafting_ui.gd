@@ -126,11 +126,11 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed(CLOSE_UI_INPUT):
-		close_crafting()
+		close_ui()
 
 
 # UI control ================================================================
-func open_crafting() -> void:
+func open_ui() -> void:
 	if crafting_animations.is_playing():
 		return
 	
@@ -139,7 +139,7 @@ func open_crafting() -> void:
 	crafting_animations.play(OPEN_ANIMATION)
 
 
-func close_crafting() -> void:
+func close_ui() -> void:
 	if crafting_animations.is_playing():
 		return
 	
@@ -156,14 +156,21 @@ func _set_open_or_close(toggle : bool) -> void:
 
 # Loading and Crafting ======================================================
 ## crafts the item from the craft data given
-func craft() -> void:
+func craft(from_cell = false) -> void:
 	var craft_data : CraftData = current_displayed_requirments
 	
 	if not _can_craft(craft_data):
 		return
 	
 	var current_storage = HelperFunctions.get_current_storage()
-	var resulting_craft_mult = craft_mult if not max_mult else max_mult
+	var resulting_craft_mult
+	
+	if from_cell:
+		resulting_craft_mult = CRAFT_ONE
+	else:
+		resulting_craft_mult = craft_mult if not max_mult else max_mult
+	
+	print(resulting_craft_mult)
 	
 	for requirment : RequirementsTemplate in craft_data.requirements:
 		HelperFunctions.remove_item_from_storage(
@@ -290,6 +297,7 @@ func display_requirements_for(craft_data : CraftData, can_craft : bool) -> void:
 			show_stat_labels([amount_stat, craft_time_stat])
 			amount_stat.text = AMOUNT_LABEL_PREFIX + str(craft_data.craft_amount)
 			craft_time_stat.text = CRAFT_TIME_LABEL_PREFIX + str(craft_data.craft_time)
+			
 		Global.ITEM_TYPES.TURRET:
 			show_stat_labels([craft_time_stat, dps_stat, ability_stat])
 			amount_stat.text = AMOUNT_LABEL_PREFIX + str(craft_data.craft_amount)
@@ -299,6 +307,7 @@ func display_requirements_for(craft_data : CraftData, can_craft : bool) -> void:
 				HelperFunctions.return_amount_shorthand(turret_data.get_damage_per_second())
 				)
 			ability_stat.text = ABILITY_LABEL_PREFIX + turret_data.ability
+			
 		Global.ITEM_TYPES.MODULE:
 			show_stat_labels([craft_time_stat])
 			pass
@@ -331,6 +340,8 @@ func display_requirements_for(craft_data : CraftData, can_craft : bool) -> void:
 	
 	craft_overlay.visible = not can_craft
 	craft_button.disabled = not can_craft
+	
+	update_crafting_display()
 
 
 func show_stat_labels(labels : Array[Label]) -> void:

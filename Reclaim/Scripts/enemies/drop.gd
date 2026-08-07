@@ -24,6 +24,8 @@ const MAX_VERT_VELOCITY := 25.0
 const MIN_VERT_VELOCITY := 5.0
 const DIRECTION := [-1, 1]
 
+const DEFAULT_ADD_AMOUNT := 1
+
 @export var player : CharacterBody3D
 @export var item_resource : ItemData
 
@@ -139,4 +141,4 @@ func _give_random_movement() -> void:
 ## add the drop into the storage of the player
 func _pick_up() -> void:
 	HelperFunctions.spawn_temp_sound(pickup_sounds.pick_random())
-	HelperFunctions.add_item_to_storage(item_resource)
+	HelperFunctions.add_item_to_storage(item_resource, DEFAULT_ADD_AMOUNT, Global.sector_storage)

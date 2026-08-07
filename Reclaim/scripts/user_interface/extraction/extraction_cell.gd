@@ -1,9 +1,9 @@
 class_name ExtractionCell
 extends BaseStorageCell
 
-const LEFT_CLICK := "m1"
-const RIGHT_CLICK := "m2"
-const SHIFT_TOGGLE := "shift"
+const LEFT_CLICK := &"m1"
+const RIGHT_CLICK := &"m2"
+const SHIFT_TOGGLE := &"shift"
 
 const MOVE_ONE := 1
 const MOVE_FIVE := 5

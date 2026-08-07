@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://i32x6p4r4rok"]
+
+[ext_resource type="Texture2D" uid="uid://dbblaaid5dlw5" path="res://2d_assets/extraction/help_icon.png" id="1_a3ypy"]
+[ext_resource type="Script" uid="uid://j6u6e0uh2cq3" path="res://scripts/user_interface/help_icon.gd" id="2_ltb3j"]
+[ext_resource type="StyleBox" uid="uid://dacpcfrv5ymbo" path="res://other_assets/styles/base_ui_panels.tres" id="3_s25lm"]
+[ext_resource type="LabelSettings" uid="uid://bgvc5k57qsgaq" path="res://other_assets/label_settings/basic_text.tres" id="4_85cn6"]
+[ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="5_bttch"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_13jd1"]
+font = ExtResource("5_bttch")
+font_size = 14
+font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+
+[node name="help_icon" type="TextureRect" unique_id=1994007448 node_paths=PackedStringArray("help_display")]
+texture_filter = 1
+custom_maximum_size = Vector2(40, 40)
+texture = ExtResource("1_a3ypy")
+stretch_mode = 2
+script = ExtResource("2_ltb3j")
+help_display = NodePath("help_display")
+
+[node name="help_display" type="PanelContainer" parent="." unique_id=476997759]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_left = 44.0
+offset_top = -1.0
+offset_right = 179.0
+offset_bottom = 30.0
+theme_override_styles/panel = ExtResource("3_s25lm")
+
+[node name="MarginContainer" type="MarginContainer" parent="help_display" unique_id=2043636704]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="help_display/MarginContainer" unique_id=400364690]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Label" type="Label" parent="help_display/MarginContainer/VBoxContainer" unique_id=1095319121]
+layout_mode = 2
+text = "Left Click - move 1
+Right Click - move 5
+Shift  Click - move 25
+Shift Right Click - Max"
+label_settings = ExtResource("4_85cn6")
+
+[node name="Label3" type="Label" parent="help_display/MarginContainer/VBoxContainer" unique_id=1857494580]
+layout_mode = 2
+text = "Presets"
+label_settings = ExtResource("4_85cn6")
+
+[node name="MarginContainer" type="MarginContainer" parent="help_display/MarginContainer/VBoxContainer" unique_id=1312825988]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = -4
+
+[node name="Label2" type="Label" parent="help_display/MarginContainer/VBoxContainer/MarginContainer" unique_id=2045848822]
+layout_mode = 2
+text = "Presets add onto what 
+you already have in your
+extraction selection. It
+won't clear your current 
+selection"
+label_settings = SubResource("LabelSettings_13jd1")
+
+[node name="Label4" type="Label" parent="help_display/MarginContainer/VBoxContainer" unique_id=368301994]
+layout_mode = 2
+text = "Best Value"
+label_settings = ExtResource("4_85cn6")
+
+[node name="MarginContainer2" type="MarginContainer" parent="help_display/MarginContainer/VBoxContainer" unique_id=56527123]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = -4
+
+[node name="Label2" type="Label" parent="help_display/MarginContainer/VBoxContainer/MarginContainer2" unique_id=1778712724]
+layout_mode = 2
+text = "This preset chooses the
+most amout of value to 
+ratio of weight"
+label_settings = SubResource("LabelSettings_13jd1")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

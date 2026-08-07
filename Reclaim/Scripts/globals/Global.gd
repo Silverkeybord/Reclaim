@@ -32,9 +32,14 @@ enum PLAYER_MODES {
 # CONSTANTS ===================================================================
 # =============================================================================
 
+# SECTORS ----------------------------------------------------------------
+const SECTORS := {
+	"remote_island" : preload("res://scenes/maps/remote_island.tscn")
+}
+
 # PATHS & DEFAULTS --------------------------------------------------------
 const SAVE_PATH: String = "user://reclaim.save"
-const DEFAULT_SECTOR_PATH: String = "res://scenes/maps/remote_island.tscn"
+const DEFAULT_SECTOR_PATH: PackedScene = SECTORS["remote_island"]
 
 # SAVE KEYS ---------------------------------------------------------------
 const SAVE_SHIP_STORAGE_KEY: String = "ship_storage"
@@ -133,10 +138,11 @@ var extraction_open := false
 var authorization_open := false
 
 # SECTOR RELATED ------------------------------------------------------------
-var selected_sector: String
-var selected_sector_path: String = DEFAULT_SECTOR_PATH
-var sector_run_time: float
-var shield_overdrive: bool = false
+var selected_sector : String
+var selected_sector_path : PackedScene = DEFAULT_SECTOR_PATH
+var sector_run_time : float
+var shield_overdrive : bool = false 
+var just_extracted : bool = false
 
 # ENEMIES
 var enemies: int = 0
@@ -172,7 +178,7 @@ var extraction_storage: Dictionary = {
 }
 
 
-## Temp testing function to fill storage
+## Temp testing function to fill storage - THIS IS A TESTING SCRIPT IGNORE CONVENTIONS
 func set_random_storage(set_sector_storage: bool = false) -> void:
 	for key in DataRegistry.items:
 		var resource = DataRegistry.items[key]

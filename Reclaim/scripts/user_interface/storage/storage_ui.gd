@@ -29,7 +29,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed(CLOSE_UI_INPUT):
-		storage_close()
+		close_ui()
 
 
 static func load_all_cells(
@@ -95,7 +95,7 @@ func _input(event: InputEvent) -> void:
 				scroll_container.scroll_vertical += SCROLL_AMOUNT
 
 
-func storage_open() -> void:
+func open_ui() -> void:
 	if storage_animations and storage_animations.is_playing():
 		return
 	
@@ -106,7 +106,7 @@ func storage_open() -> void:
 		storage_animations.play(OPEN_ANIMATION)
 
 
-func storage_close() -> void:
+func close_ui() -> void:
 	if storage_animations and storage_animations.is_playing():
 		return
 	

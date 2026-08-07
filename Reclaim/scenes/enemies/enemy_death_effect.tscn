@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://ckge7jer785ny"]
+
+[ext_resource type="Script" uid="uid://ckshjcr84oorr" path="res://scripts/enemies/enemy_death_effects.gd" id="1_vb7vg"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_yf5fn"]
+radial_segments = 32
+rings = 16
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_57qmd"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.25490198)
+
+[sub_resource type="SphereMesh" id="SphereMesh_g4v7s"]
+radius = 0.45
+height = 0.9
+
+[node name="Node3D" type="Node3D" unique_id=1875956881]
+script = ExtResource("1_vb7vg")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="." unique_id=689935821]
+mesh = SubResource("SphereMesh_yf5fn")
+material = SubResource("StandardMaterial3D_57qmd")
+
+[node name="CSGMesh3D2" type="CSGMesh3D" parent="CSGMesh3D" unique_id=1787403692]
+operation = 2
+mesh = SubResource("SphereMesh_g4v7s")
+material = SubResource("StandardMaterial3D_57qmd")

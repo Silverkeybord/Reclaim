@@ -1,5 +1,4 @@
 shader_type spatial;
-// MADE WITH AI =================
 
 
 render_mode blend_mix, cull_disabled, depth_draw_opaque;

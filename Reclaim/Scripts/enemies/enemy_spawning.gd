@@ -10,12 +10,10 @@ const SPAWN_MARKERS_GROUP : String = "enemy_spawn_markers"
 @export var spawn_timer : Timer
 
 @export_group("Map Info")
-## The target for spawned enemies
-@export var extraction_pod : Node3D
+@export var sector_elements : Node3D
 ## The map this is placed on
 @export var map : String
 
-@export var sector_shield : SectorShield
 
 var wave_resource : WaveData
 var difficulty_mult : int
@@ -55,6 +53,9 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	if Global.major_animation_playing:
+		return
+	
 	run_time += delta
 	Global.sector_run_time = run_time
 
@@ -77,7 +78,7 @@ func _on_spawn_timer_timeout() -> void:
 	commander.enemy_resource = _get_enemy_type_resource()
 	
 	# setting properties
-	commander.extraction_pod = extraction_pod
+	commander.extraction_pod = sector_elements.extraction_pod
 	commander.size = (
 		wave_resource.commander_start_size + 
 		Global.sector_run_time * commander_size_ratio + 
@@ -85,7 +86,7 @@ func _on_spawn_timer_timeout() -> void:
 		)
 	commander.scale *= commander.size
 	commander.is_commander = true
-	commander.sector_shield = sector_shield
+	commander.sector_shield = sector_elements.sector_shield
 	
 	commander.global_position = _spawn_in_radius(
 		random_spawn_node.global_position, 
@@ -101,8 +102,8 @@ func _on_spawn_timer_timeout() -> void:
 		
 		new_enemy.enemy_resource = _get_enemy_type_resource()
 		
-		new_enemy.extraction_pod = extraction_pod
-		new_enemy.sector_shield = sector_shield
+		new_enemy.extraction_pod = sector_elements.extraction_pod
+		new_enemy.sector_shield = sector_elements.sector_shield
 		new_enemy.size = (
 			wave_resource.start_size +
 			Global.sector_run_time * normal_size_ratio +

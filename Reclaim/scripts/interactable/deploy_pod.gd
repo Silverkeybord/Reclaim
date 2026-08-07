@@ -1,8 +1,21 @@
 extends StaticBody3D
 
-const ship_scene := "res://scenes/ship/ship.tscn"
+const FADE_TIME := 0.5
+const NORMAL_MODULATE := Color(1, 1, 1, 1)
+const HIDDEN_MODULATE := Color(1, 1, 1, 0)
+const PROP_MODULATE : String = "modulate"
+
+@export var color_rect : ColorRect
 
 
 func interact() -> void:
-	get_tree().change_scene_to_file(Global.selected_sector_path)
+	color_rect.visible = true
+	var fade_in_tween = create_tween()
+	fade_in_tween.tween_property(color_rect, PROP_MODULATE, NORMAL_MODULATE, FADE_TIME)
+	
+	await fade_in_tween.finished
+	color_rect.visible = false
+	color_rect.modulate = HIDDEN_MODULATE
+	
+	get_tree().change_scene_to_packed(Global.selected_sector_path)
 	Global.at_ship = false

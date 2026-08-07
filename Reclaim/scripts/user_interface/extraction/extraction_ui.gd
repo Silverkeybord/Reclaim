@@ -16,7 +16,12 @@ const MAX_COLOR := Color("FF7E7E")
 
 const FITHS_RATIO_DIVISOR := 0.2
 
-const MAX_MOVE_AMOUNT := 0
+const MAX_MOVE_AMOUNT_NUMBER := 0
+
+const ITEM_KEY := "key"
+const ITEM_TIER := "tier"
+const ITEM_VALUE := "value"
+const ITEM_WEIGHT := "weight"
 
 const CLOSE_UI_INPUT := "close_ui"
 
@@ -49,6 +54,11 @@ var extraction_cells := {}
 
 
 func _ready() -> void:
+	Global.set_random_storage(true)
+	
+	extraction_bar.value = 0 # TEMP
+	extraction_bar.max_value = 100 # TEMP
+	
 	set_process(false)
 	storage_cells = Storage.load_all_cells(
 		sector_hflow, EXTRACTION_CELL_SCENE, item_tip, self)
@@ -74,21 +84,9 @@ func _process(_delta: float) -> void:
 		close_ui()
 
 
-func open_ui() -> void:
-	if extraction_animations.is_playing():
-		return
-	
-	extraction_bar.value = 0 # TEMP
-	extraction_bar.max_value = 100 # TEMP
-	
-	_set_open_or_close(true)
-	extraction_animations.play(ANIMATION_OPEN)
-	load_extraction_cells()
-
-
 # General loading and functoins -----------------------------------------------
-func close_ui() -> void:
-	if extraction_animations.is_playing():
+func close_ui(forced = false) -> void:
+	if extraction_animations.is_playing() and not forced:
 		return
 	
 	_set_open_or_close(false)
@@ -98,6 +96,15 @@ func close_ui() -> void:
 	
 	Global.ui_open = false
 	Global.extraction_open = false
+
+
+func open_ui() -> void:
+	if extraction_animations.is_playing():
+		return
+	
+	_set_open_or_close(true)
+	extraction_animations.play(ANIMATION_OPEN)
+	load_extraction_cells()
 
 
 func _set_open_or_close(toggle : bool) -> void:
@@ -126,6 +133,7 @@ func load_extraction_cells() -> void:
 
 # Extract and Cancel Buttons --------------------------------------------------
 func _on_extract_button_pressed() -> void:
+	close_ui(true)
 	extraction_pod.extract()
 
 
@@ -148,7 +156,7 @@ func move_item(in_storage : bool, move_amount : int, item : ItemData) -> void:
 	if move_amount > item_amount:
 		move_amount = item_amount
 	
-	if move_amount == MAX_MOVE_AMOUNT:
+	if move_amount == MAX_MOVE_AMOUNT_NUMBER:
 		move_amount = item_amount
 	
 	var move_weight : int = move_amount * item.weight
@@ -178,26 +186,114 @@ func move_item(in_storage : bool, move_amount : int, item : ItemData) -> void:
 
 # Presets --------------------------------------------------------------------
 func _on_most_valuable_preset_pressed() -> void:
-	
-	pass # Replace with function body.
+	var remaining_storage = extraction_bar.max_value - extraction_bar.value
+	if not remaining_storage:
+		return
+	var item_array = get_item_array()
+	item_array.sort_custom(sort_value_then_tier)
+	move_over_items(item_array)
 
 
 func _on_highest_tier_preset_pressed() -> void:
-	
-	pass # Replace with function body.
+	var remaining_storage = extraction_bar.max_value - extraction_bar.value
+	if not remaining_storage:
+		return
+	var item_array = get_item_array()
+	item_array.sort_custom(sort_tier_then_value)
+	move_over_items(item_array)
 
 
 func _on_most_items_preset_pressed() -> void:
-	pass # Replace with function body.
+	var remaining_storage = extraction_bar.max_value - extraction_bar.value
+	if not remaining_storage:
+		return
+	var item_array = get_item_array()
+	item_array.sort_custom(sort_least_weight_then_value)
+	move_over_items(item_array)
 
 
 func _on_best_value_pressed() -> void:
-	pass
+	var remaining_storage = extraction_bar.max_value - extraction_bar.value
+	if not remaining_storage:
+		return
+	var item_array = get_item_array()
+	item_array.sort_custom(sort_ratio_then_tier)
+	move_over_items(item_array)
 
 
-# clears extraction storage
 func _on_clear_selection_pressed() -> void:
 	var items = HelperFunctions.get_item_from_storage(Global.extraction_storage)
-	
 	for item in items:
 		move_item(false, 0, DataRegistry.items[item])
+
+
+func get_item_array() -> Array[Dictionary]:
+	var sector_items = HelperFunctions.get_item_from_storage(Global.sector_storage)
+	var item_list : Array[Dictionary]
+	for item in sector_items:
+		var item_data : ItemData = DataRegistry.items[item]
+		item_list.append({
+			ITEM_KEY : item,
+			ITEM_TIER : item_data.tier,
+			ITEM_VALUE : item_data.value,
+			ITEM_WEIGHT : item_data.weight
+		})
+	return item_list
+
+
+# Sorting functions ----------------------------------------------------------
+func sort_value_then_tier(a, b) -> bool:
+	# Highest value first, then highest tier
+	if a[ITEM_VALUE] != b[ITEM_VALUE]:
+		return a[ITEM_VALUE] > b[ITEM_VALUE]
+	return a[ITEM_TIER] > b[ITEM_TIER]
+
+
+func sort_tier_then_value(a, b) -> bool:
+	# Highest tier first, then highest value
+	if a[ITEM_TIER] != b[ITEM_TIER]:
+		return a[ITEM_TIER] > b[ITEM_TIER]
+	return a[ITEM_VALUE] > b[ITEM_VALUE]
+
+
+func sort_least_weight_then_value(a, b) -> bool:
+	# lightest items first then highest value
+	if a[ITEM_WEIGHT] != b[ITEM_WEIGHT]:
+		return a[ITEM_WEIGHT] < b[ITEM_WEIGHT]
+	return a[ITEM_VALUE] > b[ITEM_VALUE]
+
+
+func sort_ratio_then_tier(a, b) -> bool:
+	# best value per weight first, then highest tier
+	var ratio_a = a[ITEM_VALUE] / max(a[ITEM_WEIGHT], 0.001)  # prevent division by zero
+	var ratio_b = b[ITEM_VALUE] / max(b[ITEM_WEIGHT], 0.001)
+	
+	if not is_equal_approx(ratio_a, ratio_b):
+		return ratio_a > ratio_b
+	return a[ITEM_TIER] > b[ITEM_TIER]
+
+
+func move_over_items(item_array : Array[Dictionary]) -> void:
+	var remaining_weight : int = int(extraction_bar.max_value - extraction_bar.value)
+	for item_values in item_array:
+		if remaining_weight == 0:
+			break
+		var item_data : ItemData = DataRegistry.items[item_values[ITEM_KEY]]
+		var storage_items : int = HelperFunctions.get_item_amount(item_data)
+		var fit_items : int = floori(float(remaining_weight) / float(item_data.weight))
+		
+		if fit_items <= storage_items:
+			remaining_weight -= fit_items * item_data.weight
+			extraction_bar.value += fit_items * item_data.weight
+		else:
+			remaining_weight -= storage_items * item_data.weight
+			extraction_bar.value += storage_items * item_data.weight
+			fit_items = storage_items
+		
+		HelperFunctions.remove_item_from_storage(item_data, fit_items)
+		HelperFunctions.add_item_to_storage(item_data, fit_items, Global.extraction_storage)
+		print("moved over item - ", item_data.key, " - of amount of - ", fit_items)
+		storage_cells[item_data.key].update_amount()
+		extraction_cells[item_data.key].update_amount()
+	
+	weight_label.text = WEIGHT_FORMAT % [extraction_bar.value, extraction_bar.max_value]

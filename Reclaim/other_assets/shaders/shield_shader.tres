@@ -1,0 +1,15 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://xekfk3bvcvwr"]
+
+[ext_resource type="Shader" uid="uid://c8ewhf2mpm8fx" path="res://other_assets/shaders/sector_shield.gdshader" id="1_xfuh2"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_xfuh2")
+shader_parameter/shield_color = Color(0.4, 0.9019608, 1, 0.078431375)
+shader_parameter/health = 1.0
+shader_parameter/fresnel_strength = 1.8000000855
+shader_parameter/fresnel_power = 6.0
+shader_parameter/scan_speed = 3.0
+shader_parameter/scan_density = 70.0
+shader_parameter/pulse_speed = 3.0
+shader_parameter/grid_size = 40.0

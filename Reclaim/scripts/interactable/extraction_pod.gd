@@ -1,8 +1,9 @@
 extends StaticBody3D
 
-const ship_scene := "res://scenes/ship.tscn"
-
 @export var extraction_ui : ExtractionUI
+@export var sector_elements : Node3D
+@export var crafting_table : StaticBody3D
+@export var storage_container : StaticBody3D
 
 
 func interact() -> void:
@@ -11,12 +12,16 @@ func interact() -> void:
 
 func extract() -> void:
 	Global.set_mouse_captured(true, true)
-	Global.at_ship = true
+	Global.just_extracted = true
+	Global.major_animation_playing = true
+	Global.sector_storage = HelperFunctions.get_clean_storage()
 	
 	if Global.ui_open:
-		Global.ui_open = false
-		Global.storage_open = false
-		Global.crafting_open = false
-		Global.extraction_open = false
+		if Global.storage_open:
+			storage_container.storage_ui.close_ui()
+		if Global.crafting_open:
+			crafting_table.crafting_ui.close_ui()
+		if Global.extraction_open:
+			extraction_ui.close_ui()
 	
-	get_tree().change_scene_to_file(ship_scene)
+	sector_elements.extract_animation()

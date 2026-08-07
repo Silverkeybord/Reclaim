@@ -356,7 +356,7 @@ _data = {
 &"open_extraction": SubResource("Animation_13jd1")
 }
 
-[node name="cancel_button" type="CanvasLayer" unique_id=1130211310 node_paths=PackedStringArray("extraction_animations", "total_weight", "item_tip", "extraction_bar", "weight_label", "help_display", "sector_hflow", "extraction_hflow")]
+[node name="extraction_ui" type="CanvasLayer" unique_id=1130211310 node_paths=PackedStringArray("extraction_animations", "total_weight", "item_tip", "extraction_bar", "weight_label", "help_display", "sector_hflow", "extraction_hflow")]
 layer = 2
 script = ExtResource("1_xxkdv")
 extraction_animations = NodePath("extraction_animations")
@@ -727,7 +727,7 @@ layout_mode = 2
 size_flags_vertical = 1
 theme_override_styles/background = SubResource("StyleBoxEmpty_7numd")
 theme_override_styles/fill = SubResource("StyleBoxFlat_p1u0y")
-step = 0.1
+step = 1.0
 fill_mode = 3
 show_percentage = false
 
