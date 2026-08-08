@@ -68,7 +68,7 @@ const TEST_STORAGE_EXPONENT: int = 0
 const TIER_CONFIG: Dictionary = {
 	1: {
 		KEY_COLOR: Color(0.541, 0.561, 0.596),
-		KEY_STYLE: preload("res://other_assets/crafting_styles/t1_style.tres"),
+		KEY_STYLE: preload("res://other_assets/styles/crafting_styles/t1_style.tres"),
 		KEY_CELLS: {
 			KEY_RESOURCES: preload("res://2d_assets/storage/resource_cells/rough_cell.png"),
 			KEY_TURRETS: preload("res://2d_assets/storage/turret_cells/rough_cell.png"),
@@ -77,7 +77,7 @@ const TIER_CONFIG: Dictionary = {
 	},
 	2: {
 		KEY_COLOR: Color(0.29, 0.871, 0.502),
-		KEY_STYLE: preload("res://other_assets/crafting_styles/t2_style.tres"),
+		KEY_STYLE: preload("res://other_assets/styles/crafting_styles/t2_style.tres"),
 		KEY_CELLS: {
 			KEY_RESOURCES: preload("res://2d_assets/storage/resource_cells/plain_cell.png"),
 			KEY_TURRETS: preload("res://2d_assets/storage/turret_cells/plain_cell.png"),
@@ -86,7 +86,7 @@ const TIER_CONFIG: Dictionary = {
 	},
 	3: {
 		KEY_COLOR: Color(0.29, 0.557, 0.996),
-		KEY_STYLE: preload("res://other_assets/crafting_styles/t3_style.tres"),
+		KEY_STYLE: preload("res://other_assets/styles/crafting_styles/t3_style.tres"),
 		KEY_CELLS: {
 			KEY_RESOURCES: preload("res://2d_assets/storage/resource_cells/usefull_cell.png"),
 			KEY_TURRETS: preload("res://2d_assets/storage/turret_cells/useful_cell.png"),
@@ -95,7 +95,7 @@ const TIER_CONFIG: Dictionary = {
 	},
 	4: {
 		KEY_COLOR: Color(1.0, 0.847, 0.243),
-		KEY_STYLE: preload("res://other_assets/crafting_styles/t4_style.tres"),
+		KEY_STYLE: preload("res://other_assets/styles/crafting_styles/t4_style.tres"),
 		KEY_CELLS: {
 			KEY_RESOURCES: preload("res://2d_assets/storage/resource_cells/valuable_cell.png"),
 			KEY_TURRETS: preload("res://2d_assets/storage/turret_cells/valuable_cell.png"),
@@ -104,7 +104,7 @@ const TIER_CONFIG: Dictionary = {
 	},
 	5: {
 		KEY_COLOR: Color(0.937, 0.267, 0.267),
-		KEY_STYLE: preload("res://other_assets/crafting_styles/t5_style.tres"),
+		KEY_STYLE: preload("res://other_assets/styles/crafting_styles/t5_style.tres"),
 		KEY_CELLS: {
 			KEY_RESOURCES: preload("res://2d_assets/storage/resource_cells/extraordinary_cell.png"),
 			KEY_TURRETS: preload("res://2d_assets/storage/turret_cells/extraordinary_cell.png"),

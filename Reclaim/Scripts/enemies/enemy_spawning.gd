@@ -63,8 +63,8 @@ func _process(delta: float) -> void:
 # spawns the cluster after each time
 func _on_spawn_timer_timeout() -> void:
 	# calculate dynamic values based on active run time
-	cluster_size = wave_resource.cluster_start_size - round(run_time * cluster_rate_ratio)
-	spawn_rate = wave_resource.spawn_start_interval - (run_time * spawn_rate_ratio)
+	cluster_size = wave_resource.cluster_start_size + round(run_time * cluster_rate_ratio)
+	spawn_rate = wave_resource.spawn_start_interval + (run_time * spawn_rate_ratio)
 	spawn_timer.start(spawn_rate)
 	
 	if Global.enemies >= Global.MAX_SPHERES:

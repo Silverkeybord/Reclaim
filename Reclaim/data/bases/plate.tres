@@ -5,4 +5,5 @@
 [resource]
 script = ExtResource("1_4khvu")
 key = "plate"
+value = "10"
 metadata/_custom_type_script = "uid://cok3yxxldqfv4"

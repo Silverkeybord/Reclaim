@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://hgi3y5catplc"]
 
 [ext_resource type="Script" uid="uid://du0kgq472nuy0" path="res://scripts/user_interface/crafting/recepie_requirment.gd" id="1_58n8p"]
-[ext_resource type="StyleBox" uid="uid://x30xg8owly1s" path="res://other_assets/crafting_styles/t1_style.tres" id="1_p0w2q"]
+[ext_resource type="StyleBox" uid="uid://x30xg8owly1s" path="res://other_assets/styles/crafting_styles/t1_style.tres" id="1_p0w2q"]
 [ext_resource type="Texture2D" uid="uid://muaixjqb24ps" path="res://2d_assets/crafting/enough_resources.png" id="3_58n8p"]
 [ext_resource type="Resource" uid="uid://dindgm06orind" path="res://data/items/resources/tier1/scrap.tres" id="3_p0w2q"]
 [ext_resource type="Texture2D" uid="uid://cgcnht18jhoxa" path="res://2d_assets/items/resources/1/scrap.png" id="4_58n8p"]

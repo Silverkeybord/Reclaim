@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SoundInfo" format=3 uid="uid://fg1kq55cdcao"]
+
+[ext_resource type="Script" uid="uid://br78q44p6grd3" path="res://scripts/other/sound_info.gd" id="1_vsemg"]
+[ext_resource type="AudioStream" uid="uid://b4nd8haeb16be" path="res://sounds/user_interface/button_click.wav" id="2_7ublt"]
+
+[resource]
+script = ExtResource("1_vsemg")
+stream = ExtResource("2_7ublt")
+metadata/_custom_type_script = "uid://br78q44p6grd3"

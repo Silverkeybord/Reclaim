@@ -54,8 +54,6 @@ var extraction_cells := {}
 
 
 func _ready() -> void:
-	Global.set_random_storage(true)
-	
 	extraction_bar.value = 0 # TEMP
 	extraction_bar.max_value = 100 # TEMP
 	
@@ -181,7 +179,7 @@ func move_item(in_storage : bool, move_amount : int, item : ItemData) -> void:
 		extraction_cells[item.key].update_amount()
 		extraction_bar.value -= move_weight
 	
-	weight_label.text = WEIGHT_FORMAT % [extraction_bar.value, extraction_bar.max_value]
+	weight_label.text = WEIGHT_FORMAT % [int(extraction_bar.value), int(extraction_bar.max_value)]
 
 
 # Presets --------------------------------------------------------------------
@@ -212,7 +210,7 @@ func _on_most_items_preset_pressed() -> void:
 	move_over_items(item_array)
 
 
-func _on_best_value_pressed() -> void:
+func on_best_value_pressed() -> void:
 	var remaining_storage = extraction_bar.max_value - extraction_bar.value
 	if not remaining_storage:
 		return
@@ -296,4 +294,4 @@ func move_over_items(item_array : Array[Dictionary]) -> void:
 		storage_cells[item_data.key].update_amount()
 		extraction_cells[item_data.key].update_amount()
 	
-	weight_label.text = WEIGHT_FORMAT % [extraction_bar.value, extraction_bar.max_value]
+	weight_label.text = WEIGHT_FORMAT % [int(extraction_bar.value), int(extraction_bar.max_value)]

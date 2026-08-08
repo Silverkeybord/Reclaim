@@ -415,11 +415,12 @@ help_display = NodePath("help_display")
 [node name="help_display" type="PanelContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon" unique_id=424539384]
 visible = false
 z_index = 1
+custom_maximum_size = Vector2(225, -1)
 layout_mode = 0
 offset_left = 44.0
 offset_top = -1.0
-offset_right = 179.0
-offset_bottom = 30.0
+offset_right = 269.0
+offset_bottom = 395.0
 theme_override_styles/panel = ExtResource("5_fb72p")
 
 [node name="MarginContainer" type="MarginContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display" unique_id=704225997]
@@ -431,7 +432,7 @@ theme_override_constants/margin_bottom = 6
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer" unique_id=1089254597]
 layout_mode = 2
-theme_override_constants/separation = 4
+theme_override_constants/separation = 6
 
 [node name="Label" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer/VBoxContainer" unique_id=369397827]
 layout_mode = 2
@@ -449,16 +450,13 @@ label_settings = ExtResource("4_uu56b")
 [node name="MarginContainer" type="MarginContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer/VBoxContainer" unique_id=510062877]
 layout_mode = 2
 theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = -4
+theme_override_constants/margin_top = -6
 
 [node name="Label2" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer/VBoxContainer/MarginContainer" unique_id=1214028742]
 layout_mode = 2
-text = "Presets add onto what 
-you already have in your
-extraction selection. It
-won't clear your current 
-selection"
+text = "Presets add onto what you already have in your selection. It won't clear your current selection"
 label_settings = SubResource("LabelSettings_13jd1")
+autowrap_mode = 3
 
 [node name="Label4" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer/VBoxContainer" unique_id=1608947960]
 layout_mode = 2
@@ -468,14 +466,23 @@ label_settings = ExtResource("4_uu56b")
 [node name="MarginContainer2" type="MarginContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer/VBoxContainer" unique_id=618072346]
 layout_mode = 2
 theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = -4
+theme_override_constants/margin_top = -6
 
-[node name="Label2" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer/VBoxContainer/MarginContainer2" unique_id=1725794731]
+[node name="VBoxContainer" type="VBoxContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer/VBoxContainer/MarginContainer2" unique_id=1501191326]
 layout_mode = 2
-text = "This preset chooses the
-most amout of value to 
-ratio of weight"
+theme_override_constants/separation = 7
+
+[node name="Label2" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer" unique_id=1725794731]
+layout_mode = 2
+text = "This preset chooses the most amout of value to ratio of weight"
 label_settings = SubResource("LabelSettings_13jd1")
+autowrap_mode = 3
+
+[node name="Label3" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer" unique_id=1735739213]
+layout_mode = 2
+text = "If your selection is empty or half empty the best value preset will automtically applied"
+label_settings = SubResource("LabelSettings_13jd1")
+autowrap_mode = 3
 
 [node name="Label" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header" unique_id=2136127503]
 layout_mode = 2

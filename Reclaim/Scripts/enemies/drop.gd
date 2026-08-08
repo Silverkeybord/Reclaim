@@ -42,7 +42,6 @@ const DEFAULT_ADD_AMOUNT := 1
 @export_group("Sounds")
 @export var pickup_sounds : Array[SoundInfo]
 
-var last_process_pos : Vector3
 var on_ground : bool = false
 var being_picked_up : bool = false
 var picked_up : bool = false

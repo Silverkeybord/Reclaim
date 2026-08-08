@@ -32,6 +32,7 @@ const INTERACT_INPUT : StringName = &"interact"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	start_animation(RESET_ANIMATION)
 	sector_name_label.text = sector_name
 	sector_name_label.visible = true
 	start_animation(LANDING_ANIMATION)
@@ -95,6 +96,9 @@ func extract_animation() -> void:
 
 
 func start_animation(animation_name : StringName) -> void:
+	if animation_name == RESET_ANIMATION:
+		return
+	
 	Global.major_animation_playing = true
 	skip_label.visible = true
 	sector_shield.run_ui.visible = false

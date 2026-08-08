@@ -3,7 +3,7 @@ extends Button
 
 # You need to turn on offset transformations for this to work
 
-const PRESS_SOUND : AudioStream = preload("res://sounds/user_interface/button_click.wav")
+const PRESS_SOUND : SoundInfo = preload("res://sounds/user_interface/button_click_soundinfo.tres")
 
 const TWEEN_TIME := 0.05
 const NORMAL_SCALE := Vector2(1, 1)
@@ -42,7 +42,4 @@ func _on_pressed() -> void:
 
 
 func play_press_sound() -> void:
-	var new_stream = AudioStreamPlayer.new()
-	new_stream.stream = PRESS_SOUND
-	HelperFunctions.add_to_root_node(new_stream)
-	new_stream.play()
+	HelperFunctions.spawn_temp_sound(PRESS_SOUND)

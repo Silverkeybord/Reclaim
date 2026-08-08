@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bsf5b7ordla2o"]
 
 [ext_resource type="Script" uid="uid://b03p5xisdih3g" path="res://scripts/maps/sector_shield.gd" id="1_n3gv3"]
-[ext_resource type="Material" uid="uid://xekfk3bvcvwr" path="res://other_assets/shaders/shield_shader.tres" id="2_68m1w"]
+[ext_resource type="Material" uid="uid://xekfk3bvcvwr" path="res://advanced_visuals/shaders/shield_shader.tres" id="2_68m1w"]
 [ext_resource type="PackedScene" uid="uid://c6q58efe0i7xg" path="res://scenes/user_interface/run_ui.tscn" id="2_ob7rg"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_g4v7s"]
