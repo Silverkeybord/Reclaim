@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://c5otcno2tqgbt"]
 
+[ext_resource type="Texture2D" uid="uid://cmsdook8f8qx1" path="res://2d_assets/items/resources/2/construction_material.png" id="1_6xp0g"]
 [ext_resource type="Script" uid="uid://cgqvvu75ctfva" path="res://data/resource_scripts/items_data.gd" id="1_kb55j"]
 
 [resource]
@@ -7,5 +8,6 @@ script = ExtResource("1_kb55j")
 key = "construction_material"
 size = Vector3(0.5, 0.5, 0.5)
 tier = 2
+item_texture = ExtResource("1_6xp0g")
 value = 2.5
 metadata/_custom_type_script = "uid://cgqvvu75ctfva"

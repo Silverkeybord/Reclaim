@@ -8,59 +8,60 @@ extends CharacterBody3D
 # Use string names instead of normal strings as it save on compute for actions and inputs
 
 # Input Action Names
-const ACTION_LEFT: StringName = &"left"
-const ACTION_RIGHT: StringName = &"right"
-const ACTION_FORWARD: StringName = &"forward"
-const ACTION_BACK: StringName = &"back"
-const ACTION_JUMP: StringName = &"jump"
-const ACTION_SHOOT: StringName = &"shoot"
-const ACTION_INTERACT: StringName = &"interact"
-const ACTION_WEAPON_MODE: StringName = &"weapon_mode"
-const ACTION_BUILD_MODE: StringName = &"build_mode"
-const ACTION_INSTALL_MODE: StringName = &"install_mode"
-const ACTION_CHANGE_BUILD_MODE: StringName = &"change_build_mode"
-const ACTION_PLACE: StringName = &"place"
-const ACTION_PICK_UP_BUILD: StringName = &"pick_up_build"
+const ACTION_LEFT : StringName = &"left"
+const ACTION_RIGHT : StringName = &"right"
+const ACTION_FORWARD : StringName = &"forward"
+const ACTION_BACK : StringName = &"back"
+const ACTION_JUMP : StringName = &"jump"
+const ACTION_SHOOT : StringName = &"shoot"
+const ACTION_INTERACT : StringName = &"interact"
+const ACTION_WEAPON_MODE : StringName = &"weapon_mode"
+const ACTION_BUILD_MODE : StringName = &"build_mode"
+const ACTION_INSTALL_MODE : StringName = &"install_mode"
+const ACTION_CHANGE_BUILD_MODE : StringName = &"change_build_mode"
+const ACTION_PLACE : StringName = &"place"
+const ACTION_PICK_UP_BUILD : StringName = &"pick_up_build"
 
 # Groups & Metadata Tags
-const GROUP_INTERACTABLE: StringName = &"interactable"
-const GROUP_DROPS: StringName = &"drops"
-const GROUP_TURRET_SLOTS: StringName = &"turret_slots"
-const ENEMY_METADATA_TAG: StringName = &"enemy"
+const GROUP_INTERACTABLE : StringName = &"interactable"
+const GROUP_DROPS : StringName = &"drops"
+const GROUP_TURRET_SLOTS : StringName = &"turret_slots"
+const ENEMY_METADATA_TAG : StringName = &"enemy"
 
 # Dynamic Property & Method String Names
-const PROP_VALID: StringName = &"valid"
-const PROP_PLAYER: StringName = &"player"
-const PROP_BULLET_SPAWN: StringName = &"bullet_spawn"
+const PROP_VALID : StringName = &"valid"
+const PROP_PLAYER : StringName = &"player"
+const PROP_BULLET_SPAWN : StringName = &"bullet_spawn"
 
-const METHOD_INTERACT: StringName = &"interact"
-const METHOD_TOGGLE_BUILD_MODE: StringName = &"_toggle_build_mode"
-const METHOD_PRIME_PICK_UP: StringName = &"prime_pick_up"
+const METHOD_INTERACT : StringName = &"interact"
+const METHOD_TOGGLE_BUILD_MODE : StringName = &"_toggle_build_mode"
+const METHOD_PRIME_PICK_UP : StringName = &"prime_pick_up"
 
 # Animation Keys & Defaults
-const PLACE_ANIMATION_KEY: StringName = &"build_placed"
-const DEFAULT_WEAPON_NAME: String = "pistol"
+const PLACE_ANIMATION_KEY : StringName = &"build_placed"
+const DEFAULT_WEAPON_NAME : String = "pistol"
 
 # UI Display Strings
-const WEAPON_MODE_INPUT: String = "1 - Weapon"
-const BUILD_MODE_INPUT: String = "2 - Building"
-const INSTALL_MODE_INPUT: String = "3 - Installation"
-const BUILDING_INPUTS: String = "F - Change Builds\nM2 - Pick up Builds\nScroll - Selection"
-const INTERACT_INPUT: String = "E - Interact"
+const WEAPON_MODE_INPUT : String = "1 - Weapon"
+const BUILD_MODE_INPUT : String = "2 - Building"
+const INSTALL_MODE_INPUT : String = "3 - Installation"
+const BUILDING_INPUTS : String = "F - Change Builds\nM2 - Pick up Builds\nScroll - Selection"
+const INTERACT_INPUT : String = "E - Interact"
 
-const PICK_UP_TEXT: String = "CLICK TO PICK UP"
-const PLACE_TEXT: String = "CLICK TO PLACE"
-const REPLACE_TEXT: String = "CLICK TO REPLACE"
-const MOVE_CLOSER_TEXT: String = "MOVE CLOSER"
+const PICK_UP_TEXT : String = "CLICK TO PICK UP"
+const PLACE_TEXT : String = "CLICK TO PLACE"
+const REPLACE_TEXT : String = "CLICK TO REPLACE"
+const MOVE_CLOSER_TEXT : String = "MOVE CLOSER"
 
 # Physics & Interaction Parameters
-const GRAVITY: float = 40.0
-const INTERACT_DISTANCE: float = 5.0
-const BUILD_RANGE: float = 25.0
-const GUN_CHILD_INDEX: int = 0
-const REMOVE_BUILD_DELAY: float = 0.1
-const HIT_OVERLAY_TIME: float = 0.08
-const PICK_UP_COOLDOWN: float = 2.0
+const GRAVITY : float = 40.0
+const INTERACT_DISTANCE : float = 5.0
+const BUILD_RANGE : float = 25.0
+const GUN_CHILD_INDEX : int = 0
+const REMOVE_BUILD_DELAY : float = 0.1
+const HIT_OVERLAY_TIME : float = 0.08
+const PICK_UP_COOLDOWN : float = 2.0
+const ZERO_FLOAT : float = 0.0
 
 # =============================================================================
 # EXPORTS
@@ -123,11 +124,11 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y -= GRAVITY * delta
 	else:
-		velocity.y = 0.0
+		velocity.y = ZERO_FLOAT
 	
 	if not Global.crafting_open and not Global.extraction_open:
 		var input_dir := Input.get_vector(ACTION_LEFT, ACTION_RIGHT, ACTION_FORWARD, ACTION_BACK)
-		var direction := (global_basis * Vector3(input_dir.x, 0.0, input_dir.y)).normalized()
+		var direction := (global_basis * Vector3(input_dir.x,ZERO_FLOAT, input_dir.y)).normalized()
 		
 		velocity.x = direction.x * move_speed
 		velocity.z = direction.z * move_speed
@@ -135,7 +136,7 @@ func _physics_process(delta: float) -> void:
 		if Input.is_action_pressed(ACTION_JUMP) and is_on_floor():
 			velocity.y = jump_velocity
 	else:
-		velocity = Vector3(0.0, velocity.y, 0.0)
+		velocity = Vector3(ZERO_FLOAT, velocity.y,ZERO_FLOAT)
 	
 	move_and_slide()
 
@@ -414,7 +415,7 @@ func _remove_hologram(change_mode: bool = false) -> void:
 			turret_grid._toggle_build_mode(false)
 
 # =============================================================================
-# COMBAT & WEAPONS
+# COMBAT & SHOOTING
 # =============================================================================
 
 func _shoot_control() -> void:

@@ -137,7 +137,7 @@ func _give_random_movement() -> void:
 	angular_velocity = Vector3(x_ang, y_ang, z_ang)
 
 
-## add the drop into the storage of the player
+# add the drop into the storage of the player
 func _pick_up() -> void:
 	HelperFunctions.spawn_temp_sound(pickup_sounds.pick_random())
 	HelperFunctions.add_item_to_storage(item_resource, DEFAULT_ADD_AMOUNT, Global.sector_storage)

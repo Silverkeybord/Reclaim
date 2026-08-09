@@ -69,6 +69,7 @@ func _on_pressed() -> void:
 		return
 	
 	play_press_sound()
+	check_requirements()
 	
 	if crafting_menu.current_displayed_requirments != craft_data:
 		crafting_menu.display_requirements_for(craft_data, can_craft)

@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://cxfxnactex4s4"]
 
 [ext_resource type="Script" uid="uid://cgqvvu75ctfva" path="res://data/resource_scripts/items_data.gd" id="1_dannn"]
+[ext_resource type="Texture2D" uid="uid://bhhy8yev87ske" path="res://2d_assets/items/resources/3/ice_essence.png" id="1_wyxyc"]
 
 [resource]
 script = ExtResource("1_dannn")
 key = "ice_essence"
 tier = 3
+item_texture = ExtResource("1_wyxyc")
 metadata/_custom_type_script = "uid://cgqvvu75ctfva"

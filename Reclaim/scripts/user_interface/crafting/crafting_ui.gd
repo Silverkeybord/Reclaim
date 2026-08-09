@@ -88,6 +88,7 @@ const CRAFT_MAX := 0
 }
 @onready var current_mult_pressed : Button = one_times
 
+var can_craft_current : bool = false
 var craft_mult : int = 1
 var max_mult : int = 0
 var current_tab = TABS.TURRETS
@@ -159,7 +160,7 @@ func _set_open_or_close(toggle : bool) -> void:
 func craft(from_cell = false) -> void:
 	var craft_data : CraftData = current_displayed_requirments
 	
-	if not _can_craft(craft_data):
+	if not can_craft_current:
 		return
 	
 	var current_storage = HelperFunctions.get_current_storage()
@@ -169,8 +170,6 @@ func craft(from_cell = false) -> void:
 		resulting_craft_mult = CRAFT_ONE
 	else:
 		resulting_craft_mult = craft_mult if not max_mult else max_mult
-	
-	print(resulting_craft_mult)
 	
 	for requirment : RequirementsTemplate in craft_data.requirements:
 		HelperFunctions.remove_item_from_storage(
@@ -238,14 +237,14 @@ func update_crafting_display() -> void:
 		
 		max_mult = max_crafting_amounts.min()
 	
-	var can_craft := true
+	can_craft_current = true
 	for cell : RecipeRequirement in get_tree().get_nodes_in_group(REQUIREMENT_CELLS_GROUP):
 		if not cell.check_requirement(craft_mult if craft_mult else max_mult):
 			craft_overlay.visible = true
-			can_craft = false
+			can_craft_current = false
 	
-	craft_overlay.visible = not can_craft
-	craft_button.disabled = not can_craft
+	craft_overlay.visible = not can_craft_current
+	craft_button.disabled = not can_craft_current
 	
 	if not current_displayed_requirments:
 		craft_overlay.visible = true
@@ -281,6 +280,7 @@ func _can_craft(craft_data : CraftData) -> bool:
 
 # Craft Selection and Requirments Controlling ===============================
 func display_requirements_for(craft_data : CraftData, can_craft : bool) -> void:
+	
 	if not Global.crafting_open or not _is_valid_recipe(craft_data):
 		return
 	
@@ -338,6 +338,7 @@ func display_requirements_for(craft_data : CraftData, can_craft : bool) -> void:
 		requirments_hflow.add_child(new_requirment)
 		new_requirment.add_to_group(REQUIREMENT_CELLS_GROUP)
 	
+	can_craft_current = can_craft
 	craft_overlay.visible = not can_craft
 	craft_button.disabled = not can_craft
 	

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://cy0b1ul3i0h6g"]
+
+[ext_resource type="Script" uid="uid://cgqvvu75ctfva" path="res://data/resource_scripts/items_data.gd" id="1_0gxyg"]
+[ext_resource type="Texture2D" uid="uid://c0yavpmrcaxy2" path="res://2d_assets/items/resources/4/lightning_essence.png" id="1_gotbv"]
+
+[resource]
+script = ExtResource("1_0gxyg")
+key = "lightning_essence"
+item_texture = ExtResource("1_gotbv")
+metadata/_custom_type_script = "uid://cgqvvu75ctfva"

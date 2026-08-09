@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://d2e8gmsyragk1"]
 
 [ext_resource type="Script" uid="uid://cgqvvu75ctfva" path="res://data/resource_scripts/items_data.gd" id="1_dannn"]
+[ext_resource type="Texture2D" uid="uid://bmtktirf7h61i" path="res://2d_assets/items/resources/5/light_shard.png" id="1_sjpax"]
 
 [resource]
 script = ExtResource("1_dannn")
 key = "light_shard"
 tier = 5
+item_texture = ExtResource("1_sjpax")
 metadata/_custom_type_script = "uid://cgqvvu75ctfva"

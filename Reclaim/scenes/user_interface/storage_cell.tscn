@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://byuh35b33sevw"]
 
-[ext_resource type="Script" uid="uid://tyy48usyadjf" path="res://scripts/user_interface/storage/base_storage.gd" id="1_0lxaj"]
-[ext_resource type="Texture2D" uid="uid://csjahjyudg6j1" path="res://2d_assets/storage/turret_cells/rough_cell.png" id="2_0lxaj"]
-[ext_resource type="Texture2D" uid="uid://bguj48j4chxxo" path="res://2d_assets/items/none.png" id="3_l2jdo"]
+[ext_resource type="Script" uid="uid://tyy48usyadjf" path="res://scripts/user_interface/storage/base_storage_cell.gd" id="1_0lxaj"]
+[ext_resource type="Texture2D" uid="uid://bdfn2q37b1rbt" path="res://2d_assets/storage/resource_cells/plain_cell.png" id="2_0lxaj"]
+[ext_resource type="Texture2D" uid="uid://ccnyb53y1dpol" path="res://2d_assets/items/resources/2/glass.png" id="3_gx0yy"]
 [ext_resource type="FontFile" uid="uid://sfctk4d5x67" path="res://other_assets/fonts/uni_sans/Uni Sans Heavy Italic.otf" id="4_g5eis"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4v7s"]
@@ -44,7 +44,7 @@ stretch_mode = 3
 layout_mode = 1
 offset_right = 60.0
 offset_bottom = 60.0
-texture = ExtResource("3_l2jdo")
+texture = ExtResource("3_gx0yy")
 stretch_mode = 3
 
 [node name="resourse_highlight_overlay" type="Panel" parent="." unique_id=38702207]

@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://cddqx504fqqq7"]
 
 [ext_resource type="Script" uid="uid://cgqvvu75ctfva" path="res://data/resource_scripts/items_data.gd" id="1_dannn"]
+[ext_resource type="Texture2D" uid="uid://o8560fhrv2lp" path="res://2d_assets/items/resources/4/earth_shard.png" id="1_shfyt"]
 
 [resource]
 script = ExtResource("1_dannn")
 key = "earth_shard"
 tier = 4
+item_texture = ExtResource("1_shfyt")
 metadata/_custom_type_script = "uid://cgqvvu75ctfva"

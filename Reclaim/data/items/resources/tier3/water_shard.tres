@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://8u1vnggp5spj"]
 
+[ext_resource type="Texture2D" uid="uid://b6turovwjtfsi" path="res://2d_assets/items/resources/3/water_shard.png" id="1_6juio"]
 [ext_resource type="Script" uid="uid://cgqvvu75ctfva" path="res://data/resource_scripts/items_data.gd" id="1_dannn"]
 
 [resource]
 script = ExtResource("1_dannn")
 key = "water_shard"
 tier = 3
+item_texture = ExtResource("1_6juio")
 metadata/_custom_type_script = "uid://cgqvvu75ctfva"

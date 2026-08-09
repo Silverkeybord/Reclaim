@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bxlw8qyouph5l"]
 
+[ext_resource type="Texture2D" uid="uid://b4imrn6yjnmh5" path="res://2d_assets/items/resources/3/wind_shard.png" id="1_65c6m"]
 [ext_resource type="Script" uid="uid://cgqvvu75ctfva" path="res://data/resource_scripts/items_data.gd" id="1_dannn"]
 
 [resource]
 script = ExtResource("1_dannn")
 key = "wind_shard"
 tier = 3
+item_texture = ExtResource("1_65c6m")
 metadata/_custom_type_script = "uid://cgqvvu75ctfva"

@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://c8r4mnuywrbk6"]
 
+[ext_resource type="Texture2D" uid="uid://ddgcmya2fawrk" path="res://2d_assets/items/resources/5/dark_essence.png" id="1_3qyel"]
 [ext_resource type="Script" uid="uid://cgqvvu75ctfva" path="res://data/resource_scripts/items_data.gd" id="1_dannn"]
 
 [resource]
 script = ExtResource("1_dannn")
 key = "dark_essence"
 tier = 5
+item_texture = ExtResource("1_3qyel")
 metadata/_custom_type_script = "uid://cgqvvu75ctfva"
