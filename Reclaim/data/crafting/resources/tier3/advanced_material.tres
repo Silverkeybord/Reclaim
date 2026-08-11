@@ -18,7 +18,7 @@ amount = 5
 [sub_resource type="Resource" id="req_1"]
 script = ExtResource("req_script")
 item = ExtResource("item_1")
-amount = 3
+amount = 2
 
 [sub_resource type="Resource" id="req_2"]
 script = ExtResource("req_script")
@@ -47,4 +47,4 @@ required_ship_level = 4
 requirements = Array[ExtResource("req_script")]([SubResource("req_0"), SubResource("req_1"), SubResource("req_2"), SubResource("req_3"), SubResource("req_4"), SubResource("req_5")])
 crafted_item = ExtResource("crafted")
 craft_amount = 2
-description = "Made with useful materials. It's very advanced"
+description = "Can be used to make some advanced stuff"

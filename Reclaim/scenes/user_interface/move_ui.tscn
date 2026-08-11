@@ -1,29 +1,29 @@
 [gd_scene format=3 uid="uid://cjuoaw83nlkpf"]
 
-[ext_resource type="PackedScene" uid="uid://dqgjh854m2igs" path="res://scenes/user_interface/itemtip.tscn" id="1_8eks6"]
-[ext_resource type="Script" uid="uid://tad6048775br" path="res://scripts/user_interface/extraction/extraction_ui.gd" id="1_xxkdv"]
-[ext_resource type="Texture2D" uid="uid://dbblaaid5dlw5" path="res://2d_assets/extraction/help_icon.png" id="2_vsh8a"]
-[ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="3_04trr"]
-[ext_resource type="Script" uid="uid://j6u6e0uh2cq3" path="res://scripts/user_interface/help_icon.gd" id="4_lqiho"]
-[ext_resource type="Texture2D" uid="uid://colmmsj7tl08u" path="res://2d_assets/extraction/preset_button.png" id="4_to6po"]
-[ext_resource type="LabelSettings" uid="uid://bgvc5k57qsgaq" path="res://other_assets/label_settings/basic_text.tres" id="4_uu56b"]
-[ext_resource type="Texture2D" uid="uid://b28pscglyfqyx" path="res://2d_assets/extraction/middle_connectors.png" id="5_04trr"]
-[ext_resource type="LabelSettings" uid="uid://c6mrm0na28c5g" path="res://other_assets/label_settings/titles.tres" id="5_ckfe1"]
-[ext_resource type="StyleBox" uid="uid://dacpcfrv5ymbo" path="res://other_assets/styles/base_ui_panels.tres" id="5_fb72p"]
-[ext_resource type="Script" uid="uid://clkeopwsevljj" path="res://scripts/user_interface/expand_buttons.gd" id="7_an0yc"]
-[ext_resource type="Texture2D" uid="uid://drcpipg5cmsks" path="res://2d_assets/extraction/decor.png" id="7_ml4rt"]
-[ext_resource type="LabelSettings" uid="uid://cvekg5ow7wvpg" path="res://other_assets/label_settings/white_button_text.tres" id="7_o2hgm"]
-[ext_resource type="Texture2D" uid="uid://ommteilkbvo2" path="res://2d_assets/extraction/sections_decor.png" id="7_xxkdv"]
-[ext_resource type="Texture2D" uid="uid://ba61jwpncwlom" path="res://2d_assets/extraction/clear_selection_button.png" id="8_an0yc"]
-[ext_resource type="Texture2D" uid="uid://bpxosd45jnywn" path="res://2d_assets/extraction/side_box.png" id="8_xxkdv"]
-[ext_resource type="Texture2D" uid="uid://dk23whls5qlpo" path="res://2d_assets/extraction/extract button.png" id="9_u7mrq"]
-[ext_resource type="Texture2D" uid="uid://dokvrvdet2fhs" path="res://2d_assets/extraction/cancel_button.png" id="10_hv5k6"]
-[ext_resource type="Theme" uid="uid://ctvnq5mcrq5dr" path="res://other_assets/themes/no_scroll_bar.tres" id="11_13jd1"]
-[ext_resource type="Script" uid="uid://bt7v0mmk03p15" path="res://scripts/user_interface/extraction/extract_highlight_button.gd" id="16_an0yc"]
-[ext_resource type="Script" uid="uid://b7ranqgnvit4m" path="res://scripts/user_interface/extraction/total_weight.gd" id="18_nkewb"]
-[ext_resource type="StyleBox" uid="uid://oyfwh8cxgij4" path="res://other_assets/styles/base_button_normal.tres" id="19_q0cy0"]
-[ext_resource type="StyleBox" uid="uid://p4bumkdahx6n" path="res://other_assets/styles/base_button_pressed.tres" id="20_82ivg"]
-[ext_resource type="StyleBox" uid="uid://dfnlbikp4agtb" path="res://other_assets/styles/base_button_hover.tres" id="21_vifx8"]
+[ext_resource type="Script" uid="uid://tad6048775br" path="res://scripts/user_interface/extraction/move_ui.gd" id="1_yfoaa"]
+[ext_resource type="PackedScene" uid="uid://dqgjh854m2igs" path="res://scenes/user_interface/itemtip.tscn" id="2_m3m1d"]
+[ext_resource type="Texture2D" uid="uid://dbblaaid5dlw5" path="res://2d_assets/extraction/help_icon.png" id="3_q8bow"]
+[ext_resource type="Script" uid="uid://j6u6e0uh2cq3" path="res://scripts/user_interface/help_icon.gd" id="4_wmt1x"]
+[ext_resource type="StyleBox" uid="uid://dacpcfrv5ymbo" path="res://other_assets/styles/base_ui_panels.tres" id="5_oep5y"]
+[ext_resource type="LabelSettings" uid="uid://bgvc5k57qsgaq" path="res://other_assets/label_settings/basic_text.tres" id="6_ql54x"]
+[ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="7_etj5u"]
+[ext_resource type="Texture2D" uid="uid://colmmsj7tl08u" path="res://2d_assets/extraction/preset_button.png" id="8_i41my"]
+[ext_resource type="Script" uid="uid://clkeopwsevljj" path="res://scripts/user_interface/expand_buttons.gd" id="9_ya17d"]
+[ext_resource type="LabelSettings" uid="uid://cvekg5ow7wvpg" path="res://other_assets/label_settings/white_button_text.tres" id="10_dxq45"]
+[ext_resource type="Texture2D" uid="uid://ba61jwpncwlom" path="res://2d_assets/extraction/clear_selection_button.png" id="11_2g25x"]
+[ext_resource type="LabelSettings" uid="uid://c6mrm0na28c5g" path="res://other_assets/label_settings/titles.tres" id="12_j8ene"]
+[ext_resource type="Theme" uid="uid://ctvnq5mcrq5dr" path="res://other_assets/themes/no_scroll_bar.tres" id="13_dy4fn"]
+[ext_resource type="Texture2D" uid="uid://b28pscglyfqyx" path="res://2d_assets/extraction/middle_connectors.png" id="14_my6ml"]
+[ext_resource type="Texture2D" uid="uid://ommteilkbvo2" path="res://2d_assets/extraction/sections_decor.png" id="15_fnru8"]
+[ext_resource type="Texture2D" uid="uid://drcpipg5cmsks" path="res://2d_assets/extraction/decor.png" id="16_xn0ea"]
+[ext_resource type="Texture2D" uid="uid://bpxosd45jnywn" path="res://2d_assets/extraction/side_box.png" id="17_xyrri"]
+[ext_resource type="Script" uid="uid://b7ranqgnvit4m" path="res://scripts/user_interface/extraction/total_weight.gd" id="18_w8ic7"]
+[ext_resource type="StyleBox" uid="uid://oyfwh8cxgij4" path="res://other_assets/styles/base_button_normal.tres" id="19_38jey"]
+[ext_resource type="StyleBox" uid="uid://p4bumkdahx6n" path="res://other_assets/styles/base_button_pressed.tres" id="20_5hxnj"]
+[ext_resource type="StyleBox" uid="uid://dfnlbikp4agtb" path="res://other_assets/styles/base_button_hover.tres" id="21_2kbha"]
+[ext_resource type="Texture2D" uid="uid://dk23whls5qlpo" path="res://2d_assets/extraction/extract button.png" id="22_8j2l1"]
+[ext_resource type="Script" uid="uid://bt7v0mmk03p15" path="res://scripts/user_interface/extraction/extract_highlight_button.gd" id="23_mdk6h"]
+[ext_resource type="Texture2D" uid="uid://dokvrvdet2fhs" path="res://2d_assets/extraction/cancel_button.png" id="24_sxb6s"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4v7s"]
 bg_color = Color(0.84313726, 0.84313726, 0.84313726, 1)
@@ -40,12 +40,12 @@ corner_radius_bottom_left = 20
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_13jd1"]
-font = ExtResource("3_04trr")
+font = ExtResource("7_etj5u")
 font_size = 14
 font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_g4v7s"]
-font = ExtResource("3_04trr")
+font = ExtResource("7_etj5u")
 font_size = 32
 font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 
@@ -100,17 +100,17 @@ bg_color = Color(1, 1, 1, 1)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_57qmd"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_uu56b"]
-font = ExtResource("3_04trr")
+font = ExtResource("7_etj5u")
 font_size = 20
 font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_u7mrq"]
-font = ExtResource("3_04trr")
+font = ExtResource("7_etj5u")
 font_size = 22
 font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_wu3y2"]
-font = ExtResource("3_04trr")
+font = ExtResource("7_etj5u")
 font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iyh4d"]
@@ -239,7 +239,7 @@ corner_radius_bottom_left = 6
 draw_center = false
 
 [sub_resource type="LabelSettings" id="LabelSettings_hv5k6"]
-font = ExtResource("3_04trr")
+font = ExtResource("7_etj5u")
 font_size = 32
 font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 
@@ -258,7 +258,7 @@ corner_detail = 1
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v1oal"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_xxkdv"]
-font = ExtResource("3_04trr")
+font = ExtResource("7_etj5u")
 font_size = 26
 font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 
@@ -358,7 +358,7 @@ _data = {
 
 [node name="extraction_ui" type="CanvasLayer" unique_id=1130211310 node_paths=PackedStringArray("extraction_animations", "total_weight", "item_tip", "extraction_bar", "weight_label", "help_display", "sector_hflow", "extraction_hflow")]
 layer = 2
-script = ExtResource("1_xxkdv")
+script = ExtResource("1_yfoaa")
 extraction_animations = NodePath("extraction_animations")
 total_weight = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight")
 item_tip = NodePath("itemtip")
@@ -368,7 +368,7 @@ help_display = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContaine
 sector_hflow = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/sector_storage/MarginContainer/VBoxContainer/ScrollContainer/sector_hflow")
 extraction_hflow = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/extraction_storage/MarginContainer/VBoxContainer/ScrollContainer/extraction_hflow")
 
-[node name="itemtip" parent="." unique_id=854836766 instance=ExtResource("1_8eks6")]
+[node name="itemtip" parent="." unique_id=854836766 instance=ExtResource("2_m3m1d")]
 
 [node name="ui_root" type="MarginContainer" parent="." unique_id=1259262818]
 visible = false
@@ -407,9 +407,9 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_g4v7s")
 texture_filter = 1
 custom_maximum_size = Vector2(40, 40)
 layout_mode = 2
-texture = ExtResource("2_vsh8a")
+texture = ExtResource("3_q8bow")
 stretch_mode = 2
-script = ExtResource("4_lqiho")
+script = ExtResource("4_wmt1x")
 help_display = NodePath("help_display")
 
 [node name="help_display" type="PanelContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon" unique_id=424539384]
@@ -421,7 +421,7 @@ offset_left = 44.0
 offset_top = -1.0
 offset_right = 269.0
 offset_bottom = 395.0
-theme_override_styles/panel = ExtResource("5_fb72p")
+theme_override_styles/panel = ExtResource("5_oep5y")
 
 [node name="MarginContainer" type="MarginContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display" unique_id=704225997]
 layout_mode = 2
@@ -440,12 +440,12 @@ text = "Left Click - move 1
 Right Click - move 5
 Shift  Click - move 25
 Shift Right Click - Max"
-label_settings = ExtResource("4_uu56b")
+label_settings = ExtResource("6_ql54x")
 
 [node name="Label3" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer/VBoxContainer" unique_id=399849600]
 layout_mode = 2
 text = "Presets"
-label_settings = ExtResource("4_uu56b")
+label_settings = ExtResource("6_ql54x")
 
 [node name="MarginContainer" type="MarginContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer/VBoxContainer" unique_id=510062877]
 layout_mode = 2
@@ -461,7 +461,7 @@ autowrap_mode = 3
 [node name="Label4" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer/VBoxContainer" unique_id=1608947960]
 layout_mode = 2
 text = "Best Value"
-label_settings = ExtResource("4_uu56b")
+label_settings = ExtResource("6_ql54x")
 
 [node name="MarginContainer2" type="MarginContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer/VBoxContainer" unique_id=618072346]
 layout_mode = 2
@@ -511,8 +511,8 @@ theme_override_colors/icon_pressed_color = Color(1, 1, 1, 0.78431374)
 theme_override_styles/normal = SubResource("StyleBoxEmpty_13jd1")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_o2hgm")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_an0yc")
-icon = ExtResource("4_to6po")
-script = ExtResource("7_an0yc")
+icon = ExtResource("8_i41my")
+script = ExtResource("9_ya17d")
 
 [node name="Label" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_valuable_preset" unique_id=2088173329]
 layout_mode = 1
@@ -522,7 +522,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Most Valuable"
-label_settings = ExtResource("7_o2hgm")
+label_settings = ExtResource("10_dxq45")
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
@@ -536,8 +536,8 @@ theme_override_colors/icon_pressed_color = Color(1, 1, 1, 0.78431374)
 theme_override_styles/normal = SubResource("StyleBoxEmpty_13jd1")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_o2hgm")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_an0yc")
-icon = ExtResource("4_to6po")
-script = ExtResource("7_an0yc")
+icon = ExtResource("8_i41my")
+script = ExtResource("9_ya17d")
 
 [node name="Label" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/highest_tier_preset" unique_id=938331701]
 layout_mode = 1
@@ -547,7 +547,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Highest Tier"
-label_settings = ExtResource("7_o2hgm")
+label_settings = ExtResource("10_dxq45")
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
@@ -561,8 +561,8 @@ theme_override_colors/icon_pressed_color = Color(1, 1, 1, 0.78431374)
 theme_override_styles/normal = SubResource("StyleBoxEmpty_13jd1")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_o2hgm")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_an0yc")
-icon = ExtResource("4_to6po")
-script = ExtResource("7_an0yc")
+icon = ExtResource("8_i41my")
+script = ExtResource("9_ya17d")
 
 [node name="Label" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/most_items_preset" unique_id=1569159998]
 layout_mode = 1
@@ -572,7 +572,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Most Items"
-label_settings = ExtResource("7_o2hgm")
+label_settings = ExtResource("10_dxq45")
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
@@ -586,8 +586,8 @@ theme_override_colors/icon_pressed_color = Color(1, 1, 1, 0.78431374)
 theme_override_styles/normal = SubResource("StyleBoxEmpty_13jd1")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_o2hgm")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_an0yc")
-icon = ExtResource("4_to6po")
-script = ExtResource("7_an0yc")
+icon = ExtResource("8_i41my")
+script = ExtResource("9_ya17d")
 
 [node name="Label" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/best_value" unique_id=237911529]
 layout_mode = 1
@@ -597,7 +597,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Best Value"
-label_settings = ExtResource("7_o2hgm")
+label_settings = ExtResource("10_dxq45")
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
@@ -611,8 +611,8 @@ theme_override_colors/icon_pressed_color = Color(1, 1, 1, 0.78431374)
 theme_override_styles/normal = SubResource("StyleBoxEmpty_13jd1")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_o2hgm")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_an0yc")
-icon = ExtResource("8_an0yc")
-script = ExtResource("7_an0yc")
+icon = ExtResource("11_2g25x")
+script = ExtResource("9_ya17d")
 
 [node name="Label" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/preset_buttons/clear_selection" unique_id=1853658517]
 layout_mode = 1
@@ -622,7 +622,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Clear Selection"
-label_settings = ExtResource("7_o2hgm")
+label_settings = ExtResource("10_dxq45")
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
@@ -638,7 +638,7 @@ theme_override_constants/separation = -4
 [node name="sector_storage" type="PanelContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer" unique_id=594236235]
 custom_minimum_size = Vector2(430, 350)
 layout_mode = 2
-theme_override_styles/panel = ExtResource("5_fb72p")
+theme_override_styles/panel = ExtResource("5_oep5y")
 
 [node name="MarginContainer" type="MarginContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/sector_storage" unique_id=1754104857]
 layout_mode = 2
@@ -660,12 +660,12 @@ theme_override_constants/margin_right = 0
 [node name="Label" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/sector_storage/MarginContainer/VBoxContainer/MarginContainer" unique_id=969913658]
 layout_mode = 2
 text = "Sector Storage"
-label_settings = ExtResource("5_ckfe1")
+label_settings = ExtResource("12_j8ene")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/sector_storage/MarginContainer/VBoxContainer" unique_id=1276571147]
 layout_mode = 2
 size_flags_vertical = 3
-theme = ExtResource("11_13jd1")
+theme = ExtResource("13_dy4fn")
 
 [node name="sector_hflow" type="HFlowContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/sector_storage/MarginContainer/VBoxContainer/ScrollContainer" unique_id=974834084]
 layout_mode = 2
@@ -678,7 +678,7 @@ theme_override_constants/v_separation = 10
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
-texture = ExtResource("5_04trr")
+texture = ExtResource("14_my6ml")
 stretch_mode = 2
 
 [node name="extraction_storage" type="PanelContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer" unique_id=500802180]
@@ -706,7 +706,7 @@ theme_override_constants/margin_right = 0
 [node name="Label" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/extraction_storage/MarginContainer/VBoxContainer/MarginContainer" unique_id=1118990254]
 layout_mode = 2
 text = "Extraction"
-label_settings = ExtResource("5_ckfe1")
+label_settings = ExtResource("12_j8ene")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/extraction_storage/MarginContainer/VBoxContainer" unique_id=461847887]
 layout_mode = 2
@@ -741,7 +741,7 @@ show_percentage = false
 [node name="storage_decor" type="TextureRect" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/storage_indication" unique_id=1654146035]
 texture_filter = 1
 layout_mode = 2
-texture = ExtResource("7_xxkdv")
+texture = ExtResource("15_fnru8")
 
 [node name="PanelContainer" type="PanelContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer" unique_id=287451249]
 layout_mode = 2
@@ -755,7 +755,7 @@ theme_override_constants/margin_top = -12
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 4
-texture = ExtResource("7_ml4rt")
+texture = ExtResource("16_xn0ea")
 stretch_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer" unique_id=1379616675]
@@ -778,9 +778,9 @@ texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
-texture = ExtResource("8_xxkdv")
+texture = ExtResource("17_xyrri")
 stretch_mode = 2
-script = ExtResource("18_nkewb")
+script = ExtResource("18_w8ic7")
 extraction_ui = NodePath("../../../../../../../..")
 selection_menu = NodePath("selction_menu")
 total_weight = NodePath("total_weight")
@@ -814,7 +814,7 @@ layout_mode = 0
 offset_top = -157.0
 offset_right = 205.0
 offset_bottom = -4.0
-theme_override_styles/panel = ExtResource("5_fb72p")
+theme_override_styles/panel = ExtResource("5_oep5y")
 
 [node name="MarginContainer" type="MarginContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight/selction_menu" unique_id=1640594291]
 layout_mode = 2
@@ -840,11 +840,11 @@ theme_override_colors/font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 theme_override_colors/font_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 theme_override_colors/font_hover_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 theme_override_colors/font_hover_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
-theme_override_fonts/font = ExtResource("3_04trr")
+theme_override_fonts/font = ExtResource("7_etj5u")
 theme_override_font_sizes/font_size = 14
-theme_override_styles/normal = ExtResource("19_q0cy0")
-theme_override_styles/pressed = ExtResource("20_82ivg")
-theme_override_styles/hover = ExtResource("21_vifx8")
+theme_override_styles/normal = ExtResource("19_38jey")
+theme_override_styles/pressed = ExtResource("20_5hxnj")
+theme_override_styles/hover = ExtResource("21_2kbha")
 toggle_mode = true
 text = "Resources"
 
@@ -855,11 +855,11 @@ theme_override_colors/font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 theme_override_colors/font_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 theme_override_colors/font_hover_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 theme_override_colors/font_hover_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
-theme_override_fonts/font = ExtResource("3_04trr")
+theme_override_fonts/font = ExtResource("7_etj5u")
 theme_override_font_sizes/font_size = 14
-theme_override_styles/normal = ExtResource("19_q0cy0")
-theme_override_styles/pressed = ExtResource("20_82ivg")
-theme_override_styles/hover = ExtResource("21_vifx8")
+theme_override_styles/normal = ExtResource("19_38jey")
+theme_override_styles/pressed = ExtResource("20_5hxnj")
+theme_override_styles/hover = ExtResource("21_2kbha")
 toggle_mode = true
 button_pressed = true
 text = "Turrets"
@@ -871,11 +871,11 @@ theme_override_colors/font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 theme_override_colors/font_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 theme_override_colors/font_hover_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 theme_override_colors/font_hover_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
-theme_override_fonts/font = ExtResource("3_04trr")
+theme_override_fonts/font = ExtResource("7_etj5u")
 theme_override_font_sizes/font_size = 14
-theme_override_styles/normal = ExtResource("19_q0cy0")
-theme_override_styles/pressed = ExtResource("20_82ivg")
-theme_override_styles/hover = ExtResource("21_vifx8")
+theme_override_styles/normal = ExtResource("19_38jey")
+theme_override_styles/pressed = ExtResource("20_5hxnj")
+theme_override_styles/hover = ExtResource("21_2kbha")
 toggle_mode = true
 button_pressed = true
 text = "Modules"
@@ -893,10 +893,10 @@ theme_override_colors/font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 theme_override_colors/font_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 theme_override_colors/font_hover_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 theme_override_colors/font_hover_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
-theme_override_fonts/font = ExtResource("3_04trr")
+theme_override_fonts/font = ExtResource("7_etj5u")
 theme_override_font_sizes/font_size = 14
 theme_override_styles/normal = SubResource("StyleBoxFlat_iyh4d")
-theme_override_styles/pressed = ExtResource("20_82ivg")
+theme_override_styles/pressed = ExtResource("20_5hxnj")
 theme_override_styles/hover = SubResource("StyleBoxFlat_fb72p")
 toggle_mode = true
 text = " T1 "
@@ -910,10 +910,10 @@ theme_override_colors/font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 theme_override_colors/font_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 theme_override_colors/font_hover_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 theme_override_colors/font_hover_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
-theme_override_fonts/font = ExtResource("3_04trr")
+theme_override_fonts/font = ExtResource("7_etj5u")
 theme_override_font_sizes/font_size = 14
 theme_override_styles/normal = SubResource("StyleBoxFlat_k04vf")
-theme_override_styles/pressed = ExtResource("20_82ivg")
+theme_override_styles/pressed = ExtResource("20_5hxnj")
 theme_override_styles/hover = SubResource("StyleBoxFlat_nkewb")
 toggle_mode = true
 text = " T2 "
@@ -927,10 +927,10 @@ theme_override_colors/font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 theme_override_colors/font_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 theme_override_colors/font_hover_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 theme_override_colors/font_hover_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
-theme_override_fonts/font = ExtResource("3_04trr")
+theme_override_fonts/font = ExtResource("7_etj5u")
 theme_override_font_sizes/font_size = 14
 theme_override_styles/normal = SubResource("StyleBoxFlat_1uunt")
-theme_override_styles/pressed = ExtResource("20_82ivg")
+theme_override_styles/pressed = ExtResource("20_5hxnj")
 theme_override_styles/hover = SubResource("StyleBoxFlat_q0cy0")
 toggle_mode = true
 text = " T3 "
@@ -944,10 +944,10 @@ theme_override_colors/font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 theme_override_colors/font_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 theme_override_colors/font_hover_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 theme_override_colors/font_hover_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
-theme_override_fonts/font = ExtResource("3_04trr")
+theme_override_fonts/font = ExtResource("7_etj5u")
 theme_override_font_sizes/font_size = 14
 theme_override_styles/normal = SubResource("StyleBoxFlat_28550")
-theme_override_styles/pressed = ExtResource("20_82ivg")
+theme_override_styles/pressed = ExtResource("20_5hxnj")
 theme_override_styles/hover = SubResource("StyleBoxFlat_82ivg")
 toggle_mode = true
 text = " T4 "
@@ -961,10 +961,10 @@ theme_override_colors/font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 theme_override_colors/font_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 theme_override_colors/font_hover_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 theme_override_colors/font_hover_pressed_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
-theme_override_fonts/font = ExtResource("3_04trr")
+theme_override_fonts/font = ExtResource("7_etj5u")
 theme_override_font_sizes/font_size = 14
 theme_override_styles/normal = SubResource("StyleBoxFlat_t0t4p")
-theme_override_styles/pressed = ExtResource("20_82ivg")
+theme_override_styles/pressed = ExtResource("20_5hxnj")
 theme_override_styles/hover = SubResource("StyleBoxFlat_vifx8")
 toggle_mode = true
 text = " T5 "
@@ -980,8 +980,8 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_3gngh")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_3gngh")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_3gngh")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_fcnqv")
-icon = ExtResource("9_u7mrq")
-script = ExtResource("16_an0yc")
+icon = ExtResource("22_8j2l1")
+script = ExtResource("23_mdk6h")
 highlight = NodePath("extract_highlight")
 highlight_overlay_toggle = false
 
@@ -1016,8 +1016,8 @@ offset_transform_enabled = true
 theme_override_styles/normal = SubResource("StyleBoxEmpty_fcnqv")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_dlomj")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_v1oal")
-icon = ExtResource("10_hv5k6")
-script = ExtResource("16_an0yc")
+icon = ExtResource("24_sxb6s")
+script = ExtResource("23_mdk6h")
 highlight = NodePath("cancel_highlight")
 
 [node name="Label" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/cancel_button" unique_id=1220591488]

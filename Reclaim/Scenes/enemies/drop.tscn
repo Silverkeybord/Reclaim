@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" uid="uid://dw86xjbrodauy" path="res://scripts/enemies/drop.gd" id="1_aphvy"]
 [ext_resource type="Script" uid="uid://br78q44p6grd3" path="res://scripts/other/sound_info.gd" id="2_3ca3l"]
-[ext_resource type="Material" uid="uid://b0grvd22mypjn" path="res://textures_and_materials/items/1/scrap.tres" id="2_pkv3f"]
 [ext_resource type="AudioStream" uid="uid://8rxy14rxlhrx" path="res://sounds/pickup/pickup_sound_1.WAV" id="3_dwcul"]
 [ext_resource type="AudioStream" uid="uid://cr55avxn7pq0c" path="res://sounds/pickup/pickup_sound_2.WAV" id="4_025ad"]
 [ext_resource type="AudioStream" uid="uid://crej082t5m7tm" path="res://sounds/pickup/pickup_sound_3.WAV" id="5_v564p"]
 [ext_resource type="AudioStream" uid="uid://ddgqy01fec88v" path="res://sounds/pickup/pickup_sound_4.WAV" id="6_ppelc"]
 [ext_resource type="AudioStream" uid="uid://b756p7e7fx70x" path="res://sounds/pickup/pickup_sound_5.WAV" id="7_u36yy"]
 [ext_resource type="AudioStream" uid="uid://ch6f6q5gpledl" path="res://sounds/pickup/pickup_sound_6.WAV" id="8_lnj5c"]
+[ext_resource type="Material" uid="uid://byfy8j60ixqcq" path="res://textures_and_materials/items/uranium_test/uranium_test.tres" id="9_dwcul"]
 
 [sub_resource type="Resource" id="Resource_v7v3a"]
 script = ExtResource("2_3ca3l")
@@ -50,7 +50,6 @@ metadata/_custom_type_script = "uid://br78q44p6grd3"
 size = Vector3(0.4, 0.4, 0.4)
 
 [sub_resource type="BoxMesh" id="BoxMesh_bjc4i"]
-size = Vector3(0.4, 0.4, 0.4)
 
 [node name="RigidBody3D" type="RigidBody3D" unique_id=1967477221 node_paths=PackedStringArray("mesh", "rigid_collision_shape", "despawn_timer") groups=["drops"]]
 collision_layer = 0
@@ -67,7 +66,7 @@ shape = SubResource("BoxShape3D_nseg0")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=162596815]
 mesh = SubResource("BoxMesh_bjc4i")
-surface_material_override/0 = ExtResource("2_pkv3f")
+surface_material_override/0 = ExtResource("9_dwcul")
 
 [node name="despawn_timer" type="Timer" parent="." unique_id=1992264395]
 wait_time = 15.0

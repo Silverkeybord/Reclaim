@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://dtox371n37n8n"]
 
 [ext_resource type="Script" uid="uid://cgqvvu75ctfva" path="res://data/resource_scripts/items_data.gd" id="1_dannn"]
+[ext_resource type="Texture2D" uid="uid://t18kmguh2ssf" path="res://2d_assets/items/resources/3/circut.png" id="1_ufn45"]
 
 [resource]
 script = ExtResource("1_dannn")
 key = "circut"
 tier = 3
+item_texture = ExtResource("1_ufn45")
 metadata/_custom_type_script = "uid://cgqvvu75ctfva"

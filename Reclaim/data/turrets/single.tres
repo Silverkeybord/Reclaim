@@ -21,7 +21,7 @@ metadata/_custom_type_script = "uid://br78q44p6grd3"
 [resource]
 script = ExtResource("1_06ve0")
 key = "single"
-damage = 5.0
+damage = 8.0
 cooldown = 1.0
 turret_range = 25.0
 shooting_sound = Array[ExtResource("2_41q63")]([SubResource("Resource_uh1hx"), SubResource("Resource_mhlrs")])

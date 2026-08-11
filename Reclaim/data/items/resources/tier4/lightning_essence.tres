@@ -6,5 +6,6 @@
 [resource]
 script = ExtResource("1_0gxyg")
 key = "lightning_essence"
+tier = 4
 item_texture = ExtResource("1_gotbv")
 metadata/_custom_type_script = "uid://cgqvvu75ctfva"

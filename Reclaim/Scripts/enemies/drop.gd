@@ -1,7 +1,7 @@
 extends RigidBody3D
 
 # seconds before despawning multiplyed by the integer value of the rarity
-const TIER_DESPAWN_MULT := 20 
+const TIER_DESPAWN_MULT := 20
 
 const DESPAWN_SCALE := Vector3(0.1, 0.1, 0.1)
 const DESPAWN_TWEEN_TIME := 0.5
@@ -23,6 +23,7 @@ const MAX_HOZ_VELOCITY := 10.0
 const MAX_VERT_VELOCITY := 25.0
 const MIN_VERT_VELOCITY := 5.0
 const DIRECTION := [-1, 1]
+const DROP_SIZE_SPEED_FACTOR := 0.1
 
 const DEFAULT_ADD_AMOUNT := 1
 
@@ -124,17 +125,19 @@ func prime_pick_up() -> void:
 
 # gives the drop some random upwards movement w
 func _give_random_movement() -> void:
+	var item_size_speed_scale =  max(1, item_resource.size.x * DROP_SIZE_SPEED_FACTOR)
+	
 	# throws the drop in a random direction upwards when it spawns
 	var x_vel = randf_range(0, MAX_HOZ_VELOCITY) * DIRECTION.pick_random()
 	var z_vel = randf_range(0, MAX_HOZ_VELOCITY) * DIRECTION.pick_random()
 	var y_vel = randf_range(MIN_VERT_VELOCITY, MAX_VERT_VELOCITY) 
-	linear_velocity = Vector3(x_vel, y_vel, z_vel)
+	linear_velocity = Vector3(x_vel, y_vel, z_vel) * item_size_speed_scale
 	
 	# gives the drop a random spin
 	var x_ang = randf_range(MIN_ANGULAR_VELOCITY, MAX_ANGULAR_VELOCITY) * DIRECTION.pick_random()
 	var z_ang = randf_range(MIN_ANGULAR_VELOCITY, MAX_ANGULAR_VELOCITY) * DIRECTION.pick_random()
 	var y_ang = randf_range(MIN_ANGULAR_VELOCITY, MAX_ANGULAR_VELOCITY) * DIRECTION.pick_random()
-	angular_velocity = Vector3(x_ang, y_ang, z_ang)
+	angular_velocity = Vector3(x_ang, y_ang, z_ang) * item_size_speed_scale
 
 
 # add the drop into the storage of the player

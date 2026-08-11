@@ -1,3 +1,4 @@
+class_name DeployPod
 extends StaticBody3D
 
 const FADE_TIME := 0.5
@@ -6,6 +7,7 @@ const HIDDEN_MODULATE := Color(1, 1, 1, 0)
 const PROP_MODULATE : String = "modulate"
 
 @export var color_rect : ColorRect
+@export var move_ui : CanvasLayer
 
 
 func interact() -> void:

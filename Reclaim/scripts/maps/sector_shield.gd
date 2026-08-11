@@ -88,12 +88,12 @@ func _start_overdrive() -> void:
 	shield_overdrive = true
 	overdrive_timer.start()
 	
-	extraction_pod.extraction_ui.on_best_value_pressed()
 	sector_elements.start_overdrive()
 	run_ui.start_overdrive()
 
 
 func _on_overdrive_timer_timeout() -> void:
 	Global.shield_overdrive = false
+	extraction_pod.extraction_ui.on_best_value_pressed()
 	if extraction_pod:
 		extraction_pod.extract()

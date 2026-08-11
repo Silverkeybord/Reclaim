@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://br62cm1gllm1"]
 
 [ext_resource type="Script" uid="uid://slvp6i1ygea6" path="res://scripts/interactable/deploy_pod.gd" id="1_5c0cb"]
+[ext_resource type="PackedScene" uid="uid://cjuoaw83nlkpf" path="res://scenes/user_interface/move_ui.tscn" id="2_i6rjx"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wn3eb"]
 size = Vector3(2, 3, 2)
@@ -11,9 +12,10 @@ size = Vector3(2, 3, 2)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_udrd7"]
 albedo_color = Color(0.4726752, 0.4726752, 0.4726752, 1)
 
-[node name="deploy_pod" type="StaticBody3D" unique_id=1373262889 node_paths=PackedStringArray("color_rect")]
+[node name="deploy_pod" type="StaticBody3D" unique_id=1373262889 node_paths=PackedStringArray("color_rect", "move_ui")]
 script = ExtResource("1_5c0cb")
 color_rect = NodePath("CanvasLayer/ColorRect")
+move_ui = NodePath("move_ui")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=976071402]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
@@ -38,3 +40,6 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 metadata/_edit_use_anchors_ = true
+
+[node name="move_ui" parent="." unique_id=1130211310 instance=ExtResource("2_i6rjx")]
+is_extraction_ui = false

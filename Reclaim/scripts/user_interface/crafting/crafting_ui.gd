@@ -315,6 +315,7 @@ func display_requirements_for(craft_data : CraftData, can_craft : bool) -> void:
 	description.text = craft_data.description
 	
 	for cell in get_tree().get_nodes_in_group(REQUIREMENT_CELLS_GROUP):
+		cell.remove_from_group(REQUIREMENT_CELLS_GROUP)
 		cell.queue_free()
 	
 	# gets a sorted list of all requirments sorted from t1 - t5 then alphabetacally
@@ -339,6 +340,7 @@ func display_requirements_for(craft_data : CraftData, can_craft : bool) -> void:
 		new_requirment.add_to_group(REQUIREMENT_CELLS_GROUP)
 	
 	can_craft_current = can_craft
+	
 	craft_overlay.visible = not can_craft
 	craft_button.disabled = not can_craft
 	

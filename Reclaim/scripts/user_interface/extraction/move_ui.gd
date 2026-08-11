@@ -5,7 +5,7 @@ const ANIMATION_OPEN := "open_extraction"
 const ANIMATION_CLOSE := "close_extraction"
 
 const EXTRACTION_CELL_SCENE : PackedScene = preload(
-	"res://scenes/user_interface/extraction_cell.tscn")
+	"res://scenes/user_interface/move_cel.tscn")
 
 const FIRST_COLOR := Color("dbffffff")
 const SECOND_COLOR := Color("c8ebffff")
@@ -38,9 +38,12 @@ const EXTRACTION_BAR_COLOR_RATIOS := {
 }
 
 @export var extraction_pod : StaticBody3D
-@export var extraction_animations : AnimationPlayer
+@export var deploy_pod : StaticBody3D
 
-@export_group("Extraction UI")
+@export var extraction_animations : AnimationPlayer
+@export var is_extraction_ui : bool = true
+
+@export_group("Move UI")
 @export var total_weight : TextureRect
 @export var item_tip : CanvasLayer
 @export var extraction_bar : ProgressBar
@@ -132,7 +135,10 @@ func load_extraction_cells() -> void:
 # Extract and Cancel Buttons --------------------------------------------------
 func _on_extract_button_pressed() -> void:
 	close_ui(true)
-	extraction_pod.extract()
+	if is_extraction_ui:
+		extraction_pod.extract()
+	else:
+		deploy_pod.deploy()
 
 
 func _on_cancel_button_pressed() -> void:

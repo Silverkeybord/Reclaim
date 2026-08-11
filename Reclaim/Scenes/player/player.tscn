@@ -38,7 +38,7 @@ albedo_color = Color(0.47914928, 0.5023035, 0.5254449, 1)
 size = Vector3(0.2, 0.2, 0.4)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_xxarj"]
-radius = 20.0
+radius = 15.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4v7s"]
 bg_color = Color(1, 1, 1, 0.23529412)

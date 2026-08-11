@@ -11,37 +11,37 @@
 
 [sub_resource type="Resource" id="Resource_5hpjm"]
 script = ExtResource("1_8x0ra")
-drop_name = ExtResource("2_juh8h")
+drop = ExtResource("2_juh8h")
 weight = 25
 metadata/_custom_type_script = "uid://cqm7b8e0xdrh5"
 
 [sub_resource type="Resource" id="Resource_ldbw5"]
 script = ExtResource("1_8x0ra")
-drop_name = ExtResource("3_ka0f0")
+drop = ExtResource("3_ka0f0")
 weight = 20
 metadata/_custom_type_script = "uid://cqm7b8e0xdrh5"
 
 [sub_resource type="Resource" id="Resource_4eudv"]
 script = ExtResource("1_8x0ra")
-drop_name = ExtResource("4_1om4g")
+drop = ExtResource("4_1om4g")
 weight = 20
 metadata/_custom_type_script = "uid://cqm7b8e0xdrh5"
 
 [sub_resource type="Resource" id="Resource_qkt1o"]
 script = ExtResource("1_8x0ra")
-drop_name = ExtResource("5_xf8t8")
+drop = ExtResource("5_xf8t8")
 weight = 20
 metadata/_custom_type_script = "uid://cqm7b8e0xdrh5"
 
 [sub_resource type="Resource" id="Resource_r78na"]
 script = ExtResource("1_8x0ra")
-drop_name = ExtResource("6_ot3hm")
+drop = ExtResource("6_ot3hm")
 weight = 5
 metadata/_custom_type_script = "uid://cqm7b8e0xdrh5"
 
 [sub_resource type="Resource" id="Resource_65b5b"]
 script = ExtResource("1_8x0ra")
-drop_name = ExtResource("7_lr81q")
+drop = ExtResource("7_lr81q")
 weight = 3
 metadata/_custom_type_script = "uid://cqm7b8e0xdrh5"
 
@@ -53,5 +53,5 @@ damage = 2
 speed = 5.0
 min_drops = 2
 max_drops = 4
-drop_table = Array[ExtResource("1_8x0ra")]([SubResource("Resource_5hpjm"), SubResource("Resource_ldbw5"), SubResource("Resource_4eudv"), SubResource("Resource_qkt1o"), SubResource("Resource_r78na"), SubResource("Resource_65b5b")])
+drop_table = Array[ExtResource("1_8x0ra")]([SubResource("Resource_5hpjm"), SubResource("Resource_ldbw5"), SubResource("Resource_4eudv"), SubResource("Resource_qkt1o"), SubResource("Resource_r78na"), SubResource("Resource_65b5b"), null])
 metadata/_custom_type_script = "uid://du3loq87kdgkg"

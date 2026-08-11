@@ -163,7 +163,13 @@ var sector_storage: Dictionary = {
 	5: {}
 }
 var ship_storage: Dictionary = {
-	1: {},
+	1: {
+		"dirt" : 5,
+		"sand" : 5,
+		"clay" : 3,
+		"rock" : 3,
+		"scrap" : 1,
+	},
 	2: {},
 	3: {},
 	4: {},

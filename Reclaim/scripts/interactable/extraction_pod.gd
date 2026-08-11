@@ -1,3 +1,4 @@
+class_name ExtractionPod
 extends StaticBody3D
 
 @export var extraction_ui : ExtractionUI

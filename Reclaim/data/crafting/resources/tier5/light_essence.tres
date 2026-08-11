@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="CraftData" format=3 uid="uid://di5ekyipcm8eg"]
 
+[ext_resource type="Resource" uid="uid://cy0b1ul3i0h6g" path="res://data/items/resources/tier4/lightning_essence.tres" id="6_pdx4w"]
 [ext_resource type="Resource" uid="uid://y4281divnrs0" path="res://data/items/resources/tier5/light_essence.tres" id="crafted"]
 [ext_resource type="Resource" uid="uid://d2e8gmsyragk1" path="res://data/items/resources/tier5/light_shard.tres" id="item_0"]
 [ext_resource type="Resource" uid="uid://bel0svp4bnsfn" path="res://data/items/resources/tier2/elemental_essence.tres" id="item_1"]
@@ -22,11 +23,17 @@ script = ExtResource("req_script")
 item = ExtResource("item_2")
 amount = 1
 
+[sub_resource type="Resource" id="Resource_8d6t8"]
+script = ExtResource("req_script")
+item = ExtResource("6_pdx4w")
+amount = 1
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
 [resource]
 script = ExtResource("script")
 key = "light_essence"
 required_ship_level = 7
-requirements = Array[ExtResource("req_script")]([SubResource("req_0"), SubResource("req_1"), SubResource("req_2")])
+requirements = Array[ExtResource("req_script")]([SubResource("req_0"), SubResource("req_1"), SubResource("req_2"), SubResource("Resource_8d6t8")])
 crafted_item = ExtResource("crafted")
 description = "Very bright. dont look at it. Quite powerful too"
 craft_time = 1.0

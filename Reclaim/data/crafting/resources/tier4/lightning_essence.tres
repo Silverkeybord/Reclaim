@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="CraftData" format=3 uid="uid://uinmeg2kseo4"]
+
+[ext_resource type="Resource" uid="uid://cy0b1ul3i0h6g" path="res://data/items/resources/tier4/lightning_essence.tres" id="1_2mu6e"]
+[ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="2_mnve6"]
+[ext_resource type="Resource" uid="uid://dkgf2qn8wlu3i" path="res://data/items/resources/tier4/fire_essence.tres" id="3_go0ut"]
+[ext_resource type="Resource" uid="uid://bge1tthylo3ux" path="res://data/items/resources/tier4/earth_essence.tres" id="4_6j7tb"]
+[ext_resource type="Script" uid="uid://hps2ehio5s7l" path="res://data/resource_scripts/craft_data.gd" id="5_s4grh"]
+
+[sub_resource type="Resource" id="Resource_1ob13"]
+script = ExtResource("2_mnve6")
+item = ExtResource("3_go0ut")
+amount = 2
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_cxsxf"]
+script = ExtResource("2_mnve6")
+item = ExtResource("4_6j7tb")
+amount = 2
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[resource]
+script = ExtResource("5_s4grh")
+key = "lightning_essence"
+required_ship_level = 6
+requirements = Array[ExtResource("2_mnve6")]([SubResource("Resource_1ob13"), SubResource("Resource_cxsxf")])
+crafted_item = ExtResource("1_2mu6e")
+description = "This might be shocking"
+metadata/_custom_type_script = "uid://hps2ehio5s7l"
