@@ -1,9 +1,12 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://b02lesvh3btwf"]
 
 [ext_resource type="Script" uid="uid://cgqvvu75ctfva" path="res://data/resource_scripts/items_data.gd" id="1_dannn"]
+[ext_resource type="Material" uid="uid://ckytk400buxqk" path="res://textures_and_materials/items/graphene_test/graphene_test.tres" id="1_mjsch"]
 
 [resource]
 script = ExtResource("1_dannn")
 key = "graphene"
+size = Vector3(0.5, 0.5, 0.5)
 tier = 5
+material = ExtResource("1_mjsch")
 metadata/_custom_type_script = "uid://cgqvvu75ctfva"

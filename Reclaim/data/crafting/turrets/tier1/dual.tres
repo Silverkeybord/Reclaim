@@ -5,7 +5,7 @@
 [ext_resource type="Resource" uid="uid://ke1h4l1ko4bj" path="res://data/items/resources/tier1/basic_material.tres" id="3_snc1d"]
 [ext_resource type="Resource" uid="uid://dm10222fpo58l" path="res://data/items/resources/tier1/rock.tres" id="4_7vyi0"]
 [ext_resource type="Resource" uid="uid://dmc0tsryqmh28" path="res://data/items/resources/tier1/sand.tres" id="5_6lqqr"]
-[ext_resource type="Resource" uid="uid://c6k8hue261trj" path="res://data/items/resources/tier1/flint.tres" id="6_t2f6p"]
+[ext_resource type="Resource" uid="uid://c6k8hue261trj" path="res://data/items/resources/tier2/flint.tres" id="6_t2f6p"]
 [ext_resource type="Resource" uid="uid://dn3wtnao87311" path="res://data/items/resources/tier2/gunpowder.tres" id="7_y825w"]
 [ext_resource type="Script" uid="uid://hps2ehio5s7l" path="res://data/resource_scripts/craft_data.gd" id="8_jr77r"]
 

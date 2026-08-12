@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://ckytk400buxqk"]
+
+[ext_resource type="Texture2D" uid="uid://icrlnkofaxb" path="res://textures_and_materials/items/graphene_test/albedo.png" id="1_y61f4"]
+[ext_resource type="Texture2D" uid="uid://bn7doou7rqtx5" path="res://textures_and_materials/items/graphene_test/emission.png" id="2_xhqga"]
+[ext_resource type="Texture2D" uid="uid://bmo31kq72uoke" path="res://textures_and_materials/items/graphene_test/metalic.png" id="3_akhhw"]
+[ext_resource type="Texture2D" uid="uid://dwm3evuqybqiq" path="res://textures_and_materials/items/graphene_test/normal.png" id="4_ocej6"]
+[ext_resource type="Texture2D" uid="uid://bosmvvpcyesg6" path="res://textures_and_materials/items/graphene_test/roughness.png" id="5_jpej5"]
+
+[resource]
+albedo_texture = ExtResource("1_y61f4")
+metallic_texture = ExtResource("3_akhhw")
+roughness_texture = ExtResource("5_jpej5")
+emission_enabled = true
+emission_texture = ExtResource("2_xhqga")
+normal_enabled = true
+normal_scale = 5.0
+normal_texture = ExtResource("4_ocej6")
+uv1_scale = Vector3(2, 2, 2)
+uv1_triplanar = true

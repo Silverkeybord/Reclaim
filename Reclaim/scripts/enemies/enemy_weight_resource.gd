@@ -8,7 +8,12 @@ extends Resource
 	"sand",
 	"rock",
 	"flint",
-	"water"
+	"water",
+	"scrap",
+	"clay",
+	"copper",
+	"iron",
+	"basic_elemental",
 ) var enemy_name : String
 
 @export var weight : int

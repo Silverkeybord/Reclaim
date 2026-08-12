@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://dht088gwmtib1"]
+
+[ext_resource type="Script" uid="uid://cqm7b8e0xdrh5" path="res://scripts/enemies/drop_weight_resource.gd" id="1_hwxfx"]
+[ext_resource type="Resource" uid="uid://dmc0tsryqmh28" path="res://data/items/resources/tier1/sand.tres" id="5_8cbm3"]
+[ext_resource type="Resource" uid="uid://dindgm06orind" path="res://data/items/resources/tier1/scrap.tres" id="7_qpcst"]
+[ext_resource type="Script" uid="uid://du3loq87kdgkg" path="res://data/resource_scripts/enemy_data.gd" id="8_oh4bv"]
+
+[sub_resource type="Resource" id="Resource_s8yfo"]
+script = ExtResource("1_hwxfx")
+drop = ExtResource("7_qpcst")
+weight = 15
+metadata/_custom_type_script = "uid://cqm7b8e0xdrh5"
+
+[sub_resource type="Resource" id="Resource_4cn24"]
+script = ExtResource("1_hwxfx")
+drop = ExtResource("5_8cbm3")
+weight = 1
+metadata/_custom_type_script = "uid://cqm7b8e0xdrh5"
+
+[resource]
+script = ExtResource("8_oh4bv")
+key = "scrap"
+health = 1
+damage = 1
+speed = 8.0
+min_drops = 5
+max_drops = 10
+drop_table = Array[ExtResource("1_hwxfx")]([SubResource("Resource_s8yfo"), SubResource("Resource_4cn24")])
+metadata/_custom_type_script = "uid://du3loq87kdgkg"

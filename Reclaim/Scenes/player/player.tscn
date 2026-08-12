@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://dmaj8a3oki02e" path="res://2d_assets/reticles/remove_overlay.png" id="8_6k3cy"]
 [ext_resource type="PackedScene" uid="uid://bqdl5iwhoay06" path="res://scenes/user_interface/fps_label.tscn" id="10_h17s1"]
 [ext_resource type="PackedScene" uid="uid://5wiwx78yrbjr" path="res://scenes/user_interface/build_selection.tscn" id="12_gx1jg"]
+[ext_resource type="PackedScene" uid="uid://bcld5qdacv0d8" path="res://scenes/user_interface/item_notif_controller.tscn" id="13_gx1jg"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e41v5"]
 
@@ -148,7 +149,7 @@ _data = {
 &"build_placed": SubResource("Animation_ugbui")
 }
 
-[node name="player" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "hit_overlay", "aim_ray", "build_ray", "shooting_timer", "pick_up_area", "arm_pivot", "gun_pivot", "hammer_pivot", "wrench_pivot", "canvas_root", "build_overlay", "build_label", "input_tip", "building_selection", "user_interface_animations") groups=["player"]]
+[node name="player" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "hit_overlay", "aim_ray", "build_ray", "shooting_timer", "pick_up_area", "arm_pivot", "gun_pivot", "hammer_pivot", "wrench_pivot", "canvas_root", "build_overlay", "build_label", "input_tip", "building_selection", "user_interface_animations", "item_notif_controller") groups=["player"]]
 collision_layer = 2
 collision_mask = 79
 script = ExtResource("1_eo61r")
@@ -169,6 +170,7 @@ build_label = NodePath("canvas_root/build_overlay/Label")
 input_tip = NodePath("canvas_root/input_tips/MarginContainer/input_tip")
 building_selection = NodePath("canvas_root/build_selection")
 user_interface_animations = NodePath("canvas_root/UI_animations")
+item_notif_controller = NodePath("canvas_root/item_notif_controller")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=125637870]
 shape = SubResource("BoxShape3D_e41v5")
@@ -439,6 +441,8 @@ label_settings = ExtResource("8_5gtgg")
 offset_left = 5.0
 offset_right = 45.0
 label_settings = ExtResource("8_5gtgg")
+
+[node name="item_notif_controller" parent="canvas_root" unique_id=1202289325 instance=ExtResource("13_gx1jg")]
 
 [node name="UI_animations" type="AnimationPlayer" parent="canvas_root" unique_id=1425390205]
 root_node = NodePath("../..")

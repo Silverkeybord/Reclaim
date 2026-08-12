@@ -4,7 +4,7 @@
 [ext_resource type="Resource" uid="uid://b54nvwdywn4mm" path="res://data/items/modules/tier1/t1_damage.tres" id="1_nap5t"]
 [ext_resource type="Script" uid="uid://hps2ehio5s7l" path="res://data/resource_scripts/craft_data.gd" id="2_nap5t"]
 [ext_resource type="Resource" uid="uid://ke1h4l1ko4bj" path="res://data/items/resources/tier1/basic_material.tres" id="3_nophv"]
-[ext_resource type="Resource" uid="uid://c6k8hue261trj" path="res://data/items/resources/tier1/flint.tres" id="4_763sd"]
+[ext_resource type="Resource" uid="uid://c6k8hue261trj" path="res://data/items/resources/tier2/flint.tres" id="4_763sd"]
 [ext_resource type="Resource" uid="uid://dindgm06orind" path="res://data/items/resources/tier1/scrap.tres" id="5_3vaby"]
 [ext_resource type="Resource" uid="uid://dn3wtnao87311" path="res://data/items/resources/tier2/gunpowder.tres" id="6_axvhe"]
 

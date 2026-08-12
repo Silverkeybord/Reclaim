@@ -51,6 +51,7 @@ const SAVE_TURRET_SLOTS_KEY: String = "turret_slots"
 const KEY_COLOR: String = "color"
 const KEY_STYLE: String = "style"
 const KEY_CELLS: String = "cells"
+const KEY_FONT: String = "font"
 const KEY_RESOURCES: String = "resources"
 const KEY_TURRETS: String = "turrets"
 const KEY_MODULES: String = "modules"
@@ -69,6 +70,7 @@ const TIER_CONFIG: Dictionary = {
 	1: {
 		KEY_COLOR: Color(0.541, 0.561, 0.596),
 		KEY_STYLE: preload("res://other_assets/styles/crafting_styles/t1_style.tres"),
+		KEY_FONT: preload("res://other_assets/label_settings/tier_fonts/t1_font.tres"),
 		KEY_CELLS: {
 			KEY_RESOURCES: preload("res://2d_assets/storage/resource_cells/rough_cell.png"),
 			KEY_TURRETS: preload("res://2d_assets/storage/turret_cells/rough_cell.png"),
@@ -78,6 +80,7 @@ const TIER_CONFIG: Dictionary = {
 	2: {
 		KEY_COLOR: Color(0.29, 0.871, 0.502),
 		KEY_STYLE: preload("res://other_assets/styles/crafting_styles/t2_style.tres"),
+		KEY_FONT: preload("res://other_assets/label_settings/tier_fonts/t2_font.tres"),
 		KEY_CELLS: {
 			KEY_RESOURCES: preload("res://2d_assets/storage/resource_cells/plain_cell.png"),
 			KEY_TURRETS: preload("res://2d_assets/storage/turret_cells/plain_cell.png"),
@@ -87,6 +90,7 @@ const TIER_CONFIG: Dictionary = {
 	3: {
 		KEY_COLOR: Color(0.29, 0.557, 0.996),
 		KEY_STYLE: preload("res://other_assets/styles/crafting_styles/t3_style.tres"),
+		KEY_FONT: preload("res://other_assets/label_settings/tier_fonts/t3_font.tres"),
 		KEY_CELLS: {
 			KEY_RESOURCES: preload("res://2d_assets/storage/resource_cells/usefull_cell.png"),
 			KEY_TURRETS: preload("res://2d_assets/storage/turret_cells/useful_cell.png"),
@@ -96,6 +100,7 @@ const TIER_CONFIG: Dictionary = {
 	4: {
 		KEY_COLOR: Color(1.0, 0.847, 0.243),
 		KEY_STYLE: preload("res://other_assets/styles/crafting_styles/t4_style.tres"),
+		KEY_FONT: preload("res://other_assets/label_settings/tier_fonts/t4_font.tres"),
 		KEY_CELLS: {
 			KEY_RESOURCES: preload("res://2d_assets/storage/resource_cells/valuable_cell.png"),
 			KEY_TURRETS: preload("res://2d_assets/storage/turret_cells/valuable_cell.png"),
@@ -105,12 +110,22 @@ const TIER_CONFIG: Dictionary = {
 	5: {
 		KEY_COLOR: Color(0.937, 0.267, 0.267),
 		KEY_STYLE: preload("res://other_assets/styles/crafting_styles/t5_style.tres"),
+		KEY_FONT: preload("res://other_assets/label_settings/tier_fonts/t5_font.tres"),
 		KEY_CELLS: {
 			KEY_RESOURCES: preload("res://2d_assets/storage/resource_cells/extraordinary_cell.png"),
 			KEY_TURRETS: preload("res://2d_assets/storage/turret_cells/extraordinary_cell.png"),
 			KEY_MODULES: preload("res://2d_assets/storage/module_cells/extraordinary_cell.png")
 		}
 	}
+}
+
+const STARTER_RESOURCES := {
+	"dirt" : 8,
+	"clay" : 10,
+	"rock" : 15,
+	"sand" : 12,
+	"flint" : 2,
+	"scrap" : 5,
 }
 
 # CAPS --------------------------------------------------------------------

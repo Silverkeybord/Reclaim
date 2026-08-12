@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://bcld5qdacv0d8"]
+
+[ext_resource type="Script" uid="uid://b3b23gyq6va5u" path="res://scripts/user_interface/item_notif_controller.gd" id="1_evxgn"]
+
+[node name="item_notif_controller" type="Control" unique_id=962715152 node_paths=PackedStringArray("notif_vbox")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_evxgn")
+notif_vbox = NodePath("MarginContainer/VBoxContainer")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=957527286]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -2.5
+offset_bottom = 2.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1370260294]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 2
+alignment = 2

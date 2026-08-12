@@ -1,11 +1,9 @@
 [gd_scene format=3 uid="uid://b5bywo714ymes"]
 
-[ext_resource type="Script" uid="uid://mhuoeked6p7p" path="res://scripts/enemies/enemy_spawning.gd" id="1_ifu1l"]
-[ext_resource type="PackedScene" uid="uid://bsspjwwk4bvma" path="res://scenes/enemies/enemies/basic.tscn" id="2_hdd6a"]
+[ext_resource type="Script" uid="uid://mhuoeked6p7p" path="res://scripts/enemies/enemy_spawner.gd" id="1_ifu1l"]
 
 [node name="enemy_spawner" type="Node3D" unique_id=51836272 node_paths=PackedStringArray("spawn_timer")]
 script = ExtResource("1_ifu1l")
-enemy_scene = ExtResource("2_hdd6a")
 spawn_timer = NodePath("spawn_timer")
 
 [node name="spawn_timer" type="Timer" parent="." unique_id=676179347]

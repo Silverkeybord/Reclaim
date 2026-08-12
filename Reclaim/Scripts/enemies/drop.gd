@@ -27,8 +27,8 @@ const DROP_SIZE_SPEED_FACTOR := 0.1
 
 const DEFAULT_ADD_AMOUNT := 1
 
-@export var player : CharacterBody3D
-@export var item_resource : ItemData
+@export var player : Player
+@export var item_data : ItemData
 
 @export var mesh : MeshInstance3D
 
@@ -52,16 +52,16 @@ var speed : float = 3.0
 
 
 func _ready() -> void:
-	despawn_timer.wait_time = TIER_DESPAWN_MULT * item_resource.tier
+	despawn_timer.wait_time = TIER_DESPAWN_MULT * item_data.tier
 	despawn_timer.start()
 	
 	mesh.mesh = mesh.mesh.duplicate()
 	rigid_collision_shape.shape = rigid_collision_shape.shape.duplicate()
 
-	rigid_collision_shape.shape.size = item_resource.size
-	mesh.mesh.size = item_resource.size
+	rigid_collision_shape.shape.size = item_data.size
+	mesh.mesh.size = item_data.size
 	
-	mesh.set_surface_override_material(0, item_resource.get_material())
+	mesh.set_surface_override_material(0, item_data.get_material())
 	
 	_give_random_movement()
 	
@@ -125,7 +125,7 @@ func prime_pick_up() -> void:
 
 # gives the drop some random upwards movement w
 func _give_random_movement() -> void:
-	var item_size_speed_scale =  max(1, item_resource.size.x * DROP_SIZE_SPEED_FACTOR)
+	var item_size_speed_scale =  max(1, item_data.size.x * DROP_SIZE_SPEED_FACTOR)
 	
 	# throws the drop in a random direction upwards when it spawns
 	var x_vel = randf_range(0, MAX_HOZ_VELOCITY) * DIRECTION.pick_random()
@@ -143,4 +143,5 @@ func _give_random_movement() -> void:
 # add the drop into the storage of the player
 func _pick_up() -> void:
 	HelperFunctions.spawn_temp_sound(pickup_sounds.pick_random())
-	HelperFunctions.add_item_to_storage(item_resource, DEFAULT_ADD_AMOUNT, Global.sector_storage)
+	HelperFunctions.add_item_to_storage(item_data, DEFAULT_ADD_AMOUNT, Global.sector_storage)
+	player.item_notif_controller.pick_up_item(item_data)

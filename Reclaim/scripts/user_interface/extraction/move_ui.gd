@@ -296,7 +296,6 @@ func move_over_items(item_array : Array[Dictionary]) -> void:
 		
 		HelperFunctions.remove_item_from_storage(item_data, fit_items)
 		HelperFunctions.add_item_to_storage(item_data, fit_items, Global.extraction_storage)
-		print("moved over item - ", item_data.key, " - of amount of - ", fit_items)
 		storage_cells[item_data.key].update_amount()
 		extraction_cells[item_data.key].update_amount()
 	

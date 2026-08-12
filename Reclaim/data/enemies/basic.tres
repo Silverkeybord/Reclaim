@@ -6,7 +6,7 @@
 [ext_resource type="Resource" uid="uid://drghxojuhxfnn" path="res://data/items/resources/tier1/clay.tres" id="3_ka0f0"]
 [ext_resource type="Resource" uid="uid://dm10222fpo58l" path="res://data/items/resources/tier1/rock.tres" id="4_1om4g"]
 [ext_resource type="Resource" uid="uid://dmc0tsryqmh28" path="res://data/items/resources/tier1/sand.tres" id="5_xf8t8"]
-[ext_resource type="Resource" uid="uid://c6k8hue261trj" path="res://data/items/resources/tier1/flint.tres" id="6_ot3hm"]
+[ext_resource type="Resource" uid="uid://c6k8hue261trj" path="res://data/items/resources/tier2/flint.tres" id="6_juh8h"]
 [ext_resource type="Resource" uid="uid://dindgm06orind" path="res://data/items/resources/tier1/scrap.tres" id="7_lr81q"]
 
 [sub_resource type="Resource" id="Resource_5hpjm"]
@@ -35,7 +35,7 @@ metadata/_custom_type_script = "uid://cqm7b8e0xdrh5"
 
 [sub_resource type="Resource" id="Resource_r78na"]
 script = ExtResource("1_8x0ra")
-drop = ExtResource("6_ot3hm")
+drop = ExtResource("6_juh8h")
 weight = 5
 metadata/_custom_type_script = "uid://cqm7b8e0xdrh5"
 
@@ -53,5 +53,5 @@ damage = 2
 speed = 5.0
 min_drops = 2
 max_drops = 4
-drop_table = Array[ExtResource("1_8x0ra")]([SubResource("Resource_5hpjm"), SubResource("Resource_ldbw5"), SubResource("Resource_4eudv"), SubResource("Resource_qkt1o"), SubResource("Resource_r78na"), SubResource("Resource_65b5b"), null])
+drop_table = Array[ExtResource("1_8x0ra")]([SubResource("Resource_5hpjm"), SubResource("Resource_ldbw5"), SubResource("Resource_4eudv"), SubResource("Resource_qkt1o"), SubResource("Resource_r78na"), SubResource("Resource_65b5b")])
 metadata/_custom_type_script = "uid://du3loq87kdgkg"

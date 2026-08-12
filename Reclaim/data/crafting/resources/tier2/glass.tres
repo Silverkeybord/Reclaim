@@ -3,7 +3,7 @@
 [ext_resource type="Resource" uid="uid://d0c8fedifhdn" path="res://data/items/resources/tier2/coal.tres" id="5_kloo4"]
 [ext_resource type="Resource" uid="uid://coniauqe450rn" path="res://data/items/resources/tier2/glass.tres" id="crafted"]
 [ext_resource type="Resource" uid="uid://dmc0tsryqmh28" path="res://data/items/resources/tier1/sand.tres" id="item_0"]
-[ext_resource type="Resource" uid="uid://c6k8hue261trj" path="res://data/items/resources/tier1/flint.tres" id="item_1"]
+[ext_resource type="Resource" uid="uid://c6k8hue261trj" path="res://data/items/resources/tier2/flint.tres" id="item_1"]
 [ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="req_script"]
 [ext_resource type="Script" uid="uid://hps2ehio5s7l" path="res://data/resource_scripts/craft_data.gd" id="script"]
 

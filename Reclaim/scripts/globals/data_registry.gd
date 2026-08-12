@@ -16,7 +16,6 @@ const PATH_SEPARATOR: String = "/"
 
 const PROP_KEY: StringName = &"key"
 
-const FINISHED_LOADING_MESSAGE: String = " -- finished loading files -- "
 const COULD_NOT_OPEN_PATH_ERROR: String = "DataRegistry: could not open path: "
 const INVALID_RESOURCE_ERROR: String = "DataRegistry: invalid resource at path: "
 
@@ -41,8 +40,6 @@ func _ready() -> void:
 	_load_folder(CRAFTING_PATH, crafting, true)
 	_load_folder(BULLET_TRAIL_PATH, bullet_trail)
 	_load_folder(ITEMS_PATH, items, true)
-	
-	print(FINISHED_LOADING_MESSAGE)
 
 
 func _load_folder(path: String, dict: Dictionary, recursive: bool = false) -> void:

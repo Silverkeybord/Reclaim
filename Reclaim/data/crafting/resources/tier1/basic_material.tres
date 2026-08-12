@@ -17,7 +17,7 @@ amount = 5
 [sub_resource type="Resource" id="req_1"]
 script = ExtResource("req_script")
 item = ExtResource("item_1")
-amount = 5
+amount = 3
 
 [sub_resource type="Resource" id="req_2"]
 script = ExtResource("req_script")
@@ -27,7 +27,7 @@ amount = 3
 [sub_resource type="Resource" id="req_3"]
 script = ExtResource("req_script")
 item = ExtResource("item_3")
-amount = 3
+amount = 5
 
 [sub_resource type="Resource" id="req_4"]
 script = ExtResource("req_script")

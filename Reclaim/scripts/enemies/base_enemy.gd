@@ -1,39 +1,42 @@
 class_name BaseEnemy
 extends CharacterBody3D
 
+# Signals ----------------------------------------------------------------------
 signal died(enemy: BaseEnemy)
 
-const ENEMY_LAYER := 4
-
-const NONE_TYPE_DROP : String = "none"
+# Constants --------------------------------------------------------------------
+const ENEMY_LAYER : int = 4
+const NONE_TYPE_DROP : StringName = &"none"
 const LOAD_BUFFER : float = 0.5
 const SIZE_BASE_STAT_FACTOR : float = 0.5
-# 80m/s/s
-const GRAVITY := 80
+const GRAVITY : float = 80.0
 
-@export var valid := false
+const PROP_COLLISION_LAYER : StringName = &"collision_layer"
+const PROP_COLLISION_MASK : StringName = &"collision_mask"
+const PROP_DISABLED : StringName = &"disabled"
+const PROP_ITEM_DATA : StringName = &"item_data"
 
+# Exports ----------------------------------------------------------------------
+@export var valid : bool = false
 @export var enemy_resource : EnemyData
-
 @export var extraction_pod : Node3D
 @export var sector_shield : SectorShield
-
 @export var drops_scene : PackedScene
 
 @export_group("Enemy Stats")
 @export var health : float
 @export var is_commander : bool = false
-@export var size : float
+@export var size : float = 1.0
 
 @export_group("In Scene")
-@export var collision_shape: CollisionShape3D
+@export var collision_shape : CollisionShape3D
 @export var attack_timer : Timer
 
-var is_dead := false
-var damage : int
-var speed : float
-
-var can_attack := false 
+# Variables --------------------------------------------------------------------
+var is_dead : bool = false
+var damage : int = 0
+var speed : float = 0.0
+var can_attack : bool = false
 
 
 func _physics_process(delta: float) -> void:
@@ -41,14 +44,22 @@ func _physics_process(delta: float) -> void:
 		movement(delta)
 
 
-func movement(delta : float) -> void:
+# Movement ---------------------------------------------------------------------
+func movement(delta: float) -> void:
 	if extraction_pod == null or is_dead:
 		return
 	
-	var target = extraction_pod
+	var target_pos: Vector3 = extraction_pod.global_position
+	var move_dir: Vector3 = (target_pos - global_position)
+	move_dir.y = 0.0
 	
-	var direction = (target.global_position - global_position).normalized()
-	velocity = direction * speed 
+	if not move_dir.is_zero_approx():
+		move_dir = move_dir.normalized()
+		velocity.x = move_dir.x * speed
+		velocity.z = move_dir.z * speed
+	else:
+		velocity.x = 0.0
+		velocity.z = 0.0
 	
 	if not is_on_floor():
 		velocity.y -= GRAVITY * delta
@@ -58,118 +69,138 @@ func movement(delta : float) -> void:
 	move_and_slide()
 
 
+# Setup & Initialization -------------------------------------------------------
 func finish_loading() -> void:
 	set_process(false)
 	set_physics_process(false)
 	
-	# so turrets dont target it when its is instianted at 0, 0, 0
-	await get_tree().create_timer(LOAD_BUFFER).timeout
+	var tree := get_tree()
+	if tree:
+		await tree.create_timer(LOAD_BUFFER).timeout
 	
-	# the enemys spawn half in the floor so adding their radius will put them on the floor
-	global_position.y += size / 2
+	if is_dead or not is_inside_tree():
+		return
+	
+	global_position.y += size / 2.0
 	
 	set_collision_layer_value(ENEMY_LAYER, true)
 	set_process(true)
 	set_physics_process(true)
 	
-	# edge case
-	if is_dead:
-		return
-	
 	Global.enemies += 1
 	
-	# sets stats
-	# mulitplys the base stats by their size by half
-	var mult := 1 + ((size - 1) / SIZE_BASE_STAT_FACTOR)
-	health = round(enemy_resource.health * mult)
-	damage = round(enemy_resource.damage * mult)
-	speed = enemy_resource.speed
-	attack_timer.wait_time = enemy_resource.attack_interval
+	if enemy_resource:
+		var mult: float = 1.0 + ((size - 1.0) / SIZE_BASE_STAT_FACTOR)
+		health = roundf(enemy_resource.health * mult)
+		damage = int(roundf(enemy_resource.damage * mult))
+		speed = enemy_resource.speed
+		if attack_timer:
+			attack_timer.wait_time = enemy_resource.attack_interval
 	
 	valid = true
 
 
-func hit(hit_damage : float, crit : bool = false) -> void:
+# Health & Combat --------------------------------------------------------------
+func hit(hit_damage: float, crit: bool = false) -> void:
 	health -= hit_damage
 	HelperFunctions.create_damage_indicator(global_position, hit_damage, crit)
-	if health <= 0 and not is_dead:
+	if health <= 0.0 and not is_dead:
 		_die()
 
 
 func _die() -> void:
-	_spawn_drops()
-	
 	is_dead = true
 	valid = false
 	died.emit(self)
 	
+	_spawn_drops()
+	
 	set_process(false)
 	set_physics_process(false)
-	set_deferred("collision_layer", 0)
-	set_deferred("collision_mask", 0)
+	set_deferred(PROP_COLLISION_LAYER, 0)
+	set_deferred(PROP_COLLISION_MASK, 0)
 	
 	if collision_shape:
-		collision_shape.set_deferred("disabled", true)
+		collision_shape.set_deferred(PROP_DISABLED, true)
 	
-	if Global.enemies <= 0:
-		Global.enemies = 0
-	else:
-		Global.enemies -= 1
+	Global.enemies = maxi(0, Global.enemies - 1)
 	
 	_queue_free_after_physics.call_deferred()
 
 
-# waits 2 physics frames just to make sure turrets can remove the signal before
 func _queue_free_after_physics() -> void:
-	await get_tree().physics_frame
-	await get_tree().physics_frame
+	var tree := get_tree()
+	if tree:
+		await tree.physics_frame
+		if get_tree():
+			await get_tree().physics_frame
 	queue_free()
 
 
+# Drops ------------------------------------------------------------------------
 func _spawn_drops() -> void:
-	for x in range(randi_range(enemy_resource.min_drops, enemy_resource.max_drops)):
-		var drop_type : Resource = _get_drop_type_resource()
-		
+	if enemy_resource == null or drops_scene == null:
+		return
+	
+	var drop_count: int = randi_range(enemy_resource.min_drops, enemy_resource.max_drops)
+	for x in range(drop_count):
+		var drop_type: Resource = _get_drop_type_resource()
 		if drop_type:
-			var new_drop = drops_scene.instantiate()
-			new_drop.item_resource = drop_type
-			add_sibling(new_drop)
-			new_drop.global_position = global_position
+			var new_drop := drops_scene.instantiate() as RigidBody3D
+			if new_drop:
+				new_drop.set(PROP_ITEM_DATA, drop_type)
+				add_sibling(new_drop)
+				new_drop.global_position = global_position
 
 
 func _get_drop_type_resource() -> ItemData:
-	var total_weight := 0
+	if enemy_resource == null or enemy_resource.drop_table.is_empty():
+		return null
 	
-	for drop_probability_info : DropWeight in enemy_resource.drop_table:
-		total_weight += drop_probability_info.weight
+	var total_weight: float = 0.0
+	for drop_info: DropWeight in enemy_resource.drop_table:
+		if drop_info:
+			total_weight += drop_info.weight
 	
-	var roll = randf() * total_weight
+	if total_weight <= 0.0:
+		return null
 	
-	for drop_probability_info : DropWeight in enemy_resource.drop_table:
-		roll -= drop_probability_info.weight
+	var roll: float = randf() * total_weight
+	for drop_info: DropWeight in enemy_resource.drop_table:
+		if drop_info == null:
+			continue
 		
-		if roll <= 0:
-			if drop_probability_info.drop_name.key == NONE_TYPE_DROP:
+		roll -= drop_info.weight
+		if roll <= 0.0:
+			if drop_info.drop == null or drop_info.drop.key == NONE_TYPE_DROP:
 				return null
-			else:
-				return DataRegistry.items[drop_probability_info.drop_name.key]
+			
+			var item_key: String = drop_info.drop.key
+			if DataRegistry.items.has(item_key):
+				return DataRegistry.items[item_key]
+			return null
 	
 	return null
 
 
-# attacking logic 
+# Attack Logic -----------------------------------------------------------------
 func start_attacking() -> void:
-	attack_timer.start()
+	if attack_timer:
+		attack_timer.start()
 	_attack()
 
 
-func stop_attacking() -> void: 
-	attack_timer.stop()
+func stop_attacking() -> void:
+	if attack_timer:
+		attack_timer.stop()
 
 
 func _attack() -> void:
-	sector_shield.hit_shield(damage)
-	attack_timer.start()
+	if sector_shield and sector_shield.has_method(&"hit_shield"):
+		sector_shield.hit_shield(damage)
+	
+	if attack_timer:
+		attack_timer.start()
 
 
 func _on_attack_timer_timeout() -> void:

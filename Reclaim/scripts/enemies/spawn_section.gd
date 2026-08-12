@@ -5,7 +5,7 @@ extends Resource
 @export var time := 0
 
 ## The time before the spawning starts
-@export var breathing_room := 1
+@export var breathing_room := 10
 
 ## time inbetween each spawn
 @export var spawn_interval : float = 5.0
@@ -20,14 +20,27 @@ extends Resource
 @export var swarm := false
 
 @export_group("Scaling")
-## Toggles if there is going to be linear spawnrate scaling in this section if not -1.0
-@export var end_spawn_rate : float = -1.0
+## If not 0 will change the spawning rate to this value by the end of the section
+@export var end_spawn_rate : float
+
+## The ending amout of didtional enemies
+@export var end_additional_enemy_amount : int = 0
+
+@export_group("Randomness")
+## The range of enemies that can be spawned ontop of the base amount
+@export var random_additional_enemies : int = 0
+
+## Negetive/min range of when an enemy can spawn 
+@export var min_spawn_interval := 0.0
+
+## Positive/max range of when an enemy can spawn
+@export var max_spawn_interval := 0.0
 
 @export_group("")
 ## Weight systems for enemy span sizes
 @export var spawn_sizes := {
-	"very_small" : 1,
-	"small" : 0,
+	"very_small" : 0,
+	"small" : 1,
 	"medium" : 0,
 	"big" : 0,
 	"large" : 0,
