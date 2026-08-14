@@ -363,7 +363,7 @@ _data = {
 &"extraction_overdrive": SubResource("Animation_82pi0")
 }
 
-[node name="run_ui" type="Control" unique_id=1725702450 node_paths=PackedStringArray("run_time_label", "shield_health_label", "extraction_timer_label", "show_health_timer", "max_indication_marker", "min_indication_marker", "overdrive_animation_player", "all_segment_control", "left_small", "right_small", "left_tall", "right_tall")]
+[node name="run_ui" type="Control" unique_id=1725702450 node_paths=PackedStringArray("run_time_label", "shield_health_label", "extraction_timer_label", "max_indication_marker", "min_indication_marker", "overdrive_animation_player", "all_segment_control", "left_small", "right_small", "left_tall", "right_tall")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -373,10 +373,9 @@ offset_right = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ff2tx")
-run_time_label = NodePath("MarginContainer/run_time")
+run_time_label = NodePath("run_time")
 shield_health_label = NodePath("MarginContainer/shield_health")
 extraction_timer_label = NodePath("MarginContainer/extraction_timer")
-show_health_timer = NodePath("show_health_timer")
 health_change_indicator = ExtResource("2_vrobe")
 max_indication_marker = NodePath("max_indication_position")
 min_indication_marker = NodePath("min_indication_position")
@@ -387,6 +386,36 @@ right_small = NodePath("all_segment_control/right_small")
 left_tall = NodePath("all_segment_control/left_tall")
 right_tall = NodePath("all_segment_control/right_tall")
 metadata/_edit_lock_ = true
+
+[node name="run_time" type="Label" parent="." unique_id=655560637]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -257.0
+offset_top = 18.0
+offset_right = -77.0
+offset_bottom = 39.0
+grow_horizontal = 2
+text = "Run time :  "
+label_settings = ExtResource("7_jckhp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="wave_time" type="Label" parent="." unique_id=1175136569]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -89.0
+offset_top = 29.0
+offset_right = 91.0
+offset_bottom = 50.0
+grow_horizontal = 2
+text = "Breathing room : "
+label_settings = ExtResource("7_jckhp")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1819321640]
 texture_filter = 1
@@ -857,14 +886,6 @@ grow_horizontal = 2
 theme_override_constants/margin_top = 3
 metadata/_edit_lock_ = true
 
-[node name="run_time" type="Label" parent="MarginContainer" unique_id=655560637]
-layout_mode = 2
-text = "Run time :  "
-label_settings = ExtResource("7_jckhp")
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_lock_ = true
-
 [node name="extraction_timer" type="Label" parent="MarginContainer" unique_id=1296665750]
 visible = false
 layout_mode = 2
@@ -875,16 +896,11 @@ vertical_alignment = 1
 metadata/_edit_lock_ = true
 
 [node name="shield_health" type="Label" parent="MarginContainer" unique_id=181965708]
-visible = false
 layout_mode = 2
 text = "100 / 100"
 label_settings = ExtResource("7_jckhp")
 horizontal_alignment = 1
 metadata/_edit_lock_ = true
-
-[node name="show_health_timer" type="Timer" parent="." unique_id=947113727]
-wait_time = 3.0
-one_shot = true
 
 [node name="max_indication_position" type="Marker2D" parent="." unique_id=768900274]
 position = Vector2(885, 13)
@@ -894,5 +910,3 @@ position = Vector2(395, 3)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1187789074]
 libraries/ = SubResource("AnimationLibrary_kl6mn")
-
-[connection signal="timeout" from="show_health_timer" to="." method="_on_show_health_timer_timeout"]

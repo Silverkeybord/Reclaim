@@ -27,5 +27,5 @@ transform = Transform3D(0.9999996, 0.00077972515, -0.00048514424, -0.00077950873
 mesh = SubResource("BoxMesh_sht5i")
 surface_material_override/0 = SubResource("StandardMaterial3D_gmvgx")
 
-[node name="extraction_ui" parent="." unique_id=1130211310 node_paths=PackedStringArray("extraction_pod") instance=ExtResource("2_8bb2x")]
-extraction_pod = NodePath("..")
+[node name="extraction_ui" parent="." unique_id=1130211310 node_paths=PackedStringArray("pod") instance=ExtResource("2_8bb2x")]
+pod = NodePath("..")

@@ -94,6 +94,6 @@ func _start_overdrive() -> void:
 
 func _on_overdrive_timer_timeout() -> void:
 	Global.shield_overdrive = false
-	extraction_pod.extraction_ui.on_best_value_pressed()
+	extraction_pod.extraction_ui._on_best_value_pressed()
 	if extraction_pod:
 		extraction_pod.extract()

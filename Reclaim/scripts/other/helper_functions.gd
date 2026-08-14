@@ -57,6 +57,20 @@ const TIERS := 5
 static var sounds: int = 0
 static var damage_indications: int = 0
 
+
+## Sets the mouse of the player to be unlocked or locked bassed on its last value
+static func set_mouse_captured(set_mode : bool = false, set_value : bool = false) -> void:
+	if set_mode:
+		Global.mouse_captured = set_value
+	else:
+		Global.mouse_captured = not Global.mouse_captured
+	
+	if Global.mouse_captured:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+
 # =============================================================================
 # ROOT / SPAWN HELPERS
 # =============================================================================
@@ -214,13 +228,6 @@ static func is_valid_item(item_resource: ItemData) -> bool:
 	)
 
 
-## returns either the passed storage dictionary or the current active storage if empty
-static func _get_storage(storage: Dictionary = {}) -> Dictionary:
-	if storage.is_empty():
-		return get_current_storage()
-	return storage
-
-
 ## gets the amount of a specific item in the target storage
 static func get_item_amount(item_resource: ItemData, storage: Dictionary = {}) -> int:
 	if not is_valid_item(item_resource):
@@ -289,6 +296,13 @@ static func remove_item_from_storage(
 	return true
 
 
+## returns the current storage if the the inputed storage is empty
+static func _get_storage(storage : Dictionary) -> Dictionary:
+	if storage.is_empty():
+		return get_current_storage()
+	return storage
+
+
 ## gets all items of a certain type with all their amounts
 static func get_items_from_type(item_type) -> Dictionary:
 	var current_storage = get_current_storage()
@@ -304,11 +318,6 @@ static func get_items_from_type(item_type) -> Dictionary:
 				items[tier][item_key] = current_storage[tier][item_key]
 	
 	return items
-
-
-## checks if an item is in the current storage
-static func check_for_item(item_resource: ItemData) -> bool:
-	return has_item_amount(item_resource)
 
 
 ## returns item value pairs from a storage

@@ -9,6 +9,7 @@ const MIN_SCROLL: int = 0
 
 const INTERACT_INPUT: StringName = &"interact"
 const CLOSE_UI_INPUT: StringName = &"close_ui"
+const METHOD_UPDATE_AMOUNT: StringName = &"update_amount"
 
 const MISSING_CELL_PARENT_ERROR: String = "Storage UI item parent is missing."
 
@@ -75,7 +76,7 @@ static func load_all_cells(
 func update_storage() -> void:
 	for item_key: String in displayed_cells:
 		var cell: BaseStorageCell = displayed_cells[item_key]
-		if cell and cell.has_method(&"update_amount"):
+		if cell and cell.has_method(METHOD_UPDATE_AMOUNT):
 			cell.update_amount()
 
 

@@ -152,7 +152,7 @@ func _set_open_or_close(toggle : bool) -> void:
 	Global.ui_open = toggle
 	Global.crafting_open = toggle
 	set_process(toggle)
-	Global.set_mouse_captured(true, not toggle)
+	HelperFunctions.set_mouse_captured(true, not toggle)
 
 
 # Loading and Crafting ======================================================

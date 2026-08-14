@@ -1,5 +1,27 @@
-class_name ExtractionUI
+class_name MoveUI
 extends CanvasLayer
+
+const KEY_EXTRACTION := "extraction"
+const KEY_DEPLOYING := "deploy"
+const KEY_TITLE := "header"
+const KEY_BOX := "box"
+const KEY_BUTTON := "button"
+const KEY_ORIGIN := "origin_storage"
+
+const DISPLAY_STRINGS := {
+	KEY_EXTRACTION : {
+		KEY_TITLE : "Extraction Menu",
+		KEY_BOX : "Extraction",
+		KEY_BUTTON : "Extract",
+		KEY_ORIGIN : "Sector Storage",
+	},
+	KEY_DEPLOYING : {
+		KEY_TITLE : "Deploy Menu",
+		KEY_BOX : "Deployable",
+		KEY_BUTTON : "Deploy",
+		KEY_ORIGIN : "Ship Storage",
+	}
+}
 
 const ANIMATION_OPEN := "open_extraction"
 const ANIMATION_CLOSE := "close_extraction"
@@ -37,11 +59,15 @@ const EXTRACTION_BAR_COLOR_RATIOS := {
 	5 : FITH_COLOR
 }
 
-@export var extraction_pod : StaticBody3D
-@export var deploy_pod : StaticBody3D
+@export var pod : StaticBody3D
 
 @export var extraction_animations : AnimationPlayer
-@export var is_extraction_ui : bool = true
+
+@export_group("UI Type")
+@export var title : Label
+@export var box_title : Label
+@export var origin_title : Label
+@export var button_label : Label
 
 @export_group("Move UI")
 @export var total_weight : TextureRect
@@ -51,6 +77,15 @@ const EXTRACTION_BAR_COLOR_RATIOS := {
 @export var help_display : PanelContainer
 @export var sector_hflow : HFlowContainer
 @export var extraction_hflow : HFlowContainer
+
+var from_storage_lookup := {
+	false : Global.sector_storage,
+	true : Global.ship_storage
+}
+var to_storage_lookup := {
+	false : Global.extraction_storage,
+	true : Global.deploy_storage
+}
 
 var storage_cells := {}
 var extraction_cells := {}
@@ -69,6 +104,16 @@ func _ready() -> void:
 	for key : String in extraction_cells:
 		var cell : ExtractionCell = extraction_cells[key]
 		cell.in_storage = false
+	
+	var ui_text = DISPLAY_STRINGS[KEY_EXTRACTION]
+	
+	if Global.at_ship:
+		ui_text = DISPLAY_STRINGS[KEY_DEPLOYING]
+	
+	title.text = ui_text[KEY_TITLE]
+	box_title.text = ui_text[KEY_BOX]
+	origin_title.text = ui_text[KEY_ORIGIN]
+	button_label.text = ui_text[KEY_BUTTON]
 
 
 func _process(_delta: float) -> void:
@@ -112,15 +157,17 @@ func _set_open_or_close(toggle : bool) -> void:
 	Global.ui_open = toggle
 	Global.extraction_open = toggle
 	set_process(toggle)
-	Global.set_mouse_captured(true, not toggle)
+	HelperFunctions.set_mouse_captured(true, not toggle)
 
 
 func load_extraction_cells() -> void:
-	for tier in Global.sector_storage:
-		for item in Global.sector_storage[tier]:
+	for tier in from_storage_lookup[Global.at_ship]:
+		for item in from_storage_lookup[Global.at_ship][tier]:
 			pass
 	
-	var sector_storage_items = HelperFunctions.get_item_from_storage(Global.sector_storage)
+	var sector_storage_items = HelperFunctions.get_item_from_storage(
+		from_storage_lookup[Global.at_ship]
+		)
 	for item in sector_storage_items:
 		storage_cells[item].update_amount()
 	
@@ -135,10 +182,10 @@ func load_extraction_cells() -> void:
 # Extract and Cancel Buttons --------------------------------------------------
 func _on_extract_button_pressed() -> void:
 	close_ui(true)
-	if is_extraction_ui:
-		extraction_pod.extract()
+	if Global.at_ship:
+		pod.deploy()
 	else:
-		deploy_pod.deploy()
+		pod.extract()
 
 
 func _on_cancel_button_pressed() -> void:
@@ -153,9 +200,9 @@ func move_item(in_storage : bool, move_amount : int, item : ItemData) -> void:
 	var item_amount : int
 	
 	if in_storage:
-		item_amount = Global.sector_storage[item.tier].get(item.key)
+		item_amount = from_storage_lookup[Global.at_ship][item.tier].get(item.key)
 	else:
-		item_amount = Global.extraction_storage[item.tier].get(item.key)
+		item_amount = to_storage_lookup[Global.at_ship][item.tier].get(item.key)
 	
 	if move_amount > item_amount:
 		move_amount = item_amount
@@ -172,15 +219,31 @@ func move_item(in_storage : bool, move_amount : int, item : ItemData) -> void:
 			move_weight = move_amount * item.weight
 		
 		if move_amount != 0:
-			HelperFunctions.add_item_to_storage(item, move_amount, Global.extraction_storage)
-			HelperFunctions.remove_item_from_storage(item, move_amount, Global.sector_storage)
+			HelperFunctions.add_item_to_storage(
+				item, 
+				move_amount, 
+				to_storage_lookup[Global.at_ship]
+				)
+			HelperFunctions.remove_item_from_storage(
+				item,
+				move_amount, 
+				from_storage_lookup[Global.at_ship]
+				)
 			storage_cells[item.key].update_amount()
 			extraction_cells[item.key].update_amount()
 			extraction_bar.value += move_weight
 		
 	else:
-		HelperFunctions.add_item_to_storage(item, move_amount, Global.sector_storage)
-		HelperFunctions.remove_item_from_storage(item, move_amount, Global.extraction_storage)
+		HelperFunctions.add_item_to_storage(
+			item, 
+			move_amount, 
+			from_storage_lookup[Global.at_ship]
+			)
+		HelperFunctions.remove_item_from_storage(
+			item, 
+			move_amount, 
+			to_storage_lookup[Global.at_ship]
+			)
 		storage_cells[item.key].update_amount()
 		extraction_cells[item.key].update_amount()
 		extraction_bar.value -= move_weight
@@ -202,6 +265,7 @@ func _on_highest_tier_preset_pressed() -> void:
 	var remaining_storage = extraction_bar.max_value - extraction_bar.value
 	if not remaining_storage:
 		return
+	
 	var item_array = get_item_array()
 	item_array.sort_custom(sort_tier_then_value)
 	move_over_items(item_array)
@@ -211,28 +275,30 @@ func _on_most_items_preset_pressed() -> void:
 	var remaining_storage = extraction_bar.max_value - extraction_bar.value
 	if not remaining_storage:
 		return
+	
 	var item_array = get_item_array()
 	item_array.sort_custom(sort_least_weight_then_value)
 	move_over_items(item_array)
 
 
-func on_best_value_pressed() -> void:
+func _on_best_value_pressed() -> void:
 	var remaining_storage = extraction_bar.max_value - extraction_bar.value
 	if not remaining_storage:
 		return
+	
 	var item_array = get_item_array()
 	item_array.sort_custom(sort_ratio_then_tier)
 	move_over_items(item_array)
 
 
 func _on_clear_selection_pressed() -> void:
-	var items = HelperFunctions.get_item_from_storage(Global.extraction_storage)
+	var items = HelperFunctions.get_item_from_storage(to_storage_lookup[Global.at_ship])
 	for item in items:
 		move_item(false, 0, DataRegistry.items[item])
 
 
 func get_item_array() -> Array[Dictionary]:
-	var sector_items = HelperFunctions.get_item_from_storage(Global.sector_storage)
+	var sector_items = HelperFunctions.get_item_from_storage(from_storage_lookup[Global.at_ship])
 	var item_list : Array[Dictionary]
 	for item in sector_items:
 		var item_data : ItemData = DataRegistry.items[item]
@@ -269,8 +335,8 @@ func sort_least_weight_then_value(a, b) -> bool:
 
 func sort_ratio_then_tier(a, b) -> bool:
 	# best value per weight first, then highest tier
-	var ratio_a = a[ITEM_VALUE] / max(a[ITEM_WEIGHT], 0.001)  # prevent division by zero
-	var ratio_b = b[ITEM_VALUE] / max(b[ITEM_WEIGHT], 0.001)
+	var ratio_a = a[ITEM_VALUE] / a[ITEM_WEIGHT]
+	var ratio_b = b[ITEM_VALUE] / b[ITEM_WEIGHT]
 	
 	if not is_equal_approx(ratio_a, ratio_b):
 		return ratio_a > ratio_b
@@ -295,7 +361,11 @@ func move_over_items(item_array : Array[Dictionary]) -> void:
 			fit_items = storage_items
 		
 		HelperFunctions.remove_item_from_storage(item_data, fit_items)
-		HelperFunctions.add_item_to_storage(item_data, fit_items, Global.extraction_storage)
+		HelperFunctions.add_item_to_storage(
+			item_data, 
+			fit_items, 
+			to_storage_lookup[Global.at_ship]
+			)
 		storage_cells[item_data.key].update_amount()
 		extraction_cells[item_data.key].update_amount()
 	

@@ -355,12 +355,12 @@ func _build_mode_handling(ray_collider: Node) -> void:
 			match Global.current_build_mode:
 				Global.BUILD_MODES.TURRET:
 					if ray_collider.can_place_turret:
-						if HelperFunctions.check_for_item(DataRegistry.items[selected_turret]):
+						if HelperFunctions.has_item_amount(DataRegistry.items[selected_turret]):
 							can_place = ray_collider.place_selected_turret(selected_turret)
 				
 				Global.BUILD_MODES.BASE:
 					if ray_collider.can_place_base:
-						if HelperFunctions.check_for_item(DataRegistry.items[selected_base]):
+						if HelperFunctions.has_item_amount(DataRegistry.items[selected_base]):
 							can_place = ray_collider.build_base(selected_base)
 			
 			if can_place and building_selection:

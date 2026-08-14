@@ -180,12 +180,6 @@ func _hit_flash() -> void:
 	hit_tween.tween_property(all_segment_control, PROP_MODULATE, target_color, FLASH_TIME)
 	hit_tween.tween_property(all_segment_control, PROP_MODULATE, original_color, FLASH_TIME)
 	
-	if shield and not shield.shield_overdrive:
-		if run_time_label:
-			run_time_label.visible = false
-		if shield_health_label:
-			shield_health_label.visible = true
-	
 	if show_health_timer:
 		show_health_timer.start()
 
@@ -201,21 +195,8 @@ func _heal_flash() -> void:
 	heal_tween.tween_property(all_segment_control, PROP_MODULATE, target_color, FLASH_TIME)
 	heal_tween.tween_property(all_segment_control, PROP_MODULATE, original_color, FLASH_TIME)
 	
-	if run_time_label:
-		run_time_label.visible = false
-	if shield_health_label:
-		shield_health_label.visible = true
-	
 	if show_health_timer:
 		show_health_timer.start()
-
-
-func _on_show_health_timer_timeout() -> void:
-	if shield and not shield.shield_overdrive:
-		if run_time_label:
-			run_time_label.visible = true
-		if shield_health_label:
-			shield_health_label.visible = false
 
 
 func _make_health_indicator(change: float, is_damage: bool = true) -> void:

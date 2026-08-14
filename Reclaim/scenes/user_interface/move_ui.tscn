@@ -356,10 +356,14 @@ _data = {
 &"open_extraction": SubResource("Animation_13jd1")
 }
 
-[node name="extraction_ui" type="CanvasLayer" unique_id=1130211310 node_paths=PackedStringArray("extraction_animations", "total_weight", "item_tip", "extraction_bar", "weight_label", "help_display", "sector_hflow", "extraction_hflow")]
+[node name="extraction_ui" type="CanvasLayer" unique_id=1130211310 node_paths=PackedStringArray("extraction_animations", "title", "box_title", "origin_title", "button_label", "total_weight", "item_tip", "extraction_bar", "weight_label", "help_display", "sector_hflow", "extraction_hflow")]
 layer = 2
 script = ExtResource("1_yfoaa")
 extraction_animations = NodePath("extraction_animations")
+title = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/header/title")
+box_title = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/extraction_storage/MarginContainer/VBoxContainer/MarginContainer/Label")
+origin_title = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/sector_storage/MarginContainer/VBoxContainer/MarginContainer/Label")
+button_label = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/extract_button/Label")
 total_weight = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/total_weight")
 item_tip = NodePath("itemtip")
 extraction_bar = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/storage_indication/extraction_bar")
@@ -484,7 +488,7 @@ text = "If your selection is empty or half empty the best value preset will auto
 label_settings = SubResource("LabelSettings_13jd1")
 autowrap_mode = 3
 
-[node name="Label" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header" unique_id=2136127503]
+[node name="title" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header" unique_id=2136127503]
 layout_mode = 2
 text = "Extraction"
 label_settings = SubResource("LabelSettings_g4v7s")

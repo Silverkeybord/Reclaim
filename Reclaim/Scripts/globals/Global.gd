@@ -142,6 +142,7 @@ var current_build_mode := BUILD_MODES.TURRET
 var at_ship := true
 var mouse_captured := true
 var major_animation_playing := false
+var cleared_tutorial := false
 
 # USER INTERFACE -----------------------------------------------------------
 var paused := false
@@ -170,33 +171,10 @@ var shield_strength: int = 1
 
 # INVENTORY + CURRENCY -------------------------------------------------------
 var cubits: int = 0
-var sector_storage: Dictionary = {
-	1: {},
-	2: {},
-	3: {},
-	4: {},
-	5: {}
-}
-var ship_storage: Dictionary = {
-	1: {
-		"dirt" : 5,
-		"sand" : 5,
-		"clay" : 3,
-		"rock" : 3,
-		"scrap" : 1,
-	},
-	2: {},
-	3: {},
-	4: {},
-	5: {}
-}
-var extraction_storage: Dictionary = {
-	1: {},
-	2: {},
-	3: {},
-	4: {},
-	5: {}
-}
+var sector_storage: Dictionary = HelperFunctions.get_clean_storage()
+var ship_storage: Dictionary = HelperFunctions.get_clean_storage()
+var extraction_storage: Dictionary = HelperFunctions.get_clean_storage()
+var deploy_storage: Dictionary = HelperFunctions.get_clean_storage()
 
 
 ## Temp testing function to fill storage - THIS IS A TESTING SCRIPT IGNORE CONVENTIONS
@@ -216,19 +194,6 @@ func set_random_storage(set_sector_storage: bool = false) -> void:
 				randi_range(TEST_STORAGE_MIN_AMOUNT, TEST_STORAGE_MAX_AMOUNT)
 				* (10 ** TEST_STORAGE_EXPONENT)
 				)
-
-
-## Sets the mouse of the player to be unlocked or locked bassed on its last value
-func set_mouse_captured(set_mode : bool = false, set_value : bool = false) -> void:
-	if set_mode:
-		mouse_captured = set_value
-	else:
-		mouse_captured = not mouse_captured
-	
-	if mouse_captured:
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	else:
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 
 # =============================================================================

@@ -13,6 +13,11 @@ const MOVE_MAX := 0
 @export var extraction_ui : CanvasLayer
 @export var in_storage : bool = true
 
+var to_storage_lookup := {
+	false : Global.extraction_storage,
+	true : Global.deploy_storage
+}
+
 
 func _ready() -> void:
 	set_process(false)
@@ -42,7 +47,10 @@ func update_amount() -> void:
 	if in_storage:
 		amount = HelperFunctions.get_item_amount(item_resource)
 	else:
-		amount = HelperFunctions.get_item_amount(item_resource, Global.extraction_storage)
+		amount = HelperFunctions.get_item_amount(
+			item_resource, 
+			to_storage_lookup[Global.at_ship]
+			)
 	
 	amount_label.text = HelperFunctions.return_amount_shorthand(amount)
 	
