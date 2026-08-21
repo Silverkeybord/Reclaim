@@ -12,10 +12,15 @@
 font = ExtResource("5_f3ev6")
 font_size = 12
 
-[node name="build_selection" type="CanvasLayer" unique_id=437229528 node_paths=PackedStringArray("selected_name", "position_negative_3", "position_negative_2", "position_negative_1", "position_selected_0", "position_positive_1", "position_positive_2", "position_positive_3")]
+[sub_resource type="LabelSettings" id="LabelSettings_f3ev6"]
+font = ExtResource("5_f3ev6")
+font_size = 14
+
+[node name="build_selection" type="CanvasLayer" unique_id=437229528 node_paths=PackedStringArray("selected_name", "build_mode_label", "position_negative_3", "position_negative_2", "position_negative_1", "position_selected_0", "position_positive_1", "position_positive_2", "position_positive_3")]
 script = ExtResource("1_irgbf")
 build_cell_scene = ExtResource("4_irgbf")
 selected_name = NodePath("selected_name")
+build_mode_label = NodePath("build_mode_label")
 position_negative_3 = NodePath("-3")
 position_negative_2 = NodePath("-2")
 position_negative_1 = NodePath("-1")
@@ -85,5 +90,19 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "DARK MATTER TURRET"
 label_settings = SubResource("LabelSettings_g4v7s")
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="build_mode_label" type="Label" parent="." unique_id=1701242637]
+anchors_preset = -1
+anchor_top = 0.67291665
+anchor_right = 1.0
+anchor_bottom = 0.6909722
+offset_top = -84.5
+offset_bottom = -82.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "bases"
+label_settings = SubResource("LabelSettings_f3ev6")
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true

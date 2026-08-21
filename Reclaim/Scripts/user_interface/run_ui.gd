@@ -8,12 +8,13 @@ const KEY_LEFT: StringName = &"left"
 const KEY_RIGHT: StringName = &"right"
 
 # UI Text Display
-const EXTRACTING_TEXT: String = "extracting in : "
-const RUN_TIME_TEXT: String = "Run time : "
-const HP_TEXT: String = " hp"
 const DAMAGE_PREFIX: String = "-"
 const HEAL_PREFIX: String = "+"
-const HEALTH_SEPARATOR: String = " / "
+const ENEMIES_IN_FORMAT: String = "Enemies in : %d"
+const WAVE_END_FORMAT: String = "Wave End in : %d"
+const EXTRACTING_FORMAT: String = "extracting in : %d"
+const RUN_TIME_FORMAT: String = "Run time : %d"
+const SHIELD_HEALTH_FORMAT: String = "%d / %d hp"
 
 # Visual Tweens & Flash Timing
 const PROP_MODULATE: String = "modulate"
@@ -43,8 +44,12 @@ const HEALTH_BAR_COLOR_MARKS: Dictionary = {
 # Assets
 const SMALL_SEGMENT: CompressedTexture2D = preload("res://2d_assets/shield/side_segment.png")
 const TALL_SEGMENT: CompressedTexture2D = preload("res://2d_assets/shield/tall_segment.png")
-const EMPTY_SMALL_SEGMENT: CompressedTexture2D = preload("res://2d_assets/shield/empty_side_segment.png")
-const EMPTY_TALL_SEGMENT: CompressedTexture2D = preload("res://2d_assets/shield/empty_tall_segment.png")
+const EMPTY_SMALL_SEGMENT: CompressedTexture2D = preload(
+	"res://2d_assets/shield/empty_side_segment.png"
+	)
+const EMPTY_TALL_SEGMENT: CompressedTexture2D = preload(
+	"res://2d_assets/shield/empty_tall_segment.png"
+	)
 
 
 # Exports ---------------------------------------------------------------------
@@ -54,7 +59,8 @@ const EMPTY_TALL_SEGMENT: CompressedTexture2D = preload("res://2d_assets/shield/
 @export var run_time_label: Label
 @export var shield_health_label: Label
 @export var extraction_timer_label: Label
-@export var show_health_timer: Timer
+@export var wave_stage_label: Label
+@export var wave_stage_timer: Timer
 
 @export_group("Indicators")
 @export var health_change_indicator: PackedScene
@@ -82,12 +88,17 @@ var texture_rect_percentage_lookup: Dictionary = {
 	0.2: {},
 	0.1: {},
 }
+# This value is set by enemy_spawner trough sector elements as that is where
+# the sectors wave data is set
+var wave_stages : Array[Array]
+var stage_index := 0
+var wave_stage_format : String = ENEMIES_IN_FORMAT
 
 
 func _ready() -> void:
 	if left_small == null or right_small == null:
 		return
-
+	
 	var child_index: int = 0
 	var left_small_segments: Array[Node] = left_small.get_children()
 	var right_small_segments: Array[Node] = right_small.get_children()
@@ -99,35 +110,53 @@ func _ready() -> void:
 				KEY_RIGHT: right_small_segments[child_index]
 			}
 			child_index += 1
+	
+	print(wave_stages)
 
 
 func _process(_delta: float) -> void:
 	if shield == null:
 		return
-
-	if run_time_label:
-		run_time_label.text = RUN_TIME_TEXT + str(int(round(Global.sector_run_time)))
 	
-	var current_health: String = HelperFunctions.return_amount_shorthand(shield.shield_health)
-	var max_health: String = HelperFunctions.return_amount_shorthand(shield.max_shield_health)
+	if run_time_label:
+		run_time_label.text = RUN_TIME_FORMAT % Global.sector_run_time
 	
 	if shield_health_label:
-		shield_health_label.text = current_health + HEALTH_SEPARATOR + max_health + HP_TEXT
+		shield_health_label.text = SHIELD_HEALTH_FORMAT % [
+			shield.shield_health, shield.max_shield_health
+			]
 	
 	if shield.shield_overdrive and extraction_timer_label and shield.overdrive_timer:
-		extraction_timer_label.text = (
-			EXTRACTING_TEXT + str(int(ceil(shield.overdrive_timer.time_left)))
-		)
+		extraction_timer_label.text = EXTRACTING_FORMAT % shield.overdrive_timer.time_left
+	
+	if (
+		wave_stages[stage_index][WaveData.INDEX_TIME] < Global.sector_run_time and 
+		stage_index < wave_stages.size() - 1
+	):
+		var last_stage = wave_stages[stage_index]
+		stage_index += 1
+		var stage = wave_stages[stage_index]
+		
+		var wait_time = stage[WaveData.INDEX_TIME] - last_stage[WaveData.INDEX_TIME]
+		
+		if wave_stage_timer:
+			wave_stage_timer.start(wait_time)
+		
+		wave_stage_format = WAVE_END_FORMAT
+		if wave_stages[stage_index][WaveData.INDEX_IS_BREATHING]:
+			wave_stage_format = ENEMIES_IN_FORMAT
+	
+	wave_stage_label.text = wave_stage_format % wave_stage_timer.time_left
 
 
 # Visual Updates -------------------------------------------------------------
 func update_visuals(change: float, is_damage: bool = true) -> void:
 	if shield == null or shield.max_shield_health <= 0.0:
 		return
-
+	
 	var ratio: float = clampf(shield.shield_health / shield.max_shield_health, 0.0, 1.0)
 	
-	# Dictionary keys order in GDScript is not guaranteed; explicit sort ensures clean lerps
+	# sorts the cells by interger name values
 	var sorted_marks: Array = HEALTH_BAR_COLOR_MARKS.keys()
 	sorted_marks.sort()
 	
@@ -135,7 +164,7 @@ func update_visuals(change: float, is_damage: bool = true) -> void:
 	var to_ratio: float = sorted_marks[sorted_marks.size() - 1]
 	var from_color: Color = HEALTH_BAR_COLOR_MARKS[from_ratio]
 	var to_color: Color = HEALTH_BAR_COLOR_MARKS[to_ratio]
-
+	
 	for index in range(sorted_marks.size() - 1):
 		var current: float = sorted_marks[index]
 		var next: float = sorted_marks[index + 1]
@@ -157,7 +186,7 @@ func update_visuals(change: float, is_damage: bool = true) -> void:
 	for segment_decimal in texture_rect_percentage_lookup:
 		var side_dict: Dictionary = texture_rect_percentage_lookup[segment_decimal]
 		for side in side_dict:
-			var segment_node: TextureRect = side_dict[side] as TextureRect
+			var segment_node:= side_dict[side] as TextureRect
 			if segment_node:
 				segment_node.texture = EMPTY_SMALL_SEGMENT if ratio < segment_decimal else SMALL_SEGMENT
 	
@@ -172,16 +201,13 @@ func update_visuals(change: float, is_damage: bool = true) -> void:
 func _hit_flash() -> void:
 	if all_segment_control == null:
 		return
-
+	
 	var hit_tween: Tween = create_tween()
 	var original_color: Color = all_segment_control.modulate
 	var target_color: Color = original_color.lerp(HIT_FLASH_COLOR, HIT_LERP_WEIGHT)
 	
 	hit_tween.tween_property(all_segment_control, PROP_MODULATE, target_color, FLASH_TIME)
 	hit_tween.tween_property(all_segment_control, PROP_MODULATE, original_color, FLASH_TIME)
-	
-	if show_health_timer:
-		show_health_timer.start()
 
 
 func _heal_flash() -> void:
@@ -194,9 +220,6 @@ func _heal_flash() -> void:
 	
 	heal_tween.tween_property(all_segment_control, PROP_MODULATE, target_color, FLASH_TIME)
 	heal_tween.tween_property(all_segment_control, PROP_MODULATE, original_color, FLASH_TIME)
-	
-	if show_health_timer:
-		show_health_timer.start()
 
 
 func _make_health_indicator(change: float, is_damage: bool = true) -> void:

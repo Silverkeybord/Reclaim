@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dh6oadn2aghxi"]
 
-[ext_resource type="Resource" uid="uid://wwsm4m2783l4" path="res://data/wave/remote_island.tres" id="2_bmgv8"]
+[ext_resource type="Resource" uid="uid://wwsm4m2783l4" path="res://data/wave/remote_island.tres" id="2_b0un0"]
 [ext_resource type="Texture2D" uid="uid://cd60ogaogyo3n" path="res://textures_and_materials/maps/4 blur.png" id="2_cm411"]
 [ext_resource type="PackedScene" uid="uid://bpkvltlrs2rr1" path="res://scenes/sector_elements.tscn" id="3_lr34o"]
 [ext_resource type="Script" uid="uid://dsjhqsu8dk601" path="res://scripts/enemies/spawn_marker.gd" id="4_b0un0"]
@@ -67,7 +67,7 @@ uv1_triplanar = true
 [node name="enemy_spawner" parent="consistant" unique_id=51836272 node_paths=PackedStringArray("sector_elements", "spawn_nodes") instance=ExtResource("7_8ty32")]
 sector_elements = NodePath("../sector_elements")
 map = "remote_island"
-wave_resource = ExtResource("2_bmgv8")
+wave_data = ExtResource("2_b0un0")
 spawn_nodes = [NodePath("../../enemy_spawn_markers/Marker3D3"), NodePath("../../enemy_spawn_markers/Marker3D4"), NodePath("../../enemy_spawn_markers/Marker3D2"), NodePath("../../enemy_spawn_markers/Marker3D5")]
 
 [node name="player_barrier" type="StaticBody3D" parent="consistant" unique_id=1069759614]

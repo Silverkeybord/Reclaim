@@ -27,7 +27,7 @@ const ANIMATION_OPEN := "open_extraction"
 const ANIMATION_CLOSE := "close_extraction"
 
 const EXTRACTION_CELL_SCENE : PackedScene = preload(
-	"res://scenes/user_interface/move_cel.tscn")
+	"res://scenes/user_interface/move_cell.tscn")
 
 const FIRST_COLOR := Color("dbffffff")
 const SECOND_COLOR := Color("c8ebffff")
@@ -135,6 +135,12 @@ func close_ui(forced = false) -> void:
 	if extraction_animations.is_playing() and not forced:
 		return
 	
+	# puts all the items in the to storage to the from storage
+	from_storage_lookup[Global.at_ship] = HelperFunctions.merge_storage(
+		from_storage_lookup[Global.at_ship],
+		to_storage_lookup[Global.at_ship]
+	)
+	
 	_set_open_or_close(false)
 	extraction_animations.play(ANIMATION_CLOSE)
 	
@@ -147,6 +153,15 @@ func close_ui(forced = false) -> void:
 func open_ui() -> void:
 	if extraction_animations.is_playing():
 		return
+	
+	for tier in to_storage_lookup[Global.at_ship]:
+		for item_name in to_storage_lookup[Global.at_ship][tier]:
+			if HelperFunctions.has_item_amount(
+				DataRegistry.items[item_name],
+				to_storage_lookup[Global.at_ship][tier][item_name],
+				from_storage_lookup[Global.at_ship]
+			):
+				pass
 	
 	_set_open_or_close(true)
 	extraction_animations.play(ANIMATION_OPEN)
@@ -161,10 +176,6 @@ func _set_open_or_close(toggle : bool) -> void:
 
 
 func load_extraction_cells() -> void:
-	for tier in from_storage_lookup[Global.at_ship]:
-		for item in from_storage_lookup[Global.at_ship][tier]:
-			pass
-	
 	var sector_storage_items = HelperFunctions.get_item_from_storage(
 		from_storage_lookup[Global.at_ship]
 		)

@@ -16,9 +16,9 @@ const INACTIVE_TURRETS_TAB := preload("res://2d_assets/crafting/inactive_turret_
 const INACTIVE_MODULES_TAB := preload("res://2d_assets/crafting/inactive_modules_tab.png")
 const INACTIVE_RESOURCE_TAB := preload("res://2d_assets/crafting/inactive_resources_tab.png")
 
-const CRAFT_CELL_SCENE := preload("res://scenes/user_interface/craft_cell.tscn")
+const CRAFT_CELL_SCENE := preload("res://scenes/user_interface/crafting/craft_cell.tscn")
 const SECTION_SELECTION_SCENE := preload(
-	"res://scenes/user_interface/crafting_selection_sections.tscn"
+	"res://scenes/user_interface/crafting/crafting_selection_sections.tscn"
 	)
 
 const CRAFT_CELLS_GROUP := "craft_cells"

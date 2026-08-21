@@ -7,7 +7,7 @@ const SPAWN_SIZES := {
 	"medium" : 1.25,
 	"big" : 1.5,
 	"large" : 2,
-	"gianormous" : 3,
+	"ginormous" : 3,
 }
 
 const COMMANDER_ADDITIONAL_SIZE := 0.5

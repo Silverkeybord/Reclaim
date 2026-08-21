@@ -15,10 +15,10 @@
 [ext_resource type="Texture2D" uid="uid://ckkntno5yp5sl" path="res://2d_assets/crafting/stats_stroke.png" id="12_uc2av"]
 [ext_resource type="Texture2D" uid="uid://wbdpq7cxeel8" path="res://2d_assets/crafting/craft button.png" id="13_7uxoi"]
 [ext_resource type="Theme" uid="uid://d1ugo0ioarh2o" path="res://other_assets/themes/scrollbar.tres" id="13_scvtr"]
-[ext_resource type="PackedScene" uid="uid://hgi3y5catplc" path="res://scenes/user_interface/recepie_requirment.tscn" id="13_uc2av"]
+[ext_resource type="PackedScene" uid="uid://hgi3y5catplc" path="res://scenes/user_interface/crafting/recepie_requirment.tscn" id="13_uc2av"]
 [ext_resource type="Script" uid="uid://bb1xlwb46h5mt" path="res://scripts/user_interface/crafting/crafting_selection_vbox.gd" id="14_6uax1"]
 [ext_resource type="StyleBox" uid="uid://oyfwh8cxgij4" path="res://other_assets/styles/base_button_normal.tres" id="15_scvtr"]
-[ext_resource type="PackedScene" uid="uid://dqgjh854m2igs" path="res://scenes/user_interface/itemtip.tscn" id="16_6ikml"]
+[ext_resource type="PackedScene" uid="uid://dqgjh854m2igs" path="res://scenes/user_interface/items/itemtip.tscn" id="16_6ikml"]
 [ext_resource type="StyleBox" uid="uid://p4bumkdahx6n" path="res://other_assets/styles/base_button_pressed.tres" id="16_6uax1"]
 [ext_resource type="StyleBox" uid="uid://dfnlbikp4agtb" path="res://other_assets/styles/base_button_hover.tres" id="17_u4imy"]
 

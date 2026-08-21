@@ -341,3 +341,23 @@ static func get_clean_storage() -> Dictionary:
 		storage[x] = {}
 	
 	return storage
+
+
+## returns the 2 inputed storages merged into one.
+static func merge_storage(first, second) -> Dictionary:
+	if not first or not second:
+		return {}
+	
+	var merged : Dictionary = first
+	
+	for tier in second:
+		for item_name in second[tier]:
+			if item_name not in DataRegistry.items:
+				continue
+			
+			if merged[tier].has(item_name):
+				merged[tier][item_name] += first[tier][item_name]
+			else:
+				merged[tier][item_name] = first[tier][item_name]
+	
+	return merged

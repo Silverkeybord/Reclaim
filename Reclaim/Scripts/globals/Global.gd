@@ -1,6 +1,6 @@
 extends Node
 # =============================================================================
-# ENUMS =======================================================================
+# ENUMS
 # =============================================================================
 
 enum SHOT_TYPE {
@@ -29,7 +29,7 @@ enum PLAYER_MODES {
 
 
 # =============================================================================
-# CONSTANTS ===================================================================
+# CONSTANTS
 # =============================================================================
 
 # SECTORS ----------------------------------------------------------------
@@ -65,6 +65,9 @@ const ERR_SAVE_INVALID: String = "Save file did not contain valid save data."
 const TEST_STORAGE_MIN_AMOUNT: int = 100
 const TEST_STORAGE_MAX_AMOUNT: int = 999
 const TEST_STORAGE_EXPONENT: int = 0
+
+const UI_OPEN_TIME_SCALE := 0.5
+const NORMAL_TIME_SCALE := 1.0
 
 const TIER_CONFIG: Dictionary = {
 	1: {
@@ -133,7 +136,7 @@ const MAX_DROPS: int = 250
 const MAX_SPHERES: int = 300
 
 # =============================================================================
-# VARIABLES ===================================================================
+# VARIABLES
 # =============================================================================
 
 # LOGIC --------------------------------------------------------------------
@@ -142,7 +145,10 @@ var current_build_mode := BUILD_MODES.TURRET
 var at_ship := true
 var mouse_captured := true
 var major_animation_playing := false
+
+# TUTORIAL RELATED ---------------------------------------------------------
 var cleared_tutorial := false
+var first_run := true
 
 # USER INTERFACE -----------------------------------------------------------
 var paused := false
@@ -151,6 +157,7 @@ var market_open := false
 var storage_open := false
 var crafting_open := false
 var extraction_open := false
+var crafting_pin_open := false
 var authorization_open := false
 
 # SECTOR RELATED ------------------------------------------------------------
@@ -197,7 +204,7 @@ func set_random_storage(set_sector_storage: bool = false) -> void:
 
 
 # =============================================================================
-# SAVING, LOADING, AND RESETING GAME DATA =====================================
+# SAVING, LOADING, AND RESETING GAME DATA
 # =============================================================================
 ## Saves the current game data to the path
 func save_game() -> void:

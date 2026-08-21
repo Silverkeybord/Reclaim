@@ -1,7 +1,7 @@
 extends Control
 
 const MAX_NOTIF : int = 10
-const ITEM_NOTIF_SCENE : PackedScene = preload("res://scenes/user_interface/item_notif.tscn")
+const ITEM_NOTIF_SCENE : PackedScene = preload("res://scenes/user_interface/items/item_notif.tscn")
 
 @export var notif_vbox : VBoxContainer
 

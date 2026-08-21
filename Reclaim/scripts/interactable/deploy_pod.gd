@@ -11,16 +11,17 @@ const PROP_MODULATE : String = "modulate"
 
 
 func interact() -> void:
-	if Global.cleared_tutorial:
-		deploy_ui.open_ui()
-	else:
+	if Global.first_run:
 		deploy()
+	else:
+		deploy_ui.open_ui()
 
 
 func deploy() -> void:
 	color_rect.visible = true
 	var fade_in_tween = create_tween()
 	fade_in_tween.tween_property(color_rect, PROP_MODULATE, NORMAL_MODULATE, FADE_TIME)
+	Global.sector_storage = Global.deploy_storage
 	
 	await fade_in_tween.finished
 	color_rect.visible = false

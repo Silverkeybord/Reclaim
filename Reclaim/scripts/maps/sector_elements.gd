@@ -1,3 +1,4 @@
+class_name SectorElements
 extends Node3D
 
 const SHIP_SCENE := preload("res://scenes/ship.tscn")

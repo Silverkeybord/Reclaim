@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://b45gi14yn6xj5"]
+
+[ext_resource type="PackedScene" uid="uid://fymq5noabj16" path="res://scenes/user_interface/recpie_pinning/craft_pin_amount.tscn" id="1_6ij0v"]
+[ext_resource type="Script" uid="uid://deh5kx6nh3gt4" path="res://scripts/user_interface/item_pinning/craft_pin_recipe.gd" id="1_i4o4j"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y3pkb"]
+bg_color = Color(0.8, 0.8, 0.8, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.65882355, 0.65882355, 0.65882355, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="HBoxContainer" type="HBoxContainer" unique_id=1773144822]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_i4o4j")
+
+[node name="VBoxContainer" type="VFlowContainer" parent="." unique_id=1593813313]
+layout_mode = 2
+alignment = 1
+last_wrap_alignment = 2
+reverse_fill = true
+
+[node name="PanelContainer" parent="VBoxContainer" unique_id=809388716 instance=ExtResource("1_6ij0v")]
+layout_mode = 2
+
+[node name="PanelContainer2" parent="VBoxContainer" unique_id=816209047 instance=ExtResource("1_6ij0v")]
+layout_mode = 2
+
+[node name="PanelContainer3" parent="VBoxContainer" unique_id=1036496552 instance=ExtResource("1_6ij0v")]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1327307346]
+custom_minimum_size = Vector2(60, 60)
+custom_maximum_size = Vector2(60, 60)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_y3pkb")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1399387836]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer" unique_id=1229304639]
+layout_mode = 2

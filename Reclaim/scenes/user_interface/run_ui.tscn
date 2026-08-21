@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://kcktfiuhsi17" path="res://scripts/user_interface/run_ui.gd" id="1_ff2tx"]
 [ext_resource type="PackedScene" uid="uid://bgekwqf1seqvo" path="res://scenes/other/health_change_indicator.tscn" id="2_vrobe"]
 [ext_resource type="Texture2D" uid="uid://df4x6dr3c13nf" path="res://2d_assets/shield/shield_health_background.png" id="3_7ejqx"]
+[ext_resource type="LabelSettings" uid="uid://p6rwcqqb64mu" path="res://other_assets/label_settings/top_ui_text.tres" id="3_8rlxl"]
 [ext_resource type="Texture2D" uid="uid://ckocqgyt5jdai" path="res://2d_assets/shield/middle_segment.png" id="4_8rlxl"]
 [ext_resource type="Texture2D" uid="uid://dpvc66ooaspl1" path="res://2d_assets/shield/side_segment.png" id="5_umb32"]
 [ext_resource type="Texture2D" uid="uid://b3gvmq6pe00r4" path="res://2d_assets/shield/tall_segment.png" id="6_n6vcg"]
@@ -363,7 +364,7 @@ _data = {
 &"extraction_overdrive": SubResource("Animation_82pi0")
 }
 
-[node name="run_ui" type="Control" unique_id=1725702450 node_paths=PackedStringArray("run_time_label", "shield_health_label", "extraction_timer_label", "max_indication_marker", "min_indication_marker", "overdrive_animation_player", "all_segment_control", "left_small", "right_small", "left_tall", "right_tall")]
+[node name="run_ui" type="Control" unique_id=1725702450 node_paths=PackedStringArray("run_time_label", "shield_health_label", "extraction_timer_label", "wave_stage_label", "wave_stage_timer", "max_indication_marker", "min_indication_marker", "overdrive_animation_player", "all_segment_control", "left_small", "right_small", "left_tall", "right_tall")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -376,6 +377,8 @@ script = ExtResource("1_ff2tx")
 run_time_label = NodePath("run_time")
 shield_health_label = NodePath("MarginContainer/shield_health")
 extraction_timer_label = NodePath("MarginContainer/extraction_timer")
+wave_stage_label = NodePath("wave_stages")
+wave_stage_timer = NodePath("wave_stage_timer")
 health_change_indicator = ExtResource("2_vrobe")
 max_indication_marker = NodePath("max_indication_position")
 min_indication_marker = NodePath("min_indication_position")
@@ -395,25 +398,25 @@ anchor_right = 0.5
 offset_left = -257.0
 offset_top = 18.0
 offset_right = -77.0
-offset_bottom = 39.0
+offset_bottom = 34.0
 grow_horizontal = 2
-text = "Run time :  "
-label_settings = ExtResource("7_jckhp")
+text = "Run time :  0"
+label_settings = ExtResource("3_8rlxl")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="wave_time" type="Label" parent="." unique_id=1175136569]
+[node name="wave_stages" type="Label" parent="." unique_id=1175136569]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -89.0
-offset_top = 29.0
-offset_right = 91.0
-offset_bottom = 50.0
+offset_left = 77.0
+offset_top = 18.0
+offset_right = 257.0
+offset_bottom = 34.0
 grow_horizontal = 2
-text = "Breathing room : "
-label_settings = ExtResource("7_jckhp")
+text = "Enemies in : 0"
+label_settings = ExtResource("3_8rlxl")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -910,3 +913,6 @@ position = Vector2(395, 3)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1187789074]
 libraries/ = SubResource("AnimationLibrary_kl6mn")
+
+[node name="wave_stage_timer" type="Timer" parent="." unique_id=1761632010]
+one_shot = true

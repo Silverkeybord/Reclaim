@@ -20,10 +20,10 @@ const SPAWN_RADIUS_PROPERTY : StringName = &"spawn_radius"
 @export var spawn_timer : Timer
 
 @export_group("Map Info")
-@export var sector_elements : Node3D
+@export var sector_elements : SectorElements
 ## The map this is placed on
 @export var map : String
-@export var wave_resource : WaveData
+@export var wave_data : WaveData
 
 @export var spawn_nodes : Array[Marker3D]
 
@@ -47,13 +47,11 @@ var clear_spawning := false
 
 
 func _ready() -> void:
-	var first_section = wave_resource.spawning[0]
+	var first_section = wave_data.spawning[0]
 	current_spawn_section = first_section
 	
-	for section in wave_resource.spawning:
-		spawn_section_times.append(section.time)
-	
-	spawn_section_times.append(wave_resource.end_time)
+	sector_elements.sector_shield.run_ui.wave_stages = wave_data.return_wave_stages()
+	spawn_section_times = wave_data.return_wave_times()
 	
 	spawn_timer.start(first_section.breathing_room)
 
@@ -65,13 +63,13 @@ func _process(delta: float) -> void:
 	run_time += delta
 	Global.sector_run_time = run_time
 	
-	if run_time > wave_resource.end_time:
+	if run_time > wave_data.end_time:
 		set_process(false)
 	
 	if spawn_section_times[current_spawn_index + 1] < run_time:
 		spawn_timer.stop()
 		current_spawn_index += 1
-		current_spawn_section = wave_resource.spawning[current_spawn_index]
+		current_spawn_section = wave_data.spawning[current_spawn_index]
 		spawn_timer.start(current_spawn_section.breathing_room)
 
 
@@ -184,7 +182,7 @@ func _get_enemy_type_scene() -> PackedScene:
 	return BASIC_ENEMY_FALLBACK
 
 
-# returns a vector 3 for the size of the enemy
+# returns a float for the size of the enemy to be multplyed by vector.one
 func _get_enemy_size() -> float:
 	var spawn_sizes = current_spawn_section.spawn_sizes
 	

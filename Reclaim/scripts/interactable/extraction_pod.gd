@@ -12,6 +12,9 @@ func interact() -> void:
 
 
 func extract() -> void:
+	if Global.first_run:
+		Global.first_run = false
+	
 	HelperFunctions.set_mouse_captured(true, true)
 	Global.just_extracted = true
 	Global.major_animation_playing = true

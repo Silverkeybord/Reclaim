@@ -57,7 +57,7 @@ func _input(event: InputEvent) -> void:
 			_zoom_in_out(event as InputEventMouseButton)
 	
 	if event.is_action_pressed(ACTION_TOGGLE_MOUSE_CAPTURE):
-		Global.set_mouse_captured()
+		HelperFunctions.set_mouse_captured()
 
 
 # =============================================================================

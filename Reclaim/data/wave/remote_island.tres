@@ -58,111 +58,47 @@ metadata/_custom_type_script = "uid://bkm3t85heyp8m"
 
 [sub_resource type="Resource" id="Resource_dwcul"]
 script = ExtResource("3_b8akh")
+breathing_room = 5
 spawn_interval = 6.0
-spawn_amount = 3
+spawn_amount = 4
 end_additional_enemy_amount = 5
-enemies = Array[ExtResource("1_dbg6m")]([SubResource("Resource_025ad")])
-metadata/_custom_type_script = "uid://qok4oe3yk4b1"
-
-[sub_resource type="Resource" id="Resource_yduy7"]
-script = ExtResource("1_dbg6m")
-enemy_name = "basic"
-metadata/_custom_type_script = "uid://bkm3t85heyp8m"
-
-[sub_resource type="Resource" id="Resource_qgmpv"]
-script = ExtResource("3_b8akh")
-time = 100
-spawn_interval = 8.0
-spawn_amount = 4
-commanders = true
-end_spawn_rate = 6.0
-enemies = Array[ExtResource("1_dbg6m")]([SubResource("Resource_yduy7")])
-metadata/_custom_type_script = "uid://qok4oe3yk4b1"
-
-[sub_resource type="Resource" id="Resource_21e4u"]
-script = ExtResource("1_dbg6m")
-enemy_name = "basic"
-weight = 1
-metadata/_custom_type_script = "uid://bkm3t85heyp8m"
-
-[sub_resource type="Resource" id="Resource_6of1n"]
-script = ExtResource("3_b8akh")
-time = 150
-breathing_room = 5
-spawn_interval = 2.0
-spawn_amount = 4
-swarm = true
-spawn_sizes = {
-"big": 0,
-"gianormous": 0,
-"large": 0,
-"medium": 0,
-"small": 1,
-"very_small": 3
-}
-enemies = Array[ExtResource("1_dbg6m")]([SubResource("Resource_21e4u")])
-metadata/_custom_type_script = "uid://qok4oe3yk4b1"
-
-[sub_resource type="Resource" id="Resource_ni710"]
-script = ExtResource("3_b8akh")
-time = 160
-breathing_room = 5
-spawn_amount = 4
-commanders = true
-end_additional_enemy_amount = 2
 spawn_sizes = {
 "big": 0,
 "gianormous": 0,
 "large": 0,
 "medium": 1,
-"small": 3,
-"very_small": 0
+"small": 8,
+"very_small": 2
 }
-enemies = Array[ExtResource("1_dbg6m")]([SubResource("Resource_fvh0x"), SubResource("Resource_dfn6b")])
+enemies = Array[ExtResource("1_dbg6m")]([SubResource("Resource_025ad")])
 metadata/_custom_type_script = "uid://qok4oe3yk4b1"
 
-[sub_resource type="Resource" id="Resource_kgqiw"]
+[sub_resource type="Resource" id="Resource_yduy7"]
 script = ExtResource("3_b8akh")
-time = 250
-spawn_interval = 4.0
-spawn_amount = 4
-end_spawn_rate = 3.0
-random_additional_enemies = 2
-min_spawn_interval = 3.0
-max_spawn_interval = 6.0
-spawn_sizes = {
-"big": 0,
-"gianormous": 0,
-"large": 0,
-"medium": 2,
-"small": 3,
-"very_small": 0
-}
-enemies = Array[ExtResource("1_dbg6m")]([SubResource("Resource_fvh0x"), SubResource("Resource_dfn6b"), SubResource("Resource_fop1h"), SubResource("Resource_vuhhf"), SubResource("Resource_4rdh3")])
+time = 100
+breathing_room = 5
 metadata/_custom_type_script = "uid://qok4oe3yk4b1"
 
-[sub_resource type="Resource" id="Resource_ubqgt"]
+[sub_resource type="Resource" id="Resource_iiq5p"]
 script = ExtResource("3_b8akh")
-time = 270
-spawn_interval = 2.0
-spawn_amount = 4
-commanders = true
-swarm = true
-spawn_sizes = {
-"big": 0,
-"gianormous": 0,
-"large": 0,
-"medium": 3,
-"small": 2,
-"very_small": 0
-}
-enemies = Array[ExtResource("1_dbg6m")]([SubResource("Resource_fvh0x"), SubResource("Resource_dfn6b"), SubResource("Resource_fop1h"), SubResource("Resource_vuhhf"), SubResource("Resource_4rdh3")])
+metadata/_custom_type_script = "uid://qok4oe3yk4b1"
+
+[sub_resource type="Resource" id="Resource_h7h5h"]
+script = ExtResource("3_b8akh")
+metadata/_custom_type_script = "uid://qok4oe3yk4b1"
+
+[sub_resource type="Resource" id="Resource_ocrmk"]
+script = ExtResource("3_b8akh")
+metadata/_custom_type_script = "uid://qok4oe3yk4b1"
+
+[sub_resource type="Resource" id="Resource_3tyhh"]
+script = ExtResource("3_b8akh")
 metadata/_custom_type_script = "uid://qok4oe3yk4b1"
 
 [resource]
 script = ExtResource("1_rvc1w")
 key = "remote_island"
-spawning = Array[ExtResource("3_b8akh")]([SubResource("Resource_dwcul"), SubResource("Resource_qgmpv"), SubResource("Resource_6of1n"), SubResource("Resource_ni710"), SubResource("Resource_kgqiw"), SubResource("Resource_ubqgt")])
-end_time = 300.0
+spawning = Array[ExtResource("3_b8akh")]([SubResource("Resource_dwcul"), SubResource("Resource_yduy7"), SubResource("Resource_iiq5p"), SubResource("Resource_h7h5h"), SubResource("Resource_ocrmk"), SubResource("Resource_3tyhh")])
+end_time = 400.0
 clear_spawning = SubResource("Resource_b8akh")
 metadata/_custom_type_script = "uid://ebuopgthqly1"

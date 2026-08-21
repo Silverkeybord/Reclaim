@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://dmaj8a3oki02e" path="res://2d_assets/reticles/remove_overlay.png" id="8_6k3cy"]
 [ext_resource type="PackedScene" uid="uid://bqdl5iwhoay06" path="res://scenes/user_interface/fps_label.tscn" id="10_h17s1"]
 [ext_resource type="PackedScene" uid="uid://5wiwx78yrbjr" path="res://scenes/user_interface/build_selection.tscn" id="12_gx1jg"]
-[ext_resource type="PackedScene" uid="uid://bcld5qdacv0d8" path="res://scenes/user_interface/item_notif_controller.tscn" id="13_gx1jg"]
+[ext_resource type="PackedScene" uid="uid://bcld5qdacv0d8" path="res://scenes/user_interface/items/item_notif_controller.tscn" id="13_gx1jg"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e41v5"]
 

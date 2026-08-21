@@ -4,7 +4,6 @@ extends CharacterBody3D
 # =============================================================================
 # CONSTANTS
 # =============================================================================
-
 # Use string names instead of normal strings as it save on compute for actions and inputs
 
 # Input Action Names
@@ -32,7 +31,6 @@ const ENEMY_METADATA_TAG : StringName = &"enemy"
 const PROP_VALID : StringName = &"valid"
 const PROP_PLAYER : StringName = &"player"
 const PROP_BULLET_SPAWN : StringName = &"bullet_spawn"
-
 const METHOD_INTERACT : StringName = &"interact"
 const METHOD_TOGGLE_BUILD_MODE : StringName = &"_toggle_build_mode"
 const METHOD_PRIME_PICK_UP : StringName = &"prime_pick_up"
@@ -47,7 +45,6 @@ const BUILD_MODE_INPUT : String = "2 - Building"
 const INSTALL_MODE_INPUT : String = "3 - Installation"
 const BUILDING_INPUTS : String = "F - Change Builds\nM2 - Pick up Builds\nScroll - Selection"
 const INTERACT_INPUT : String = "E - Interact"
-
 const PICK_UP_TEXT : String = "CLICK TO PICK UP"
 const PLACE_TEXT : String = "CLICK TO PLACE"
 const REPLACE_TEXT : String = "CLICK TO REPLACE"
@@ -66,7 +63,6 @@ const ZERO_FLOAT : float = 0.0
 # =============================================================================
 # EXPORTS
 # =============================================================================
-
 @export_group("Player Stats")
 @export var jump_velocity: float = 40.0 # was 20 debugging
 @export var move_speed: float = 30.0 # was 14 debugging
@@ -104,7 +100,6 @@ const ZERO_FLOAT : float = 0.0
 # =============================================================================
 # VARIABLES
 # =============================================================================
-
 var turret_holagram: Node3D = null
 var can_shoot: bool = true
 var weapon: Node3D = null
@@ -117,6 +112,7 @@ func _ready() -> void:
 	_set_new_weapon()
 
 
+## Handles gravity, movement input, and jumping every physics frame.
 func _physics_process(delta: float) -> void:
 	if Global.major_animation_playing:
 		return
@@ -128,15 +124,13 @@ func _physics_process(delta: float) -> void:
 	
 	if not Global.crafting_open and not Global.extraction_open:
 		var input_dir := Input.get_vector(ACTION_LEFT, ACTION_RIGHT, ACTION_FORWARD, ACTION_BACK)
-		var direction := (global_basis * Vector3(input_dir.x,ZERO_FLOAT, input_dir.y)).normalized()
-		
+		var direction := (global_basis * Vector3(input_dir.x, ZERO_FLOAT, input_dir.y)).normalized()
 		velocity.x = direction.x * move_speed
 		velocity.z = direction.z * move_speed
-		
 		if Input.is_action_pressed(ACTION_JUMP) and is_on_floor():
 			velocity.y = jump_velocity
 	else:
-		velocity = Vector3(ZERO_FLOAT, velocity.y,ZERO_FLOAT)
+		velocity = Vector3(ZERO_FLOAT, velocity.y, ZERO_FLOAT)
 	
 	move_and_slide()
 
@@ -145,7 +139,6 @@ func _process(_delta: float) -> void:
 	if Global.major_animation_playing:
 		canvas_root.visible = false
 		return
-	
 	if not canvas_root.visible:
 		canvas_root.visible = true
 	
@@ -170,14 +163,16 @@ func _process(_delta: float) -> void:
 	):
 		_interaction_handling(ray_collider)
 
+
 # =============================================================================
 # UI & INPUT TIPS
 # =============================================================================
 
+# Updates the input tip text based on what the player can do
 func _input_tip_updating() -> void:
 	if input_tip == null:
 		return
-
+	
 	var input_tip_output: Array[String] = []
 	
 	if Global.player_mode == Global.PLAYER_MODES.BUILDING:
@@ -186,10 +181,8 @@ func _input_tip_updating() -> void:
 	if not Global.at_ship:
 		if Global.player_mode != Global.PLAYER_MODES.WEAPON:
 			input_tip_output.append(WEAPON_MODE_INPUT)
-		
 		if Global.player_mode != Global.PLAYER_MODES.BUILDING:
 			input_tip_output.append(BUILD_MODE_INPUT)
-		
 		if Global.player_mode != Global.PLAYER_MODES.INSTALLING:
 			input_tip_output.append(INSTALL_MODE_INPUT)
 	
@@ -199,29 +192,31 @@ func _input_tip_updating() -> void:
 	input_tip.text = "\n".join(input_tip_output)
 
 
+# Checks if the object the player is looking at is interactable and distance
 func _interaction_handling(ray_collider: Node) -> void:
 	if interact_overlay == null:
 		return
-
+	
 	if (
 		ray_collider != null
 		and ray_collider.is_in_group(GROUP_INTERACTABLE)
 		and global_position.distance_to(ray_collider.global_position) < INTERACT_DISTANCE
 	):
 		interact_overlay.visible = true
-		
 		if (
-			Input.is_action_just_pressed(ACTION_INTERACT) and 
+			Input.is_action_just_pressed(ACTION_INTERACT) and
 			ray_collider.has_method(METHOD_INTERACT)
 		):
 			ray_collider.interact()
 	else:
 		interact_overlay.visible = false
 
+
 # =============================================================================
 # MODE SWITCHING
 # =============================================================================
 
+# Bassed on inputs changes the player mode to shooting, building, installation
 func _player_mode_handling() -> void:
 	if (
 		Input.is_action_just_pressed(ACTION_WEAPON_MODE)
@@ -255,6 +250,7 @@ func _player_mode_handling() -> void:
 		toggle_player_mode_item(wrench_pivot)
 
 
+# Hides all tool pivots then shows only the one passed in
 func toggle_player_mode_item(pivot: Node3D) -> void:
 	if gun_pivot:
 		gun_pivot.visible = false
@@ -266,10 +262,12 @@ func toggle_player_mode_item(pivot: Node3D) -> void:
 	if pivot:
 		pivot.visible = true
 
+
 # =============================================================================
 # BUILDING & HOLOGRAMS
 # =============================================================================
 
+# handels all buliding, placeing, checking and more
 func _build_mode_handling(ray_collider: Node) -> void:
 	var build_ray_collider: Node = build_ray.get_collider() if build_ray else null
 	var current_build_selected: String = ""
@@ -302,7 +300,6 @@ func _build_mode_handling(ray_collider: Node) -> void:
 	if turret_holagram:
 		if _check_valid_placement(ray_collider) and not current_build_selected.is_empty():
 			var preexisting_build: bool = false
-			
 			match Global.current_build_mode:
 				Global.BUILD_MODES.TURRET:
 					turret_holagram.visible = true
@@ -310,30 +307,27 @@ func _build_mode_handling(ray_collider: Node) -> void:
 						ray_collider.turret_origin_point.global_position)
 					if ray_collider.turret:
 						preexisting_build = true
-				
 				Global.BUILD_MODES.BASE:
 					turret_holagram.visible = true
 					turret_holagram.global_position = ray_collider.global_position
 					if ray_collider.base:
 						preexisting_build = true
-			
+	
 			if global_position.distance_to(ray_collider.global_position) < BUILD_RANGE:
 				turret_holagram.valid_position = true
 				build_label.text = REPLACE_TEXT if preexisting_build else PLACE_TEXT
 			else:
 				build_label.text = MOVE_CLOSER_TEXT
 				turret_holagram.valid_position = false
-			
+	
 			if build_overlay:
 				build_overlay.visible = true
-		
 		elif not current_build_selected.is_empty():
 			if aim_ray and aim_ray.is_colliding():
 				turret_holagram.global_position = aim_ray.get_collision_point()
 				turret_holagram.visible = true
 			else:
 				turret_holagram.visible = false
-				
 			turret_holagram.valid_position = false
 			if build_overlay:
 				build_overlay.visible = false
@@ -342,49 +336,43 @@ func _build_mode_handling(ray_collider: Node) -> void:
 			if build_overlay:
 				build_overlay.visible = false
 	
-	if Input.is_action_just_pressed(ACTION_PLACE) and not current_build_selected.is_empty():
-		if (
-			_check_valid_placement(ray_collider)
-			and global_position.distance_to(ray_collider.global_position) < BUILD_RANGE
-		):
-			var can_place: bool = false
-			
-			if user_interface_animations:
-				user_interface_animations.play(PLACE_ANIMATION_KEY)
-			
-			match Global.current_build_mode:
-				Global.BUILD_MODES.TURRET:
-					if ray_collider.can_place_turret:
-						if HelperFunctions.has_item_amount(DataRegistry.items[selected_turret]):
-							can_place = ray_collider.place_selected_turret(selected_turret)
-				
-				Global.BUILD_MODES.BASE:
-					if ray_collider.can_place_base:
-						if HelperFunctions.has_item_amount(DataRegistry.items[selected_base]):
-							can_place = ray_collider.build_base(selected_base)
-			
-			if can_place and building_selection:
-				building_selection.placed_build()
+		if Input.is_action_just_pressed(ACTION_PLACE) and not current_build_selected.is_empty():
+			if (
+				_check_valid_placement(ray_collider)
+				and global_position.distance_to(ray_collider.global_position) < BUILD_RANGE
+			):
+				var can_place: bool = false
+				if user_interface_animations:
+					user_interface_animations.play(PLACE_ANIMATION_KEY)
+				match Global.current_build_mode:
+					Global.BUILD_MODES.TURRET:
+						if ray_collider.can_place_turret:
+							if HelperFunctions.has_item_amount(DataRegistry.items[selected_turret]):
+								can_place = ray_collider.place_selected_turret(selected_turret)
+					Global.BUILD_MODES.BASE:
+						if ray_collider.can_place_base:
+							if HelperFunctions.has_item_amount(DataRegistry.items[selected_base]):
+								can_place = ray_collider.build_base(selected_base)
+				if can_place and building_selection:
+					building_selection.placed_build()
 	
-	if Input.is_action_just_pressed(ACTION_PICK_UP_BUILD):
-		if (
-			can_remove_build
-			and build_ray_collider
-			and global_position.distance_to(build_ray_collider.global_position) < BUILD_RANGE
-		):
-			can_remove_build = false
-			build_ray_collider.pick_up()
-			
-			if building_selection:
-				building_selection.load_selection()
-			
-			if build_ray_collider.build_type == Global.BUILD_TYPES.BASE:
-				build_ray_collider.slot.base_removed()
-			
-			await get_tree().create_timer(REMOVE_BUILD_DELAY).timeout
-			can_remove_build = true
+		if Input.is_action_just_pressed(ACTION_PICK_UP_BUILD):
+			if (
+				can_remove_build
+				and build_ray_collider
+				and global_position.distance_to(build_ray_collider.global_position) < BUILD_RANGE
+			):
+				can_remove_build = false
+				build_ray_collider.pick_up()
+				if building_selection:
+					building_selection.load_selection()
+				if build_ray_collider.build_type == Global.BUILD_TYPES.BASE:
+					build_ray_collider.slot.base_removed()
+				await get_tree().create_timer(REMOVE_BUILD_DELAY).timeout
+				can_remove_build = true
 
 
+# Returns true if the current ray collider is a valid unlocked turret slot
 func _check_valid_placement(ray_collider: Node) -> bool:
 	if (
 		ray_collider == null
@@ -398,10 +386,10 @@ func _check_valid_placement(ray_collider: Node) -> bool:
 			return ray_collider.base != null
 		Global.BUILD_MODES.BASE:
 			return true
-	
 	return false
 
 
+# removes the current hologram
 func _remove_hologram(change_mode: bool = false) -> void:
 	if gun_pivot:
 		gun_pivot.visible = true
@@ -409,15 +397,16 @@ func _remove_hologram(change_mode: bool = false) -> void:
 		turret_holagram.queue_free()
 	if build_overlay:
 		build_overlay.visible = false
-	
 	if change_mode and not Global.at_ship and turret_grid:
 		if turret_grid.has_method(METHOD_TOGGLE_BUILD_MODE):
 			turret_grid._toggle_build_mode(false)
+
 
 # =============================================================================
 # COMBAT & SHOOTING
 # =============================================================================
 
+# Checks if the player is allowed to shoot and starts the cooldown timer.
 func _shoot_control() -> void:
 	if (
 		Global.player_mode != Global.PLAYER_MODES.WEAPON
@@ -434,9 +423,9 @@ func _shoot_control() -> void:
 		_shoot()
 
 
+# gets the gun to shoot basson on its properties
 func _shoot() -> void:
 	var to: Vector3
-	
 	if aim_ray and aim_ray.is_colliding():
 		to = aim_ray.get_collision_point()
 		var hit: Node = aim_ray.get_collider()
@@ -452,7 +441,7 @@ func _shoot() -> void:
 				await get_tree().create_timer(HIT_OVERLAY_TIME).timeout
 				if hit_overlay:
 					hit_overlay.visible = false
-					
+			
 			if weapon_resource:
 				HelperFunctions.spawn_temp_sound(weapon_resource.hit_resource)
 	else:
@@ -462,34 +451,32 @@ func _shoot() -> void:
 		to = origin + (forward_vector * max_distance)
 	
 	var from: Vector3 = (
-		weapon.get(PROP_BULLET_SPAWN).global_position 
-		if weapon and weapon.get(PROP_BULLET_SPAWN) 
+		weapon.get(PROP_BULLET_SPAWN).global_position
+		if weapon and weapon.get(PROP_BULLET_SPAWN)
 		else global_position)
 	
 	if DataRegistry.bullet_trail.has(weapon_name):
 		HelperFunctions.create_bullet_trail(from, to, DataRegistry.bullet_trail[weapon_name])
-	
 	if weapon_resource:
 		HelperFunctions.spawn_temp_sound(weapon_resource.shoot_resource, from)
 
 
+# sets the weapon of the player to the current weapon resource 
 func _set_new_weapon() -> void:
 	if gun_pivot and gun_pivot.get_child_count() > GUN_CHILD_INDEX:
 		weapon = gun_pivot.get_child(GUN_CHILD_INDEX)
-	
-	if DataRegistry.weapon.has(weapon_name):
-		weapon_resource = DataRegistry.weapon[weapon_name]
-		if shooting_timer and weapon_resource:
-			shooting_timer.wait_time = weapon_resource.cool_down
+		if DataRegistry.weapon.has(weapon_name):
+			weapon_resource = DataRegistry.weapon[weapon_name]
+			if shooting_timer and weapon_resource:
+				shooting_timer.wait_time = weapon_resource.cool_down
 
 
 func _on_shoot_timer_timeout() -> void:
 	can_shoot = true
 
-# =============================================================================
-# PICKUP SYSTEM
-# =============================================================================
+# PICKUP SYSTEM --------------------------------------------------------------
 
+# Called when a drop enters the pickup area making it start moving
 func _on_pick_up_area_body_entered(body: Node3D) -> void:
 	if body and body.is_in_group(GROUP_DROPS) and body.get(PROP_VALID):
 		body.set(PROP_PLAYER, self)
