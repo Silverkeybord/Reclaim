@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://b45gi14yn6xj5"]
+
+[ext_resource type="Script" uid="uid://deh5kx6nh3gt4" path="res://scripts/user_interface/item_pinning/craft_pin_recipe.gd" id="1_vx5fn"]
+[ext_resource type="PackedScene" uid="uid://fymq5noabj16" path="res://scenes/user_interface/recipe_pinning/craft_pin_amount.tscn" id="2_2gaqs"]
+[ext_resource type="Texture2D" uid="uid://b7jm2ktv5ivse" path="res://2d_assets/items/resources/1/dirt.png" id="3_wq57s"]
+[ext_resource type="FontFile" uid="uid://sfctk4d5x67" path="res://other_assets/fonts/uni_sans/Uni Sans Heavy Italic.otf" id="4_vno04"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8gq7n"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8gq7n"]
+bg_color = Color(0.49803922, 0.49803922, 0.49803922, 0.654902)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.7372549, 0.7372549, 0.7372549, 0.88235295)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_vy3l6"]
+font = ExtResource("4_vno04")
+font_size = 18
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Control" type="PanelContainer" unique_id=88483477 node_paths=PackedStringArray("item_amounts_hbox", "item_craft_texture", "craft_times_label")]
+offset_right = 64.0
+offset_bottom = 60.0
+size_flags_horizontal = 8
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_8gq7n")
+script = ExtResource("1_vx5fn")
+craft_pin_amount_scene = ExtResource("2_2gaqs")
+item_amounts_hbox = NodePath("HBoxContainer/item_amounts_hbox")
+item_craft_texture = NodePath("HBoxContainer/PanelContainer/MarginContainer/TextureRect")
+craft_times_label = NodePath("HBoxContainer/PanelContainer/MarginContainer/TextureRect/craft_times")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1773144822]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="item_amounts_hbox" type="HBoxContainer" parent="HBoxContainer" unique_id=781418108]
+layout_mode = 2
+theme_override_constants/separation = -44
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer" unique_id=1327307346]
+custom_minimum_size = Vector2(60, 60)
+custom_maximum_size = Vector2(60, 60)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8gq7n")
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/PanelContainer" unique_id=1399387836]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/PanelContainer/MarginContainer" unique_id=1229304639]
+layout_mode = 2
+texture = ExtResource("3_wq57s")
+stretch_mode = 5
+
+[node name="craft_times" type="Label" parent="HBoxContainer/PanelContainer/MarginContainer/TextureRect" unique_id=987081646]
+layout_mode = 0
+offset_left = -4.000002
+offset_top = 38.0
+offset_right = 51.182808
+offset_bottom = 57.0
+rotation = -0.06493581
+size_flags_vertical = 8
+text = "1x"
+label_settings = SubResource("LabelSettings_vy3l6")
+horizontal_alignment = 2
+vertical_alignment = 1

@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" format=3 uid="uid://byobq1yygt0f6"]
+
+[ext_resource type="FontFile" uid="uid://sfctk4d5x67" path="res://other_assets/fonts/uni_sans/Uni Sans Heavy Italic.otf" id="1_787av"]
+
+[resource]
+font = ExtResource("1_787av")
+font_size = 14
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)

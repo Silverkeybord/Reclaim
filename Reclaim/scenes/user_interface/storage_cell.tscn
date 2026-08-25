@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://tyy48usyadjf" path="res://scripts/user_interface/storage/base_storage_cell.gd" id="1_0lxaj"]
 [ext_resource type="Texture2D" uid="uid://bdfn2q37b1rbt" path="res://2d_assets/storage/resource_cells/plain_cell.png" id="2_0lxaj"]
 [ext_resource type="Texture2D" uid="uid://ccnyb53y1dpol" path="res://2d_assets/items/resources/2/glass.png" id="3_gx0yy"]
-[ext_resource type="FontFile" uid="uid://sfctk4d5x67" path="res://other_assets/fonts/uni_sans/Uni Sans Heavy Italic.otf" id="4_g5eis"]
+[ext_resource type="LabelSettings" uid="uid://byobq1yygt0f6" path="res://other_assets/label_settings/storage_item.tres" id="4_0lxaj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4v7s"]
 bg_color = Color(1, 1, 1, 0.18039216)
@@ -11,12 +11,6 @@ corner_radius_top_left = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 1
-
-[sub_resource type="LabelSettings" id="LabelSettings_e6v48"]
-font = ExtResource("4_g5eis")
-font_size = 14
-outline_size = 4
-outline_color = Color(0, 0, 0, 1)
 
 [node name="storage_cell" type="Control" unique_id=1715849231 node_paths=PackedStringArray("cell_texture", "item_texture", "amount_label", "resource_highlight_overlay", "full_highlight_overlay")]
 custom_minimum_size = Vector2(60, 60)
@@ -79,7 +73,7 @@ offset_right = 57.95781
 offset_bottom = 64.05706
 rotation = -0.089428425
 text = "999.9k"
-label_settings = SubResource("LabelSettings_e6v48")
+label_settings = ExtResource("4_0lxaj")
 horizontal_alignment = 2
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

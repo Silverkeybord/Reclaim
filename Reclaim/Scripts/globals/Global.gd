@@ -160,6 +160,8 @@ var extraction_open := false
 var crafting_pin_open := false
 var authorization_open := false
 
+var pined_crafts : Dictionary
+
 # SECTOR RELATED ------------------------------------------------------------
 var selected_sector : String
 var selected_sector_path : PackedScene = DEFAULT_SECTOR_PATH

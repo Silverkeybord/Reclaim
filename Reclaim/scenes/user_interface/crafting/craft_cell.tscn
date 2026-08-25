@@ -98,6 +98,7 @@ anchors_preset = -1
 anchor_right = 0.0546875
 anchor_bottom = 0.097222224
 offset_transform_enabled = true
+focus_mode = 0
 theme_override_styles/normal = SubResource("StyleBoxFlat_mnj7u")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ecock")
 theme_override_styles/hover = SubResource("StyleBoxFlat_ksw0y")

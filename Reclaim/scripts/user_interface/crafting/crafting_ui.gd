@@ -40,6 +40,10 @@ const CRAFT_MAX := 0
 
 @export var crafting_animations : AnimationPlayer
 
+@export_group("Recpie Pinning")
+@export var pinning_button : Button
+@export var recpie_pinning : RecpiePinning
+
 @export_group("Requirments")
 @export var current_displayed_requirments : CraftData
 @export var recipe_requirments_scene : PackedScene
@@ -420,3 +424,9 @@ func _on_modules_tab_button_pressed() -> void:
 
 func _on_resourses_tab_button_pressed() -> void:
 	_change_to_tab(TABS.RESOURCES)
+
+
+# Recpie Pinning ===========================================================
+func _on_pin_recpie_pressed() -> void:
+	if current_displayed_requirments:
+		recpie_pinning.pin_recipe(current_displayed_requirments)

@@ -212,6 +212,11 @@ func _interaction_handling(ray_collider: Node) -> void:
 		interact_overlay.visible = false
 
 
+# Controls if the pined recpes can be seen or not
+func _item_pinning_handeling() -> void:
+	pass
+
+
 # =============================================================================
 # MODE SWITCHING
 # =============================================================================

@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://fymq5noabj16"]
+
+[ext_resource type="Script" uid="uid://bcmmnegfwt0x1" path="res://scripts/user_interface/item_pinning/craft_pin_amount.gd" id="1_wn053"]
+[ext_resource type="Texture2D" uid="uid://b7jm2ktv5ivse" path="res://2d_assets/items/resources/1/dirt.png" id="2_717ht"]
+[ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="3_wn053"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_huq42"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wn053"]
+font = ExtResource("3_wn053")
+font_size = 10
+outline_size = 4
+outline_color = Color(0.3254902, 0.3254902, 0.3254902, 0.78039217)
+
+[node name="craft_pin_amount" type="Panel" unique_id=1036496552 node_paths=PackedStringArray("amount_label", "item_texture")]
+custom_minimum_size = Vector2(50, 50)
+custom_maximum_size = Vector2(44, 44)
+offset_right = 25.0
+offset_bottom = 25.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_huq42")
+script = ExtResource("1_wn053")
+amount_label = NodePath("Label")
+item_texture = NodePath("TextureRect")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=285250461]
+custom_maximum_size = Vector2(28, 28)
+layout_mode = 0
+offset_left = 8.0
+offset_top = 7.0
+offset_right = 36.0
+offset_bottom = 35.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_717ht")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="." unique_id=1389891708]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -24.0
+offset_top = -16.0
+offset_right = 25.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "999/999"
+label_settings = SubResource("LabelSettings_wn053")
+horizontal_alignment = 1
