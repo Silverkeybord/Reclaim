@@ -156,12 +156,15 @@ func open_ui() -> void:
 	
 	for tier in to_storage_lookup[Global.at_ship]:
 		for item_name in to_storage_lookup[Global.at_ship][tier]:
-			if HelperFunctions.has_item_amount(
+			if not HelperFunctions.has_item_amount(
 				DataRegistry.items[item_name],
 				to_storage_lookup[Global.at_ship][tier][item_name],
 				from_storage_lookup[Global.at_ship]
 			):
 				pass
+			else:
+				from_storage_lookup[Global.at_ship][tier][item_name] 
+				
 	
 	_set_open_or_close(true)
 	extraction_animations.play(ANIMATION_OPEN)
@@ -323,35 +326,35 @@ func get_item_array() -> Array[Dictionary]:
 
 
 # Sorting functions ----------------------------------------------------------
-func sort_value_then_tier(a, b) -> bool:
+func sort_value_then_tier(item_1, item_2) -> bool:
 	# Highest value first, then highest tier
-	if a[ITEM_VALUE] != b[ITEM_VALUE]:
-		return a[ITEM_VALUE] > b[ITEM_VALUE]
-	return a[ITEM_TIER] > b[ITEM_TIER]
+	if item_1[ITEM_VALUE] != item_2[ITEM_VALUE]:
+		return item_1[ITEM_VALUE] > item_2[ITEM_VALUE]
+	return item_1[ITEM_TIER] > item_2[ITEM_TIER]
 
 
-func sort_tier_then_value(a, b) -> bool:
+func sort_tier_then_value(item_1, item_2) -> bool:
 	# Highest tier first, then highest value
-	if a[ITEM_TIER] != b[ITEM_TIER]:
-		return a[ITEM_TIER] > b[ITEM_TIER]
-	return a[ITEM_VALUE] > b[ITEM_VALUE]
+	if item_1[ITEM_TIER] != item_2[ITEM_TIER]:
+		return item_1[ITEM_TIER] > item_2[ITEM_TIER]
+	return item_1[ITEM_VALUE] > item_2[ITEM_VALUE]
 
 
-func sort_least_weight_then_value(a, b) -> bool:
+func sort_least_weight_then_value(item_1, item_2) -> bool:
 	# lightest items first then highest value
-	if a[ITEM_WEIGHT] != b[ITEM_WEIGHT]:
-		return a[ITEM_WEIGHT] < b[ITEM_WEIGHT]
-	return a[ITEM_VALUE] > b[ITEM_VALUE]
+	if item_1[ITEM_WEIGHT] != item_2[ITEM_WEIGHT]:
+		return item_1[ITEM_WEIGHT] < item_2[ITEM_WEIGHT]
+	return item_1[ITEM_VALUE] > item_2[ITEM_VALUE]
 
 
-func sort_ratio_then_tier(a, b) -> bool:
+func sort_ratio_then_tier(item_1, item_2) -> bool:
 	# best value per weight first, then highest tier
-	var ratio_a = a[ITEM_VALUE] / a[ITEM_WEIGHT]
-	var ratio_b = b[ITEM_VALUE] / b[ITEM_WEIGHT]
+	var ratio_one = item_1[ITEM_VALUE] / item_1[ITEM_WEIGHT]
+	var ratio_two = item_2[ITEM_VALUE] / item_2[ITEM_WEIGHT]
 	
-	if not is_equal_approx(ratio_a, ratio_b):
-		return ratio_a > ratio_b
-	return a[ITEM_TIER] > b[ITEM_TIER]
+	if not is_equal_approx(ratio_one, ratio_two):
+		return ratio_one > ratio_two
+	return item_1[ITEM_TIER] > item_2[ITEM_TIER]
 
 
 func move_over_items(item_array : Array[Dictionary]) -> void:

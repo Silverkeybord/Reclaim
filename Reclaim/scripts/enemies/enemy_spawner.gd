@@ -252,6 +252,7 @@ func get_enemy_scenes() -> Dictionary:
 		var scene : PackedScene = load(path)
 		
 		var key_name = file_name.get_basename()
+		print(key_name)
 		returning_dict[key_name] = scene
 	 
 	return returning_dict

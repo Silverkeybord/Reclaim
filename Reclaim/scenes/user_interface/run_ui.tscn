@@ -428,7 +428,6 @@ anchor_right = 1.0
 grow_horizontal = 2
 texture = ExtResource("3_7ejqx")
 stretch_mode = 3
-metadata/_edit_lock_ = true
 
 [node name="all_segment_control" type="Control" parent="." unique_id=553044858]
 modulate = Color(0.6862745, 1, 1, 1)
@@ -887,7 +886,6 @@ anchor_right = 1.0
 offset_bottom = 24.0
 grow_horizontal = 2
 theme_override_constants/margin_top = 3
-metadata/_edit_lock_ = true
 
 [node name="extraction_timer" type="Label" parent="MarginContainer" unique_id=1296665750]
 visible = false
@@ -896,14 +894,12 @@ text = "Extracting in : 10"
 label_settings = ExtResource("7_jckhp")
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_lock_ = true
 
 [node name="shield_health" type="Label" parent="MarginContainer" unique_id=181965708]
 layout_mode = 2
 text = "100 / 100"
 label_settings = ExtResource("7_jckhp")
 horizontal_alignment = 1
-metadata/_edit_lock_ = true
 
 [node name="max_indication_position" type="Marker2D" parent="." unique_id=768900274]
 position = Vector2(885, 13)

@@ -419,6 +419,7 @@ stretch_mode = 3
 [node name="item_notif_controller" parent="canvas_root" unique_id=1202289325 instance=ExtResource("13_gx1jg")]
 
 [node name="FPS counter" parent="canvas_root" unique_id=1336845062 instance=ExtResource("10_h17s1")]
+visible = false
 offset_left = 5.0
 offset_right = 45.0
 label_settings = ExtResource("8_5gtgg")

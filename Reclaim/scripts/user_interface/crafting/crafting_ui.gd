@@ -33,6 +33,9 @@ const CRAFT_TIME_LABEL_PREFIX := "Craft Time: "
 
 const CLOSE_UI_INPUT := "close_ui"
 
+const RECIPE_PIN_NORMAL_COLOR := Color(0.743, 0.743, 0.743, 1.0)
+const RECIPE_PIN_PINED_COLOR := Color(0.58, 1.0, 0.5, 1.0)
+
 const CRAFT_ONE := 1
 const CRAFT_FIVE := 5
 const CRAFT_TWENTY_FIVE := 25
@@ -41,7 +44,7 @@ const CRAFT_MAX := 0
 @export var crafting_animations : AnimationPlayer
 
 @export_group("Recpie Pinning")
-@export var pinning_button : Button
+@export var craft_pin_texture : TextureRect
 @export var recpie_pinning : RecpiePinning
 
 @export_group("Requirments")
@@ -241,6 +244,7 @@ func update_crafting_display() -> void:
 		
 		max_mult = max_crafting_amounts.min()
 	
+	# gets all the cells to check if there is enough and highlights craft button
 	can_craft_current = true
 	for cell : RecipeRequirement in get_tree().get_nodes_in_group(REQUIREMENT_CELLS_GROUP):
 		if not cell.check_requirement(craft_mult if craft_mult else max_mult):
@@ -348,6 +352,12 @@ func display_requirements_for(craft_data : CraftData, can_craft : bool) -> void:
 	craft_overlay.visible = not can_craft
 	craft_button.disabled = not can_craft
 	
+	# pining color updating
+	if craft_data in Global.pined_crafts.keys():
+		craft_pin_texture.modulate = RECIPE_PIN_PINED_COLOR
+	else:
+		craft_pin_texture.modulate = RECIPE_PIN_NORMAL_COLOR
+	
 	update_crafting_display()
 
 
@@ -430,3 +440,8 @@ func _on_resourses_tab_button_pressed() -> void:
 func _on_pin_recpie_pressed() -> void:
 	if current_displayed_requirments:
 		recpie_pinning.pin_recipe(current_displayed_requirments)
+	
+	if current_displayed_requirments in Global.pined_crafts.keys():
+		craft_pin_texture.modulate = RECIPE_PIN_PINED_COLOR
+	else:
+		craft_pin_texture.modulate = RECIPE_PIN_NORMAL_COLOR

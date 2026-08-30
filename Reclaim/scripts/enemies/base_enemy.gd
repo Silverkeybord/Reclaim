@@ -16,6 +16,8 @@ const PROP_COLLISION_MASK : StringName = &"collision_mask"
 const PROP_DISABLED : StringName = &"disabled"
 const PROP_ITEM_DATA : StringName = &"item_data"
 
+const ERR_INVALID_ENEMYDATA := "Invalid Enemy Data"
+
 # Exports ----------------------------------------------------------------------
 @export var valid : bool = false
 @export var enemy_resource : EnemyData
@@ -96,6 +98,8 @@ func finish_loading() -> void:
 		speed = enemy_resource.speed
 		if attack_timer:
 			attack_timer.wait_time = enemy_resource.attack_interval
+	else:
+		push_error(ERR_INVALID_ENEMYDATA)
 	
 	valid = true
 

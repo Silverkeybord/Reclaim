@@ -1,9 +1,19 @@
 class_name CraftPinRecipe
 extends PanelContainer
 
+# Duplicate Style Values
+const PANEL_NAME := &"panel"
+const STYLE_CONTENT_MARGINS := -1
+const STYLE_BG_COLOR_A := 0.4
+const STYLE_BORDER_WIDTH := 4
+const STYLE_CORNER_RADIUS := 16
+
+const CANT_CRAFT_COLOR := Color(0.659, 0.659, 0.659, 0.4)
+const CAN_CRAFT_COLOR := Color(0.58, 1.0, 0.5, 0.4)
+
 const CRAFT_TIMES_FORMATING := "%dx"
 
-#Tween values
+# Tween values
 const TWEEN_TIME := 0.15
 const TWEEN_HIDDEN_SEPARATION := -44
 const TWEEN_SHOW_SEPARATION := 4
@@ -12,6 +22,7 @@ const PROP_SEPARATION := "theme_override_constants/separation"
 @export var craft_pin_amount_scene : PackedScene
 @export var craft_data : CraftData
 
+@export var item_panel_container : PanelContainer
 @export var item_amounts_hbox : HBoxContainer
 @export var item_craft_texture : TextureRect
 @export var craft_times_label : Label
@@ -32,6 +43,17 @@ func _ready() -> void:
 		item_amounts_hbox.add_child(new_amount)
 	
 	item_craft_texture.texture = craft_data.crafted_item.get_item_texture()
+	
+	var tier_style : StyleBoxFlat = (
+		Global.TIER_CONFIG[craft_data.crafted_item.tier][Global.KEY_STYLE].duplicate()
+		)
+	
+	tier_style.bg_color.a = STYLE_BG_COLOR_A
+	tier_style.set_border_width_all(STYLE_BORDER_WIDTH)
+	tier_style.set_corner_radius_all(STYLE_CORNER_RADIUS)
+	tier_style.set_content_margin_all(STYLE_CONTENT_MARGINS)
+	
+	item_panel_container.add_theme_stylebox_override(PANEL_NAME, tier_style)
 
 
 func _process(_delta: float) -> void:
@@ -46,11 +68,16 @@ func update_values() -> void:
 	
 	craft_times.sort()
 	
+	var style : StyleBoxFlat = item_panel_container.get_theme_stylebox(PANEL_NAME)
 	if craft_times[0] == 0:
 		craft_times_label.visible = false
+		style.border_color = CANT_CRAFT_COLOR
 	else:
 		craft_times_label.text = CRAFT_TIMES_FORMATING % craft_times[0]
 		craft_times_label.visible = true
+		style.border_color = CAN_CRAFT_COLOR
+	
+	item_panel_container.add_theme_stylebox_override(PANEL_NAME, style)
 	
 	for craft_pin_amount : CraftPinAmount in craft_pin_amounts:
 		craft_pin_amount.update_item_amount()

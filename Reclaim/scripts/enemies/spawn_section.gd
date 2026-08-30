@@ -19,6 +19,10 @@ extends Resource
 ## If this is toggled this section will spawn enemies from every side
 @export var swarm := false
 
+@export_group("Wave Message")
+## Message at the start of the section
+@export var section_message : String
+
 @export_group("Scaling")
 ## If not 0 will change the spawning rate to this value by the end of the section
 @export var end_spawn_rate : float

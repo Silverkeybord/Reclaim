@@ -14,6 +14,8 @@ const PROP_POSITION := "position"
 
 @export var pining_vbox : VBoxContainer
 
+var last_open_ui_state : bool = false
+
 
 func _ready() -> void:
 	for craft_data in Global.pined_crafts:
@@ -24,17 +26,26 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	if Global.ui_open and not Global.storage_open:
+	var current_open_ui_state = true
+	if Global.ui_open and not Global.storage_open or Global.major_animation_playing:
+		current_open_ui_state = false
+	
+	if current_open_ui_state == false and current_open_ui_state != last_open_ui_state:
+		show_or_hide_tween(false)
+	
+	if not current_open_ui_state:
 		return
 	
 	if Input.is_action_just_pressed(INPUT_SHOW):
-		show_or_hide_tween()
+		show_or_hide_tween(not Global.crafting_pin_open)
 	
-	if Input.is_action_just_released(INPUT_SHOW):
-		show_or_hide_tween(false)
+	last_open_ui_state = current_open_ui_state
 
 
 func show_or_hide_tween(is_show := true) -> void:
+	if is_show == Global.crafting_pin_open:
+		return
+	
 	Global.crafting_pin_open = is_show
 	var show_tween = create_tween()
 	show_tween.set_ease(Tween.EASE_IN)
@@ -50,7 +61,8 @@ func show_or_hide_tween(is_show := true) -> void:
 
 
 func pin_recipe(craft_data : CraftData) -> bool:
-	if (Global.pined_crafts.size() >= MAX_PINNED or 
+	if (Global.pined_crafts.size() >= MAX_PINNED and 
+	craft_data not in Global.pined_crafts or 
 	not craft_data or 
 	not craft_data.crafted_item.key in DataRegistry.crafting
 ):
@@ -66,5 +78,4 @@ func pin_recipe(craft_data : CraftData) -> bool:
 		pining_vbox.add_child(new_craft_pin)
 		Global.pined_crafts[craft_data] = new_craft_pin
 	
-	print(Global.pined_crafts)
 	return true

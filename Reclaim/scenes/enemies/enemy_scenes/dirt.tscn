@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://cssqvjdpn4rl7"]
+
+[ext_resource type="Script" uid="uid://2m7df3t2upw4" path="res://scripts/enemies/base_enemy.gd" id="1_3smsf"]
+[ext_resource type="Resource" uid="uid://dta4wmdb2r2ev" path="res://data/enemies/dirt.tres" id="2_rosv0"]
+[ext_resource type="PackedScene" uid="uid://qtk76i5mawjs" path="res://scenes/enemies/drop.tscn" id="3_f5tb8"]
+[ext_resource type="Material" uid="uid://m7o6b6v5n7vu" path="res://textures_and_materials/items/1/dirt.tres" id="4_f5tb8"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_notgg"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_cpjt6"]
+radius = 0.45
+height = 0.9
+
+[sub_resource type="SphereMesh" id="SphereMesh_we58l"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_slefu"]
+transparency = 1
+albedo_color = Color(0.3254902, 0.2509804, 0.22352941, 0.4745098)
+
+[node name="enemy" type="CharacterBody3D" unique_id=1676880902 node_paths=PackedStringArray("collision_shape", "attack_timer")]
+collision_layer = 0
+collision_mask = 33
+script = ExtResource("1_3smsf")
+enemy_resource = ExtResource("2_rosv0")
+drops_scene = ExtResource("3_f5tb8")
+collision_shape = NodePath("CollisionShape3D")
+attack_timer = NodePath("attack_timer")
+metadata/enemy = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=219369272]
+shape = SubResource("SphereShape3D_notgg")
+
+[node name="ball_mesh" type="Node3D" parent="." unique_id=1940412479]
+
+[node name="inner" type="MeshInstance3D" parent="ball_mesh" unique_id=1091480525]
+mesh = SubResource("SphereMesh_cpjt6")
+surface_material_override/0 = ExtResource("4_f5tb8")
+
+[node name="outer" type="MeshInstance3D" parent="ball_mesh" unique_id=1847667074]
+mesh = SubResource("SphereMesh_we58l")
+surface_material_override/0 = SubResource("StandardMaterial3D_slefu")
+
+[node name="attack_timer" type="Timer" parent="." unique_id=34766232]
+wait_time = 2.5
+one_shot = true
+
+[connection signal="timeout" from="attack_timer" to="." method="_on_attack_timer_timeout"]

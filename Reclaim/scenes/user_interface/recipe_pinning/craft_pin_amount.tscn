@@ -4,7 +4,19 @@
 [ext_resource type="Texture2D" uid="uid://b7jm2ktv5ivse" path="res://2d_assets/items/resources/1/dirt.png" id="2_717ht"]
 [ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="3_wn053"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_huq42"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wq57s"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wn053"]
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.8, 0.8, 0.8, 0)
+border_blend = true
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
 
 [sub_resource type="LabelSettings" id="LabelSettings_wn053"]
 font = ExtResource("3_wn053")
@@ -12,7 +24,7 @@ font_size = 10
 outline_size = 4
 outline_color = Color(0.3254902, 0.3254902, 0.3254902, 0.78039217)
 
-[node name="craft_pin_amount" type="Panel" unique_id=1036496552 node_paths=PackedStringArray("amount_label", "item_texture")]
+[node name="craft_pin_amount" type="Panel" unique_id=1036496552 node_paths=PackedStringArray("glow_background_panel", "amount_label", "item_texture")]
 custom_minimum_size = Vector2(50, 50)
 custom_maximum_size = Vector2(44, 44)
 offset_right = 25.0
@@ -20,10 +32,27 @@ offset_bottom = 25.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_huq42")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_wq57s")
 script = ExtResource("1_wn053")
+glow_background_panel = NodePath("MarginContainer/Panel")
 amount_label = NodePath("Label")
 item_texture = NodePath("TextureRect")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=674344177]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 6
+
+[node name="Panel" type="Panel" parent="MarginContainer" unique_id=994894749]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wn053")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=285250461]
 custom_maximum_size = Vector2(28, 28)

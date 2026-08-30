@@ -2,30 +2,19 @@
 
 [ext_resource type="Script" uid="uid://deh5kx6nh3gt4" path="res://scripts/user_interface/item_pinning/craft_pin_recipe.gd" id="1_vx5fn"]
 [ext_resource type="PackedScene" uid="uid://fymq5noabj16" path="res://scenes/user_interface/recipe_pinning/craft_pin_amount.tscn" id="2_2gaqs"]
+[ext_resource type="StyleBox" uid="uid://x30xg8owly1s" path="res://other_assets/styles/crafting_styles/t1_style.tres" id="3_2gaqs"]
 [ext_resource type="Texture2D" uid="uid://b7jm2ktv5ivse" path="res://2d_assets/items/resources/1/dirt.png" id="3_wq57s"]
-[ext_resource type="FontFile" uid="uid://sfctk4d5x67" path="res://other_assets/fonts/uni_sans/Uni Sans Heavy Italic.otf" id="4_vno04"]
+[ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="5_2gaqs"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8gq7n"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8gq7n"]
-bg_color = Color(0.49803922, 0.49803922, 0.49803922, 0.654902)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(0.7372549, 0.7372549, 0.7372549, 0.88235295)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
 [sub_resource type="LabelSettings" id="LabelSettings_vy3l6"]
-font = ExtResource("4_vno04")
+font = ExtResource("5_2gaqs")
 font_size = 18
 outline_size = 6
-outline_color = Color(0, 0, 0, 1)
+outline_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 
-[node name="Control" type="PanelContainer" unique_id=88483477 node_paths=PackedStringArray("item_amounts_hbox", "item_craft_texture", "craft_times_label")]
+[node name="Control" type="PanelContainer" unique_id=88483477 node_paths=PackedStringArray("item_panel_container", "item_amounts_hbox", "item_craft_texture", "craft_times_label")]
 offset_right = 64.0
 offset_bottom = 60.0
 size_flags_horizontal = 8
@@ -33,6 +22,7 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_8gq7n")
 script = ExtResource("1_vx5fn")
 craft_pin_amount_scene = ExtResource("2_2gaqs")
+item_panel_container = NodePath("HBoxContainer/PanelContainer")
 item_amounts_hbox = NodePath("HBoxContainer/item_amounts_hbox")
 item_craft_texture = NodePath("HBoxContainer/PanelContainer/MarginContainer/TextureRect")
 craft_times_label = NodePath("HBoxContainer/PanelContainer/MarginContainer/TextureRect/craft_times")
@@ -49,7 +39,7 @@ theme_override_constants/separation = -44
 custom_minimum_size = Vector2(60, 60)
 custom_maximum_size = Vector2(60, 60)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_8gq7n")
+theme_override_styles/panel = ExtResource("3_2gaqs")
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/PanelContainer" unique_id=1399387836]
 layout_mode = 2
@@ -65,10 +55,10 @@ stretch_mode = 5
 
 [node name="craft_times" type="Label" parent="HBoxContainer/PanelContainer/MarginContainer/TextureRect" unique_id=987081646]
 layout_mode = 0
-offset_left = -4.000002
-offset_top = 38.0
+offset_left = -4.0000005
+offset_top = 36.000004
 offset_right = 51.182808
-offset_bottom = 57.0
+offset_bottom = 59.000004
 rotation = -0.06493581
 size_flags_vertical = 8
 text = "1x"

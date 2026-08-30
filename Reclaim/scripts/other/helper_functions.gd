@@ -348,6 +348,12 @@ static func merge_storage(first, second) -> Dictionary:
 	if not first or not second:
 		return {}
 	
+	if not first:
+		return second
+	
+	if not second:
+		return first
+	
 	var merged : Dictionary = first
 	
 	for tier in second:
@@ -356,8 +362,8 @@ static func merge_storage(first, second) -> Dictionary:
 				continue
 			
 			if merged[tier].has(item_name):
-				merged[tier][item_name] += first[tier][item_name]
+				merged[tier][item_name] += second[tier][item_name]
 			else:
-				merged[tier][item_name] = first[tier][item_name]
+				merged[tier][item_name] = second[tier][item_name]
 	
 	return merged

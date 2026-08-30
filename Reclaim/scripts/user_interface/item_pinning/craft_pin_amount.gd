@@ -1,10 +1,14 @@
 class_name CraftPinAmount
 extends Panel
 
+const PANEL_NAME := &"panel"
+
 const LABEL_FORMAT := "%s/%s"
 const GREEN_COLOR := Color("9BFF9B")
 const RED_COLOR := Color("ff948bff")
+const COLOR_A := 0.6
 
+@export var glow_background_panel : Panel
 @export var required_amount : int
 @export var item_data : ItemData
 @export var amount_label : Label
@@ -29,6 +33,14 @@ func _ready() -> void:
 	
 	if Global.crafting_pin_open:
 		set_process(true)
+	
+	var style : StyleBoxFlat = glow_background_panel.get_theme_stylebox(PANEL_NAME).duplicate()
+	var color = Global.TIER_CONFIG[item_data.tier][Global.KEY_COLOR]
+	style.bg_color = color
+	style.bg_color.a = COLOR_A
+	style.border_color = color
+	style.border_color.a = 0
+	glow_background_panel.add_theme_stylebox_override(PANEL_NAME, style)
 
 
 func update_item_amount() -> void:
@@ -44,5 +56,4 @@ func update_item_amount() -> void:
 func get_craft_times() -> int:
 	if not amount:
 		return 0
-	@warning_ignore("integer_division")
-	return int(required_amount / amount)
+	return floori(float(amount) / float(required_amount))

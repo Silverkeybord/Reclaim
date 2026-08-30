@@ -11,7 +11,7 @@ const KEY_RIGHT: StringName = &"right"
 const DAMAGE_PREFIX: String = "-"
 const HEAL_PREFIX: String = "+"
 const ENEMIES_IN_FORMAT: String = "Enemies in : %d"
-const WAVE_END_FORMAT: String = "Wave End in : %d"
+const WAVE_END_FORMAT: String = "Wave Ends in : %d"
 const EXTRACTING_FORMAT: String = "extracting in : %d"
 const RUN_TIME_FORMAT: String = "Run time : %d"
 const SHIELD_HEALTH_FORMAT: String = "%d / %d hp"
@@ -110,9 +110,6 @@ func _ready() -> void:
 				KEY_RIGHT: right_small_segments[child_index]
 			}
 			child_index += 1
-	
-	print(wave_stages)
-
 
 func _process(_delta: float) -> void:
 	if shield == null:
@@ -142,9 +139,9 @@ func _process(_delta: float) -> void:
 		if wave_stage_timer:
 			wave_stage_timer.start(wait_time)
 		
-		wave_stage_format = WAVE_END_FORMAT
+		wave_stage_format = ENEMIES_IN_FORMAT
 		if wave_stages[stage_index][WaveData.INDEX_IS_BREATHING]:
-			wave_stage_format = ENEMIES_IN_FORMAT
+			wave_stage_format = WAVE_END_FORMAT
 	
 	wave_stage_label.text = wave_stage_format % wave_stage_timer.time_left
 

@@ -73,32 +73,167 @@ spawn_sizes = {
 enemies = Array[ExtResource("1_dbg6m")]([SubResource("Resource_025ad")])
 metadata/_custom_type_script = "uid://qok4oe3yk4b1"
 
+[sub_resource type="Resource" id="Resource_urssv"]
+script = ExtResource("1_dbg6m")
+enemy_name = "basic"
+weight = 5
+metadata/_custom_type_script = "uid://bkm3t85heyp8m"
+
 [sub_resource type="Resource" id="Resource_yduy7"]
+script = ExtResource("1_dbg6m")
+enemy_name = "sand"
+weight = 3
+metadata/_custom_type_script = "uid://bkm3t85heyp8m"
+
+[sub_resource type="Resource" id="Resource_6of1n"]
+script = ExtResource("1_dbg6m")
+enemy_name = "dirt"
+weight = 3
+metadata/_custom_type_script = "uid://bkm3t85heyp8m"
+
+[sub_resource type="Resource" id="Resource_j8ufc"]
 script = ExtResource("3_b8akh")
 time = 100
-breathing_room = 5
+breathing_room = 15
+spawn_interval = 2.5
+spawn_amount = 4
+swarm = true
+section_message = "Swarm Incomming!"
+spawn_sizes = {
+"big": 0,
+"gianormous": 0,
+"large": 0,
+"medium": 0,
+"small": 5,
+"very_small": 3
+}
+enemies = Array[ExtResource("1_dbg6m")]([SubResource("Resource_urssv"), SubResource("Resource_yduy7"), SubResource("Resource_6of1n")])
 metadata/_custom_type_script = "uid://qok4oe3yk4b1"
+
+[sub_resource type="Resource" id="Resource_21e4u"]
+script = ExtResource("1_dbg6m")
+enemy_name = "basic"
+weight = 1
+metadata/_custom_type_script = "uid://bkm3t85heyp8m"
+
+[sub_resource type="Resource" id="Resource_ni710"]
+script = ExtResource("1_dbg6m")
+enemy_name = "dirt"
+weight = 4
+metadata/_custom_type_script = "uid://bkm3t85heyp8m"
+
+[sub_resource type="Resource" id="Resource_kj6pa"]
+script = ExtResource("1_dbg6m")
+enemy_name = "sand"
+weight = 4
+metadata/_custom_type_script = "uid://bkm3t85heyp8m"
+
+[sub_resource type="Resource" id="Resource_uf6ha"]
+script = ExtResource("1_dbg6m")
+enemy_name = "rock"
+weight = 4
+metadata/_custom_type_script = "uid://bkm3t85heyp8m"
 
 [sub_resource type="Resource" id="Resource_iiq5p"]
 script = ExtResource("3_b8akh")
+time = 125
+spawn_amount = 4
+commanders = true
+end_spawn_rate = 4.0
+end_additional_enemy_amount = 2
+spawn_sizes = {
+"big": 0,
+"gianormous": 0,
+"large": 0,
+"medium": 3,
+"small": 5,
+"very_small": 1
+}
+enemies = Array[ExtResource("1_dbg6m")]([SubResource("Resource_21e4u"), SubResource("Resource_ni710"), SubResource("Resource_kj6pa"), SubResource("Resource_uf6ha")])
 metadata/_custom_type_script = "uid://qok4oe3yk4b1"
+
+[sub_resource type="Resource" id="Resource_p2721"]
+script = ExtResource("1_dbg6m")
+enemy_name = "flint"
+weight = 2
+metadata/_custom_type_script = "uid://bkm3t85heyp8m"
 
 [sub_resource type="Resource" id="Resource_h7h5h"]
 script = ExtResource("3_b8akh")
+time = 250
+spawn_interval = 4.0
+spawn_amount = 6
+commanders = true
+end_spawn_rate = 3.5
+end_additional_enemy_amount = 2
+spawn_sizes = {
+"big": 0,
+"gianormous": 0,
+"large": 0,
+"medium": 5,
+"small": 5,
+"very_small": 1
+}
+enemies = Array[ExtResource("1_dbg6m")]([SubResource("Resource_21e4u"), SubResource("Resource_ni710"), SubResource("Resource_kj6pa"), SubResource("Resource_uf6ha"), SubResource("Resource_p2721")])
 metadata/_custom_type_script = "uid://qok4oe3yk4b1"
 
-[sub_resource type="Resource" id="Resource_ocrmk"]
-script = ExtResource("3_b8akh")
-metadata/_custom_type_script = "uid://qok4oe3yk4b1"
+[sub_resource type="Resource" id="Resource_8wjw2"]
+script = ExtResource("1_dbg6m")
+enemy_name = "basic"
+weight = 4
+metadata/_custom_type_script = "uid://bkm3t85heyp8m"
+
+[sub_resource type="Resource" id="Resource_h8fhn"]
+script = ExtResource("1_dbg6m")
+enemy_name = "dirt"
+weight = 6
+metadata/_custom_type_script = "uid://bkm3t85heyp8m"
+
+[sub_resource type="Resource" id="Resource_u2tee"]
+script = ExtResource("1_dbg6m")
+enemy_name = "sand"
+weight = 6
+metadata/_custom_type_script = "uid://bkm3t85heyp8m"
+
+[sub_resource type="Resource" id="Resource_3xuol"]
+script = ExtResource("1_dbg6m")
+enemy_name = "rock"
+weight = 6
+metadata/_custom_type_script = "uid://bkm3t85heyp8m"
+
+[sub_resource type="Resource" id="Resource_mp641"]
+script = ExtResource("1_dbg6m")
+enemy_name = "flint"
+weight = 4
+metadata/_custom_type_script = "uid://bkm3t85heyp8m"
+
+[sub_resource type="Resource" id="Resource_qiyyi"]
+script = ExtResource("1_dbg6m")
+enemy_name = "scrap"
+weight = 2
+metadata/_custom_type_script = "uid://bkm3t85heyp8m"
 
 [sub_resource type="Resource" id="Resource_3tyhh"]
 script = ExtResource("3_b8akh")
+time = 350
+spawn_amount = 6
+commanders = true
+end_spawn_rate = 3.0
+spawn_sizes = {
+"big": 0,
+"gianormous": 0,
+"large": 0,
+"medium": 3,
+"small": 2,
+"very_small": 0
+}
+enemies = Array[ExtResource("1_dbg6m")]([SubResource("Resource_8wjw2"), SubResource("Resource_h8fhn"), SubResource("Resource_u2tee"), SubResource("Resource_3xuol"), SubResource("Resource_mp641"), SubResource("Resource_qiyyi")])
 metadata/_custom_type_script = "uid://qok4oe3yk4b1"
 
 [resource]
 script = ExtResource("1_rvc1w")
 key = "remote_island"
-spawning = Array[ExtResource("3_b8akh")]([SubResource("Resource_dwcul"), SubResource("Resource_yduy7"), SubResource("Resource_iiq5p"), SubResource("Resource_h7h5h"), SubResource("Resource_ocrmk"), SubResource("Resource_3tyhh")])
+spawning = Array[ExtResource("3_b8akh")]([SubResource("Resource_dwcul"), SubResource("Resource_j8ufc"), SubResource("Resource_iiq5p"), SubResource("Resource_h7h5h"), SubResource("Resource_3tyhh")])
 end_time = 400.0
 clear_spawning = SubResource("Resource_b8akh")
 metadata/_custom_type_script = "uid://ebuopgthqly1"
