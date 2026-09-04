@@ -8,7 +8,7 @@ const craft_pin_recipe_scene := preload(
 
 #Tween values
 const TWEEN_TIME := 0.15
-const TWEEN_HIDDEN_POS := Vector2(120, 0)
+const TWEEN_HIDDEN_POS := Vector2(140, 0)
 const TWEEN_SHOW_POS := Vector2(0, 0)
 const PROP_POSITION := "position"
 
@@ -61,11 +61,11 @@ func show_or_hide_tween(is_show := true) -> void:
 
 
 func pin_recipe(craft_data : CraftData) -> bool:
-	if (Global.pined_crafts.size() >= MAX_PINNED and 
-	craft_data not in Global.pined_crafts or 
-	not craft_data or 
-	not craft_data.crafted_item.key in DataRegistry.crafting
-):
+	if (
+		Global.pined_crafts.size() >= MAX_PINNED or 
+		not craft_data or 
+		not craft_data.crafted_item.key in DataRegistry.items
+	):
 		return false
 	
 	if craft_data in Global.pined_crafts.keys():
@@ -75,7 +75,16 @@ func pin_recipe(craft_data : CraftData) -> bool:
 	else:
 		var new_craft_pin : CraftPinRecipe = craft_pin_recipe_scene.instantiate()
 		new_craft_pin.craft_data = craft_data
+		
+		var child_index = Global.pined_crafts.size()
+		var required_items = craft_data.requirements.size()
+		
+		for requirment : CraftData in Global.pined_crafts:
+			if requirment.requirements.size() < required_items:
+				child_index -= 1
+		
 		pining_vbox.add_child(new_craft_pin)
+		pining_vbox.move_child(new_craft_pin, child_index)
 		Global.pined_crafts[craft_data] = new_craft_pin
 	
 	return true

@@ -1,5 +1,5 @@
 class_name Storage
-extends Node
+extends UserInterfaceMenu
 
 const INVENTORY_CELLS_SCENE: PackedScene = preload("res://scenes/user_interface/storage_cell.tscn")
 const OPEN_ANIMATION: StringName = &"open_storage"
@@ -37,7 +37,7 @@ static func load_all_cells(
 	cell_parent: Node,
 	cell_scene: PackedScene,
 	scene_item_tip: CanvasLayer,
-	extraction_ui: CanvasLayer = null
+	extraction_ui: MoveUI = null
 ) -> Dictionary:
 	
 	if cell_parent == null:
@@ -120,4 +120,5 @@ func close_ui() -> void:
 func _set_open_or_close(toggle: bool) -> void:
 	Global.ui_open = toggle
 	Global.storage_open = toggle
+	set_open_timescale(toggle)
 	set_process(toggle)

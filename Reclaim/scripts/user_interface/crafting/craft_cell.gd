@@ -17,7 +17,7 @@ const DOUBLE_CLICK_CRAFT_AMOUNT : int = 1
 @export var cant_craft_overlay : PanelContainer
 
 @export_group("Out Of Scene")
-@export var crafting_menu : CanvasLayer
+@export var crafting_menu : CraftingUI
 
 var craft_requirements : Dictionary
 var can_craft : bool = true

@@ -107,6 +107,8 @@ craft_data = SubResource("Resource_857sj")
 item_image = NodePath("item_image")
 double_click_timer = NodePath("double_click_timer")
 cant_craft_overlay = NodePath("cant_craft_overlay")
+expand_toggle = null
+scale_target = null
 metadata/_edit_use_anchors_ = true
 
 [node name="item_image" type="TextureRect" parent="." unique_id=1045134972]

@@ -30,4 +30,4 @@ required_ship_level = 2
 requirements = Array[ExtResource("req_script")]([SubResource("req_0"), SubResource("req_1"), SubResource("Resource_3m36u")])
 crafted_item = ExtResource("crafted")
 description = "Hurts when it shatters. Also you can see through it"
-craft_time = 4.0
+craft_time = 2.0

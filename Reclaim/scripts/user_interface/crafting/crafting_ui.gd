@@ -1,4 +1,5 @@
-extends CanvasLayer
+class_name CraftingUI
+extends UserInterfaceMenu
 
 enum TABS {
 	TURRETS,
@@ -8,6 +9,9 @@ enum TABS {
 
 const COLOR_KEY := "color"
 const PANEL_OVERRIDE_KEY := "panel"
+
+const ERR_INVALID_RECIPE := "Invalid crafting recipe skipped: %s" 
+const ERR_INVALID_SHIP_LEVEL := "Crafting recipe has invalid ship level: %s"
 
 const ACTIVE_TURRETS_TAB := preload("res://2d_assets/crafting/active_turret_tab.png")
 const ACTIVE_MODULES_TAB := preload("res://2d_assets/crafting/active_modules_tab.png")
@@ -21,8 +25,12 @@ const SECTION_SELECTION_SCENE := preload(
 	"res://scenes/user_interface/crafting/crafting_selection_sections.tscn"
 	)
 
-const CRAFT_CELLS_GROUP := "craft_cells"
-const REQUIREMENT_CELLS_GROUP := "requirment_cells"
+const CRAFT_QUEUE_SCENE := preload("res://scenes/user_interface/crafting/craft_queue_item.tscn")
+
+const GROUP_CRAFT_CELLS := &"craft_cells"
+const GROUP_CRAFT_QUEUE := &"craft_queue_items"
+const GROUP_REQUIREMENT_CELLS := &"requirment_cells"
+const GROUP_PLAYER := &"player"
 
 const OPEN_ANIMATION := "open_crafting"
 const CLOSE_ANIMATION := "close_crafting"
@@ -36,12 +44,15 @@ const CLOSE_UI_INPUT := "close_ui"
 const RECIPE_PIN_NORMAL_COLOR := Color(0.743, 0.743, 0.743, 1.0)
 const RECIPE_PIN_PINED_COLOR := Color(0.58, 1.0, 0.5, 1.0)
 
+const MAX_CRAFT_QUEUE := 5
+
 const CRAFT_ONE := 1
 const CRAFT_FIVE := 5
 const CRAFT_TWENTY_FIVE := 25
 const CRAFT_MAX := 0
 
 @export var crafting_animations : AnimationPlayer
+@export var craft_queue_vbox : VBoxContainer
 
 @export_group("Recpie Pinning")
 @export var craft_pin_texture : TextureRect
@@ -94,6 +105,7 @@ const CRAFT_MAX := 0
 	max_times : CRAFT_MAX
 }
 @onready var current_mult_pressed : Button = one_times
+@onready var player : Player = get_tree().get_first_node_in_group(GROUP_PLAYER)
 
 var can_craft_current : bool = false
 var craft_mult : int = 1
@@ -118,13 +130,13 @@ func _ready() -> void:
 	for recipe_key : String in DataRegistry.crafting:
 		var recipe : CraftData = DataRegistry.crafting[recipe_key]
 		if not _is_valid_recipe(recipe):
-			push_error("Invalid crafting recipe skipped: %s" % recipe_key)
+			push_error(ERR_INVALID_RECIPE % recipe_key)
 			continue
 		
 		var item_key = recipe.crafted_item.key
 		var level = recipe.required_ship_level
 		if not ship_level_requirments.has(level):
-			push_error("Crafting recipe has invalid ship level: %s" % recipe_key)
+			push_error(ERR_INVALID_SHIP_LEVEL % recipe_key)
 			continue
 		
 		ship_level_requirments[level][item_key] = recipe
@@ -158,6 +170,7 @@ func close_ui() -> void:
 func _set_open_or_close(toggle : bool) -> void:
 	Global.ui_open = toggle
 	Global.crafting_open = toggle
+	set_open_timescale(toggle)
 	set_process(toggle)
 	HelperFunctions.set_mouse_captured(true, not toggle)
 
@@ -167,29 +180,76 @@ func _set_open_or_close(toggle : bool) -> void:
 func craft(from_cell = false) -> void:
 	var craft_data : CraftData = current_displayed_requirments
 	
-	if not can_craft_current:
+	if not can_craft_current or not current_displayed_requirments:
 		return
 	
-	var current_storage = HelperFunctions.get_current_storage()
-	var resulting_craft_mult
+	var resulting_craft_mult : int
 	
 	if from_cell:
 		resulting_craft_mult = CRAFT_ONE
 	else:
 		resulting_craft_mult = craft_mult if not max_mult else max_mult
 	
+	_queue_craft(craft_data, resulting_craft_mult)
+	
+	# removing the resources for crafting that item
 	for requirment : RequirementsTemplate in craft_data.requirements:
 		HelperFunctions.remove_item_from_storage(
-			requirment.item, requirment.amount * resulting_craft_mult, current_storage
+			requirment.item, 
+			requirment.amount * resulting_craft_mult
 			)
-	
-	HelperFunctions.add_item_to_storage(
-		craft_data.crafted_item, craft_data.craft_amount * resulting_craft_mult, current_storage)
+		
+		player.item_notif_controller.add_notif(
+			requirment.item, -requirment.amount * resulting_craft_mult
+			)
 	
 	update_crafting_display()
 
 
-## loads all crafting UI
+# Creates a new craft queue or adds to the last if the same
+func _queue_craft(craft_data : CraftData, craft_amount : int) -> void:
+	var queued_items: Array = get_tree().get_nodes_in_group(GROUP_CRAFT_QUEUE)
+	
+	if queued_items:
+		var last_item := queued_items.back() as CraftQueueItem
+		
+		if last_item and last_item.craft_data == craft_data:
+			if not last_item.is_queued_for_deletion():
+				last_item.amount += craft_amount
+				last_item._set_amount_label()
+				return
+	
+	var new_queue_item: CraftQueueItem = CRAFT_QUEUE_SCENE.instantiate()
+	
+	new_queue_item.craft_data = craft_data
+	new_queue_item.amount = craft_amount
+	new_queue_item.crafting_ui = self
+	new_queue_item.item_notif_controller = player.item_notif_controller
+	
+	new_queue_item.add_to_group(GROUP_CRAFT_QUEUE)
+	craft_queue_vbox.add_child(new_queue_item)
+	
+	if queued_items.is_empty() or queued_items[0].is_queued_for_deletion():
+		new_queue_item.start_craft()
+
+
+func queue_next() -> void:
+	print("queueing next")
+	var queued_items = get_tree().get_nodes_in_group(GROUP_CRAFT_QUEUE)
+	
+	update_crafting_display()
+	
+	if queued_items.size() == 0:
+		return
+	
+	var first_queued_item : CraftQueueItem = queued_items[0]
+	
+	if first_queued_item.craft_timer.is_stopped():
+		first_queued_item.start_craft()
+	
+
+
+## loads all crafting UI bassed on ship level
 func load_crafting() -> void:
 	for ship_level in ship_level_requirments:
 		if ship_level > Global.ship_level:
@@ -222,7 +282,7 @@ func load_crafting() -> void:
 				
 				var new_craft_cell : CraftCell = CRAFT_CELL_SCENE.instantiate()
 				new_craft_cell.craft_data = recipe
-				new_craft_cell.add_to_group(CRAFT_CELLS_GROUP)
+				new_craft_cell.add_to_group(GROUP_CRAFT_CELLS)
 				new_craft_cell.crafting_menu = self
 				section.hflow.add_child(new_craft_cell)
 
@@ -246,10 +306,15 @@ func update_crafting_display() -> void:
 	
 	# gets all the cells to check if there is enough and highlights craft button
 	can_craft_current = true
-	for cell : RecipeRequirement in get_tree().get_nodes_in_group(REQUIREMENT_CELLS_GROUP):
-		if not cell.check_requirement(craft_mult if craft_mult else max_mult):
-			craft_overlay.visible = true
-			can_craft_current = false
+	
+	if get_tree().get_nodes_in_group(GROUP_CRAFT_QUEUE).size() > MAX_CRAFT_QUEUE:
+		can_craft_current = false
+	
+	if can_craft_current:
+		for cell : RecipeRequirement in get_tree().get_nodes_in_group(GROUP_REQUIREMENT_CELLS):
+			if not cell.check_requirement(craft_mult if craft_mult else max_mult):
+				craft_overlay.visible = true
+				can_craft_current = false
 	
 	craft_overlay.visible = not can_craft_current
 	craft_button.disabled = not can_craft_current
@@ -257,10 +322,11 @@ func update_crafting_display() -> void:
 	if not current_displayed_requirments:
 		craft_overlay.visible = true
 	
-	for cell : CraftCell in get_tree().get_nodes_in_group(CRAFT_CELLS_GROUP): 
+	for cell : CraftCell in get_tree().get_nodes_in_group(GROUP_CRAFT_CELLS): 
 		cell.check_requirements()
 
 
+# checks if the recipe is valid
 func _is_valid_recipe(craft_data : CraftData) -> bool:
 	if craft_data == null or not HelperFunctions.is_valid_item(craft_data.crafted_item):
 		return false
@@ -275,8 +341,12 @@ func _is_valid_recipe(craft_data : CraftData) -> bool:
 	return true
 
 
+# checks if the current displayed crafting requirments can be crafted
 func _can_craft(craft_data : CraftData) -> bool:
 	if not _is_valid_recipe(craft_data):
+		return false
+	
+	if get_tree().get_nodes_in_group(GROUP_CRAFT_QUEUE).size() > MAX_CRAFT_QUEUE:
 		return false
 	
 	for requirment : RequirementsTemplate in craft_data.requirements:
@@ -322,8 +392,8 @@ func display_requirements_for(craft_data : CraftData, can_craft : bool) -> void:
 	
 	description.text = craft_data.description
 	
-	for cell in get_tree().get_nodes_in_group(REQUIREMENT_CELLS_GROUP):
-		cell.remove_from_group(REQUIREMENT_CELLS_GROUP)
+	for cell in get_tree().get_nodes_in_group(GROUP_REQUIREMENT_CELLS):
+		cell.remove_from_group(GROUP_REQUIREMENT_CELLS)
 		cell.queue_free()
 	
 	# gets a sorted list of all requirments sorted from t1 - t5 then alphabetacally
@@ -345,7 +415,7 @@ func display_requirements_for(craft_data : CraftData, can_craft : bool) -> void:
 		new_requirment.amount_required = requirment.amount
 		new_requirment.check_requirement(craft_mult)
 		requirments_hflow.add_child(new_requirment)
-		new_requirment.add_to_group(REQUIREMENT_CELLS_GROUP)
+		new_requirment.add_to_group(GROUP_REQUIREMENT_CELLS)
 	
 	can_craft_current = can_craft
 	
@@ -361,6 +431,7 @@ func display_requirements_for(craft_data : CraftData, can_craft : bool) -> void:
 	update_crafting_display()
 
 
+# Hides all stat labels then shows only the ones passed
 func show_stat_labels(labels : Array[Label]) -> void:
 	craft_time_stat.visible = false
 	amount_stat.visible = false

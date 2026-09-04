@@ -1,15 +1,31 @@
 [gd_scene format=3 uid="uid://dxb4bka5q7f4t"]
 
+[ext_resource type="Script" uid="uid://bq14v58xrunkp" path="res://scripts/user_interface/pause_menu.gd" id="1_yasr7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4v7s"]
+bg_color = Color(1, 1, 1, 0.27450982)
+
 [sub_resource type="LabelSettings" id="LabelSettings_b681e"]
 font_size = 128
 
-[node name="Control" type="Control" unique_id=1199239225]
+[node name="pause_menu" type="Control" unique_id=1199239225]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_yasr7")
+
+[node name="white_overlay" type="Panel" parent="." unique_id=1336941411]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="." unique_id=587511203]
 layout_mode = 0

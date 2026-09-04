@@ -41,3 +41,4 @@ requirements = Array[ExtResource("req_script")]([SubResource("req_0"), SubResour
 crafted_item = ExtResource("crafted")
 craft_amount = 2
 description = "Basic building material."
+craft_time = 1.0

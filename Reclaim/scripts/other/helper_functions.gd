@@ -273,10 +273,12 @@ static func add_item_to_storage(
 	target_storage[item_resource.tier][item_resource.key] = (
 		get_item_amount(item_resource, target_storage) + amount
 	)
+	
 	return true
 
 
 ## removes a specific amount of an item from the target storage if there is enough
+## storage defaults to current if not provided
 static func remove_item_from_storage(
 	item_resource: ItemData,
 	amount: int = DEFAULT_ITEM_CHANGE,

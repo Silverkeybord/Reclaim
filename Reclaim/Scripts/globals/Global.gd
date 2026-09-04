@@ -60,6 +60,7 @@ const KEY_MODULES: String = "modules"
 const ERR_SAVE_WRITE: String = "Could not open save file for writing: %s"
 const ERR_SAVE_READ: String = "Could not open save file for reading: %s"
 const ERR_SAVE_INVALID: String = "Save file did not contain valid save data."
+const ERR_OUT_OF_BOUNDS_TIMESCALE: String = "Out of Bounds Time Scale %s"
 
 # MISC --------------------------------------------------------------------
 const TEST_STORAGE_MIN_AMOUNT: int = 100
@@ -147,6 +148,7 @@ var mouse_captured := true
 var major_animation_playing := false
 
 # TUTORIAL RELATED ---------------------------------------------------------
+var turorial_stage := 1
 var cleared_tutorial := false
 var first_run := true
 
@@ -186,7 +188,7 @@ var extraction_storage: Dictionary = HelperFunctions.get_clean_storage()
 var deploy_storage: Dictionary = HelperFunctions.get_clean_storage()
 
 
-## Temp testing function to fill storage - THIS IS A TESTING SCRIPT IGNORE CONVENTIONS
+## Temp testing function to fill storage - THIS IS A TESTING FUNCTION IGNORE CONVENTIONS
 func set_random_storage(set_sector_storage: bool = false) -> void:
 	for key in DataRegistry.items:
 		var resource = DataRegistry.items[key]
@@ -203,6 +205,27 @@ func set_random_storage(set_sector_storage: bool = false) -> void:
 				randi_range(TEST_STORAGE_MIN_AMOUNT, TEST_STORAGE_MAX_AMOUNT)
 				* (10 ** TEST_STORAGE_EXPONENT)
 				)
+
+
+# =============================================================================
+# PAUSING CONTROL AND GAME SPEED
+# =============================================================================
+## sets get_tree().paused to pause
+func set_paused(pause := false) -> void:
+	get_tree().paused = pause
+
+
+## sets the time scale of the engine to the passed float should be between 0.0 - 1.0
+func set_time_scale(time_scale := 1.0) -> void:
+	if time_scale == 1.0:
+		Engine.time_scale = time_scale
+	
+	if time_scale > 1.0 or time_scale < 0.0:
+		push_error(ERR_OUT_OF_BOUNDS_TIMESCALE % str(time_scale))
+	
+	time_scale = clampf(time_scale, 0, 1)
+	
+	Engine.time_scale = time_scale
 
 
 # =============================================================================

@@ -127,6 +127,7 @@ item_tip = NodePath("itemtip")
 item_parent = NodePath("inventory_root/storage_background/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/ScrollContainer/GridContainer")
 storage_animations = NodePath("AnimationPlayer")
 scroll_container = NodePath("inventory_root/storage_background/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/ScrollContainer")
+is_storage = true
 metadata/_edit_lock_ = true
 
 [node name="itemtip" parent="." unique_id=854836766 instance=ExtResource("2_tb0sc")]

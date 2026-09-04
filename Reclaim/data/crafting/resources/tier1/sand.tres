@@ -30,3 +30,4 @@ requirements = Array[ExtResource("req_script")]([SubResource("req_0"), SubResour
 crafted_item = ExtResource("crafted")
 craft_amount = 40
 description = "if you need some more sand cheer"
+craft_time = 0.5

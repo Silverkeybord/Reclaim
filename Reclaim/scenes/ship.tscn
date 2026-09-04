@@ -23,10 +23,12 @@ data = PackedVector3Array(-20, -1, -10, 20, -1, -10, -20, 19, -10, -20, -1, -10,
 
 [node name="ship" type="Node3D" unique_id=965132915 groups=["root_nodes"]]
 script = ExtResource("1_7j21i")
+metadata/_edit_lock_ = true
 
 [node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="." unique_id=1907386961]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.009134293, 0.009200096, -0.027325988)
 mesh = SubResource("ArrayMesh_m75ec")
+metadata/_edit_lock_ = true
 
 [node name="StaticBody3D" type="StaticBody3D" parent="CSGBakedMeshInstance3D" unique_id=1604979033]
 
@@ -37,18 +39,24 @@ shape = SubResource("ConcavePolygonShape3D_f0cws")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
 omni_range = 100.0
 omni_attenuation = 0.0
+metadata/_edit_lock_ = true
 
 [node name="CharacterBody3D" parent="." unique_id=961430667 instance=ExtResource("1_m75ec")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.14566374, 1.5843339, 0.30729866)
+metadata/_edit_lock_ = true
 
 [node name="crafting_table" parent="." unique_id=1786656130 instance=ExtResource("2_f0cws")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2590008, 0, 7.7612762)
+metadata/_edit_lock_ = true
 
 [node name="research_table" parent="." unique_id=2099294027 instance=ExtResource("3_w1oif")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25725937, 0, -7.802432)
+metadata/_edit_lock_ = true
 
 [node name="deploy_pod" parent="." unique_id=1373262889 groups=["interactable"] instance=ExtResource("4_m75ec")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, 0)
+metadata/_edit_lock_ = true
 
 [node name="storage_container" parent="." unique_id=1421577712 instance=ExtResource("5_io440")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 5.98608, 0.009203434, 7.7906218)
+metadata/_edit_lock_ = true

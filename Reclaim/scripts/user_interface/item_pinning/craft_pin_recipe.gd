@@ -34,7 +34,10 @@ func _ready() -> void:
 	if not craft_data:
 		return
 	
-	for recipe_requirement: RequirementsTemplate in craft_data.requirements:
+	var sorted_requirments := craft_data.requirements
+	sorted_requirments.sort_custom(sort_tier_then_value)
+	
+	for recipe_requirement: RequirementsTemplate in sorted_requirments:
 		var new_amount := craft_pin_amount_scene.instantiate()
 		new_amount.item_data = recipe_requirement.item
 		new_amount.required_amount = recipe_requirement.amount
@@ -92,3 +95,12 @@ func show_or_hide_tween(is_show : bool) -> void:
 		TWEEN_SHOW_SEPARATION if is_show else TWEEN_HIDDEN_SEPARATION, 
 		TWEEN_TIME
 	)
+
+
+func sort_tier_then_value(
+	requirment_1 : RequirementsTemplate, 
+	requirment_2 : RequirementsTemplate
+) -> bool:
+	if requirment_1.item.tier > requirment_2.item.tier:
+		return true
+	return false

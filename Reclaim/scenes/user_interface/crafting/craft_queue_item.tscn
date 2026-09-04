@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://fgjq0d4thmv5"]
+
+[ext_resource type="Script" uid="uid://dp4lyt6yc3g4j" path="res://scripts/user_interface/crafting/craft_queue_item.gd" id="1_owdv4"]
+[ext_resource type="Texture2D" uid="uid://b7jm2ktv5ivse" path="res://2d_assets/items/resources/1/dirt.png" id="2_36jfx"]
+[ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="3_umi6g"]
+[ext_resource type="LabelSettings" uid="uid://did6nhlhj082r" path="res://other_assets/label_settings/help_text.tres" id="4_36jfx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3gngh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_57qmd"]
+bg_color = Color(0.59607846, 0.59607846, 0.59607846, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4v7s"]
+bg_color = Color(0.3956208, 0.39562082, 0.39562064, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yf5fn"]
+bg_color = Color(0.87329835, 0.87329847, 0.87329817, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="LabelSettings" id="LabelSettings_otp7q"]
+font = ExtResource("3_umi6g")
+font_size = 10
+outline_size = 4
+outline_color = Color(0.3254902, 0.3254902, 0.3254902, 0.78039217)
+
+[node name="craft_queue_item" type="PanelContainer" unique_id=661767272 node_paths=PackedStringArray("name_label", "craft_timer", "progress_bar", "craft_amount_label", "item_texture_rect", "progress_panel")]
+offset_right = 252.0
+offset_bottom = 35.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_3gngh")
+script = ExtResource("1_owdv4")
+name_label = NodePath("HBoxContainer/name_label")
+craft_timer = NodePath("Timer")
+progress_bar = NodePath("HBoxContainer/progres_panel/ProgressBar")
+craft_amount_label = NodePath("HBoxContainer/item_texture/craft_amount_label")
+item_texture_rect = NodePath("HBoxContainer/item_texture")
+progress_panel = NodePath("HBoxContainer/progres_panel")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=925186584]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="progres_panel" type="PanelContainer" parent="HBoxContainer" unique_id=1906754432]
+visible = false
+custom_minimum_size = Vector2(30, 30)
+custom_maximum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_57qmd")
+
+[node name="ProgressBar" type="ProgressBar" parent="HBoxContainer/progres_panel" unique_id=2007602164]
+custom_minimum_size = Vector2(24, 24)
+custom_maximum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_g4v7s")
+theme_override_styles/fill = SubResource("StyleBoxFlat_yf5fn")
+value = 19.71
+fill_mode = 3
+show_percentage = false
+
+[node name="item_texture" type="TextureRect" parent="HBoxContainer" unique_id=457005964]
+custom_minimum_size = Vector2(35, 35)
+custom_maximum_size = Vector2(35, 35)
+layout_mode = 2
+texture = ExtResource("2_36jfx")
+stretch_mode = 3
+
+[node name="craft_amount_label" type="Label" parent="HBoxContainer/item_texture" unique_id=184935804]
+layout_mode = 0
+offset_left = -3.9999924
+offset_top = 27.0
+offset_right = 35.000008
+offset_bottom = 40.0
+rotation = -0.11185427
+text = "100x"
+label_settings = SubResource("LabelSettings_otp7q")
+horizontal_alignment = 2
+
+[node name="name_label" type="Label" parent="HBoxContainer" unique_id=1168349404]
+layout_mode = 2
+text = "Construction mterial"
+label_settings = ExtResource("4_36jfx")
+
+[node name="Timer" type="Timer" parent="." unique_id=1317525618]
+ignore_time_scale = true
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

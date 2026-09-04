@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" format=3 uid="uid://dwciotafe4ddd"]
+
+[ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="1_kxa4y"]
+
+[resource]
+font = ExtResource("1_kxa4y")
+font_color = Color(1, 0.78667974, 0.7518979, 1)
+outline_size = 6
+outline_color = Color(0.3254902, 0.3254902, 0.3254902, 0.78039217)

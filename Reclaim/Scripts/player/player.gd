@@ -95,7 +95,7 @@ const ZERO_FLOAT : float = 0.0
 @export var input_tip: Label
 @export var building_selection: CanvasLayer
 @export var user_interface_animations: AnimationPlayer
-@export var item_notif_controller : Control
+@export var item_notif_controller : ItemNotifController
 
 # =============================================================================
 # VARIABLES
@@ -109,6 +109,7 @@ var can_remove_build: bool = true
 
 
 func _ready() -> void:
+	Global.set_random_storage()
 	_set_new_weapon()
 
 
@@ -269,112 +270,182 @@ func toggle_player_mode_item(pivot: Node3D) -> void:
 
 
 # =============================================================================
-# BUILDING & HOLOGRAMS
+# BUILDING - PLACING, PICKINGUP, CHANGING MODES
 # =============================================================================
 
-# handels all buliding, placeing, checking and more
+# Handles all building logic
 func _build_mode_handling(ray_collider: Node) -> void:
-	var build_ray_collider: Node = build_ray.get_collider() if build_ray else null
-	var current_build_selected: String = ""
+	if Global.player_mode != Global.PLAYER_MODES.BUILDING:
+		return
 	
-	if Global.player_mode == Global.PLAYER_MODES.BUILDING and not turret_holagram:
-		if gun_pivot:
-			gun_pivot.visible = false
-		if turret_holagram_scene:
-			turret_holagram = turret_holagram_scene.instantiate()
-			add_sibling(turret_holagram)
-		if interact_overlay:
-			interact_overlay.visible = false
+	_check_holagram()
+	_handle_build_mode_toggle()
 	
-	if Input.is_action_just_pressed(ACTION_CHANGE_BUILD_MODE):
-		var build_modes: int = Global.BUILD_MODES.size()
-		Global.current_build_mode = (
-			((Global.current_build_mode + 1) % build_modes) as Global.BUILD_MODES
-		)
-		if building_selection:
-			building_selection.change_build_mode()
+	var current_selection: String = _get_current_build_selection()
+	
+	_update_hologram_and_ui(ray_collider, current_selection)
+	_handle_placement(ray_collider, current_selection)
+	_handle_pickup()
+
+
+# Checks if there is a holagram
+func _check_holagram() -> void:
+	if turret_holagram:
+		return
+	
+	if gun_pivot:
+		gun_pivot.visible = false
+	if interact_overlay:
+		interact_overlay.visible = false
+		
+	if turret_holagram_scene:
+		turret_holagram = turret_holagram_scene.instantiate() as Node3D
+		add_sibling(turret_holagram)
+
+
+func _handle_build_mode_toggle() -> void:
+	if not Input.is_action_just_pressed(ACTION_CHANGE_BUILD_MODE):
+		return
+	
+	var build_modes: int = Global.BUILD_MODES.size()
+	Global.current_build_mode = (Global.current_build_mode + 1) % build_modes as Global.BUILD_MODES
+	
+	if building_selection:
+		building_selection.change_build_mode()
+
+
+func _get_current_build_selection() -> String:
+	match Global.current_build_mode:
+		Global.BUILD_MODES.TURRET:
+			return selected_turret if not selected_turret.is_empty() else ""
+		Global.BUILD_MODES.BASE:
+			return selected_base if not selected_base.is_empty() else ""
+	
+	return ""
+
+
+func _update_hologram_and_ui(ray_collider: Node, current_selection: String) -> void:
+	if not turret_holagram:
+		return
+	
+	if current_selection.is_empty():
+		turret_holagram.visible = false
+		if build_overlay:
+			build_overlay.visible = false
+		return
+	
+	if _check_valid_placement(ray_collider):
+		_snap_hologram_to_grid(ray_collider)
+		_update_hologram_validity(ray_collider)
+		if build_overlay:
+			build_overlay.visible = true
+	else:
+		_move_hologram_to_aim()
+		turret_holagram.valid_position = false
+		if build_overlay:
+			build_overlay.visible = false
+
+
+func _snap_hologram_to_grid(ray_collider: Node) -> void:
+	var preexisting_build: bool = false
+	turret_holagram.visible = true
 	
 	match Global.current_build_mode:
 		Global.BUILD_MODES.TURRET:
-			if not selected_turret.is_empty():
-				current_build_selected = selected_turret
+			if ray_collider.get("turret_origin_point"):
+				turret_holagram.global_position = ray_collider.turret_origin_point.global_position
+			if ray_collider.get("turret"):
+				preexisting_build = true
 		Global.BUILD_MODES.BASE:
-			if not selected_base.is_empty():
-				current_build_selected = selected_base
+			turret_holagram.global_position = ray_collider.global_position
+			if ray_collider.get("base"):
+				preexisting_build = true
 	
-	if turret_holagram:
-		if _check_valid_placement(ray_collider) and not current_build_selected.is_empty():
-			var preexisting_build: bool = false
-			match Global.current_build_mode:
-				Global.BUILD_MODES.TURRET:
-					turret_holagram.visible = true
-					turret_holagram.global_position = (
-						ray_collider.turret_origin_point.global_position)
-					if ray_collider.turret:
-						preexisting_build = true
-				Global.BUILD_MODES.BASE:
-					turret_holagram.visible = true
-					turret_holagram.global_position = ray_collider.global_position
-					if ray_collider.base:
-						preexisting_build = true
+	if build_label:
+		build_label.text = REPLACE_TEXT if preexisting_build else PLACE_TEXT
+
+
+func _update_hologram_validity(ray_collider: Node) -> void:
+	var dist: float = global_position.distance_to(ray_collider.global_position)
 	
-			if global_position.distance_to(ray_collider.global_position) < BUILD_RANGE:
-				turret_holagram.valid_position = true
-				build_label.text = REPLACE_TEXT if preexisting_build else PLACE_TEXT
-			else:
-				build_label.text = MOVE_CLOSER_TEXT
-				turret_holagram.valid_position = false
+	if dist < BUILD_RANGE:
+		turret_holagram.valid_position = true
+	else:
+		turret_holagram.valid_position = false
+		if build_label:
+			build_label.text = MOVE_CLOSER_TEXT
+
+
+func _move_hologram_to_aim() -> void:
+	if aim_ray and aim_ray.is_colliding():
+		turret_holagram.global_position = aim_ray.get_collision_point()
+		turret_holagram.visible = true
+	else:
+		turret_holagram.visible = false
+
+
+func _handle_placement(ray_collider: Node, current_selection: String) -> void:
+	if current_selection.is_empty() or not Input.is_action_just_pressed(ACTION_PLACE):
+		return
 	
-			if build_overlay:
-				build_overlay.visible = true
-		elif not current_build_selected.is_empty():
-			if aim_ray and aim_ray.is_colliding():
-				turret_holagram.global_position = aim_ray.get_collision_point()
-				turret_holagram.visible = true
-			else:
-				turret_holagram.visible = false
-			turret_holagram.valid_position = false
-			if build_overlay:
-				build_overlay.visible = false
-		else:
-			turret_holagram.visible = false
-			if build_overlay:
-				build_overlay.visible = false
+	if not _check_valid_placement(ray_collider):
+		return
+		
+	if global_position.distance_to(ray_collider.global_position) >= BUILD_RANGE:
+		return
 	
-		if Input.is_action_just_pressed(ACTION_PLACE) and not current_build_selected.is_empty():
-			if (
-				_check_valid_placement(ray_collider)
-				and global_position.distance_to(ray_collider.global_position) < BUILD_RANGE
-			):
-				var can_place: bool = false
-				if user_interface_animations:
-					user_interface_animations.play(PLACE_ANIMATION_KEY)
-				match Global.current_build_mode:
-					Global.BUILD_MODES.TURRET:
-						if ray_collider.can_place_turret:
-							if HelperFunctions.has_item_amount(DataRegistry.items[selected_turret]):
-								can_place = ray_collider.place_selected_turret(selected_turret)
-					Global.BUILD_MODES.BASE:
-						if ray_collider.can_place_base:
-							if HelperFunctions.has_item_amount(DataRegistry.items[selected_base]):
-								can_place = ray_collider.build_base(selected_base)
-				if can_place and building_selection:
-					building_selection.placed_build()
+	if not DataRegistry.items.has(current_selection):
+		return
+		
+	var item: ItemData = DataRegistry.items[current_selection]
+	if not HelperFunctions.has_item_amount(item):
+		return
+		
+	var can_place: bool = false
 	
-		if Input.is_action_just_pressed(ACTION_PICK_UP_BUILD):
-			if (
-				can_remove_build
-				and build_ray_collider
-				and global_position.distance_to(build_ray_collider.global_position) < BUILD_RANGE
-			):
-				can_remove_build = false
-				build_ray_collider.pick_up()
-				if building_selection:
-					building_selection.load_selection()
-				if build_ray_collider.build_type == Global.BUILD_TYPES.BASE:
-					build_ray_collider.slot.base_removed()
-				await get_tree().create_timer(REMOVE_BUILD_DELAY).timeout
-				can_remove_build = true
+	match Global.current_build_mode:
+		Global.BUILD_MODES.TURRET:
+			if ray_collider.get("can_place_turret") and ray_collider.can_place_turret:
+				can_place = ray_collider.place_selected_turret(current_selection)
+		Global.BUILD_MODES.BASE:
+			if ray_collider.get("can_place_base") and ray_collider.can_place_base:
+				can_place = ray_collider.build_base(current_selection)
+				
+	if can_place:
+		if user_interface_animations:
+			user_interface_animations.play(PLACE_ANIMATION_KEY)
+		if building_selection:
+			building_selection.placed_build()
+
+
+func _handle_pickup() -> void:
+	if not Input.is_action_just_pressed(ACTION_PICK_UP_BUILD) or not can_remove_build:
+		return
+		
+	var build_ray_collider: Node = build_ray.get_collider() if build_ray else null
+	if not build_ray_collider:
+		return
+		
+	if global_position.distance_to(build_ray_collider.global_position) >= BUILD_RANGE:
+		return
+		
+	can_remove_build = false
+	
+	if build_ray_collider.has_method("pick_up"):
+		build_ray_collider.pick_up()
+		
+	if building_selection:
+		building_selection.load_selection()
+		
+	if build_ray_collider.get("build_type") == Global.BUILD_TYPES.BASE:
+		if build_ray_collider.get("slot"):
+			build_ray_collider.slot.base_removed()
+			
+	var tree := get_tree()
+	if tree:
+		await tree.create_timer(REMOVE_BUILD_DELAY).timeout
+	
+	can_remove_build = true
 
 
 # Returns true if the current ray collider is a valid unlocked turret slot
@@ -479,8 +550,8 @@ func _set_new_weapon() -> void:
 func _on_shoot_timer_timeout() -> void:
 	can_shoot = true
 
-# PICKUP SYSTEM --------------------------------------------------------------
 
+# PICKUP ======================================================================
 # Called when a drop enters the pickup area making it start moving
 func _on_pick_up_area_body_entered(body: Node3D) -> void:
 	if body and body.is_in_group(GROUP_DROPS) and body.get(PROP_VALID):

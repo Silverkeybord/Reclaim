@@ -1,5 +1,5 @@
 class_name MoveUI
-extends CanvasLayer
+extends UserInterfaceMenu
 
 const KEY_EXTRACTION := "extraction"
 const KEY_DEPLOYING := "deploy"
@@ -141,13 +141,8 @@ func close_ui(forced = false) -> void:
 		to_storage_lookup[Global.at_ship]
 	)
 	
-	_set_open_or_close(false)
 	extraction_animations.play(ANIMATION_CLOSE)
-	
-	await extraction_animations.animation_finished
-	
-	Global.ui_open = false
-	Global.extraction_open = false
+	_set_open_or_close(false)
 
 
 func open_ui() -> void:
@@ -161,9 +156,17 @@ func open_ui() -> void:
 				to_storage_lookup[Global.at_ship][tier][item_name],
 				from_storage_lookup[Global.at_ship]
 			):
-				pass
+				
+				to_storage_lookup[Global.at_ship][tier][item_name] = (
+					from_storage_lookup[Global.at_ship][tier][item_name]
+					)
+				from_storage_lookup[Global.at_ship][tier][item_name] = 0
+				
 			else:
-				from_storage_lookup[Global.at_ship][tier][item_name] 
+				
+				from_storage_lookup[Global.at_ship][tier][item_name] -= (
+					to_storage_lookup[Global.at_ship][tier][item_name]
+					)
 				
 	
 	_set_open_or_close(true)
@@ -174,6 +177,7 @@ func open_ui() -> void:
 func _set_open_or_close(toggle : bool) -> void:
 	Global.ui_open = toggle
 	Global.extraction_open = toggle
+	set_open_timescale(toggle)
 	set_process(toggle)
 	HelperFunctions.set_mouse_captured(true, not toggle)
 
@@ -333,6 +337,7 @@ func sort_value_then_tier(item_1, item_2) -> bool:
 	return item_1[ITEM_TIER] > item_2[ITEM_TIER]
 
 
+# sorts to the highest tier and then value
 func sort_tier_then_value(item_1, item_2) -> bool:
 	# Highest tier first, then highest value
 	if item_1[ITEM_TIER] != item_2[ITEM_TIER]:

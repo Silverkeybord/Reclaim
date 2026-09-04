@@ -144,4 +144,4 @@ func _give_random_movement() -> void:
 func _pick_up() -> void:
 	HelperFunctions.spawn_temp_sound(pickup_sounds.pick_random())
 	HelperFunctions.add_item_to_storage(item_data, DEFAULT_ADD_AMOUNT, Global.sector_storage)
-	player.item_notif_controller.pick_up_item(item_data)
+	player.item_notif_controller.add_notif(item_data)

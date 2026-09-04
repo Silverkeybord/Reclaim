@@ -18,6 +18,7 @@ const SCALE_PROPERTY := "offset_transform_scale"
 func _on_mouse_entered() -> void:
 	if expand_toggle:
 		var scale_tween = create_tween()
+		scale_tween.set_ignore_time_scale(true)
 		scale_tween.set_ease(Tween.EASE_OUT)
 		scale_tween.tween_property(self, SCALE_PROPERTY, hover_scale, TWEEN_TIME)
 	
@@ -27,6 +28,7 @@ func _on_mouse_entered() -> void:
 func _on_mouse_exited() -> void:
 	if expand_toggle:
 		var scale_tween = create_tween()
+		scale_tween.set_ignore_time_scale(true)
 		scale_tween.set_ease(Tween.EASE_OUT)
 		scale_tween.tween_property(self, SCALE_PROPERTY, NORMAL_SCALE, TWEEN_TIME)
 	
