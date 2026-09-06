@@ -12,6 +12,7 @@ const ITEMS_PATH: String = "res://data/items/"
 
 const RESOURCE_FILE_EXTENSION: String = ".tres"
 const REMAP_FILE_EXTENSION: String = ".remap"
+const SCENE_FILE_EXTENTION: String = ".tscn"
 const PATH_SEPARATOR: String = "/"
 
 const PROP_KEY: StringName = &"key"
@@ -24,7 +25,7 @@ var modules: Dictionary = {}
 var weapon: Dictionary = {}
 var enemies: Dictionary = {}
 var wave: Dictionary = {}
-var research: Dictionary = {}
+var authorisation: Dictionary = {}
 var crafting: Dictionary = {}
 var bullet_trail: Dictionary = {}
 var items: Dictionary = {}
@@ -36,7 +37,7 @@ func _ready() -> void:
 	_load_folder(WEAPONS_PATH, weapon)
 	_load_folder(ENEMIES_PATH, enemies)
 	_load_folder(WAVE_PATH, wave)
-	_load_folder(AUTHORISATION_PATH, research)
+	_load_folder(AUTHORISATION_PATH, authorisation)
 	_load_folder(CRAFTING_PATH, crafting, true)
 	_load_folder(BULLET_TRAIL_PATH, bullet_trail)
 	_load_folder(ITEMS_PATH, items, true)

@@ -416,7 +416,8 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("8_6k3cy")
 stretch_mode = 3
 
-[node name="item_notif_controller" parent="canvas_root" unique_id=1202289325 instance=ExtResource("13_gx1jg")]
+[node name="item_notif_controller" parent="canvas_root" unique_id=1202289325 node_paths=PackedStringArray("build_selection") instance=ExtResource("13_gx1jg")]
+build_selection = NodePath("../build_selection")
 
 [node name="FPS counter" parent="canvas_root" unique_id=1336845062 instance=ExtResource("10_h17s1")]
 visible = false

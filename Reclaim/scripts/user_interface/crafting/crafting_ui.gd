@@ -32,8 +32,6 @@ const GROUP_CRAFT_QUEUE := &"craft_queue_items"
 const GROUP_REQUIREMENT_CELLS := &"requirment_cells"
 const GROUP_PLAYER := &"player"
 
-const OPEN_ANIMATION := "open_crafting"
-const CLOSE_ANIMATION := "close_crafting"
 const DPS_LABEL_PREFIX := "DPS : "
 const ABILITY_LABEL_PREFIX := "Ability : "
 const AMOUNT_LABEL_PREFIX := "Amount: "
@@ -51,7 +49,12 @@ const CRAFT_FIVE := 5
 const CRAFT_TWENTY_FIVE := 25
 const CRAFT_MAX := 0
 
-@export var crafting_animations : AnimationPlayer
+# Tween Pram
+const TWEEN_DURATION := 0.8
+const SHOW_POS := Vector2(0, 0)
+const HIDE_POS := Vector2(0, -720)
+
+@export var ui_root : MarginContainer
 @export var craft_queue_vbox : VBoxContainer
 
 @export_group("Recpie Pinning")
@@ -151,23 +154,29 @@ func _process(_delta: float) -> void:
 
 # UI control ================================================================
 func open_ui() -> void:
-	if crafting_animations.is_playing():
+	if move_tween_playing:
 		return
 	
 	_set_open_or_close(true)
 	update_crafting_display()
-	crafting_animations.play(OPEN_ANIMATION)
 
 
 func close_ui() -> void:
-	if crafting_animations.is_playing():
+	if move_tween_playing:
 		return
 	
 	_set_open_or_close(false)
-	crafting_animations.play(CLOSE_ANIMATION)
 
 
 func _set_open_or_close(toggle : bool) -> void:
+	hide_or_show_tween(
+		ui_root,
+		TWEEN_DURATION,
+		SHOW_POS if toggle else HIDE_POS,
+		toggle
+		)
+	
+	
 	Global.ui_open = toggle
 	Global.crafting_open = toggle
 	set_open_timescale(toggle)
@@ -233,8 +242,8 @@ func _queue_craft(craft_data : CraftData, craft_amount : int) -> void:
 		new_queue_item.start_craft()
 
 
+# Checks if the removed or finished item is in first slot and then starts the next if there is one
 func queue_next() -> void:
-	print("queueing next")
 	var queued_items = get_tree().get_nodes_in_group(GROUP_CRAFT_QUEUE)
 	
 	update_crafting_display()
@@ -246,7 +255,6 @@ func queue_next() -> void:
 	
 	if first_queued_item.craft_timer.is_stopped():
 		first_queued_item.start_craft()
-	
 
 
 ## loads all crafting UI bassed on ship level

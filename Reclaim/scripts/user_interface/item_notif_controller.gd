@@ -5,6 +5,7 @@ const MAX_NOTIF : int = 15
 const ITEM_NOTIF_SCENE : PackedScene = preload("res://scenes/user_interface/items/item_notif.tscn")
 const DEFAULT_ITEM_AMOUNT := 1
 
+@export var build_selection : BuildSelection
 @export var notif_vbox : VBoxContainer
 
 var item_notifs : Dictionary
@@ -26,6 +27,10 @@ func add_notif(item_data : ItemData, amount := DEFAULT_ITEM_AMOUNT) -> void:
 		notif.notif_controller = self
 		
 		notif_vbox.add_child(notif)
+	
+	# If the player is in build mode and a turret or base gets made will update the selection
+	if item_data.type == Global.ITEM_TYPES.TURRET or item_data.type == Global.ITEM_TYPES.BASE:
+		build_selection.load_selection()
 
 
 func remove_notif(item_data : ItemData) -> void:

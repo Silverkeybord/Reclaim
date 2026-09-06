@@ -13,15 +13,24 @@ const TWEEN_SHOW_POS := Vector2(0, 0)
 const PROP_POSITION := "position"
 
 @export var pining_vbox : VBoxContainer
+@export var margin_container : MarginContainer
 
 var last_open_ui_state : bool = false
 
 
 func _ready() -> void:
-	for craft_data in Global.pined_crafts:
+	for craft_data : CraftData in Global.pined_crafts:
 		var new_craft_pin : CraftPinRecipe = craft_pin_recipe_scene.instantiate()
+		var pinned_crafts := pining_vbox.get_children()
+		var child_index := pinned_crafts.size()
+		
+		for existing_pin : CraftPinRecipe in pinned_crafts:
+			if existing_pin.craft_data.requirements.size() < craft_data.requirements.size():
+				child_index -= 1
+		
 		new_craft_pin.craft_data = craft_data
 		pining_vbox.add_child(new_craft_pin)
+		pining_vbox.move_child(new_craft_pin, child_index)
 		Global.pined_crafts[craft_data] = new_craft_pin
 
 
@@ -50,7 +59,7 @@ func show_or_hide_tween(is_show := true) -> void:
 	var show_tween = create_tween()
 	show_tween.set_ease(Tween.EASE_IN)
 	show_tween.tween_property(
-		self, 
+		margin_container, 
 		PROP_POSITION, 
 		TWEEN_SHOW_POS if is_show else TWEEN_HIDDEN_POS, 
 		TWEEN_TIME

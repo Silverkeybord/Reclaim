@@ -167,97 +167,10 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="Animation" id="Animation_6uax1"]
-length = 0.001
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ui_root:position:y")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(-720, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ui_root:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
-[sub_resource type="Animation" id="Animation_6bmh7"]
-resource_name = "close_crafting"
-length = 0.8
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ui_root:position:y")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(2, 0),
-"points": PackedFloat32Array(0, 0, 0, 0.06666667, -600.74945, -720, -0.6, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.8)
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ui_root:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.8),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
-[sub_resource type="Animation" id="Animation_u4imy"]
-resource_name = "open_crafting"
-length = 0.8
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ui_root:position:y")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(2, 0),
-"points": PackedFloat32Array(-720, 0, 0, 0.06666667, 620.2074, 0, -0.6, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.8)
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ui_root:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_6bmh7"]
-_data = {
-&"RESET": SubResource("Animation_6uax1"),
-&"close_crafting": SubResource("Animation_6bmh7"),
-&"open_crafting": SubResource("Animation_u4imy")
-}
-
-[node name="crafting_ui" type="CanvasLayer" unique_id=881350527 node_paths=PackedStringArray("crafting_animations", "craft_queue_vbox", "craft_pin_texture", "recpie_pinning", "craft_name", "image_background", "requirement_image", "requirments_hflow", "craft_button", "craft_overlay", "amount_stat", "craft_time_stat", "dps_stat", "ability_stat", "description", "one_times", "five_times", "twentyfive_times", "max_times", "turrets_tab", "modules_tab", "resources_tab", "turrets_vbox", "modules_vbox", "resources_vbox", "turrets_tab_scroll", "modules_tab_scroll", "resources_tab_scroll")]
+[node name="crafting_ui" type="CanvasLayer" unique_id=881350527 node_paths=PackedStringArray("ui_root", "craft_queue_vbox", "craft_pin_texture", "recpie_pinning", "craft_name", "image_background", "requirement_image", "requirments_hflow", "craft_button", "craft_overlay", "amount_stat", "craft_time_stat", "dps_stat", "ability_stat", "description", "one_times", "five_times", "twentyfive_times", "max_times", "turrets_tab", "modules_tab", "resources_tab", "turrets_vbox", "modules_vbox", "resources_vbox", "turrets_tab_scroll", "modules_tab_scroll", "resources_tab_scroll")]
 layer = 2
 script = ExtResource("1_0a7d0")
-crafting_animations = NodePath("AnimationPlayer")
+ui_root = NodePath("ui_root")
 craft_queue_vbox = NodePath("ui_root/whole_ui/craft_queue_vbox")
 craft_pin_texture = NodePath("ui_root/whole_ui/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirment_header/craft_name/MarginContainer/pin_recpie/MarginContainer/item_pin_texture")
 recpie_pinning = NodePath("recipie_pinning")
@@ -290,8 +203,6 @@ resources_tab_scroll = NodePath("ui_root/whole_ui/crafting/MarginContainer/craft
 [node name="itemtip" parent="." unique_id=854836766 instance=ExtResource("16_6ikml")]
 
 [node name="recipie_pinning" parent="." unique_id=1830514154 instance=ExtResource("22_s7ttn")]
-offset_left = 0.0
-offset_right = 0.0
 
 [node name="ui_root" type="MarginContainer" parent="." unique_id=412766446]
 visible = false
@@ -904,9 +815,6 @@ custom_maximum_size = Vector2(-1, 480)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1668380900]
-libraries/ = SubResource("AnimationLibrary_6bmh7")
 
 [connection signal="mouse_entered" from="ui_root/whole_ui/crafting/MarginContainer/crafting_vbox/header/help_icon" to="ui_root/whole_ui/crafting/MarginContainer/crafting_vbox/header/help_icon" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="ui_root/whole_ui/crafting/MarginContainer/crafting_vbox/header/help_icon" to="ui_root/whole_ui/crafting/MarginContainer/crafting_vbox/header/help_icon" method="_on_mouse_exited"]

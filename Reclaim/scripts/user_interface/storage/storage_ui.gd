@@ -2,21 +2,24 @@ class_name Storage
 extends UserInterfaceMenu
 
 const INVENTORY_CELLS_SCENE: PackedScene = preload("res://scenes/user_interface/storage_cell.tscn")
-const OPEN_ANIMATION: StringName = &"open_storage"
-const CLOSE_ANIMATION: StringName = &"close_storage"
 const SCROLL_AMOUNT: int = 50
 const MIN_SCROLL: int = 0
 
+const PROP_EXTRACTION_UI := &"extraction_ui"
 const INTERACT_INPUT: StringName = &"interact"
 const CLOSE_UI_INPUT: StringName = &"close_ui"
 const METHOD_UPDATE_AMOUNT: StringName = &"update_amount"
 
-const MISSING_CELL_PARENT_ERROR: String = "Storage UI item parent is missing."
+const ERR_MISSING_CELL_PARENT: String = "Storage UI item parent is missing."
 
+const TWEEN_DURATION := 0.5
+const SHOW_POS := Vector2(0, 0)
+const HIDE_POS := Vector2(-1280, 0)
+
+@export var inventory_root : MarginContainer
 @export var item_tip: CanvasLayer
 @export var item_parent: Node
 @export var crafting_inventory: bool = false
-@export var storage_animations: AnimationPlayer
 @export var scroll_container: ScrollContainer
 
 var displayed_cells: Dictionary = {}
@@ -41,7 +44,7 @@ static func load_all_cells(
 ) -> Dictionary:
 	
 	if cell_parent == null:
-		push_error(MISSING_CELL_PARENT_ERROR)
+		push_error(ERR_MISSING_CELL_PARENT)
 		return {}
 	
 	var loaded_cells: Dictionary = {}
@@ -68,7 +71,7 @@ static func load_all_cells(
 		loaded_cells[item.key] = new_cell
 		
 		if extraction_ui:
-			new_cell.set(&"extraction_ui", extraction_ui)
+			new_cell.set(PROP_EXTRACTION_UI, extraction_ui)
 	
 	return loaded_cells
 
@@ -97,27 +100,29 @@ func _input(event: InputEvent) -> void:
 
 
 func open_ui() -> void:
-	if storage_animations and storage_animations.is_playing():
+	if move_tween_playing:
 		return
 	
 	_set_open_or_close(true)
 	
 	update_storage()
-	if not crafting_inventory and storage_animations:
-		storage_animations.play(OPEN_ANIMATION)
 
 
 func close_ui() -> void:
-	if storage_animations and storage_animations.is_playing():
+	if move_tween_playing:
 		return
 	
 	_set_open_or_close(false)
-	
-	if not crafting_inventory and storage_animations:
-		storage_animations.play(CLOSE_ANIMATION)
 
 
 func _set_open_or_close(toggle: bool) -> void:
+	hide_or_show_tween(
+		inventory_root,
+		TWEEN_DURATION,
+		SHOW_POS if toggle else HIDE_POS,
+		toggle
+		)
+	
 	Global.ui_open = toggle
 	Global.storage_open = toggle
 	set_open_timescale(toggle)

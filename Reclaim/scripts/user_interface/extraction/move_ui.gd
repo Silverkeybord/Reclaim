@@ -23,9 +23,6 @@ const DISPLAY_STRINGS := {
 	}
 }
 
-const ANIMATION_OPEN := "open_extraction"
-const ANIMATION_CLOSE := "close_extraction"
-
 const EXTRACTION_CELL_SCENE : PackedScene = preload(
 	"res://scenes/user_interface/move_cell.tscn")
 
@@ -49,6 +46,11 @@ const CLOSE_UI_INPUT := "close_ui"
 
 const WEIGHT_FORMAT := "--- Weight %s/%s kg ---"
 
+# Tween Pram
+const TWEEN_DURATION := 0.8
+const SHOW_POS := Vector2(0, 0)
+const HIDE_POS := Vector2(0, -720)
+
 # each number is multiplyed by 0.2 for the ratio. using intergets for better precision
 # so 1 means under 0.2
 const EXTRACTION_BAR_COLOR_RATIOS := {
@@ -60,8 +62,7 @@ const EXTRACTION_BAR_COLOR_RATIOS := {
 }
 
 @export var pod : StaticBody3D
-
-@export var extraction_animations : AnimationPlayer
+@export var ui_root : MarginContainer
 
 @export_group("UI Type")
 @export var title : Label
@@ -132,7 +133,7 @@ func _process(_delta: float) -> void:
 
 # General loading and functoins -----------------------------------------------
 func close_ui(forced = false) -> void:
-	if extraction_animations.is_playing() and not forced:
+	if move_tween_playing and not forced:
 		return
 	
 	# puts all the items in the to storage to the from storage
@@ -141,12 +142,11 @@ func close_ui(forced = false) -> void:
 		to_storage_lookup[Global.at_ship]
 	)
 	
-	extraction_animations.play(ANIMATION_CLOSE)
 	_set_open_or_close(false)
 
 
 func open_ui() -> void:
-	if extraction_animations.is_playing():
+	if move_tween_playing:
 		return
 	
 	for tier in to_storage_lookup[Global.at_ship]:
@@ -167,14 +167,19 @@ func open_ui() -> void:
 				from_storage_lookup[Global.at_ship][tier][item_name] -= (
 					to_storage_lookup[Global.at_ship][tier][item_name]
 					)
-				
 	
 	_set_open_or_close(true)
-	extraction_animations.play(ANIMATION_OPEN)
 	load_extraction_cells()
 
 
 func _set_open_or_close(toggle : bool) -> void:
+	hide_or_show_tween(
+		ui_root,
+		TWEEN_DURATION,
+		SHOW_POS if toggle else HIDE_POS,
+		toggle
+		)
+	
 	Global.ui_open = toggle
 	Global.extraction_open = toggle
 	set_open_timescale(toggle)

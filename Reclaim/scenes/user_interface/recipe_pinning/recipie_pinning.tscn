@@ -2,25 +2,26 @@
 
 [ext_resource type="Script" uid="uid://cbgkgqi5hd8k8" path="res://scripts/user_interface/item_pinning/recipie_pinning.gd" id="1_ftnn3"]
 
-[node name="recipie_pinning" type="Control" unique_id=1830514154 node_paths=PackedStringArray("pining_vbox")]
+[node name="recipie_pinning" type="Control" unique_id=1830514154 node_paths=PackedStringArray("pining_vbox", "margin_container")]
 z_index = -1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 140.0
-offset_right = 140.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_ftnn3")
 pining_vbox = NodePath("MarginContainer/VBoxContainer")
+margin_container = NodePath("MarginContainer")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1155133925]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 140.0
+offset_right = 140.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_top = 20

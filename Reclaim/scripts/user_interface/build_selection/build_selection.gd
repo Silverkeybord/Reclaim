@@ -1,3 +1,4 @@
+class_name BuildSelection
 extends CanvasLayer
 
 # Constants --------------------------------------------------------------------
@@ -171,8 +172,9 @@ func _input(event: InputEvent) -> void:
 		scroll(event)
 
 
-# Setup & Management -----------------------------------------------------------
+# Setup & Processes ------------------------------------------------------------
 func load_selection() -> void:
+	print("ran : ", HelperFunctions.get_items_from_type(Global.ITEM_TYPES.BASE))
 	var available_turrets = HelperFunctions.get_items_from_type(Global.ITEM_TYPES.TURRET)
 	var available_bases = HelperFunctions.get_items_from_type(Global.ITEM_TYPES.BASE)
 	

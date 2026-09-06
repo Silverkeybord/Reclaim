@@ -241,17 +241,30 @@ func get_enemy_scenes() -> Dictionary:
 		return {}
 	
 	var enemy_scene_files = enemy_scene_folder.get_files()
+	print(enemy_scene_files)
 	
 	for file_name in enemy_scene_files:
-		var path = enemy_scene_folder.get_current_dir() + SLASH_FORMATTING + file_name
+		var clean_file_name: String = file_name
 		
-		if not ResourceLoader.exists(path):
-			push_error(INVALID_ENEMY_SCENE)
+		if clean_file_name.ends_with(DataRegistry.REMAP_FILE_EXTENSION):
+			clean_file_name = clean_file_name.trim_suffix(DataRegistry.REMAP_FILE_EXTENSION)
+		
+		if not clean_file_name.ends_with(DataRegistry.SCENE_FILE_EXTENTION):
 			continue
 		
-		var scene : PackedScene = load(path)
+		var path := (
+			enemy_scene_folder.get_current_dir() +
+			SLASH_FORMATTING +
+			clean_file_name
+		)
 		
-		var key_name = file_name.get_basename()
+		if not ResourceLoader.exists(path):
+			continue
+		
+		var scene: PackedScene = load(path)
+		
+		var key_name := clean_file_name.get_basename()
 		returning_dict[key_name] = scene
-	 
+	
+	print(returning_dict)
 	return returning_dict
