@@ -67,7 +67,7 @@ void fragment()
 	
 	float pulse =
 		0.1
-		+ 0.9*sin(TIME * pulse_speed);
+		+ 0.9 * sin(TIME * pulse_speed);
 	
 	
 	//-------------------------
@@ -83,10 +83,10 @@ void fragment()
 	
 	float glow =
 		fresnel
-		+ scan*0.35
-		+ grid*0.6
-		+ pulse*0.15
-		+ damage_flash*0.6;
+		+ scan * 0.35
+		+ grid * 0.6
+		+ pulse * 0.15
+		+ damage_flash * 0.6;
 	
 	//-------------------------
 	
@@ -97,6 +97,6 @@ void fragment()
 	
 	ALPHA =
 		shield_color.a
-		+ fresnel*0.35
-		+ scan*0.08;
+		+ fresnel * 0.35
+		+ scan * 0.08;
 }

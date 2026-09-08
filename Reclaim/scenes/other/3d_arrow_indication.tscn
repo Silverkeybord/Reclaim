@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://b5372wtd5bmwh"]
+
+[ext_resource type="PackedScene" uid="uid://brwb4agh1v30c" path="res://3d_assets/other/arrow_indicator.tscn" id="1_xhe1i"]
+
+[node name="3D_arrow_indication" type="Node3D" unique_id=1312486985]
+
+[node name="arrow_indicator" parent="." unique_id=1675649169 instance=ExtResource("1_xhe1i")]
