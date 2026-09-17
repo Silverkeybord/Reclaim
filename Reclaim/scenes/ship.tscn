@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://p33w1llwyou3" path="res://scenes/interactable/research_table.tscn" id="3_w1oif"]
 [ext_resource type="PackedScene" uid="uid://br62cm1gllm1" path="res://scenes/interactable/deploy_pod.tscn" id="4_m75ec"]
 [ext_resource type="PackedScene" uid="uid://dy5epdlb81c0u" path="res://scenes/interactable/storage_container.tscn" id="5_io440"]
-[ext_resource type="PackedScene" uid="uid://brwb4agh1v30c" path="res://3d_assets/other/arrow_indicator.tscn" id="7_3m36u"]
+[ext_resource type="PackedScene" uid="uid://onj6y7orkvbw" path="res://scenes/other/tutorial_arrow.tscn" id="7_3m36u"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_m75ec"]
 _surfaces = [{
@@ -62,5 +62,5 @@ metadata/_edit_lock_ = true
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 5.98608, 0.009203434, 7.7906218)
 metadata/_edit_lock_ = true
 
-[node name="arrow_indicator" parent="." unique_id=1675649169 instance=ExtResource("7_3m36u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.1119213, 3.6693215, 7.268256)
+[node name="TutorialArrow" parent="." unique_id=1145567560 instance=ExtResource("7_3m36u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2460151, 2.02872, 7.810231)

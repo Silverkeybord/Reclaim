@@ -64,8 +64,8 @@ const ZERO_FLOAT : float = 0.0
 # EXPORTS
 # =============================================================================
 @export_group("Player Stats")
-@export var jump_velocity: float = 40.0 # was 20 debugging
-@export var move_speed: float = 30.0 # was 14 debugging
+@export var jump_velocity: float = 20.0
+@export var move_speed: float = 16.0
 @export var in_shield: bool = false
 
 @export_group("In Scene References")

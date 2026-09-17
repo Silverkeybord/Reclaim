@@ -168,7 +168,6 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [node name="crafting_ui" type="CanvasLayer" unique_id=881350527 node_paths=PackedStringArray("ui_root", "craft_queue_vbox", "craft_pin_texture", "recpie_pinning", "craft_name", "image_background", "requirement_image", "requirments_hflow", "craft_button", "craft_overlay", "amount_stat", "craft_time_stat", "dps_stat", "ability_stat", "description", "one_times", "five_times", "twentyfive_times", "max_times", "turrets_tab", "modules_tab", "resources_tab", "turrets_vbox", "modules_vbox", "resources_vbox", "turrets_tab_scroll", "modules_tab_scroll", "resources_tab_scroll")]
-layer = 2
 script = ExtResource("1_0a7d0")
 ui_root = NodePath("ui_root")
 craft_queue_vbox = NodePath("ui_root/whole_ui/craft_queue_vbox")

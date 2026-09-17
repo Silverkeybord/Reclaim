@@ -82,8 +82,9 @@ transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
 shape = SubResource("ConcavePolygonShape3D_8ty32")
 debug_color = Color(0.91764706, 0, 0.7058824, 1)
 
-[node name="sector_elements" parent="consistant" unique_id=1141916938 instance=ExtResource("3_lr34o")]
+[node name="sector_elements" parent="consistant" unique_id=1141916938 node_paths=PackedStringArray("enemy_spawner") instance=ExtResource("3_lr34o")]
 sector_name = "--- Remote Island ---"
+enemy_spawner = NodePath("../enemy_spawner")
 
 [node name="enemy_spawn_markers" type="Node" parent="." unique_id=1301469332]
 

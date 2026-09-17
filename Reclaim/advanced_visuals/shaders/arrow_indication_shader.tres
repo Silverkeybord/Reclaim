@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dwkwps61v6ffm"]
+
+[ext_resource type="Shader" uid="uid://cwnhaivd05kia" path="res://advanced_visuals/shaders/arrow_indicator.gdshader" id="1_2sj4w"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_2sj4w")
+shader_parameter/arrow_color = Color(0.9171251, 0.95471936, 0.9277744, 1)
+shader_parameter/center_alpha = 0.400000019
+shader_parameter/fresnel_power = 5.0210002352376195
+shader_parameter/fresnel_strength = 10.0

@@ -21,7 +21,7 @@ font_size = 10
 font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 
 [node name="itemtip" type="CanvasLayer" unique_id=854836766 node_paths=PackedStringArray("item_control", "resource_name_label", "resource_value_label", "resource_weight_label", "resource_amount_label", "turret_name_label", "turret_value_label", "turret_weight_label", "turret_fire_rate_label", "turret_damage_label", "turret_range_label", "turret_ability_label", "resources_tip", "turrets_tip")]
-layer = 3
+layer = 2
 script = ExtResource("1_nhpud")
 item_control = NodePath("item_control")
 resource_name_label = NodePath("item_control/resource_tip/MarginContainer/VBoxContainer/name_label")

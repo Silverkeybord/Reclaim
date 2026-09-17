@@ -213,6 +213,7 @@ func set_random_storage(set_sector_storage: bool = false) -> void:
 ## sets get_tree().paused to pause
 func set_paused(pause := false) -> void:
 	get_tree().paused = pause
+	Global.paused = pause
 
 
 ## sets the time scale of the engine to the passed float should be between 0.0 - 1.0

@@ -15,6 +15,9 @@ func _enter_tree() -> void:
 
 
 func set_open_timescale(toggle : bool) -> void:
+	if Global.at_ship:
+		return
+	
 	if not toggle:
 		Global.set_time_scale()
 	else:
@@ -45,4 +48,3 @@ func hide_or_show_tween(
 		target.visible = false
 	
 	move_tween_playing = false
-	

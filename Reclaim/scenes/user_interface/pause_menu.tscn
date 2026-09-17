@@ -1,37 +1,304 @@
 [gd_scene format=3 uid="uid://dxb4bka5q7f4t"]
 
 [ext_resource type="Script" uid="uid://bq14v58xrunkp" path="res://scripts/user_interface/pause_menu.gd" id="1_yasr7"]
+[ext_resource type="Texture2D" uid="uid://bfm2gf7iq5eix" path="res://2d_assets/pause/pause_back_blur.png" id="2_qheht"]
+[ext_resource type="Texture2D" uid="uid://bhw24wvgh1pb" path="res://2d_assets/pause/pause_background.png" id="3_irus0"]
+[ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="4_irus0"]
+[ext_resource type="Texture2D" uid="uid://b8sd6n548cu1l" path="res://2d_assets/pause/pause_button_img.png" id="5_w0kvp"]
+[ext_resource type="Texture2D" uid="uid://owgtuxeau3us" path="res://2d_assets/pause/toggled_icon.png" id="6_w0kvp"]
+[ext_resource type="Texture2D" uid="uid://3vf3qoshemvd" path="res://2d_assets/pause/unactive_grabber.png" id="7_75gvq"]
+[ext_resource type="Texture2D" uid="uid://bcyag6oknwvjn" path="res://2d_assets/pause/progress_tick.png" id="7_bcmvr"]
+[ext_resource type="Texture2D" uid="uid://sl48hcakk51m" path="res://2d_assets/pause/active_grabber.png" id="8_iv7aa"]
+[ext_resource type="FontFile" uid="uid://q3206aq7b5tl" path="res://other_assets/fonts/uni_sans/Uni Sans Heavy.otf" id="10_75gvq"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4v7s"]
-bg_color = Color(1, 1, 1, 0.27450982)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_b681e"]
-font_size = 128
+[sub_resource type="LabelSettings" id="LabelSettings_bcmvr"]
+font = ExtResource("4_irus0")
+font_size = 40
+font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 
-[node name="pause_menu" type="Control" unique_id=1199239225]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yf5fn"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_75gvq"]
+font = ExtResource("4_irus0")
+font_size = 28
+font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_57qmd"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_iv7aa"]
+font = ExtResource("4_irus0")
+font_size = 20
+font_color = Color(0.3882353, 0.3882353, 0.3882353, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gijfb"]
+content_margin_top = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0.8509804, 0.8509804, 0.8509804, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.47058824, 0.47058824, 0.47058824, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d0u6y"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3gngh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fcnqv"]
+
+[node name="pause_menu" type="CanvasLayer" unique_id=774636245]
+script = ExtResource("1_yasr7")
+
+[node name="Control" type="Control" parent="." unique_id=1606044641]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_yasr7")
 
-[node name="white_overlay" type="Panel" parent="." unique_id=1336941411]
+[node name="back_blur" type="TextureRect" parent="Control" unique_id=884249937]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_qheht")
+
+[node name="PanelContainer" type="PanelContainer" parent="Control/back_blur" unique_id=1245753146]
+custom_minimum_size = Vector2(368, 458)
+custom_maximum_size = Vector2(368, 458)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_g4v7s")
+
+[node name="background" type="TextureRect" parent="Control/back_blur/PanelContainer" unique_id=661285744]
+layout_mode = 2
+texture = ExtResource("3_irus0")
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/back_blur/PanelContainer" unique_id=861877766]
+layout_mode = 2
+theme_override_constants/margin_left = 23
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 23
+theme_override_constants/margin_bottom = 23
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/back_blur/PanelContainer/MarginContainer" unique_id=1175674949]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer" unique_id=454108040]
+layout_mode = 2
+text = "Pause Menu"
+label_settings = SubResource("LabelSettings_bcmvr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel" type="Panel" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/Label" unique_id=1168888689]
+custom_minimum_size = Vector2(320, 10)
+custom_maximum_size = Vector2(320, 10)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 4.0
+offset_top = 51.0
+offset_right = -4.0
+offset_bottom = 61.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer" unique_id=1679097907]
+custom_maximum_size = Vector2(-1, 274)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_top = 33
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer" unique_id=1377713222]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="continue_button" type="Button" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1205859067]
+texture_filter = 1
+custom_minimum_size = Vector2(180, 60)
+custom_maximum_size = Vector2(180, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/normal = SubResource("StyleBoxEmpty_yf5fn")
+text = "Continue"
+icon = ExtResource("5_w0kvp")
+
+[node name="Label" type="Label" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/continue_button" unique_id=1368226046]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
-metadata/_edit_use_anchors_ = true
+text = "Continue"
+label_settings = SubResource("LabelSettings_75gvq")
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Label" type="Label" parent="." unique_id=587511203]
-layout_mode = 0
-offset_left = 127.0
-offset_top = 263.0
-offset_right = 1197.0
-offset_bottom = 438.0
-text = "YOU ARE PAUSED"
-label_settings = SubResource("LabelSettings_b681e")
+[node name="save_button" type="Button" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=884388448]
+texture_filter = 1
+custom_minimum_size = Vector2(180, 60)
+custom_maximum_size = Vector2(180, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/normal = SubResource("StyleBoxEmpty_yf5fn")
+text = "Continue"
+icon = ExtResource("5_w0kvp")
+
+[node name="Label" type="Label" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/save_button" unique_id=606766851]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Save"
+label_settings = SubResource("LabelSettings_75gvq")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="exit_button" type="Button" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1418727575]
+texture_filter = 1
+custom_minimum_size = Vector2(180, 60)
+custom_maximum_size = Vector2(180, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/normal = SubResource("StyleBoxEmpty_yf5fn")
+text = "Continue"
+icon = ExtResource("5_w0kvp")
+
+[node name="Label" type="Label" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/exit_button" unique_id=1702995067]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Exit"
+label_settings = SubResource("LabelSettings_75gvq")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggles" type="HBoxContainer" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer" unique_id=1428105534]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+theme_override_constants/separation = 33
+
+[node name="toggle_input_tips" type="Button" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/toggles" unique_id=1774345277]
+custom_minimum_size = Vector2(148, 0)
+custom_maximum_size = Vector2(148, -1)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxEmpty_57qmd")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_input_tips" unique_id=299864477]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="TextureRect" type="TextureRect" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_input_tips/HBoxContainer" unique_id=826611641]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("6_w0kvp")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_input_tips/HBoxContainer" unique_id=316319980]
+layout_mode = 2
+text = "Input Tips"
+label_settings = SubResource("LabelSettings_iv7aa")
+
+[node name="toggle_show_fps" type="Button" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/toggles" unique_id=1972113380]
+custom_minimum_size = Vector2(140, 0)
+custom_maximum_size = Vector2(140, -1)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxEmpty_57qmd")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_show_fps" unique_id=1795711595]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="TextureRect" type="TextureRect" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_show_fps/HBoxContainer" unique_id=1719057655]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("6_w0kvp")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_show_fps/HBoxContainer" unique_id=1969433081]
+layout_mode = 2
+text = "Show FPS"
+label_settings = SubResource("LabelSettings_iv7aa")
+
+[node name="MarginContainer2" type="MarginContainer" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer" unique_id=1446802511]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+
+[node name="sensitivity" type="HBoxContainer" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2" unique_id=1007311866]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_constants/separation = 11
+
+[node name="sensitivity" type="Label" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity" unique_id=540411141]
+layout_mode = 2
+text = "Sensitivity"
+label_settings = SubResource("LabelSettings_iv7aa")
+
+[node name="HSlider" type="HSlider" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity" unique_id=583399253]
+texture_filter = 1
+custom_minimum_size = Vector2(130, 0)
+custom_maximum_size = Vector2(130, -1)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/center_grabber = -1
+theme_override_constants/grabber_offset = 0
+theme_override_constants/tick_offset = 0
+theme_override_icons/grabber = ExtResource("7_75gvq")
+theme_override_icons/grabber_highlight = ExtResource("8_iv7aa")
+theme_override_icons/tick = ExtResource("7_bcmvr")
+theme_override_styles/slider = SubResource("StyleBoxFlat_gijfb")
+value = 50.0
+
+[node name="sensitivity_value" type="Label" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity" unique_id=749263079]
+visible = false
+layout_mode = 2
+text = "0.5"
+label_settings = SubResource("LabelSettings_iv7aa")
+
+[node name="LineEdit" type="LineEdit" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity" unique_id=624836745]
+custom_maximum_size = Vector2(45, 30)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.3882353, 0.3882353, 0.3882353, 1)
+theme_override_fonts/font = ExtResource("10_75gvq")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_d0u6y")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_3gngh")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_fcnqv")
+text = "0.85"

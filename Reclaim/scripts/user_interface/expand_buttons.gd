@@ -3,7 +3,7 @@ extends Button
 
 # You need to turn on offset transformations for this to work
 
-const PRESS_SOUND : SoundInfo = preload("res://sounds/user_interface/button_click_soundinfo.tres")
+const PRESS_SOUND : SoundInfo = preload("res://sounds/user_interface/button_click_sound_info.tres")
 
 const TWEEN_TIME := 0.05
 const NORMAL_SCALE := Vector2(1, 1)

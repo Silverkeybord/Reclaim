@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://3hi5wymcupw7" path="res://scenes/turrets/build_holagram.tscn" id="2_6upyo"]
 [ext_resource type="Script" uid="uid://dev5omns2mu5y" path="res://scripts/player/camera_control.gd" id="2_mxepk"]
 [ext_resource type="Texture2D" uid="uid://b0sbhjjkojgb0" path="res://2d_assets/reticles/interact_reticle.png" id="3_mxepk"]
+[ext_resource type="Script" uid="uid://6g0hl3jv6gmt" path="res://scripts/player/camera_follow.gd" id="4_ugbui"]
 [ext_resource type="PackedScene" uid="uid://deasukscym312" path="res://scenes/weapons/gun.tscn" id="4_xxarj"]
 [ext_resource type="FontFile" uid="uid://q3206aq7b5tl" path="res://other_assets/fonts/uni_sans/Uni Sans Heavy.otf" id="5_ca0mu"]
 [ext_resource type="PackedScene" uid="uid://1t8lful3kj2t" path="res://scenes/player/installatoin_wrench.tscn" id="5_gx1jg"]
@@ -13,8 +14,14 @@
 [ext_resource type="PackedScene" uid="uid://bqdl5iwhoay06" path="res://scenes/user_interface/fps_label.tscn" id="10_h17s1"]
 [ext_resource type="PackedScene" uid="uid://5wiwx78yrbjr" path="res://scenes/user_interface/build_selection.tscn" id="12_gx1jg"]
 [ext_resource type="PackedScene" uid="uid://bcld5qdacv0d8" path="res://scenes/user_interface/items/item_notif_controller.tscn" id="13_gx1jg"]
+[ext_resource type="PackedScene" uid="uid://dxb4bka5q7f4t" path="res://scenes/user_interface/pause_menu.tscn" id="15_fcs02"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e41v5"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_myrg7"]
+radius = 0.2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ugbui"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ca0mu"]
 size = Vector3(0.9, 0.9, 0.9)
@@ -24,10 +31,6 @@ size = Vector3(0.9, 0.9, 0.9)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xxarj"]
 transparency = 1
 albedo_color = Color(0.8117647, 0.8117647, 0.8117647, 0.44313726)
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_qek5x"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_5gtgg"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_yf5fn"]
 size = Vector3(0.125, 0.3, 0.125)
@@ -155,8 +158,8 @@ collision_mask = 79
 script = ExtResource("1_eo61r")
 interact_overlay = NodePath("canvas_root/interact_overlay")
 hit_overlay = NodePath("canvas_root/hit_overlay")
-aim_ray = NodePath("SpringArm3D2/SpringArm3D/aim_ray")
-build_ray = NodePath("SpringArm3D2/SpringArm3D/build_ray")
+aim_ray = NodePath("spring_arm_piviot/camera_follow/aim_ray")
+build_ray = NodePath("spring_arm_piviot/camera_follow/build_ray")
 shooting_timer = NodePath("arm_piviot/gun_piviot/shoot_timer")
 pick_up_area = NodePath("pick_up_area")
 arm_pivot = NodePath("arm_piviot")
@@ -176,6 +179,48 @@ item_notif_controller = NodePath("canvas_root/item_notif_controller")
 shape = SubResource("BoxShape3D_e41v5")
 debug_color = Color(0, 0, 0, 0.41960785)
 
+[node name="spring_arm_piviot" type="Node3D" parent="." unique_id=1936268321 node_paths=PackedStringArray("player", "arm_pivot", "xy_spring_arm", "z_spring_arm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+script = ExtResource("2_mxepk")
+player = NodePath("..")
+arm_pivot = NodePath("../arm_piviot")
+xy_spring_arm = NodePath("xy_axis_spring_arm")
+z_spring_arm = NodePath("z_axis_spring_arm")
+
+[node name="z_axis_spring_arm" type="SpringArm3D" parent="spring_arm_piviot" unique_id=1140578964]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+shape = SubResource("SphereShape3D_myrg7")
+spring_length = 0.75
+
+[node name="z_camera_marker" type="Marker3D" parent="spring_arm_piviot/z_axis_spring_arm" unique_id=1072257979]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.2)
+
+[node name="xy_axis_spring_arm" type="SpringArm3D" parent="spring_arm_piviot" unique_id=1859477604]
+shape = SubResource("SphereShape3D_ugbui")
+spring_length = 8.0
+
+[node name="xy_camera_marker" type="Marker3D" parent="spring_arm_piviot/xy_axis_spring_arm" unique_id=38049301]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.2)
+
+[node name="camera_follow" type="Node3D" parent="spring_arm_piviot" unique_id=1474230426 node_paths=PackedStringArray("xy_camera_marker", "z_camera_marker")]
+script = ExtResource("4_ugbui")
+xy_camera_marker = NodePath("../xy_axis_spring_arm/xy_camera_marker")
+z_camera_marker = NodePath("../z_axis_spring_arm/z_camera_marker")
+lerp_power = 14.0
+
+[node name="Third person" type="Camera3D" parent="spring_arm_piviot/camera_follow" unique_id=918761004]
+current = true
+
+[node name="aim_ray" type="RayCast3D" parent="spring_arm_piviot/camera_follow" unique_id=49309072]
+target_position = Vector3(0, 0, -150)
+collision_mask = 25
+collide_with_areas = true
+
+[node name="build_ray" type="RayCast3D" parent="spring_arm_piviot/camera_follow" unique_id=1763885368]
+target_position = Vector3(0, 0, -150)
+collision_mask = 4
+collide_with_areas = true
+
 [node name="player_model" type="Node3D" parent="." unique_id=1056608312]
 
 [node name="inner" type="MeshInstance3D" parent="player_model" unique_id=564812277]
@@ -184,36 +229,6 @@ mesh = SubResource("BoxMesh_ca0mu")
 [node name="outter" type="MeshInstance3D" parent="player_model" unique_id=1930751977]
 mesh = SubResource("BoxMesh_6upyo")
 surface_material_override/0 = SubResource("StandardMaterial3D_xxarj")
-
-[node name="SpringArm3D2" type="SpringArm3D" parent="." unique_id=1504848558]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 1.25, 0)
-shape = SubResource("SphereShape3D_qek5x")
-spring_length = 0.75
-
-[node name="SpringArm3D" type="SpringArm3D" parent="SpringArm3D2" unique_id=1017678808 node_paths=PackedStringArray("player", "spring_arm", "arm_pivot", "z_axis_spring_arm")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -3.278354e-08, 0, 0.75)
-shape = SubResource("SphereShape3D_5gtgg")
-spring_length = 10.0
-script = ExtResource("2_mxepk")
-player = NodePath("../..")
-spring_arm = NodePath(".")
-arm_pivot = NodePath("../../arm_piviot")
-z_axis_spring_arm = NodePath("..")
-
-[node name="Third person" type="Camera3D" parent="SpringArm3D2/SpringArm3D" unique_id=918761004]
-current = true
-
-[node name="aim_ray" type="RayCast3D" parent="SpringArm3D2/SpringArm3D" unique_id=49309072]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
-target_position = Vector3(0, 0, -150)
-collision_mask = 25
-collide_with_areas = true
-
-[node name="build_ray" type="RayCast3D" parent="SpringArm3D2/SpringArm3D" unique_id=1763885368]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
-target_position = Vector3(0, 0, -150)
-collision_mask = 4
-collide_with_areas = true
 
 [node name="arm_piviot" type="Node3D" parent="." unique_id=3113373]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.65, 0.1, 0)
@@ -248,6 +263,7 @@ visible = false
 transform = Transform3D(-4.371139e-08, -1, 0, -4.371139e-08, 1.9106855e-15, -1, 1, -4.371139e-08, -4.371139e-08, 0.05, 0, 0)
 
 [node name="pick_up_area" type="Area3D" parent="." unique_id=1724560040 groups=["drop"]]
+visible = false
 collision_layer = 0
 collision_mask = 128
 monitoring = false
@@ -277,6 +293,33 @@ grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("5_xxarj")
 stretch_mode = 3
+
+[node name="FPS counter" parent="canvas_root" unique_id=1336845062 instance=ExtResource("10_h17s1")]
+visible = false
+offset_left = 5.0
+offset_right = 45.0
+label_settings = ExtResource("8_5gtgg")
+
+[node name="input_tips" type="PanelContainer" parent="canvas_root" unique_id=1946409334]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 139.0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
+
+[node name="MarginContainer" type="MarginContainer" parent="canvas_root/input_tips" unique_id=1312460894]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="input_tip" type="Label" parent="canvas_root/input_tips/MarginContainer" unique_id=1361217528]
+layout_mode = 2
+label_settings = ExtResource("8_5gtgg")
 
 [node name="interact_overlay" type="Control" parent="canvas_root" unique_id=828996024]
 visible = false
@@ -419,32 +462,7 @@ stretch_mode = 3
 [node name="item_notif_controller" parent="canvas_root" unique_id=1202289325 node_paths=PackedStringArray("build_selection") instance=ExtResource("13_gx1jg")]
 build_selection = NodePath("../build_selection")
 
-[node name="FPS counter" parent="canvas_root" unique_id=1336845062 instance=ExtResource("10_h17s1")]
-visible = false
-offset_left = 5.0
-offset_right = 45.0
-label_settings = ExtResource("8_5gtgg")
-
-[node name="input_tips" type="PanelContainer" parent="canvas_root" unique_id=1946409334]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -40.0
-offset_right = 139.0
-grow_vertical = 0
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
-
-[node name="MarginContainer" type="MarginContainer" parent="canvas_root/input_tips" unique_id=1312460894]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 5
-
-[node name="input_tip" type="Label" parent="canvas_root/input_tips/MarginContainer" unique_id=1361217528]
-layout_mode = 2
-label_settings = ExtResource("8_5gtgg")
+[node name="pause_menu" parent="canvas_root" unique_id=1199239225 instance=ExtResource("15_fcs02")]
 
 [node name="UI_animations" type="AnimationPlayer" parent="canvas_root" unique_id=1425390205]
 root_node = NodePath("../..")

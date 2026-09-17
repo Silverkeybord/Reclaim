@@ -29,6 +29,7 @@ const INTERACT_INPUT : StringName = &"interact"
 @export var player : CharacterBody3D
 @export var extraction_pod : StaticBody3D
 @export var sector_shield : SectorShield
+@export var enemy_spawner : EnemySpawner
 
 
 # Called when the node enters the scene tree for the first time.
@@ -66,6 +67,8 @@ func _process(_delta: float) -> void:
 			sector_name_label.visible = false
 			skip_label.visible = false
 			
+			enemy_spawner.start_sector()
+			
 			set_process(false)
 			
 		elif sector_element_animation.current_animation == EXTRACTING_ANIMATION:
@@ -86,6 +89,7 @@ func _on_sector_elements_animations_animation_finished(anim_name: StringName) ->
 	if anim_name == LANDING_ANIMATION:
 		Global.major_animation_playing = false
 		sector_shield.run_ui.visible = true
+		enemy_spawner.start_sector()
 	
 	elif anim_name == EXTRACTING_ANIMATION:
 		Global.major_animation_playing = false

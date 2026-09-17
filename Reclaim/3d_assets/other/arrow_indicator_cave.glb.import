@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://ng7g422iivrm"
-path="res://.godot/imported/arrow_indicator.glb-21ad76bd4f9ea10ac86fbe8f06b7439f.scn"
+uid="uid://d4c2q3g4alwri"
+path="res://.godot/imported/arrow_indicator_cave.glb-a36358eb0666c79c5e39e77964ea7740.scn"
 
 [deps]
 
-source_file="res://3d_assets/other/arrow_indicator.glb"
-dest_files=["res://.godot/imported/arrow_indicator.glb-21ad76bd4f9ea10ac86fbe8f06b7439f.scn"]
+source_file="res://3d_assets/other/arrow_indicator_cave.glb"
+dest_files=["res://.godot/imported/arrow_indicator_cave.glb-a36358eb0666c79c5e39e77964ea7740.scn"]
 
 [params]
 

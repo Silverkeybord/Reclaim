@@ -1,3 +1,4 @@
+class_name EnemySpawner
 extends Node3D
 
 const BASIC_ENEMY_FALLBACK : PackedScene = preload("res://scenes/enemies/enemy_scenes/basic.tscn")
@@ -47,13 +48,18 @@ var clear_spawning := false
 
 
 func _ready() -> void:
+	set_process(false)
 	var first_section = wave_data.spawning[0]
 	current_spawn_section = first_section
 	
 	sector_elements.sector_shield.run_ui.wave_stages = wave_data.return_wave_stages()
 	spawn_section_times = wave_data.return_wave_times()
-	
-	spawn_timer.start(first_section.breathing_room)
+
+
+# called from sector elements after animation is finished or skipped
+func start_sector() -> void:
+	spawn_timer.start(current_spawn_section.breathing_room)
+	set_process(true)
 
 
 func _process(delta: float) -> void:
@@ -241,8 +247,8 @@ func get_enemy_scenes() -> Dictionary:
 		return {}
 	
 	var enemy_scene_files = enemy_scene_folder.get_files()
-	print(enemy_scene_files)
 	
+	# Same problem as the resource files loading exported versions add a remap extention
 	for file_name in enemy_scene_files:
 		var clean_file_name: String = file_name
 		
@@ -266,5 +272,4 @@ func get_enemy_scenes() -> Dictionary:
 		var key_name := clean_file_name.get_basename()
 		returning_dict[key_name] = scene
 	
-	print(returning_dict)
 	return returning_dict
