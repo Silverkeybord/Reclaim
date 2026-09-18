@@ -1,13 +1,13 @@
 [gd_scene format=3 uid="uid://dxb4bka5q7f4t"]
 
 [ext_resource type="Script" uid="uid://bq14v58xrunkp" path="res://scripts/user_interface/pause_menu.gd" id="1_yasr7"]
+[ext_resource type="Texture2D" uid="uid://dkttbw1dr5i57" path="res://2d_assets/pause/untoggled_icon.png" id="2_iv7aa"]
 [ext_resource type="Texture2D" uid="uid://bfm2gf7iq5eix" path="res://2d_assets/pause/pause_back_blur.png" id="2_qheht"]
 [ext_resource type="Texture2D" uid="uid://bhw24wvgh1pb" path="res://2d_assets/pause/pause_background.png" id="3_irus0"]
 [ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="4_irus0"]
 [ext_resource type="Texture2D" uid="uid://b8sd6n548cu1l" path="res://2d_assets/pause/pause_button_img.png" id="5_w0kvp"]
 [ext_resource type="Texture2D" uid="uid://owgtuxeau3us" path="res://2d_assets/pause/toggled_icon.png" id="6_w0kvp"]
 [ext_resource type="Texture2D" uid="uid://3vf3qoshemvd" path="res://2d_assets/pause/unactive_grabber.png" id="7_75gvq"]
-[ext_resource type="Texture2D" uid="uid://bcyag6oknwvjn" path="res://2d_assets/pause/progress_tick.png" id="7_bcmvr"]
 [ext_resource type="Texture2D" uid="uid://sl48hcakk51m" path="res://2d_assets/pause/active_grabber.png" id="8_iv7aa"]
 [ext_resource type="FontFile" uid="uid://q3206aq7b5tl" path="res://other_assets/fonts/uni_sans/Uni Sans Heavy.otf" id="10_75gvq"]
 
@@ -20,12 +20,20 @@ font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yf5fn"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_attwk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qtm7a"]
+
 [sub_resource type="LabelSettings" id="LabelSettings_75gvq"]
 font = ExtResource("4_irus0")
 font_size = 28
 font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_57qmd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_75gvq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iv7aa"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_iv7aa"]
 font = ExtResource("4_irus0")
@@ -52,8 +60,17 @@ corner_radius_bottom_left = 4
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fcnqv"]
 
-[node name="pause_menu" type="CanvasLayer" unique_id=774636245]
+[node name="pause_menu" type="CanvasLayer" unique_id=774636245 node_paths=PackedStringArray("sensitivity_slider", "sensitivity_line_edit", "input_tips_texture_rect", "fps_texture_rect")]
+process_mode = 3
+layer = 3
+visible = false
 script = ExtResource("1_yasr7")
+sensitivity_slider = NodePath("Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity/HSlider")
+sensitivity_line_edit = NodePath("Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity/LineEdit")
+input_tips_texture_rect = NodePath("Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_input_tips/HBoxContainer/TextureRect")
+fps_texture_rect = NodePath("Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_show_fps/HBoxContainer/TextureRect")
+untoggled_texture = ExtResource("2_iv7aa")
+toggled_texture = ExtResource("6_w0kvp")
 
 [node name="Control" type="Control" parent="." unique_id=1606044641]
 layout_mode = 3
@@ -67,6 +84,7 @@ grow_vertical = 2
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 texture = ExtResource("2_qheht")
 
 [node name="PanelContainer" type="PanelContainer" parent="Control/back_blur" unique_id=1245753146]
@@ -139,6 +157,8 @@ custom_maximum_size = Vector2(180, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_styles/normal = SubResource("StyleBoxEmpty_yf5fn")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_attwk")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_qtm7a")
 text = "Continue"
 icon = ExtResource("5_w0kvp")
 
@@ -161,6 +181,8 @@ custom_maximum_size = Vector2(180, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_styles/normal = SubResource("StyleBoxEmpty_yf5fn")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_attwk")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_qtm7a")
 text = "Continue"
 icon = ExtResource("5_w0kvp")
 
@@ -183,6 +205,8 @@ custom_maximum_size = Vector2(180, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_styles/normal = SubResource("StyleBoxEmpty_yf5fn")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_attwk")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_qtm7a")
 text = "Continue"
 icon = ExtResource("5_w0kvp")
 
@@ -209,6 +233,8 @@ custom_maximum_size = Vector2(148, -1)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("StyleBoxEmpty_57qmd")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_75gvq")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_iv7aa")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_input_tips" unique_id=299864477]
 layout_mode = 1
@@ -236,6 +262,8 @@ custom_maximum_size = Vector2(140, -1)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("StyleBoxEmpty_57qmd")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_75gvq")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_iv7aa")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_show_fps" unique_id=1795711595]
 layout_mode = 1
@@ -277,28 +305,36 @@ custom_minimum_size = Vector2(130, 0)
 custom_maximum_size = Vector2(130, -1)
 layout_mode = 2
 size_flags_vertical = 4
-theme_override_constants/center_grabber = -1
 theme_override_constants/grabber_offset = 0
-theme_override_constants/tick_offset = 0
 theme_override_icons/grabber = ExtResource("7_75gvq")
 theme_override_icons/grabber_highlight = ExtResource("8_iv7aa")
-theme_override_icons/tick = ExtResource("7_bcmvr")
+theme_override_icons/grabber_disabled = ExtResource("7_75gvq")
 theme_override_styles/slider = SubResource("StyleBoxFlat_gijfb")
-value = 50.0
-
-[node name="sensitivity_value" type="Label" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity" unique_id=749263079]
-visible = false
-layout_mode = 2
-text = "0.5"
-label_settings = SubResource("LabelSettings_iv7aa")
+min_value = 0.05
+max_value = 2.0
+step = 0.05
+value = 0.05
 
 [node name="LineEdit" type="LineEdit" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity" unique_id=624836745]
 custom_maximum_size = Vector2(45, 30)
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_colors/font_color = Color(0.3882353, 0.3882353, 0.3882353, 1)
+theme_override_colors/font_uneditable_color = Color(0.3882353, 0.3882353, 0.3882353, 1)
 theme_override_fonts/font = ExtResource("10_75gvq")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_d0u6y")
 theme_override_styles/read_only = SubResource("StyleBoxEmpty_3gngh")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_fcnqv")
 text = "0.85"
+max_length = 4
+context_menu_enabled = false
+
+[connection signal="pressed" from="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/continue_button" to="." method="_on_continue_button_pressed"]
+[connection signal="pressed" from="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/save_button" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/exit_button" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_input_tips" to="." method="_on_toggle_input_tips_pressed"]
+[connection signal="pressed" from="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_show_fps" to="." method="_on_toggle_show_fps_pressed"]
+[connection signal="drag_ended" from="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity/HSlider" to="." method="_on_h_slider_drag_ended"]
+[connection signal="drag_started" from="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity/HSlider" to="." method="_on_h_slider_drag_started"]
+[connection signal="editing_toggled" from="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity/LineEdit" to="." method="_on_line_edit_editing_toggled"]
+[connection signal="text_submitted" from="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity/LineEdit" to="." method="_on_line_edit_text_submitted"]

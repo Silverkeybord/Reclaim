@@ -41,11 +41,20 @@ const SECTORS := {
 const SAVE_PATH: String = "user://reclaim.save"
 const DEFAULT_SECTOR_PATH: PackedScene = SECTORS["remote_island"]
 
-# SAVE KEYS ---------------------------------------------------------------
+# SAVE AND LOADING ---------------------------------------------------------
 const SAVE_SHIP_STORAGE_KEY: String = "ship_storage"
 const SAVE_CUBITS_KEY: String = "cubits"
 const SAVE_COUNCIL_AUTHORIZATION_KEY: String = "council_authorization"
+const SAVE_SETTINGS_KEY: String = "settings"
+
+# UPGRADES
 const SAVE_TURRET_SLOTS_KEY: String = "turret_slots"
+
+const SAVE_SENSIVITY_KEY: String = "sensitivity"
+const SAVE_SHOW_FPS_TOGGLE: String = "show_fps"
+const SAVE_SHOW_INPUT_TIP_TOGGLE: String = "show_input_tip"
+
+const SAVE_AND_LOAD_BUFFER: float = 0.5
 
 # TIER CONFIG KEYS --------------------------------------------------------
 const KEY_COLOR: String = "color"
@@ -187,6 +196,11 @@ var ship_storage: Dictionary = HelperFunctions.get_clean_storage()
 var extraction_storage: Dictionary = HelperFunctions.get_clean_storage()
 var deploy_storage: Dictionary = HelperFunctions.get_clean_storage()
 
+# SETTINGS -------------------------------------------------------------------
+## Goes from 0.05 to 2 as a multiplyer of the base sensitivity
+var sensitivity: float = 1.0
+var show_input_tip: bool = true
+var show_fps: bool = false
 
 ## Temp testing function to fill storage - THIS IS A TESTING FUNCTION IGNORE CONVENTIONS
 func set_random_storage(set_sector_storage: bool = false) -> void:
@@ -240,15 +254,27 @@ func save_game() -> void:
 		return
 	
 	var save_data := {
-		# storage / storage
 		SAVE_SHIP_STORAGE_KEY: ship_storage,
 		SAVE_CUBITS_KEY: cubits,
 		SAVE_COUNCIL_AUTHORIZATION_KEY: {
-			SAVE_TURRET_SLOTS_KEY: turret_slots
+			SAVE_TURRET_SLOTS_KEY: turret_slots,
+		},
+		SAVE_SETTINGS_KEY: {
+			SAVE_SENSIVITY_KEY: sensitivity,
+			SAVE_SHOW_FPS_TOGGLE: show_fps,
+			SAVE_SHOW_INPUT_TIP_TOGGLE: show_input_tip
 		}
 	}
 	
 	file.store_var(save_data)
+	print("-------- load data is --------")
+	for x in save_data:
+		print(save_data[x])
+		print("")
+	print("save success")
+	
+	await get_tree().create_timer(SAVE_AND_LOAD_BUFFER).timeout
+	return
 
 
 ## Loads the data from the saved folder if there is one
@@ -266,14 +292,31 @@ func load_game() -> void:
 		push_error(ERR_SAVE_INVALID)
 		return
 	
-	if data.has(SAVE_SHIP_STORAGE_KEY):
-		ship_storage = data[SAVE_SHIP_STORAGE_KEY]
+	print("-------- load data is --------")
+	for x in data:
+		print(data[x])
+		print("")
+	print("")
+	# Settings ---------------------------------------------------------------
+	var settings = data.get(SAVE_SETTINGS_KEY, {})
+	if typeof(settings) == TYPE_DICTIONARY:
+		print("loading settings")
+		sensitivity = get(SAVE_SENSIVITY_KEY)
+		show_fps = get(SAVE_SHOW_FPS_TOGGLE)
+		show_input_tip = get(SAVE_SHOW_INPUT_TIP_TOGGLE)
 	
+	# Ship storage -----------------------------------------------------------
+	ship_storage = data.get(SAVE_SHIP_STORAGE_KEY, {})
+	
+	# Cubits -----------------------------------------------------------------
 	cubits = int(data.get(SAVE_CUBITS_KEY, cubits))
 	
+	# Council authorisation loading -------------------------------------------
 	var council_authorization = data.get(SAVE_COUNCIL_AUTHORIZATION_KEY, {})
 	if typeof(council_authorization) == TYPE_DICTIONARY:
 		turret_slots = int(council_authorization.get(SAVE_TURRET_SLOTS_KEY, turret_slots))
+	
+	print("load success \n")
 
 
 ## Deletes the game data completely, removing the save file

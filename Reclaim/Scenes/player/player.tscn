@@ -152,7 +152,7 @@ _data = {
 &"build_placed": SubResource("Animation_ugbui")
 }
 
-[node name="player" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "hit_overlay", "aim_ray", "build_ray", "shooting_timer", "pick_up_area", "arm_pivot", "gun_pivot", "hammer_pivot", "wrench_pivot", "canvas_root", "build_overlay", "build_label", "input_tip", "building_selection", "user_interface_animations", "item_notif_controller") groups=["player"]]
+[node name="player" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "hit_overlay", "aim_ray", "build_ray", "shooting_timer", "pick_up_area", "arm_pivot", "gun_pivot", "hammer_pivot", "wrench_pivot", "canvas_root", "build_overlay", "build_label", "input_tip", "building_selection", "user_interface_animations", "item_notif_controller", "fps_lable", "input_tips_panel") groups=["player"]]
 collision_layer = 2
 collision_mask = 79
 script = ExtResource("1_eo61r")
@@ -174,6 +174,8 @@ input_tip = NodePath("canvas_root/input_tips/MarginContainer/input_tip")
 building_selection = NodePath("canvas_root/build_selection")
 user_interface_animations = NodePath("canvas_root/UI_animations")
 item_notif_controller = NodePath("canvas_root/item_notif_controller")
+fps_lable = NodePath("canvas_root/FPS counter")
+input_tips_panel = NodePath("canvas_root/input_tips")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=125637870]
 shape = SubResource("BoxShape3D_e41v5")
@@ -209,6 +211,7 @@ z_camera_marker = NodePath("../z_axis_spring_arm/z_camera_marker")
 lerp_power = 14.0
 
 [node name="Third person" type="Camera3D" parent="spring_arm_piviot/camera_follow" unique_id=918761004]
+visible = false
 current = true
 
 [node name="aim_ray" type="RayCast3D" parent="spring_arm_piviot/camera_follow" unique_id=49309072]

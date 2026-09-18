@@ -4,7 +4,6 @@ extends CharacterBody3D
 # =============================================================================
 # CONSTANTS
 # =============================================================================
-# Use string names instead of normal strings as it save on compute for actions and inputs
 
 # Input Action Names
 const ACTION_LEFT : StringName = &"left"
@@ -96,6 +95,8 @@ const ZERO_FLOAT : float = 0.0
 @export var building_selection: CanvasLayer
 @export var user_interface_animations: AnimationPlayer
 @export var item_notif_controller : ItemNotifController
+@export var fps_lable : Label
+@export var input_tips_panel : PanelContainer
 
 # =============================================================================
 # VARIABLES
@@ -111,6 +112,7 @@ var can_remove_build: bool = true
 func _ready() -> void:
 	Global.set_random_storage()
 	_set_new_weapon()
+	Global.load_game()
 
 
 ## Handles gravity, movement input, and jumping every physics frame.
@@ -146,9 +148,11 @@ func _process(_delta: float) -> void:
 	_shoot_control()
 	_player_mode_handling()
 	_input_tip_updating()
+	_overlay_settings_updating()
 	
 	var ray_collider: Node = aim_ray.get_collider() if aim_ray else null
 	
+	# bassed on the player mode will do certain things
 	match Global.player_mode:
 		Global.PLAYER_MODES.WEAPON:
 			pass
@@ -168,6 +172,14 @@ func _process(_delta: float) -> void:
 # =============================================================================
 # UI & INPUT TIPS
 # =============================================================================
+
+func _overlay_settings_updating() -> void:
+	if Global.show_fps != fps_lable.visible:
+		fps_lable.visible = Global.show_fps
+	
+	if Global.show_input_tip != input_tips_panel.visible:
+		input_tips_panel.visible = Global.show_input_tip
+
 
 # Updates the input tip text based on what the player can do
 func _input_tip_updating() -> void:

@@ -5,10 +5,12 @@ extends Node3D
 # CONSTANTS
 # =============================================================================
 
-# Input Actions
+const BASE_SENSITIVITY := 0.003
+
+# Input actions
 const ACTION_TOGGLE_MOUSE_CAPTURE: StringName = &"toggle_mouse_capture"
 
-# Camera Bounds & Offsets
+# Camera bounds & offsets
 const MIN_PITCH: float = -PI / 2
 const MAX_PITCH: float = PI / 4
 
@@ -23,10 +25,6 @@ const THIRD_PERSON_Z_SPRING_LENGTH: float = 0.75
 # =============================================================================
 # EXPORTS
 # =============================================================================
-
-@export_group("Settings")
-@export var sensitivity: float = 0.003
-
 @export_group("Scene References")
 @export var player: CharacterBody3D
 @export var arm_pivot: Node3D
@@ -69,9 +67,9 @@ func _pan_and_pitch(event: InputEventMouseMotion) -> void:
 	if player == null:
 		return
 	
-	player.rotation.y -= event.relative.x * sensitivity
+	player.rotation.y -= event.relative.x * Global.sensitivity * BASE_SENSITIVITY
 	
-	pitch -= event.relative.y * sensitivity
+	pitch -= event.relative.y * Global.sensitivity * BASE_SENSITIVITY
 	pitch = clampf(pitch, MIN_PITCH, MAX_PITCH)
 	
 	rotation.x = pitch
