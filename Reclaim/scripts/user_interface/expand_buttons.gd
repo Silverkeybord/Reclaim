@@ -35,6 +35,7 @@ func _on_mouse_exited() -> void:
 	toggle_highlight(false)
 
 
+# calling function in "extract_highlight_button" if extended
 func toggle_highlight(_show_highlight := false) -> void:
 	pass
 

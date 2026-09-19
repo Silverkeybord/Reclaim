@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://3vf3qoshemvd" path="res://2d_assets/pause/unactive_grabber.png" id="7_75gvq"]
 [ext_resource type="Texture2D" uid="uid://sl48hcakk51m" path="res://2d_assets/pause/active_grabber.png" id="8_iv7aa"]
 [ext_resource type="FontFile" uid="uid://q3206aq7b5tl" path="res://other_assets/fonts/uni_sans/Uni Sans Heavy.otf" id="10_75gvq"]
+[ext_resource type="Script" uid="uid://clkeopwsevljj" path="res://scripts/user_interface/expand_buttons.gd" id="11_iv7aa"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
 
@@ -60,15 +61,34 @@ corner_radius_bottom_left = 4
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fcnqv"]
 
-[node name="pause_menu" type="CanvasLayer" unique_id=774636245 node_paths=PackedStringArray("sensitivity_slider", "sensitivity_line_edit", "input_tips_texture_rect", "fps_texture_rect")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4v7s"]
+bg_color = Color(0.8732979, 0.8732986, 0.87329817, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.69826937, 0.6982693, 0.6982693, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="LabelSettings" id="LabelSettings_attwk"]
+font = ExtResource("4_irus0")
+font_size = 14
+font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+
+[node name="pause_menu" type="CanvasLayer" unique_id=774636245 node_paths=PackedStringArray("sensitivity_slider", "sensitivity_line_edit", "input_tips_texture_rect", "fps_texture_rect", "delete_timer", "delete_lable")]
 process_mode = 3
 layer = 3
 visible = false
 script = ExtResource("1_yasr7")
-sensitivity_slider = NodePath("Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity/HSlider")
-sensitivity_line_edit = NodePath("Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity/LineEdit")
-input_tips_texture_rect = NodePath("Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_input_tips/HBoxContainer/TextureRect")
-fps_texture_rect = NodePath("Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_show_fps/HBoxContainer/TextureRect")
+sensitivity_slider = NodePath("Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity/HSlider")
+sensitivity_line_edit = NodePath("Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity/LineEdit")
+input_tips_texture_rect = NodePath("Control/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_input_tips/HBoxContainer/TextureRect")
+fps_texture_rect = NodePath("Control/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_show_fps/HBoxContainer/TextureRect")
+delete_timer = NodePath("delete_timer")
+delete_lable = NodePath("Control/delete_save/delete_lable")
 untoggled_texture = ExtResource("2_iv7aa")
 toggled_texture = ExtResource("6_w0kvp")
 
@@ -87,7 +107,7 @@ offset_bottom = 40.0
 mouse_filter = 2
 texture = ExtResource("2_qheht")
 
-[node name="PanelContainer" type="PanelContainer" parent="Control/back_blur" unique_id=1245753146]
+[node name="PanelContainer" type="PanelContainer" parent="Control" unique_id=1245753146]
 custom_minimum_size = Vector2(368, 458)
 custom_maximum_size = Vector2(368, 458)
 layout_mode = 1
@@ -96,37 +116,37 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -184.0
+offset_top = -229.0
+offset_right = 184.0
+offset_bottom = 229.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_g4v7s")
 
-[node name="background" type="TextureRect" parent="Control/back_blur/PanelContainer" unique_id=661285744]
+[node name="background" type="TextureRect" parent="Control/PanelContainer" unique_id=661285744]
 layout_mode = 2
 texture = ExtResource("3_irus0")
 stretch_mode = 5
 
-[node name="MarginContainer" type="MarginContainer" parent="Control/back_blur/PanelContainer" unique_id=861877766]
+[node name="MarginContainer" type="MarginContainer" parent="Control/PanelContainer" unique_id=861877766]
 layout_mode = 2
 theme_override_constants/margin_left = 23
 theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 23
 theme_override_constants/margin_bottom = 23
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/back_blur/PanelContainer/MarginContainer" unique_id=1175674949]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/MarginContainer" unique_id=1175674949]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer" unique_id=454108040]
+[node name="Label" type="Label" parent="Control/PanelContainer/MarginContainer/VBoxContainer" unique_id=454108040]
 layout_mode = 2
 text = "Pause Menu"
 label_settings = SubResource("LabelSettings_bcmvr")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Panel" type="Panel" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/Label" unique_id=1168888689]
+[node name="Panel" type="Panel" parent="Control/PanelContainer/MarginContainer/VBoxContainer/Label" unique_id=1168888689]
 custom_minimum_size = Vector2(320, 10)
 custom_maximum_size = Vector2(320, 10)
 layout_mode = 1
@@ -140,29 +160,31 @@ grow_horizontal = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="MarginContainer" type="MarginContainer" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer" unique_id=1679097907]
+[node name="MarginContainer" type="MarginContainer" parent="Control/PanelContainer/MarginContainer/VBoxContainer" unique_id=1679097907]
 custom_maximum_size = Vector2(-1, 274)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_top = 33
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer" unique_id=1377713222]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer" unique_id=1377713222]
 layout_mode = 2
 theme_override_constants/separation = 24
 
-[node name="continue_button" type="Button" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1205859067]
+[node name="continue_button" type="Button" parent="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1205859067]
 texture_filter = 1
 custom_minimum_size = Vector2(180, 60)
 custom_maximum_size = Vector2(180, 60)
 layout_mode = 2
 size_flags_horizontal = 4
+offset_transform_enabled = true
 theme_override_styles/normal = SubResource("StyleBoxEmpty_yf5fn")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_attwk")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_qtm7a")
 text = "Continue"
 icon = ExtResource("5_w0kvp")
+script = ExtResource("11_iv7aa")
 
-[node name="Label" type="Label" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/continue_button" unique_id=1368226046]
+[node name="Label" type="Label" parent="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/continue_button" unique_id=1368226046]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -174,19 +196,21 @@ label_settings = SubResource("LabelSettings_75gvq")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="save_button" type="Button" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=884388448]
+[node name="save_button" type="Button" parent="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=884388448]
 texture_filter = 1
 custom_minimum_size = Vector2(180, 60)
 custom_maximum_size = Vector2(180, 60)
 layout_mode = 2
 size_flags_horizontal = 4
+offset_transform_enabled = true
 theme_override_styles/normal = SubResource("StyleBoxEmpty_yf5fn")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_attwk")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_qtm7a")
 text = "Continue"
 icon = ExtResource("5_w0kvp")
+script = ExtResource("11_iv7aa")
 
-[node name="Label" type="Label" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/save_button" unique_id=606766851]
+[node name="Label" type="Label" parent="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/save_button" unique_id=606766851]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -198,19 +222,21 @@ label_settings = SubResource("LabelSettings_75gvq")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="exit_button" type="Button" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1418727575]
+[node name="exit_button" type="Button" parent="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1418727575]
 texture_filter = 1
 custom_minimum_size = Vector2(180, 60)
 custom_maximum_size = Vector2(180, 60)
 layout_mode = 2
 size_flags_horizontal = 4
+offset_transform_enabled = true
 theme_override_styles/normal = SubResource("StyleBoxEmpty_yf5fn")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_attwk")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_qtm7a")
 text = "Continue"
 icon = ExtResource("5_w0kvp")
+script = ExtResource("11_iv7aa")
 
-[node name="Label" type="Label" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/exit_button" unique_id=1702995067]
+[node name="Label" type="Label" parent="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/exit_button" unique_id=1702995067]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -222,12 +248,12 @@ label_settings = SubResource("LabelSettings_75gvq")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="toggles" type="HBoxContainer" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer" unique_id=1428105534]
+[node name="toggles" type="HBoxContainer" parent="Control/PanelContainer/MarginContainer/VBoxContainer" unique_id=1428105534]
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 theme_override_constants/separation = 33
 
-[node name="toggle_input_tips" type="Button" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/toggles" unique_id=1774345277]
+[node name="toggle_input_tips" type="Button" parent="Control/PanelContainer/MarginContainer/VBoxContainer/toggles" unique_id=1774345277]
 custom_minimum_size = Vector2(148, 0)
 custom_maximum_size = Vector2(148, -1)
 layout_mode = 2
@@ -236,7 +262,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_57qmd")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_75gvq")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_iv7aa")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_input_tips" unique_id=299864477]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_input_tips" unique_id=299864477]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -245,18 +271,18 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 8
 
-[node name="TextureRect" type="TextureRect" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_input_tips/HBoxContainer" unique_id=826611641]
+[node name="TextureRect" type="TextureRect" parent="Control/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_input_tips/HBoxContainer" unique_id=826611641]
 texture_filter = 1
 layout_mode = 2
 texture = ExtResource("6_w0kvp")
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_input_tips/HBoxContainer" unique_id=316319980]
+[node name="Label" type="Label" parent="Control/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_input_tips/HBoxContainer" unique_id=316319980]
 layout_mode = 2
 text = "Input Tips"
 label_settings = SubResource("LabelSettings_iv7aa")
 
-[node name="toggle_show_fps" type="Button" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/toggles" unique_id=1972113380]
+[node name="toggle_show_fps" type="Button" parent="Control/PanelContainer/MarginContainer/VBoxContainer/toggles" unique_id=1972113380]
 custom_minimum_size = Vector2(140, 0)
 custom_maximum_size = Vector2(140, -1)
 layout_mode = 2
@@ -265,7 +291,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_57qmd")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_75gvq")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_iv7aa")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_show_fps" unique_id=1795711595]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_show_fps" unique_id=1795711595]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -274,32 +300,32 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 8
 
-[node name="TextureRect" type="TextureRect" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_show_fps/HBoxContainer" unique_id=1719057655]
+[node name="TextureRect" type="TextureRect" parent="Control/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_show_fps/HBoxContainer" unique_id=1719057655]
 texture_filter = 1
 layout_mode = 2
 texture = ExtResource("6_w0kvp")
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_show_fps/HBoxContainer" unique_id=1969433081]
+[node name="Label" type="Label" parent="Control/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_show_fps/HBoxContainer" unique_id=1969433081]
 layout_mode = 2
 text = "Show FPS"
 label_settings = SubResource("LabelSettings_iv7aa")
 
-[node name="MarginContainer2" type="MarginContainer" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer" unique_id=1446802511]
+[node name="MarginContainer2" type="MarginContainer" parent="Control/PanelContainer/MarginContainer/VBoxContainer" unique_id=1446802511]
 layout_mode = 2
 theme_override_constants/margin_left = 14
 
-[node name="sensitivity" type="HBoxContainer" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2" unique_id=1007311866]
+[node name="sensitivity" type="HBoxContainer" parent="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2" unique_id=1007311866]
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 theme_override_constants/separation = 11
 
-[node name="sensitivity" type="Label" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity" unique_id=540411141]
+[node name="sensitivity" type="Label" parent="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity" unique_id=540411141]
 layout_mode = 2
 text = "Sensitivity"
 label_settings = SubResource("LabelSettings_iv7aa")
 
-[node name="HSlider" type="HSlider" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity" unique_id=583399253]
+[node name="HSlider" type="HSlider" parent="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity" unique_id=583399253]
 texture_filter = 1
 custom_minimum_size = Vector2(130, 0)
 custom_maximum_size = Vector2(130, -1)
@@ -315,7 +341,7 @@ max_value = 2.0
 step = 0.05
 value = 0.05
 
-[node name="LineEdit" type="LineEdit" parent="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity" unique_id=624836745]
+[node name="LineEdit" type="LineEdit" parent="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity" unique_id=624836745]
 custom_maximum_size = Vector2(45, 30)
 layout_mode = 2
 size_flags_vertical = 4
@@ -329,12 +355,62 @@ text = "0.85"
 max_length = 4
 context_menu_enabled = false
 
-[connection signal="pressed" from="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/continue_button" to="." method="_on_continue_button_pressed"]
-[connection signal="pressed" from="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/save_button" to="." method="_on_save_button_pressed"]
-[connection signal="pressed" from="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/exit_button" to="." method="_on_exit_button_pressed"]
-[connection signal="pressed" from="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_input_tips" to="." method="_on_toggle_input_tips_pressed"]
-[connection signal="pressed" from="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_show_fps" to="." method="_on_toggle_show_fps_pressed"]
-[connection signal="drag_ended" from="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity/HSlider" to="." method="_on_h_slider_drag_ended"]
-[connection signal="drag_started" from="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity/HSlider" to="." method="_on_h_slider_drag_started"]
-[connection signal="editing_toggled" from="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity/LineEdit" to="." method="_on_line_edit_editing_toggled"]
-[connection signal="text_submitted" from="Control/back_blur/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity/LineEdit" to="." method="_on_line_edit_text_submitted"]
+[node name="delete_save" type="Button" parent="Control" unique_id=845862017]
+custom_minimum_size = Vector2(140, 40)
+custom_maximum_size = Vector2(140, 40)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -149.0
+offset_top = -49.0
+offset_right = -9.0
+offset_bottom = -9.0
+grow_horizontal = 0
+grow_vertical = 0
+offset_transform_enabled = true
+theme_override_styles/normal = SubResource("StyleBoxFlat_g4v7s")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_g4v7s")
+theme_override_styles/hover = SubResource("StyleBoxFlat_g4v7s")
+script = ExtResource("11_iv7aa")
+
+[node name="delete_lable" type="Label" parent="Control/delete_save" unique_id=576659446]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Delete Save"
+label_settings = SubResource("LabelSettings_attwk")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="delete_timer" type="Timer" parent="." unique_id=637274480]
+wait_time = 5.0
+
+[connection signal="mouse_entered" from="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/continue_button" to="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/continue_button" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/continue_button" to="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/continue_button" method="_on_mouse_exited"]
+[connection signal="pressed" from="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/continue_button" to="." method="_on_continue_button_pressed"]
+[connection signal="pressed" from="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/continue_button" to="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/continue_button" method="_on_pressed"]
+[connection signal="mouse_entered" from="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/save_button" to="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/save_button" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/save_button" to="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/save_button" method="_on_mouse_exited"]
+[connection signal="pressed" from="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/save_button" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/save_button" to="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/save_button" method="_on_pressed"]
+[connection signal="mouse_entered" from="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/exit_button" to="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/exit_button" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/exit_button" to="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/exit_button" method="_on_mouse_exited"]
+[connection signal="pressed" from="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/exit_button" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/exit_button" to="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/exit_button" method="_on_pressed"]
+[connection signal="pressed" from="Control/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_input_tips" to="." method="_on_toggle_input_tips_pressed"]
+[connection signal="pressed" from="Control/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_show_fps" to="." method="_on_toggle_show_fps_pressed"]
+[connection signal="drag_ended" from="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity/HSlider" to="." method="_on_h_slider_drag_ended"]
+[connection signal="drag_started" from="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity/HSlider" to="." method="_on_h_slider_drag_started"]
+[connection signal="editing_toggled" from="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity/LineEdit" to="." method="_on_line_edit_editing_toggled"]
+[connection signal="text_submitted" from="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity/LineEdit" to="." method="_on_line_edit_text_submitted"]
+[connection signal="mouse_entered" from="Control/delete_save" to="Control/delete_save" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Control/delete_save" to="Control/delete_save" method="_on_mouse_exited"]
+[connection signal="pressed" from="Control/delete_save" to="." method="_on_delete_save_pressed"]
+[connection signal="pressed" from="Control/delete_save" to="Control/delete_save" method="_on_pressed"]
+[connection signal="timeout" from="delete_timer" to="." method="_on_delete_timer_timeout"]

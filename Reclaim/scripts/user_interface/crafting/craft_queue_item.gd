@@ -2,7 +2,7 @@ class_name CraftQueueItem
 extends Control
 
 const INPUT_RIGHT_CLICK := &"m2"
-const MIN_CRAFT_TIME := 0.01
+const MIN_CRAFT_TIME := 0.05
 
 @export var amount : int
 @export var craft_data : CraftData

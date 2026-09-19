@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="TurretData" format=3 uid="uid://twejnti2x2k5"]
 
 [ext_resource type="Script" uid="uid://cc33b1pxw7k1r" path="res://data/resource_scripts/turret_data.gd" id="1_0btck"]
-[ext_resource type="Script" uid="uid://br78q44p6grd3" path="res://scripts/other/sound_info.gd" id="2_rmnw7"]
+[ext_resource type="Script" uid="uid://br78q44p6grd3" path="res://scripts/resources/sound_info.gd" id="2_rmnw7"]
 [ext_resource type="AudioStream" uid="uid://bafaj5xuyn8p3" path="res://sounds/turrets/1/single/single_1.wav" id="3_vmx1p"]
 [ext_resource type="AudioStream" uid="uid://6coyy5ya0a8i" path="res://sounds/turrets/1/single/single_2.wav" id="4_2lkif"]
 

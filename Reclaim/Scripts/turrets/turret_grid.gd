@@ -7,7 +7,7 @@ func _ready() -> void:
 
 func _check_turret_slots() -> void:
 	var turrets_level_nodes = get_children()
-	var slot_level = Global.turret_slots
+	var slot_level = Global.level_turret_slots
 	
 	for turret_level_node in turrets_level_nodes:
 		if slot_level == 0:

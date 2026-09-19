@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://br62cm1gllm1"]
 
 [ext_resource type="Script" uid="uid://slvp6i1ygea6" path="res://scripts/interactable/deploy_pod.gd" id="1_5c0cb"]
-[ext_resource type="PackedScene" uid="uid://cjuoaw83nlkpf" path="res://scenes/user_interface/move_ui.tscn" id="2_i6rjx"]
+[ext_resource type="PackedScene" uid="uid://cjuoaw83nlkpf" path="res://scenes/user_interface/move_ui/move_ui.tscn" id="2_i6rjx"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wn3eb"]
 size = Vector3(2, 3, 2)

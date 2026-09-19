@@ -23,9 +23,6 @@ const DISPLAY_STRINGS := {
 	}
 }
 
-const EXTRACTION_CELL_SCENE : PackedScene = preload(
-	"res://scenes/user_interface/move_cell.tscn")
-
 const FIRST_COLOR := Color("dbffffff")
 const SECOND_COLOR := Color("c8ebffff")
 const THIRD_COLOR := Color("B9FFAF")
@@ -64,6 +61,8 @@ const EXTRACTION_BAR_COLOR_RATIOS := {
 @export var pod : StaticBody3D
 @export var ui_root : MarginContainer
 
+@export var move_cell_scene : PackedScene
+
 @export_group("UI Type")
 @export var title : Label
 @export var box_title : Label
@@ -98,9 +97,9 @@ func _ready() -> void:
 	
 	set_process(false)
 	storage_cells = Storage.load_all_cells(
-		sector_hflow, EXTRACTION_CELL_SCENE, item_tip, self)
+		sector_hflow, move_cell_scene, item_tip, self)
 	extraction_cells = Storage.load_all_cells(
-		extraction_hflow, EXTRACTION_CELL_SCENE, item_tip, self)
+		extraction_hflow, move_cell_scene, item_tip, self)
 	
 	for key : String in extraction_cells:
 		var cell : ExtractionCell = extraction_cells[key]

@@ -11,7 +11,7 @@ const COLOR_KEY := "color"
 const PANEL_OVERRIDE_KEY := "panel"
 
 const ERR_INVALID_RECIPE := "Invalid crafting recipe skipped: %s" 
-const ERR_INVALID_SHIP_LEVEL := "Crafting recipe has invalid ship level: %s"
+const ERR_INVALID_level_ship := "Crafting recipe has invalid ship level: %s"
 
 const ACTIVE_TURRETS_TAB := preload("res://2d_assets/crafting/active_turret_tab.png")
 const ACTIVE_MODULES_TAB := preload("res://2d_assets/crafting/active_modules_tab.png")
@@ -114,7 +114,7 @@ var can_craft_current : bool = false
 var craft_mult : int = 1
 var max_mult : int = 0
 var current_tab = TABS.TURRETS
-var ship_level_requirments : Dictionary = {
+var level_ship_requirments : Dictionary = {
 	1 : {},
 	2 : {},
 	3 : {},
@@ -138,11 +138,11 @@ func _ready() -> void:
 		
 		var item_key = recipe.crafted_item.key
 		var level = recipe.required_ship_level
-		if not ship_level_requirments.has(level):
-			push_error(ERR_INVALID_SHIP_LEVEL % recipe_key)
+		if not level_ship_requirments.has(level):
+			push_error(ERR_INVALID_level_ship % recipe_key)
 			continue
 		
-		ship_level_requirments[level][item_key] = recipe
+		level_ship_requirments[level][item_key] = recipe
 	
 	load_crafting()
 
@@ -259,13 +259,13 @@ func queue_next() -> void:
 
 ## loads all crafting UI bassed on ship level
 func load_crafting() -> void:
-	for ship_level in ship_level_requirments:
-		if ship_level > Global.ship_level:
+	for level_ship in level_ship_requirments:
+		if level_ship > Global.level_ship:
 			break
 		
 		else:
-			for recipe_key : String in ship_level_requirments[ship_level]:
-				var recipe : CraftData = ship_level_requirments[ship_level][recipe_key]
+			for recipe_key : String in level_ship_requirments[level_ship]:
+				var recipe : CraftData = level_ship_requirments[level_ship][recipe_key]
 				var item_type = recipe.crafted_item.type
 				if not tab_vboxs.has(item_type):
 					continue

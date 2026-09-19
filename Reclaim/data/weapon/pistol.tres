@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="WeaponData" format=3 uid="uid://j7m1gdi6bd7l"]
 
 [ext_resource type="Script" uid="uid://bcv8pchg6om62" path="res://data/resource_scripts/weapons_data.gd" id="1_0aanf"]
-[ext_resource type="Script" uid="uid://br78q44p6grd3" path="res://scripts/other/sound_info.gd" id="2_hr5cf"]
+[ext_resource type="Script" uid="uid://br78q44p6grd3" path="res://scripts/resources/sound_info.gd" id="2_hr5cf"]
 [ext_resource type="AudioStream" uid="uid://cs0qp83qvlop" path="res://sounds/weapons/hitmarker_2.mp3" id="2_r0v3w"]
 [ext_resource type="AudioStream" uid="uid://bh832pllgcf0r" path="res://sounds/weapons/pistol_shot.wav" id="3_7hie4"]
 

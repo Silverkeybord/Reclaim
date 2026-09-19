@@ -1,0 +1,90 @@
+[gd_scene format=3 uid="uid://bduqnu8tr78sr"]
+
+[ext_resource type="Script" uid="uid://c7lyc2vvvb6nk" path="res://scripts/user_interface/council_authorisation/authorisatoin_selection.gd" id="1_4jj56"]
+[ext_resource type="LabelSettings" uid="uid://c6mrm0na28c5g" path="res://other_assets/label_settings/titles.tres" id="1_hlan1"]
+[ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="2_4jj56"]
+[ext_resource type="Resource" uid="uid://du0hy78wnfmij" path="res://data/authorisation/ship_tier.tres" id="2_ec332"]
+[ext_resource type="PackedScene" uid="uid://c5vawsgmfgyop" path="res://scenes/user_interface/council_authorisation/authorisation_level_cell.tscn" id="3_dnqs7"]
+[ext_resource type="StyleBox" uid="uid://camma701wx4c0" path="res://other_assets/styles/menu_constrast_style.tres" id="3_trkge"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yf5fn"]
+bg_color = Color(0.8509804, 0.8509804, 0.8509804, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.49019608, 0.49019608, 0.49019608, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yf5fn"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_dnqs7"]
+font = ExtResource("2_4jj56")
+font_size = 20
+font_color = Color(0.49019608, 0.49019608, 0.49019608, 1)
+
+[node name="PanelContainer" type="PanelContainer" unique_id=1100909469 node_paths=PackedStringArray("authorisation_name_lable", "level_icon_hbox", "authorisation_icon_texture_rect")]
+custom_minimum_size = Vector2(400, 100)
+custom_maximum_size = Vector2(400, 100)
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_yf5fn")
+script = ExtResource("1_4jj56")
+authorisation_data = ExtResource("2_ec332")
+level_cell = ExtResource("3_dnqs7")
+authorisation_name_lable = NodePath("MarginContainer/HBoxContainer/PanelContainer2/authorisation_name")
+level_icon_hbox = NodePath("MarginContainer/HBoxContainer/PanelContainer2/level_icons_hbox")
+authorisation_icon_texture_rect = NodePath("MarginContainer/HBoxContainer/MarginContainer/PanelContainer/icon_image")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=918588694]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_bottom = 12
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1207939466]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/HBoxContainer" unique_id=1728932242]
+custom_minimum_size = Vector2(310, 0)
+custom_maximum_size = Vector2(310, -1)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_yf5fn")
+
+[node name="authorisation_name" type="Label" parent="MarginContainer/HBoxContainer/PanelContainer2" unique_id=142596864]
+layout_mode = 2
+size_flags_vertical = 0
+text = "-- Ship Tier --"
+label_settings = ExtResource("1_hlan1")
+
+[node name="level_icons_hbox" type="HBoxContainer" parent="MarginContainer/HBoxContainer/PanelContainer2" unique_id=1083564823]
+custom_minimum_size = Vector2(0, 28)
+custom_maximum_size = Vector2(-1, 28)
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="level_lable" type="Label" parent="MarginContainer/HBoxContainer/PanelContainer2/level_icons_hbox" unique_id=2044225737]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Level : "
+label_settings = SubResource("LabelSettings_dnqs7")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer" unique_id=1655573767]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/margin_top = 8
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/MarginContainer" unique_id=1415814047]
+custom_minimum_size = Vector2(60, 60)
+custom_maximum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = ExtResource("3_trkge")
+
+[node name="icon_image" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/PanelContainer" unique_id=863626651]
+layout_mode = 2

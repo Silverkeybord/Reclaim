@@ -48,7 +48,16 @@ const SAVE_COUNCIL_AUTHORIZATION_KEY: String = "council_authorization"
 const SAVE_SETTINGS_KEY: String = "settings"
 
 # UPGRADES
-const SAVE_TURRET_SLOTS_KEY: String = "turret_slots"
+const SAVE_SHIP_KEY := "level_ship"
+const SAVE_SHIP_CAPACITY_KEY := "level_ship_capacity"
+const SAVE_EXTRACTION_CAPACITY_KEY := "level_extraction_capacity"
+const SAVE_DEPLOYMENT_CAPACITY_KEY := "level_deployment_capacity"
+const SAVE_SHIELD_STRENGTH_KEY := "level_shield_strength"
+const SAVE_CRAFT_EFFICIENCY_KEY := "level_craft_efficiency"
+const SAVE_WEAPON_AUTHORIZATION_KEY := "level_weapon_authorization"
+const SAVE_TURRET_AUTHORIZATION_KEY := "level_turret_authorization"
+const SAVE_MODULE_AUTHORIZATION_KEY := "level_module_authorization"
+const SAVE_TURRET_SLOTS_KEY := "level_turret_slots"
 
 const SAVE_SENSIVITY_KEY: String = "sensitivity"
 const SAVE_SHOW_FPS_TOGGLE: String = "show_fps"
@@ -184,10 +193,16 @@ var just_extracted : bool = false
 var enemies: int = 0
 
 # META UPGRADES / COUNCIL AUTHORIZATION -------------------------------------
-var ship_level: int = 8
-var turret_slots: int = 1
-var shield_strength: int = 1
-
+var level_ship: int = 8
+var level_ship_capacity: int = 1
+var level_extraction_capacity: int = 1
+var level_deployment_capacity: int = 1
+var level_shield_strength: int = 1
+var level_craft_efficiency: int = 1
+var level_weapon_authorization: int = 1
+var level_turret_authorization: int = 1
+var level_module_authorization: int = 1
+var level_turret_slots: int = 1
 
 # INVENTORY + CURRENCY -------------------------------------------------------
 var cubits: int = 0
@@ -202,8 +217,10 @@ var sensitivity: float = 1.0
 var show_input_tip: bool = true
 var show_fps: bool = false
 
+
 ## Temp testing function to fill storage - THIS IS A TESTING FUNCTION IGNORE CONVENTIONS
 func set_random_storage(set_sector_storage: bool = false) -> void:
+	print(ship_storage)
 	for key in DataRegistry.items:
 		var resource = DataRegistry.items[key]
 		if not HelperFunctions.is_valid_item(resource):
@@ -257,7 +274,16 @@ func save_game() -> void:
 		SAVE_SHIP_STORAGE_KEY: ship_storage,
 		SAVE_CUBITS_KEY: cubits,
 		SAVE_COUNCIL_AUTHORIZATION_KEY: {
-			SAVE_TURRET_SLOTS_KEY: turret_slots,
+			SAVE_SHIP_KEY: level_ship,
+			SAVE_SHIP_CAPACITY_KEY: level_ship_capacity,
+			SAVE_EXTRACTION_CAPACITY_KEY: level_extraction_capacity,
+			SAVE_DEPLOYMENT_CAPACITY_KEY: level_deployment_capacity,
+			SAVE_SHIELD_STRENGTH_KEY: level_shield_strength,
+			SAVE_CRAFT_EFFICIENCY_KEY: level_craft_efficiency,
+			SAVE_WEAPON_AUTHORIZATION_KEY: level_weapon_authorization,
+			SAVE_TURRET_AUTHORIZATION_KEY: level_turret_authorization,
+			SAVE_MODULE_AUTHORIZATION_KEY: level_module_authorization,
+			SAVE_TURRET_SLOTS_KEY: level_turret_slots,
 		},
 		SAVE_SETTINGS_KEY: {
 			SAVE_SENSIVITY_KEY: sensitivity,
@@ -267,11 +293,6 @@ func save_game() -> void:
 	}
 	
 	file.store_var(save_data)
-	print("-------- load data is --------")
-	for x in save_data:
-		print(save_data[x])
-		print("")
-	print("save success")
 	
 	await get_tree().create_timer(SAVE_AND_LOAD_BUFFER).timeout
 	return
@@ -292,31 +313,51 @@ func load_game() -> void:
 		push_error(ERR_SAVE_INVALID)
 		return
 	
-	print("-------- load data is --------")
-	for x in data:
-		print(data[x])
-		print("")
-	print("")
 	# Settings ---------------------------------------------------------------
 	var settings = data.get(SAVE_SETTINGS_KEY, {})
 	if typeof(settings) == TYPE_DICTIONARY:
-		print("loading settings")
-		sensitivity = get(SAVE_SENSIVITY_KEY)
-		show_fps = get(SAVE_SHOW_FPS_TOGGLE)
-		show_input_tip = get(SAVE_SHOW_INPUT_TIP_TOGGLE)
+		sensitivity = settings.get(SAVE_SENSIVITY_KEY, sensitivity)
+		show_fps = settings.get(SAVE_SHOW_FPS_TOGGLE, show_fps)
+		show_input_tip = settings.get(SAVE_SHOW_INPUT_TIP_TOGGLE, show_input_tip)
 	
 	# Ship storage -----------------------------------------------------------
-	ship_storage = data.get(SAVE_SHIP_STORAGE_KEY, {})
+	ship_storage = data.get(SAVE_SHIP_STORAGE_KEY, HelperFunctions.get_clean_storage())
 	
 	# Cubits -----------------------------------------------------------------
 	cubits = int(data.get(SAVE_CUBITS_KEY, cubits))
 	
-	# Council authorisation loading -------------------------------------------
-	var council_authorization = data.get(SAVE_COUNCIL_AUTHORIZATION_KEY, {})
+# Council authorisation loading -------------------------------------------
+	var council_authorization: Dictionary = data.get(SAVE_COUNCIL_AUTHORIZATION_KEY, {})
 	if typeof(council_authorization) == TYPE_DICTIONARY:
-		turret_slots = int(council_authorization.get(SAVE_TURRET_SLOTS_KEY, turret_slots))
+		level_ship = council_authorization.get(SAVE_SHIP_KEY, level_ship)
+		level_ship_capacity = council_authorization.get(SAVE_SHIP_CAPACITY_KEY, level_ship_capacity)
+		level_extraction_capacity = council_authorization.get(
+			SAVE_EXTRACTION_CAPACITY_KEY, level_extraction_capacity
+		)
+		level_deployment_capacity = council_authorization.get(
+			SAVE_DEPLOYMENT_CAPACITY_KEY, level_deployment_capacity
+		)
+		level_shield_strength = council_authorization.get(
+			SAVE_SHIELD_STRENGTH_KEY, level_shield_strength
+		)
+		level_craft_efficiency = council_authorization.get(
+			SAVE_CRAFT_EFFICIENCY_KEY, level_craft_efficiency
+		)
+		level_weapon_authorization = council_authorization.get(
+			SAVE_WEAPON_AUTHORIZATION_KEY, level_weapon_authorization
+		)
+		level_turret_authorization = council_authorization.get(
+			SAVE_TURRET_AUTHORIZATION_KEY, level_turret_authorization
+		)
+		level_module_authorization = council_authorization.get(
+			SAVE_MODULE_AUTHORIZATION_KEY, level_module_authorization
+		)
+		level_turret_slots = council_authorization.get(
+			SAVE_TURRET_SLOTS_KEY, level_turret_slots
+		)
 	
-	print("load success \n")
+	await get_tree().create_timer(SAVE_AND_LOAD_BUFFER).timeout
+	return
 
 
 ## Deletes the game data completely, removing the save file

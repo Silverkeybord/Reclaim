@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://d3d5boicpnsxn"]
 
-[ext_resource type="Script" uid="uid://cqm7b8e0xdrh5" path="res://scripts/enemies/drop_weight_resource.gd" id="1_dtoqs"]
+[ext_resource type="Script" uid="uid://cqm7b8e0xdrh5" path="res://scripts/resources/drop_weight_resource.gd" id="1_dtoqs"]
 [ext_resource type="Resource" uid="uid://c6k8hue261trj" path="res://data/items/resources/tier2/flint.tres" id="3_q3j6l"]
 [ext_resource type="Resource" uid="uid://dm10222fpo58l" path="res://data/items/resources/tier1/rock.tres" id="4_ppmgk"]
 [ext_resource type="Resource" uid="uid://dindgm06orind" path="res://data/items/resources/tier1/scrap.tres" id="7_0vwrd"]

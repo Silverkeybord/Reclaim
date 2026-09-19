@@ -44,6 +44,8 @@ const BUILD_MODE_INPUT : String = "2 - Building"
 const INSTALL_MODE_INPUT : String = "3 - Installation"
 const BUILDING_INPUTS : String = "F - Change Builds\nM2 - Pick up Builds\nScroll - Selection"
 const INTERACT_INPUT : String = "E - Interact"
+const SHOW_PINNED_INPUT : String = "TAB - Pinned"
+
 const PICK_UP_TEXT : String = "CLICK TO PICK UP"
 const PLACE_TEXT : String = "CLICK TO PLACE"
 const REPLACE_TEXT : String = "CLICK TO REPLACE"
@@ -110,9 +112,7 @@ var can_remove_build: bool = true
 
 
 func _ready() -> void:
-	Global.set_random_storage()
 	_set_new_weapon()
-	Global.load_game()
 
 
 ## Handles gravity, movement input, and jumping every physics frame.
@@ -201,6 +201,9 @@ func _input_tip_updating() -> void:
 	
 	if Global.player_mode != Global.PLAYER_MODES.BUILDING:
 		input_tip_output.append(INTERACT_INPUT)
+	
+	if Global.pined_crafts:
+		input_tip_output.append(SHOW_PINNED_INPUT)
 	
 	input_tip.text = "\n".join(input_tip_output)
 

@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://cjuoaw83nlkpf"]
 
 [ext_resource type="Script" uid="uid://tad6048775br" path="res://scripts/user_interface/extraction/move_ui.gd" id="1_yfoaa"]
+[ext_resource type="PackedScene" uid="uid://b37rif3c8wi8f" path="res://scenes/user_interface/move_ui/move_cell.tscn" id="2_0l7gi"]
 [ext_resource type="PackedScene" uid="uid://dqgjh854m2igs" path="res://scenes/user_interface/items/itemtip.tscn" id="2_m3m1d"]
-[ext_resource type="Texture2D" uid="uid://dbblaaid5dlw5" path="res://2d_assets/extraction/help_icon.png" id="3_q8bow"]
+[ext_resource type="Texture2D" uid="uid://dbblaaid5dlw5" path="res://2d_assets/general/help_icon.png" id="3_q8bow"]
 [ext_resource type="Script" uid="uid://j6u6e0uh2cq3" path="res://scripts/user_interface/help_icon.gd" id="4_wmt1x"]
 [ext_resource type="StyleBox" uid="uid://dacpcfrv5ymbo" path="res://other_assets/styles/base_ui_panels.tres" id="5_oep5y"]
 [ext_resource type="LabelSettings" uid="uid://bgvc5k57qsgaq" path="res://other_assets/label_settings/basic_text.tres" id="6_ql54x"]
@@ -273,6 +274,7 @@ corner_detail = 1
 layer = 2
 script = ExtResource("1_yfoaa")
 ui_root = NodePath("ui_root")
+move_cell_scene = ExtResource("2_0l7gi")
 title = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/header/title")
 box_title = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/extraction_storage/MarginContainer/VBoxContainer/MarginContainer/Label")
 origin_title = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/sector_storage/MarginContainer/VBoxContainer/MarginContainer/Label")

@@ -1,5 +1,5 @@
+extends Resource
 class_name AuthorisationData
-
 
 @export var key : String
 
@@ -21,14 +21,11 @@ class_name AuthorisationData
 @export_enum(
 	"stat_increase",
 	"crafting_unlock",
+	"ship_level"
 ) var upgrade_type : String = "stat_increase"
 
+## the levels and requirements for 
+@export var max_level : int = 1
 
-## the level of authorsatoin
-@export var level : int = 1
-
-## The required resources for this access
-@export var requirments : Array[RequirementsTemplate]
-
-## The amount of cubits required for this upgrade
-@export var required_cubits : int = 0
+## An array that holds all the 
+@export var levels : Array[AuthorisationLevel]

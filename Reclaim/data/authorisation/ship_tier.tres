@@ -1,0 +1,87 @@
+[gd_resource type="Resource" script_class="AuthorisationData" format=3 uid="uid://du0hy78wnfmij"]
+
+[ext_resource type="Script" uid="uid://bfg6owh4kyadi" path="res://scripts/resources/authorisation_level.gd" id="1_s7wpj"]
+[ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="2_fx25p"]
+[ext_resource type="Script" uid="uid://cd702x671kf7o" path="res://scripts/resources/unlock_template.gd" id="3_36457"]
+[ext_resource type="Resource" uid="uid://drghxojuhxfnn" path="res://data/items/resources/tier1/clay.tres" id="3_rpna7"]
+[ext_resource type="Resource" uid="uid://sp02wx0d0gfn" path="res://data/items/resources/tier1/dirt.tres" id="4_36457"]
+[ext_resource type="Resource" uid="uid://wwsm4m2783l4" path="res://data/wave/remote_island.tres" id="4_qk3uq"]
+[ext_resource type="Resource" uid="uid://c48tssl3ncgj5" path="res://data/crafting/turrets/tier1/single.tres" id="5_cabxx"]
+[ext_resource type="Resource" uid="uid://c6k8hue261trj" path="res://data/items/resources/tier2/flint.tres" id="5_qk3uq"]
+[ext_resource type="Resource" uid="uid://dm10222fpo58l" path="res://data/items/resources/tier1/rock.tres" id="6_cabxx"]
+[ext_resource type="Resource" uid="uid://dmc0tsryqmh28" path="res://data/items/resources/tier1/sand.tres" id="7_oycck"]
+[ext_resource type="Resource" uid="uid://ke1h4l1ko4bj" path="res://data/items/resources/tier1/basic_material.tres" id="8_gyv58"]
+[ext_resource type="Script" uid="uid://bd3b7pbajamv4" path="res://data/resource_scripts/authorisation_data.gd" id="9_yjvfa"]
+
+[sub_resource type="Resource" id="Resource_ec332"]
+script = ExtResource("3_36457")
+unlock_type = "sector"
+unlock_data = ExtResource("4_qk3uq")
+metadata/_custom_type_script = "uid://cd702x671kf7o"
+
+[sub_resource type="Resource" id="Resource_dnqs7"]
+script = ExtResource("3_36457")
+unlock_data = ExtResource("5_cabxx")
+metadata/_custom_type_script = "uid://cd702x671kf7o"
+
+[sub_resource type="Resource" id="Resource_yoqii"]
+script = ExtResource("1_s7wpj")
+level = 1
+unlocks = Array[ExtResource("3_36457")]([SubResource("Resource_ec332"), SubResource("Resource_dnqs7")])
+metadata/_custom_type_script = "uid://bfg6owh4kyadi"
+
+[sub_resource type="Resource" id="Resource_mbwl8"]
+script = ExtResource("2_fx25p")
+item = ExtResource("3_rpna7")
+amount = 10
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_26xli"]
+script = ExtResource("2_fx25p")
+item = ExtResource("4_36457")
+amount = 10
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_bmcm4"]
+script = ExtResource("2_fx25p")
+item = ExtResource("5_qk3uq")
+amount = 4
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_87y0m"]
+script = ExtResource("2_fx25p")
+item = ExtResource("6_cabxx")
+amount = 10
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_3bqac"]
+script = ExtResource("2_fx25p")
+item = ExtResource("7_oycck")
+amount = 10
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_elrrk"]
+script = ExtResource("2_fx25p")
+item = ExtResource("8_gyv58")
+amount = 2
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_trkge"]
+script = ExtResource("3_36457")
+unlock_type = "sector"
+metadata/_custom_type_script = "uid://cd702x671kf7o"
+
+[sub_resource type="Resource" id="Resource_jugkx"]
+script = ExtResource("1_s7wpj")
+level = 2
+requirments = Array[ExtResource("2_fx25p")]([SubResource("Resource_mbwl8"), SubResource("Resource_26xli"), SubResource("Resource_bmcm4"), SubResource("Resource_87y0m"), SubResource("Resource_3bqac"), SubResource("Resource_elrrk")])
+unlocks = Array[ExtResource("3_36457")]([SubResource("Resource_trkge")])
+metadata/_custom_type_script = "uid://bfg6owh4kyadi"
+
+[resource]
+script = ExtResource("9_yjvfa")
+key = "ship_tier"
+authorisation = "ship_tier"
+max_level = 8
+levels = Array[ExtResource("1_s7wpj")]([SubResource("Resource_yoqii"), SubResource("Resource_jugkx"), null, null, null, null, null, null])
+metadata/_custom_type_script = "uid://bd3b7pbajamv4"

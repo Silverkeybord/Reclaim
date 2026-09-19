@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://c5vawsgmfgyop"]
+
+[ext_resource type="StyleBox" uid="uid://bi4eon1srsnb2" path="res://other_assets/styles/authorisation_level_cell_styles/unachieved_style.tres" id="1_1vaus"]
+[ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="1_q2yp7"]
+[ext_resource type="Script" uid="uid://cwsfkvgljkgma" path="res://scripts/user_interface/council_authorisation/authorisation_level_cell.gd" id="2_r6xhq"]
+[ext_resource type="StyleBox" uid="uid://dcnyqmmov3s8s" path="res://other_assets/styles/authorisation_level_cell_styles/achieved_style.tres" id="3_tjc3v"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_mdncp"]
+font = ExtResource("1_q2yp7")
+font_size = 18
+font_color = Color(0.49019608, 0.49019608, 0.49019608, 1)
+
+[node name="level_cell" type="Panel" unique_id=274234781 node_paths=PackedStringArray("number_lable")]
+custom_minimum_size = Vector2(25, 25)
+custom_maximum_size = Vector2(25, 25)
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_styles/panel = ExtResource("1_1vaus")
+script = ExtResource("2_r6xhq")
+achieved_style = ExtResource("3_tjc3v")
+number_lable = NodePath("Label")
+
+[node name="Label" type="Label" parent="." unique_id=941322293]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "1"
+label_settings = SubResource("LabelSettings_mdncp")
+horizontal_alignment = 1
+vertical_alignment = 1

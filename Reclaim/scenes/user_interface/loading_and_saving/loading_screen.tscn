@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://dtg503qthdjl6"]
+
+[ext_resource type="Script" uid="uid://ctrojh5k11fjo" path="res://scripts/loading_and_saving/loading_screen.gd" id="1_2bvsy"]
+[ext_resource type="PackedScene" uid="uid://cykue4k22xfxa" path="res://scenes/ship.tscn" id="2_el0o7"]
+[ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="3_v672g"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_tupli"]
+font = ExtResource("3_v672g")
+font_size = 78
+font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
+
+[node name="loading_screen" type="Control" unique_id=2127336883 node_paths=PackedStringArray("min_loading_timer")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2bvsy")
+min_loading_timer = NodePath("min_loading_timer")
+ship_scene = ExtResource("2_el0o7")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=584338373]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.53568584, 0.5356859, 0.5356859, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="." unique_id=2138030017]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "This is a loading screen"
+label_settings = SubResource("LabelSettings_tupli")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="min_loading_timer" type="Timer" parent="." unique_id=423551820]
+
+[connection signal="timeout" from="min_loading_timer" to="." method="_on_min_loading_timer_timeout"]

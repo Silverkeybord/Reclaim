@@ -5,10 +5,20 @@ const INPUT_PAUSE := "pause"
 const MAX_SENSITIVITY_MULT := 5.0
 const MIN_SENSITIVITY_MULT := 0.2
 
+const DELETE_PRESSES_TEXT := {
+	0 : "Delete Save",
+	1 : "Are you sure?",
+	2 : "Really sure?",
+	3 : "Last check",
+	4 : "OK BYE :o"
+}
+
 @export var sensitivity_slider : HSlider
 @export var sensitivity_line_edit : LineEdit
 @export var input_tips_texture_rect : TextureRect
 @export var fps_texture_rect : TextureRect
+@export var delete_timer : Timer
+@export var delete_lable : Label
 
 @export_group("Textures")
 @export var untoggled_texture : Texture
@@ -18,6 +28,8 @@ const MIN_SENSITIVITY_MULT := 0.2
 	false : untoggled_texture,
 	true : toggled_texture
 }
+
+var consecutive_presses: int = 0 
 
 
 func _ready() -> void:
@@ -30,7 +42,7 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed(INPUT_PAUSE):
+	if Input.is_action_just_pressed(INPUT_PAUSE) and not Global.ui_open:
 		_toggle_pause()
 	
 	_check_sensitivity_slider()
@@ -101,3 +113,19 @@ func _on_toggle_show_fps_pressed() -> void:
 
 func _on_h_slider_mouse_entered() -> void:
 	print("wuta;sdhfaniefa")
+
+
+
+# Delete game data ------------------------------------------------------------
+func _on_delete_save_pressed() -> void:
+	consecutive_presses += 1
+	delete_timer.start()
+	delete_lable.text = DELETE_PRESSES_TEXT.get(consecutive_presses, "")
+	
+	if consecutive_presses == DELETE_PRESSES_TEXT.keys()[-1]:
+		Global.reset_game()
+
+
+func _on_delete_timer_timeout() -> void:
+	consecutive_presses = 0
+	delete_lable.text = DELETE_PRESSES_TEXT.get(consecutive_presses, "")

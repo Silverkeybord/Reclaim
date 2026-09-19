@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Reclaim"
-run/main_scene="uid://cykue4k22xfxa"
+run/main_scene="uid://dtg503qthdjl6"
 config/features=PackedStringArray("4.7", "Forward Plus")
 
 [audio]

@@ -11,8 +11,8 @@
 [ext_resource type="Texture2D" uid="uid://bc52l5qd5bkcq" path="res://2d_assets/reticles/normal_reticle.png" id="5_xxarj"]
 [ext_resource type="LabelSettings" uid="uid://did6nhlhj082r" path="res://other_assets/label_settings/help_text.tres" id="8_5gtgg"]
 [ext_resource type="Texture2D" uid="uid://dmaj8a3oki02e" path="res://2d_assets/reticles/remove_overlay.png" id="8_6k3cy"]
-[ext_resource type="PackedScene" uid="uid://bqdl5iwhoay06" path="res://scenes/user_interface/fps_label.tscn" id="10_h17s1"]
-[ext_resource type="PackedScene" uid="uid://5wiwx78yrbjr" path="res://scenes/user_interface/build_selection.tscn" id="12_gx1jg"]
+[ext_resource type="PackedScene" uid="uid://bqdl5iwhoay06" path="res://scenes/user_interface/player_visuals/fps_label.tscn" id="10_h17s1"]
+[ext_resource type="PackedScene" uid="uid://5wiwx78yrbjr" path="res://scenes/user_interface/player_visuals/build_selection.tscn" id="12_gx1jg"]
 [ext_resource type="PackedScene" uid="uid://bcld5qdacv0d8" path="res://scenes/user_interface/items/item_notif_controller.tscn" id="13_gx1jg"]
 [ext_resource type="PackedScene" uid="uid://dxb4bka5q7f4t" path="res://scenes/user_interface/pause_menu.tscn" id="15_fcs02"]
 
@@ -276,6 +276,7 @@ monitorable = false
 shape = SubResource("SphereShape3D_xxarj")
 
 [node name="canvas_root" type="CanvasLayer" parent="." unique_id=685615734]
+layer = 0
 
 [node name="build_selection" parent="canvas_root" unique_id=437229528 node_paths=PackedStringArray("player") instance=ExtResource("12_gx1jg")]
 visible = false
@@ -464,6 +465,7 @@ stretch_mode = 3
 
 [node name="item_notif_controller" parent="canvas_root" unique_id=1202289325 node_paths=PackedStringArray("build_selection") instance=ExtResource("13_gx1jg")]
 build_selection = NodePath("../build_selection")
+metadata/_edit_lock_ = true
 
 [node name="pause_menu" parent="canvas_root" unique_id=1199239225 instance=ExtResource("15_fcs02")]
 
