@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://i4ef0cepag1h" path="res://scripts/user_interface/storage/itemtip.gd" id="1_nhpud"]
 [ext_resource type="Texture2D" uid="uid://ssroq0w4ai6r" path="res://2d_assets/storage/resources_tip_background.png" id="2_puydn"]
 [ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="3_oswdm"]
+[ext_resource type="Texture2D" uid="uid://kkwrrwyu1lom" path="res://2d_assets/storage/module_tip_background.png" id="4_1vvmo"]
 [ext_resource type="Texture2D" uid="uid://bjh26snyavx76" path="res://2d_assets/storage/turret_tip_background.png" id="4_puydn"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_g4v7s"]
@@ -20,7 +21,7 @@ font = ExtResource("3_oswdm")
 font_size = 10
 font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 
-[node name="itemtip" type="CanvasLayer" unique_id=854836766 node_paths=PackedStringArray("item_control", "resource_name_label", "resource_value_label", "resource_weight_label", "resource_amount_label", "turret_name_label", "turret_value_label", "turret_weight_label", "turret_fire_rate_label", "turret_damage_label", "turret_range_label", "turret_ability_label", "resources_tip", "turrets_tip")]
+[node name="itemtip" type="CanvasLayer" unique_id=854836766 node_paths=PackedStringArray("item_control", "resource_name_label", "resource_value_label", "resource_weight_label", "resource_amount_label", "turret_name_label", "turret_value_label", "turret_weight_label", "turret_fire_rate_label", "turret_damage_label", "turret_range_label", "turret_ability_label", "module_name_label", "module_effect_label", "module_stat_label", "module_weight_label", "module_tier_label", "base_name_label", "base_effect_label", "base_value_label", "base_weight_label", "resources_tip", "turrets_tip", "moduels_tip", "base_tip")]
 layer = 2
 script = ExtResource("1_nhpud")
 item_control = NodePath("item_control")
@@ -35,8 +36,19 @@ turret_fire_rate_label = NodePath("item_control/turret_tip/MarginContainer/VBoxC
 turret_damage_label = NodePath("item_control/turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3/VBoxContainer/damage_label")
 turret_range_label = NodePath("item_control/turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3/VBoxContainer2/range_label")
 turret_ability_label = NodePath("item_control/turret_tip/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer3/VBoxContainer2/ability_label")
+module_name_label = NodePath("item_control/module_tip/MarginContainer/VBoxContainer/name_label")
+module_effect_label = NodePath("item_control/module_tip/MarginContainer/VBoxContainer/effect_label")
+module_stat_label = NodePath("item_control/module_tip/MarginContainer/VBoxContainer/HBoxContainer/stat_lable")
+module_weight_label = NodePath("item_control/module_tip/MarginContainer/VBoxContainer/HBoxContainer2/weight_lable")
+module_tier_label = NodePath("item_control/module_tip/MarginContainer/VBoxContainer/HBoxContainer2/tier_lable")
+base_name_label = NodePath("item_control/base_tip/MarginContainer/VBoxContainer/name_label")
+base_effect_label = NodePath("item_control/base_tip/MarginContainer/VBoxContainer/effect_label")
+base_value_label = NodePath("item_control/base_tip/MarginContainer/VBoxContainer/HBoxContainer/value_label")
+base_weight_label = NodePath("item_control/base_tip/MarginContainer/VBoxContainer/HBoxContainer/weight_label")
 resources_tip = NodePath("item_control/resource_tip")
 turrets_tip = NodePath("item_control/turret_tip")
+moduels_tip = NodePath("item_control/module_tip")
+base_tip = NodePath("item_control/base_tip")
 
 [node name="item_control" type="Control" parent="." unique_id=1687772551]
 layout_mode = 3
@@ -92,7 +104,118 @@ layout_mode = 2
 text = "Amount : 999,999"
 label_settings = SubResource("LabelSettings_1eo2d")
 
+[node name="base_tip" type="TextureRect" parent="item_control" unique_id=57960365]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.09166667
+anchor_right = 0.13125
+offset_top = -66.0
+offset_right = 168.0
+mouse_filter = 2
+texture = ExtResource("2_puydn")
+stretch_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="item_control/base_tip" unique_id=1580854435]
+layout_mode = 1
+offset_right = 154.0
+offset_bottom = 64.0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="item_control/base_tip/MarginContainer" unique_id=810372342]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="name_label" type="Label" parent="item_control/base_tip/MarginContainer/VBoxContainer" unique_id=86069786]
+layout_mode = 2
+text = "Plate"
+label_settings = SubResource("LabelSettings_g4v7s")
+
+[node name="effect_label" type="Label" parent="item_control/base_tip/MarginContainer/VBoxContainer" unique_id=1178092218]
+layout_mode = 2
+text = "Effect : None"
+label_settings = SubResource("LabelSettings_1eo2d")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="item_control/base_tip/MarginContainer/VBoxContainer" unique_id=1911482012]
+layout_mode = 2
+
+[node name="weight_label" type="Label" parent="item_control/base_tip/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1866820203]
+layout_mode = 2
+text = "Weight : 999k"
+label_settings = SubResource("LabelSettings_l7j5f")
+
+[node name="value_label" type="Label" parent="item_control/base_tip/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1192166243]
+layout_mode = 2
+text = "Value : 999k"
+label_settings = SubResource("LabelSettings_1eo2d")
+
+[node name="module_tip" type="TextureRect" parent="item_control" unique_id=955977916]
+visible = false
+texture_filter = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.09166667
+anchor_right = 0.13125
+offset_top = -79.0
+offset_right = 168.0
+mouse_filter = 2
+texture = ExtResource("4_1vvmo")
+stretch_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="item_control/module_tip" unique_id=1435705105]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="item_control/module_tip/MarginContainer" unique_id=730287607]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="name_label" type="Label" parent="item_control/module_tip/MarginContainer/VBoxContainer" unique_id=1157279267]
+layout_mode = 2
+text = "Damage"
+label_settings = SubResource("LabelSettings_g4v7s")
+
+[node name="effect_label" type="Label" parent="item_control/module_tip/MarginContainer/VBoxContainer" unique_id=1242781283]
+layout_mode = 2
+text = "Effect : Damage Buff"
+label_settings = SubResource("LabelSettings_1eo2d")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="item_control/module_tip/MarginContainer/VBoxContainer" unique_id=1049105259]
+layout_mode = 2
+
+[node name="stat_lable" type="Label" parent="item_control/module_tip/MarginContainer/VBoxContainer/HBoxContainer" unique_id=235303806]
+layout_mode = 2
+text = "Stat : +25 Damage"
+label_settings = SubResource("LabelSettings_l7j5f")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="item_control/module_tip/MarginContainer/VBoxContainer" unique_id=937412661]
+layout_mode = 2
+
+[node name="weight_lable" type="Label" parent="item_control/module_tip/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=423878126]
+layout_mode = 2
+text = "Weight : 100kg"
+label_settings = SubResource("LabelSettings_1eo2d")
+
+[node name="tier_lable" type="Label" parent="item_control/module_tip/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1850404599]
+layout_mode = 2
+text = "Tier : 5"
+label_settings = SubResource("LabelSettings_1eo2d")
+
 [node name="turret_tip" type="TextureRect" parent="item_control" unique_id=318515611]
+visible = false
 texture_filter = 1
 layout_mode = 1
 anchors_preset = -1

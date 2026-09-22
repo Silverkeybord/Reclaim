@@ -44,10 +44,9 @@ const DEFAULT_SECTOR_PATH: PackedScene = SECTORS["remote_island"]
 # SAVE AND LOADING ---------------------------------------------------------
 const SAVE_SHIP_STORAGE_KEY: String = "ship_storage"
 const SAVE_CUBITS_KEY: String = "cubits"
-const SAVE_COUNCIL_AUTHORIZATION_KEY: String = "council_authorization"
-const SAVE_SETTINGS_KEY: String = "settings"
 
 # UPGRADES
+const SAVE_COUNCIL_AUTHORIZATION_KEY: String = "council_authorization"
 const SAVE_SHIP_KEY := "level_ship"
 const SAVE_SHIP_CAPACITY_KEY := "level_ship_capacity"
 const SAVE_EXTRACTION_CAPACITY_KEY := "level_extraction_capacity"
@@ -59,9 +58,18 @@ const SAVE_TURRET_AUTHORIZATION_KEY := "level_turret_authorization"
 const SAVE_MODULE_AUTHORIZATION_KEY := "level_module_authorization"
 const SAVE_TURRET_SLOTS_KEY := "level_turret_slots"
 
+# SETTINGS
+const SAVE_SETTINGS_KEY: String = "settings"
 const SAVE_SENSIVITY_KEY: String = "sensitivity"
 const SAVE_SHOW_FPS_TOGGLE: String = "show_fps"
 const SAVE_SHOW_INPUT_TIP_TOGGLE: String = "show_input_tip"
+
+# TUTORIAL
+const SAVE_TUTORIAL: String = "tutorial"
+const SAVE_TUTORIAL_STAGE: String = "tutorial_stage"
+const SAVE_CLEARED_TUTORIAL: String = "tutorial_cleared"
+const SAVE_FIRST_PLAY : String = "first_play"
+
 
 const SAVE_AND_LOAD_BUFFER: float = 0.5
 
@@ -166,9 +174,9 @@ var mouse_captured := true
 var major_animation_playing := false
 
 # TUTORIAL RELATED ---------------------------------------------------------
-var turorial_stage := 1
+var tutorial_stage := 1
 var cleared_tutorial := false
-var first_run := true
+var first_play := true
 
 # USER INTERFACE -----------------------------------------------------------
 var paused := false
@@ -220,7 +228,6 @@ var show_fps: bool = false
 
 ## Temp testing function to fill storage - THIS IS A TESTING FUNCTION IGNORE CONVENTIONS
 func set_random_storage(set_sector_storage: bool = false) -> void:
-	print(ship_storage)
 	for key in DataRegistry.items:
 		var resource = DataRegistry.items[key]
 		if not HelperFunctions.is_valid_item(resource):
@@ -289,6 +296,11 @@ func save_game() -> void:
 			SAVE_SENSIVITY_KEY: sensitivity,
 			SAVE_SHOW_FPS_TOGGLE: show_fps,
 			SAVE_SHOW_INPUT_TIP_TOGGLE: show_input_tip
+		},
+		SAVE_TUTORIAL: {
+			SAVE_TUTORIAL_STAGE : tutorial_stage,
+			SAVE_CLEARED_TUTORIAL : cleared_tutorial,
+			SAVE_FIRST_PLAY: first_play
 		}
 	}
 	
@@ -313,6 +325,19 @@ func load_game() -> void:
 		push_error(ERR_SAVE_INVALID)
 		return
 	
+	# Ship storage -----------------------------------------------------------
+	ship_storage = data.get(SAVE_SHIP_STORAGE_KEY, HelperFunctions.get_clean_storage())
+	
+	# Cubits -----------------------------------------------------------------
+	cubits = int(data.get(SAVE_CUBITS_KEY, cubits))
+	
+	# Tutorial values --------------------------------------------------------
+	var tutorial_values = data.get(SAVE_TUTORIAL, {})
+	if typeof(tutorial_values) == TYPE_DICTIONARY:
+		tutorial_stage = tutorial_values[SAVE_TUTORIAL_STAGE]
+		cleared_tutorial = tutorial_values[SAVE_CLEARED_TUTORIAL]
+		first_play = tutorial_values[SAVE_FIRST_PLAY]
+	
 	# Settings ---------------------------------------------------------------
 	var settings = data.get(SAVE_SETTINGS_KEY, {})
 	if typeof(settings) == TYPE_DICTIONARY:
@@ -320,13 +345,7 @@ func load_game() -> void:
 		show_fps = settings.get(SAVE_SHOW_FPS_TOGGLE, show_fps)
 		show_input_tip = settings.get(SAVE_SHOW_INPUT_TIP_TOGGLE, show_input_tip)
 	
-	# Ship storage -----------------------------------------------------------
-	ship_storage = data.get(SAVE_SHIP_STORAGE_KEY, HelperFunctions.get_clean_storage())
-	
-	# Cubits -----------------------------------------------------------------
-	cubits = int(data.get(SAVE_CUBITS_KEY, cubits))
-	
-# Council authorisation loading -------------------------------------------
+	# Council authorisation loading -------------------------------------------
 	var council_authorization: Dictionary = data.get(SAVE_COUNCIL_AUTHORIZATION_KEY, {})
 	if typeof(council_authorization) == TYPE_DICTIONARY:
 		level_ship = council_authorization.get(SAVE_SHIP_KEY, level_ship)

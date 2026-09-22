@@ -369,3 +369,13 @@ static func merge_storage(first, second) -> Dictionary:
 				merged[tier][item_name] = second[tier][item_name]
 	
 	return merged
+
+
+## checks if the inputted storage is empty or if none check the current storage
+static func check_storage_empty(storage: Dictionary = {}) -> bool:
+	if not storage:
+		storage = get_current_storage()
+	
+	if storage == get_clean_storage():
+		return true
+	return false

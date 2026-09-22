@@ -11,21 +11,21 @@ const RANGE_TEXT := "Range : "
 const ABILITY_TEXT := "Ability : "
 const EFFECT_TEXT := "Effect : "
 const TIER_TEXT := "Tier : "
-const TURRET_NAME_FORMAT := "- %s -"
-
+const STAT_TEXT := "Stat : "
+const BUILD_NAME_FORMAT := "- %s -"
 const X_TEXT := "x"
 const SECONDS_TEXT := " s"
 const METERS_TEXT := "m"
 
 @export var item_control : Control
 
-@export_group("Resources Tip", "resource_")
+@export_group("Resources Tip")
 @export var resource_name_label : Label
 @export var resource_value_label : Label
 @export var resource_weight_label : Label
 @export var resource_amount_label : Label
 
-@export_group("Turrets Tip", "turret_")
+@export_group("Turrets Tip")
 @export var turret_name_label : Label
 @export var turret_value_label : Label
 @export var turret_weight_label : Label
@@ -34,12 +34,24 @@ const METERS_TEXT := "m"
 @export var turret_range_label : Label
 @export var turret_ability_label : Label
 
-@export_group("Resources Tip")
+@export_group("Module Tip")
+@export var module_name_label : Label
+@export var module_effect_label : Label
+@export var module_stat_label : Label
+@export var module_weight_label : Label
+@export var module_tier_label : Label
+
+@export_group("Base Tip")
+@export var base_name_label : Label
+@export var base_effect_label : Label
+@export var base_value_label : Label
+@export var base_weight_label : Label
 
 @export_group("Tips")
 @export var resources_tip : TextureRect
 @export var turrets_tip : TextureRect
 @export var moduels_tip : TextureRect
+@export var base_tip : TextureRect
 
 var current_tip : TextureRect
 
@@ -62,7 +74,7 @@ func show_itemtip(item : ItemData, amount : int, type : int) -> void:
 		Global.ITEM_TYPES.TURRET:
 			current_tip = turrets_tip
 			turrets_tip.visible = true
-			turret_name_label.text = TURRET_NAME_FORMAT % HelperFunctions.get_display_name(item.key)
+			turret_name_label.text = BUILD_NAME_FORMAT % HelperFunctions.get_display_name(item.key)
 			turret_value_label.text = VALUE_TEXT + str(item.value)
 			turret_weight_label.text = WEIGHT_TEXT + str(item.weight)
 			
@@ -83,6 +95,22 @@ func show_itemtip(item : ItemData, amount : int, type : int) -> void:
 			
 		Global.ITEM_TYPES.MODULE:
 			current_tip = moduels_tip
+			moduels_tip.visible = true
+			module_name_label.text = BUILD_NAME_FORMAT % HelperFunctions.get_display_name(item.key)
+			var module : ModuleData = DataRegistry.modules[item.key]
+			module_effect_label.text = EFFECT_TEXT + HelperFunctions.get_display_name(module.module)
+			module_stat_label.text = STAT_TEXT + module.stat
+			module_weight_label.text = WEIGHT_TEXT + str(item.weight)
+			module_tier_label.text = TIER_TEXT + str(item.tier)
+		
+		Global.ITEM_TYPES.BASE:
+			current_tip = base_tip
+			base_tip.visible = true
+			base_name_label.text = HelperFunctions.get_display_name(item.key)
+			var base : BaseData = DataRegistry.bases[item.key]
+			base_effect_label.text = EFFECT_TEXT + base.BASE_EFFECTS_LOOKUP[base.effect]
+			base_value_label.text = VALUE_TEXT + str(item.value)
+			base_weight_label.text = WEIGHT_TEXT + str(item.weight)
 	
 	visible = true
 

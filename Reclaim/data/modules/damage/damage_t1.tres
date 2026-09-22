@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_yh3hs")
-key = "t1_damage"
-value = "5"
+key = "damage_t1"
+stat = "5"
 metadata/_custom_type_script = "uid://djlpr1w3x0sxi"

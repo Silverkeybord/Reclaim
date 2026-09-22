@@ -1,6 +1,9 @@
 class_name ModuleData
 extends Resource
 
+const DAMAGE_BUFF := "damage_buff"
+
+
 enum EFFECT_ENUM {
 	ADDITIVE,
 	SUBTRACTIVE,
@@ -14,7 +17,7 @@ const EFFECT_NAMES := {
 	1 : "Subtractive",
 	2 : "Multiplicative",
 	3 : "Power",
-	4 : "Bullet Effect"
+	4 : "Bullet_Effect"
 }
 
 @export var key : String
@@ -24,22 +27,23 @@ const EFFECT_NAMES := {
 
 ## the module type
 @export_enum(
-	"damage",
+	DAMAGE_BUFF,
 	"overclock",
-	"range",
+	"range upgrade",
 	"modular_modules",
 	"turbo_charge",
 	"explosive rounds",
-	"frost",
-	"water",
-	"wind",
-	"fire",
-	"earth",
-	"light",
-	"dark"
-) var module : String = "damage"
+	"frozen rounds",
+	"water rounds",
+	"wind rounds",
+	"fire rounds",
+	"earth rounds",
+	"light rounds",
+	"dark rounds"
+) var module : String = "damage buff"
+
 ## what type of effect the module has on the 
 ##  turret interger relation to each effect
 @export var effect_type: EFFECT_ENUM = EFFECT_ENUM.ADDITIVE
 ## the measurement of the effect
-@export var value : String
+@export var stat : String

@@ -1,6 +1,8 @@
 class_name MoveUI
 extends UserInterfaceMenu
 
+const ERR_INVALID_ITEM := "Invalid Item : "
+
 const KEY_EXTRACTION := "extraction"
 const KEY_DEPLOYING := "deploy"
 const KEY_TITLE := "header"
@@ -191,7 +193,10 @@ func load_extraction_cells() -> void:
 		from_storage_lookup[Global.at_ship]
 		)
 	for item in sector_storage_items:
-		storage_cells[item].update_amount()
+		if item in DataRegistry.items:
+			storage_cells[item].update_amount()
+		else:
+			push_error(ERR_INVALID_ITEM, item)
 	
 	total_weight.update_weight_label()
 	

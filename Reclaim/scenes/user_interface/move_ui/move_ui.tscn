@@ -288,6 +288,7 @@ sector_hflow = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContaine
 extraction_hflow = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/extraction_storage/MarginContainer/VBoxContainer/ScrollContainer/extraction_hflow")
 
 [node name="itemtip" parent="." unique_id=854836766 instance=ExtResource("2_m3m1d")]
+layer = 3
 
 [node name="ui_root" type="MarginContainer" parent="." unique_id=1259262818]
 visible = false

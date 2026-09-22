@@ -9,6 +9,7 @@ const AUTHORISATION_PATH: String = "res://data/authorisation/"
 const CRAFTING_PATH: String = "res://data/crafting/"
 const BULLET_TRAIL_PATH: String = "res://data/bullet_trails/"
 const ITEMS_PATH: String = "res://data/items/"
+const BASE_PATH: String = "res://data/bases/"
 
 const RESOURCE_FILE_EXTENSION: String = ".tres"
 const REMAP_FILE_EXTENSION: String = ".remap"
@@ -29,6 +30,7 @@ var authorisation: Dictionary = {}
 var crafting: Dictionary = {}
 var bullet_trail: Dictionary = {}
 var items: Dictionary = {}
+var bases: Dictionary = {}
 
 
 func _ready() -> void:
@@ -41,6 +43,7 @@ func _ready() -> void:
 	_load_folder(CRAFTING_PATH, crafting, true)
 	_load_folder(BULLET_TRAIL_PATH, bullet_trail)
 	_load_folder(ITEMS_PATH, items, true)
+	_load_folder(BASE_PATH, bases)
 
 
 func _load_folder(path: String, dict: Dictionary, recursive: bool = false) -> void:
