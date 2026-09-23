@@ -26,12 +26,14 @@ font = ExtResource("2_4jj56")
 font_size = 20
 font_color = Color(0.49019608, 0.49019608, 0.49019608, 1)
 
-[node name="PanelContainer" type="PanelContainer" unique_id=1100909469 node_paths=PackedStringArray("authorisation_name_lable", "level_icon_hbox", "authorisation_icon_texture_rect")]
+[node name="button" type="Button" unique_id=1469183287 node_paths=PackedStringArray("authorisation_name_lable", "level_icon_hbox", "authorisation_icon_texture_rect")]
 custom_minimum_size = Vector2(400, 100)
 custom_maximum_size = Vector2(400, 100)
-offset_right = 40.0
-offset_bottom = 40.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_yf5fn")
+offset_right = 400.0
+offset_bottom = 100.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_yf5fn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_yf5fn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_yf5fn")
 script = ExtResource("1_4jj56")
 authorisation_data = ExtResource("2_ec332")
 level_cell = ExtResource("3_dnqs7")
@@ -40,9 +42,14 @@ level_icon_hbox = NodePath("MarginContainer/HBoxContainer/PanelContainer2/level_
 authorisation_icon_texture_rect = NodePath("MarginContainer/HBoxContainer/MarginContainer/PanelContainer/icon_image")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=918588694]
-layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 2
+layout_mode = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 396.0
+offset_bottom = 96.0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 12
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1207939466]
@@ -50,8 +57,8 @@ layout_mode = 2
 theme_override_constants/separation = 8
 
 [node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/HBoxContainer" unique_id=1728932242]
-custom_minimum_size = Vector2(310, 0)
-custom_maximum_size = Vector2(310, -1)
+custom_minimum_size = Vector2(305, 0)
+custom_maximum_size = Vector2(305, -1)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_yf5fn")
 
@@ -70,13 +77,13 @@ size_flags_vertical = 8
 [node name="level_lable" type="Label" parent="MarginContainer/HBoxContainer/PanelContainer2/level_icons_hbox" unique_id=2044225737]
 layout_mode = 2
 size_flags_vertical = 8
-text = "Level : "
+text = "Level :"
 label_settings = SubResource("LabelSettings_dnqs7")
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer" unique_id=1655573767]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_constants/margin_top = 8
+theme_override_constants/margin_top = 6
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/MarginContainer" unique_id=1415814047]
 custom_minimum_size = Vector2(60, 60)
@@ -88,3 +95,5 @@ theme_override_styles/panel = ExtResource("3_trkge")
 
 [node name="icon_image" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer/PanelContainer" unique_id=863626651]
 layout_mode = 2
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

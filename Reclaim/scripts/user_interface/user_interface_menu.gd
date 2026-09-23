@@ -3,6 +3,7 @@ extends Node
 
 const UI_MENU_OPEN_TIMESCALE := 0.3
 const PROP_POSITION := "position"
+const TWEEN_IN_TIME := 0.5
 
 @export var is_storage := false
 
@@ -27,7 +28,6 @@ func set_open_timescale(toggle : bool) -> void:
 ## Base tween settings for all UI menus
 func hide_or_show_tween(
 	target : Node, 
-	duration : float, 
 	target_pos : Vector2, 
 	is_show : bool
 ) -> void:
@@ -40,7 +40,7 @@ func hide_or_show_tween(
 	move_tween.set_ignore_time_scale(true)
 	move_tween.set_ease(Tween.EASE_OUT)
 	move_tween.set_trans(Tween.TRANS_CUBIC)
-	move_tween.tween_property(target, PROP_POSITION, target_pos, duration)
+	move_tween.tween_property(target, PROP_POSITION, target_pos, TWEEN_IN_TIME)
 	
 	await move_tween.finished
 	

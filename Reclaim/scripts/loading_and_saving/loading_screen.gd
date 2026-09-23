@@ -18,3 +18,8 @@ func _ready() -> void:
 func _on_min_loading_timer_timeout() -> void:
 	if finished_loading:
 		get_tree().change_scene_to_packed(ship_scene)
+
+
+func _load_council_authoriseations() -> void:
+	for authority in DataRegistry.authorisation:
+		Global.authorisations

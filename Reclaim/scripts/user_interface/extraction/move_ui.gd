@@ -176,7 +176,6 @@ func open_ui() -> void:
 func _set_open_or_close(toggle : bool) -> void:
 	hide_or_show_tween(
 		ui_root,
-		TWEEN_DURATION,
 		SHOW_POS if toggle else HIDE_POS,
 		toggle
 		)

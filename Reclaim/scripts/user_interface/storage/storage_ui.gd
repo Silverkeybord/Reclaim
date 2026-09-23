@@ -12,7 +12,6 @@ const METHOD_UPDATE_AMOUNT: StringName = &"update_amount"
 
 const ERR_MISSING_CELL_PARENT: String = "Storage UI item parent is missing."
 
-const TWEEN_DURATION := 0.5
 const SHOW_POS := Vector2(0, 0)
 const HIDE_POS := Vector2(-1280, 0)
 
@@ -118,7 +117,6 @@ func close_ui() -> void:
 func _set_open_or_close(toggle: bool) -> void:
 	hide_or_show_tween(
 		inventory_root,
-		TWEEN_DURATION,
 		SHOW_POS if toggle else HIDE_POS,
 		toggle
 		)

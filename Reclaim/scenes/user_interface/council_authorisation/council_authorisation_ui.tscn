@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://br4dbw7ff705o" path="res://scripts/user_interface/council_authorisation/council_authorisation.gd" id="1_6ilwi"]
 [ext_resource type="Texture2D" uid="uid://bjwxfonfjuv2k" path="res://2d_assets/council_authorisation/council_authorisation_background.png" id="2_2nn7d"]
+[ext_resource type="PackedScene" uid="uid://bduqnu8tr78sr" path="res://scenes/user_interface/council_authorisation/authorisation_selection.tscn" id="2_j2krl"]
+[ext_resource type="PackedScene" uid="uid://hgi3y5catplc" path="res://scenes/user_interface/crafting/recepie_requirment.tscn" id="3_4lsmu"]
 [ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="3_j2krl"]
 [ext_resource type="Texture2D" uid="uid://dbblaaid5dlw5" path="res://2d_assets/general/help_icon.png" id="4_4lsmu"]
 [ext_resource type="Script" uid="uid://j6u6e0uh2cq3" path="res://scripts/user_interface/help_icon.gd" id="5_xfuvv"]
@@ -91,15 +93,28 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[node name="CouncilAuthorisation" type="CanvasLayer" unique_id=2078735524]
+[node name="CouncilAuthorisation" type="CanvasLayer" unique_id=2078735524 node_paths=PackedStringArray("ui_root", "selection_vbox", "requirments_hflow", "level_change_label", "unlock_change_label", "authorisation_name", "description_box", "authorise_button")]
 layer = 2
 script = ExtResource("1_6ilwi")
+ui_root = NodePath("ui_root")
+selection_vbox = NodePath("ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_selection/MarginContainer/VBoxContainer/ScrollContainer/authorisation_selection_vbox")
+requirments_hflow = NodePath("ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/authorisation_selection_vbox/requirments_margin/requirments_panel/MarginContainer/ScrollContainer/requirments_hflow")
+level_change_label = NodePath("ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/authorisation_selection_vbox/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/level_diff")
+unlock_change_label = NodePath("ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/authorisation_selection_vbox/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/other_diff")
+authorisation_name = NodePath("ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/requirment_header/authoriseation_name")
+description_box = NodePath("ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/authorisation_selection_vbox/description_margin/description")
+authorise_button = NodePath("ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/craft_button_margin/authorise_button")
+authorisation_selection_cell = ExtResource("2_j2krl")
+recipe_requirments_scene = ExtResource("3_4lsmu")
+is_storage = null
 
 [node name="ui_root" type="Control" parent="." unique_id=169872163]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -720.0
+offset_bottom = -720.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -183,13 +198,13 @@ theme_override_constants/separation = 8
 
 [node name="Label" type="Label" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer/VBoxContainer" unique_id=629851083]
 layout_mode = 2
-text = "- Double click cells to quick upgrade"
+text = "- All upgrads are permanant "
 label_settings = ExtResource("7_htm8a")
 autowrap_mode = 3
 
 [node name="Label2" type="Label" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer/VBoxContainer" unique_id=1026732937]
 layout_mode = 2
-text = "- These upgrades are permanent"
+text = "- Ship level is main progression"
 label_settings = ExtResource("7_htm8a")
 autowrap_mode = 3
 
@@ -219,9 +234,9 @@ theme_override_styles/panel = ExtResource("8_xn5r8")
 
 [node name="MarginContainer" type="MarginContainer" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_selection" unique_id=118108589]
 layout_mode = 2
-theme_override_constants/margin_left = 14
+theme_override_constants/margin_left = 12
 theme_override_constants/margin_top = 6
-theme_override_constants/margin_right = 14
+theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 14
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_selection/MarginContainer" unique_id=150705829]
@@ -251,8 +266,13 @@ custom_maximum_size = Vector2(-1, 360)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_d58ik")
 
-[node name="authorisation_selection_vbox" type="VBoxContainer" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_selection/MarginContainer/VBoxContainer" unique_id=1879934901]
+[node name="ScrollContainer" type="ScrollContainer" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_selection/MarginContainer/VBoxContainer" unique_id=1220076151]
 layout_mode = 2
+size_flags_vertical = 3
+
+[node name="authorisation_selection_vbox" type="VBoxContainer" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_selection/MarginContainer/VBoxContainer/ScrollContainer" unique_id=1879934901]
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="authorisation_details" type="PanelContainer" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer" unique_id=362428340]
@@ -275,7 +295,7 @@ theme_override_constants/separation = 8
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_tbl6n")
 
-[node name="craft_name" type="Label" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/requirment_header" unique_id=1808668537]
+[node name="authoriseation_name" type="Label" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/requirment_header" unique_id=1808668537]
 layout_mode = 2
 text = "Details"
 label_settings = SubResource("LabelSettings_eaxbq")

@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://d2gjbxqj7bl38" path="res://scripts/user_interface/crafting/crafting_ui.gd" id="1_0a7d0"]
 [ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="2_xasgv"]
+[ext_resource type="PackedScene" uid="uid://fgjq0d4thmv5" path="res://scenes/user_interface/crafting/craft_queue_item.tscn" id="3_dhkci"]
+[ext_resource type="PackedScene" uid="uid://cxjg2nfs7kh11" path="res://scenes/user_interface/crafting/craft_cell.tscn" id="4_p24mb"]
+[ext_resource type="PackedScene" uid="uid://jvgkff2pr1rj" path="res://scenes/user_interface/crafting/crafting_selection_sections.tscn" id="5_l5r13"]
 [ext_resource type="Texture2D" uid="uid://dbblaaid5dlw5" path="res://2d_assets/general/help_icon.png" id="7_iwo3t"]
 [ext_resource type="Texture2D" uid="uid://cykia00d2ecko" path="res://2d_assets/crafting/active_turret_tab.png" id="7_uc2av"]
 [ext_resource type="Script" uid="uid://clkeopwsevljj" path="res://scripts/user_interface/expand_buttons.gd" id="8_7uxoi"]
@@ -151,9 +154,12 @@ layer = 2
 script = ExtResource("1_0a7d0")
 ui_root = NodePath("ui_root")
 craft_queue_vbox = NodePath("ui_root/whole_ui/craft_queue_vbox")
+recipe_requirments_scene = ExtResource("13_uc2av")
+craft_queue_scene = ExtResource("3_dhkci")
+craft_cell_scene = ExtResource("4_p24mb")
+section_selection_scene = ExtResource("5_l5r13")
 craft_pin_texture = NodePath("ui_root/whole_ui/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirment_header/craft_name/MarginContainer/pin_recpie/MarginContainer/item_pin_texture")
 recpie_pinning = NodePath("recipie_pinning")
-recipe_requirments_scene = ExtResource("13_uc2av")
 craft_name = NodePath("ui_root/whole_ui/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirment_header/craft_name")
 image_background = NodePath("ui_root/whole_ui/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/requirments_stats_and_image/requirments_image_margin/image_background")
 requirement_image = NodePath("ui_root/whole_ui/crafting/MarginContainer/crafting_vbox/MarginContainer/HBoxContainer/crafting_requirments_background/crafting_requirements_margin/craftin_requirments_vbox/requirments_margin/requirments_vbox/requirments_stats_and_image/requirments_image_margin/image_background/MarginContainer/requirments_image")

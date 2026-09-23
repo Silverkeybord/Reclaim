@@ -81,7 +81,6 @@ metadata/_custom_type_script = "uid://bfg6owh4kyadi"
 [resource]
 script = ExtResource("9_yjvfa")
 key = "ship_tier"
-authorisation = "ship_tier"
 max_level = 8
 levels = Array[ExtResource("1_s7wpj")]([SubResource("Resource_yoqii"), SubResource("Resource_jugkx"), null, null, null, null, null, null])
 metadata/_custom_type_script = "uid://bd3b7pbajamv4"

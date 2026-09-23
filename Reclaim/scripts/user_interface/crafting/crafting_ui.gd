@@ -13,19 +13,13 @@ const PANEL_OVERRIDE_KEY := "panel"
 const ERR_INVALID_RECIPE := "Invalid crafting recipe skipped: %s" 
 const ERR_INVALID_level_ship := "Crafting recipe has invalid ship level: %s"
 
+# Tab assets
 const ACTIVE_TURRETS_TAB := preload("res://2d_assets/crafting/active_turret_tab.png")
 const ACTIVE_MODULES_TAB := preload("res://2d_assets/crafting/active_modules_tab.png")
 const ACTIVE_RESOURCE_TAB := preload("res://2d_assets/crafting/active_resources_tab.png")
 const INACTIVE_TURRETS_TAB := preload("res://2d_assets/crafting/inactive_turret_tab.png")
 const INACTIVE_MODULES_TAB := preload("res://2d_assets/crafting/inactive_modules_tab.png")
 const INACTIVE_RESOURCE_TAB := preload("res://2d_assets/crafting/inactive_resources_tab.png")
-
-const CRAFT_CELL_SCENE := preload("res://scenes/user_interface/crafting/craft_cell.tscn")
-const SECTION_SELECTION_SCENE := preload(
-	"res://scenes/user_interface/crafting/crafting_selection_sections.tscn"
-	)
-
-const CRAFT_QUEUE_SCENE := preload("res://scenes/user_interface/crafting/craft_queue_item.tscn")
 
 const GROUP_CRAFT_CELLS := &"craft_cells"
 const GROUP_CRAFT_QUEUE := &"craft_queue_items"
@@ -57,13 +51,18 @@ const HIDE_POS := Vector2(0, -720)
 @export var ui_root : MarginContainer
 @export var craft_queue_vbox : VBoxContainer
 
+@export_group("Other Scenes")
+@export var recipe_requirments_scene : PackedScene
+@export var craft_queue_scene : PackedScene
+@export var craft_cell_scene : PackedScene
+@export var section_selection_scene : PackedScene
+
 @export_group("Recpie Pinning")
 @export var craft_pin_texture : TextureRect
 @export var recpie_pinning : RecpiePinning
 
 @export_group("Requirments")
 @export var current_displayed_requirments : CraftData
-@export var recipe_requirments_scene : PackedScene
 @export var craft_name : Label
 @export var image_background : PanelContainer
 @export var requirement_image : TextureRect
@@ -171,7 +170,6 @@ func close_ui() -> void:
 func _set_open_or_close(toggle : bool) -> void:
 	hide_or_show_tween(
 		ui_root,
-		TWEEN_DURATION,
 		SHOW_POS if toggle else HIDE_POS,
 		toggle
 		)
@@ -228,7 +226,7 @@ func _queue_craft(craft_data : CraftData, craft_amount : int) -> void:
 				last_item._set_amount_label()
 				return
 	
-	var new_queue_item: CraftQueueItem = CRAFT_QUEUE_SCENE.instantiate()
+	var new_queue_item: CraftQueueItem = craft_queue_scene.instantiate()
 	
 	new_queue_item.craft_data = craft_data
 	new_queue_item.amount = craft_amount
@@ -279,7 +277,7 @@ func load_crafting() -> void:
 					
 				else:
 					var new_selection_section : CraftingSelection = (
-						SECTION_SELECTION_SCENE.instantiate()
+						section_selection_scene.instantiate()
 						)
 					new_selection_section.tier = recipe.crafted_item.tier
 					tab_vbox.selection_sections[recipe.crafted_item.tier] = new_selection_section
@@ -288,7 +286,7 @@ func load_crafting() -> void:
 					section = new_selection_section
 					section.set_up()
 				
-				var new_craft_cell : CraftCell = CRAFT_CELL_SCENE.instantiate()
+				var new_craft_cell : CraftCell = craft_cell_scene.instantiate()
 				new_craft_cell.craft_data = recipe
 				new_craft_cell.add_to_group(GROUP_CRAFT_CELLS)
 				new_craft_cell.crafting_menu = self
