@@ -10,8 +10,10 @@ enum TABS {
 const COLOR_KEY := "color"
 const PANEL_OVERRIDE_KEY := "panel"
 
+# Error messages
 const ERR_INVALID_RECIPE := "Invalid crafting recipe skipped: %s" 
-const ERR_INVALID_level_ship := "Crafting recipe has invalid ship level: %s"
+const ERR_INVALID_SHIP_TIER := "Crafting recipe has invalid ship level: %s"
+const ERR_MISSING_AUTHORITY := "Missing Authority: %s"
 
 # Tab assets
 const ACTIVE_TURRETS_TAB := preload("res://2d_assets/crafting/active_turret_tab.png")
@@ -21,32 +23,38 @@ const INACTIVE_TURRETS_TAB := preload("res://2d_assets/crafting/inactive_turret_
 const INACTIVE_MODULES_TAB := preload("res://2d_assets/crafting/inactive_modules_tab.png")
 const INACTIVE_RESOURCE_TAB := preload("res://2d_assets/crafting/inactive_resources_tab.png")
 
+# Groups
 const GROUP_CRAFT_CELLS := &"craft_cells"
 const GROUP_CRAFT_QUEUE := &"craft_queue_items"
 const GROUP_REQUIREMENT_CELLS := &"requirment_cells"
 const GROUP_PLAYER := &"player"
 
+# Text formatting
 const DPS_LABEL_PREFIX := "DPS : "
 const ABILITY_LABEL_PREFIX := "Ability : "
 const AMOUNT_LABEL_PREFIX := "Amount: "
 const CRAFT_TIME_LABEL_PREFIX := "Craft Time: "
 
-const CLOSE_UI_INPUT := "close_ui"
+# Input names
+const CLOSE_UI_INPUT := &"close_ui"
 
 const RECIPE_PIN_NORMAL_COLOR := Color(0.743, 0.743, 0.743, 1.0)
 const RECIPE_PIN_PINED_COLOR := Color(0.58, 1.0, 0.5, 1.0)
 
+# Crafting Values
 const MAX_CRAFT_QUEUE := 5
-
 const CRAFT_ONE := 1
 const CRAFT_FIVE := 5
 const CRAFT_TWENTY_FIVE := 25
-const CRAFT_MAX := 0
+const CRAFT_MAX := -1
 
 # Tween Pram
 const TWEEN_DURATION := 0.8
 const SHOW_POS := Vector2(0, 0)
 const HIDE_POS := Vector2(0, -720)
+
+# Important authorisations
+const AUTH_SHIP_TIER := preload("res://data/authorisation/ship_tier.tres")
 
 @export var ui_root : MarginContainer
 @export var craft_queue_vbox : VBoxContainer
@@ -113,7 +121,7 @@ var can_craft_current : bool = false
 var craft_mult : int = 1
 var max_mult : int = 0
 var current_tab = TABS.TURRETS
-var level_ship_requirments : Dictionary = {
+var ship_tier_requirments : Dictionary = {
 	1 : {},
 	2 : {},
 	3 : {},
@@ -136,12 +144,12 @@ func _ready() -> void:
 			continue
 		
 		var item_key = recipe.crafted_item.key
-		var level = recipe.required_ship_level
-		if not level_ship_requirments.has(level):
-			push_error(ERR_INVALID_level_ship % recipe_key)
+		var level = recipe.required_ship_tier
+		if not ship_tier_requirments.has(level):
+			push_error(ERR_INVALID_SHIP_TIER % recipe_key)
 			continue
 		
-		level_ship_requirments[level][item_key] = recipe
+		ship_tier_requirments[level][item_key] = recipe
 	
 	load_crafting()
 
@@ -257,13 +265,18 @@ func queue_next() -> void:
 
 ## loads all crafting UI bassed on ship level
 func load_crafting() -> void:
-	for level_ship in level_ship_requirments:
-		if level_ship > Global.level_ship:
+	if not Global.council_authorisations.get(AUTH_SHIP_TIER.key, {}):
+		push_error(ERR_MISSING_AUTHORITY % AUTH_SHIP_TIER.key)
+		return
+	
+	# For all the levels in ship_tier will make the cells visible 
+	for ship_tier in range(1, AUTH_SHIP_TIER.max_level):
+		if ship_tier > Global.council_authorisations[AUTH_SHIP_TIER.key]:
 			break
 		
 		else:
-			for recipe_key : String in level_ship_requirments[level_ship]:
-				var recipe : CraftData = level_ship_requirments[level_ship][recipe_key]
+			for recipe_key : String in ship_tier_requirments[ship_tier]:
+				var recipe : CraftData = ship_tier_requirments[ship_tier][recipe_key]
 				var item_type = recipe.crafted_item.type
 				if not tab_vboxs.has(item_type):
 					continue

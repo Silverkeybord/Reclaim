@@ -5,7 +5,7 @@ extends Resource
 @export var key : String
 
 ## the required ship tier to unlock this crafting recipe
-@export_range(1, 8) var required_ship_level : int = 1
+@export_range(1, 8) var required_ship_tier : int = 1
 ## a list of requirments derived from "RequirementsTemplate"
 @export var requirements : Array[RequirementsTemplate]
 ## the resulting item crafted

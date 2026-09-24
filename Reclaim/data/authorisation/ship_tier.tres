@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="AuthorisationData" format=3 uid="uid://du0hy78wnfmij"]
 
+[ext_resource type="Texture2D" uid="uid://b6xcqs734mf5q" path="res://2d_assets/council_authorisation/ship_tier.png" id="1_qk3uq"]
 [ext_resource type="Script" uid="uid://bfg6owh4kyadi" path="res://scripts/resources/authorisation_level.gd" id="1_s7wpj"]
 [ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="2_fx25p"]
 [ext_resource type="Script" uid="uid://cd702x671kf7o" path="res://scripts/resources/unlock_template.gd" id="3_36457"]
@@ -81,6 +82,7 @@ metadata/_custom_type_script = "uid://bfg6owh4kyadi"
 [resource]
 script = ExtResource("9_yjvfa")
 key = "ship_tier"
+icon = ExtResource("1_qk3uq")
 max_level = 8
 levels = Array[ExtResource("1_s7wpj")]([SubResource("Resource_yoqii"), SubResource("Resource_jugkx"), null, null, null, null, null, null])
 metadata/_custom_type_script = "uid://bd3b7pbajamv4"

@@ -204,18 +204,7 @@ var just_extracted : bool = false
 var enemies: int = 0
 
 # META UPGRADES / COUNCIL AUTHORIZATION -------------------------------------
-var council_authorisation : Dictionary = {}
-
-var level_ship_tier: int = 8
-var level_ship_capacity: int = 1
-var level_extraction_capacity: int = 1
-var level_deployment_capacity: int = 1
-var level_shield_strength: int = 1
-var level_craft_efficiency: int = 1
-var level_weapon_authorization: int = 1
-var level_turret_authorization: int = 1
-var level_module_authorization: int = 1
-var level_turret_slots: int = 1
+var council_authorisations : Dictionary = {}
 
 # INVENTORY + CURRENCY -------------------------------------------------------
 var cubits: int = 0
@@ -259,7 +248,7 @@ func set_paused(pause := false) -> void:
 	Global.paused = pause
 
 
-## sets the time scale of the engine to the passed float should be between 0.0 - 1.0
+## sets the time scale of the engine to the passed float
 func set_time_scale(time_scale := 1.0) -> void:
 	if time_scale == 1.0:
 		Engine.time_scale = time_scale
@@ -285,7 +274,7 @@ func save_game() -> void:
 	var save_data := {
 		SAVE_SHIP_STORAGE_KEY: ship_storage,
 		SAVE_CUBITS_KEY: cubits,
-		SAVE_COUNCIL_AUTHORIZATION_KEY: council_authorisation,
+		SAVE_COUNCIL_AUTHORIZATION_KEY: council_authorisations,
 		SAVE_SETTINGS_KEY: {
 			SAVE_SENSIVITY_KEY: sensitivity,
 			SAVE_SHOW_FPS_TOGGLE: show_fps,
@@ -326,7 +315,7 @@ func load_game() -> void:
 	cubits = int(data.get(SAVE_CUBITS_KEY, cubits))
 	
 	# Council Authorisation -------------------------------------------------
-	council_authorisation = data.get(SAVE_COUNCIL_AUTHORIZATION_KEY, council_authorisation)
+	council_authorisations = data.get(SAVE_COUNCIL_AUTHORIZATION_KEY, council_authorisations)
 	
 	
 	# Tutorial values --------------------------------------------------------
@@ -352,3 +341,5 @@ func reset_game() -> void:
 	if FileAccess.file_exists(SAVE_PATH):
 		DirAccess.remove_absolute(ProjectSettings.globalize_path(SAVE_PATH))
 	get_tree().quit()
+	
+	return

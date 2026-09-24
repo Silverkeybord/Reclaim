@@ -12,3 +12,6 @@ class_name AuthorisationLevel
 
 ## The unlocks that getting this level will grant/upgrades
 @export var unlocks : Array[UnlockTemplate]
+
+## The description of the authorisation
+@export var description : String = ""

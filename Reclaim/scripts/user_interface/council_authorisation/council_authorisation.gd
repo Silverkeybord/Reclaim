@@ -22,6 +22,7 @@ const RECIPIES_TEXT := "Recpies : %s"
 @export var authorisation_name : Label
 @export var description_box : RichTextLabel
 @export var authorise_button : Button
+@export var authorisation_icon : TextureRect
 
 @export_group("Other Scenes")
 @export var authorisation_selection_cell : PackedScene
@@ -68,10 +69,12 @@ func _set_open_or_close(toggle : bool) -> void:
 	HelperFunctions.set_mouse_captured(true, not toggle)
 
 
-# Displaying details and requirments for the authorisation -------------------
+# Displaying details ands requirments for the authorisation -------------------
 func show_authorisation_details(authorisation_data : AuthorisationData) -> void:
 	current_displayed_authorisation = authorisation_data
 	authorisation_name.text = HelperFunctions.get_display_name(authorisation_data.key)
-	var authority_level = Global.council_authorisation[authorisation_data.key]
+	authorisation_icon.texture = authorisation_data.get_icon()
+	var authority_level = Global.council_authorisations[authorisation_data.key]
 	level_change_label.text = LEVEL_CANGE_TEXT % [authority_level, authority_level + 1]
+	
 	

@@ -33,7 +33,7 @@ var items: Dictionary = {}
 var bases: Dictionary = {}
 
 
-func _ready() -> void:
+func load_data_registry() -> void:
 	_load_folder(TURRET_PATH, turrets, true)
 	_load_folder(MODULES_PATH, modules, true)
 	_load_folder(WEAPONS_PATH, weapon)

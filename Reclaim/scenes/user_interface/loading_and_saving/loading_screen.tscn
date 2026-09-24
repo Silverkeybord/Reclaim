@@ -43,5 +43,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="min_loading_timer" type="Timer" parent="." unique_id=423551820]
+wait_time = 5.0
 
 [connection signal="timeout" from="min_loading_timer" to="." method="_on_min_loading_timer_timeout"]
