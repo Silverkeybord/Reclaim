@@ -1,10 +1,12 @@
 [gd_resource type="Resource" script_class="AuthorisationData" format=3 uid="uid://bbg08t7gksxei"]
 
+[ext_resource type="Texture2D" uid="uid://dph3mfdoj1utd" path="res://2d_assets/council_authorisation/extraction_capacity.png" id="1_ginos"]
 [ext_resource type="Script" uid="uid://bfg6owh4kyadi" path="res://scripts/resources/authorisation_level.gd" id="1_l7oyt"]
 [ext_resource type="Script" uid="uid://bd3b7pbajamv4" path="res://data/resource_scripts/authorisation_data.gd" id="2_ginos"]
 
 [resource]
 script = ExtResource("2_ginos")
 key = "extraction_capacity"
+icon = ExtResource("1_ginos")
 max_level = 5
 metadata/_custom_type_script = "uid://bd3b7pbajamv4"

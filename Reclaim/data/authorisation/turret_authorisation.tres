@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="AuthorisationData" format=3 uid="uid://d1nsau8ehd8da"]
 
+[ext_resource type="Texture2D" uid="uid://brrw47k3o1qug" path="res://2d_assets/council_authorisation/turret_authorisatoin.png" id="1_ndj7v"]
 [ext_resource type="Script" uid="uid://bfg6owh4kyadi" path="res://scripts/resources/authorisation_level.gd" id="1_r7ngo"]
 [ext_resource type="Script" uid="uid://bd3b7pbajamv4" path="res://data/resource_scripts/authorisation_data.gd" id="2_ndj7v"]
 
@@ -7,5 +8,6 @@
 script = ExtResource("2_ndj7v")
 key = "turret_authorisation"
 upgrade_type = "crafting_unlock"
+icon = ExtResource("1_ndj7v")
 max_level = 5
 metadata/_custom_type_script = "uid://bd3b7pbajamv4"

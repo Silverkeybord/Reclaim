@@ -1,10 +1,12 @@
 [gd_resource type="Resource" script_class="AuthorisationData" format=3 uid="uid://cndf0et3hdo8s"]
 
+[ext_resource type="Texture2D" uid="uid://c4rtsoakegi6h" path="res://2d_assets/council_authorisation/shield_strength.png" id="1_mra2b"]
 [ext_resource type="Script" uid="uid://bfg6owh4kyadi" path="res://scripts/resources/authorisation_level.gd" id="1_y6qvl"]
 [ext_resource type="Script" uid="uid://bd3b7pbajamv4" path="res://data/resource_scripts/authorisation_data.gd" id="2_mra2b"]
 
 [resource]
 script = ExtResource("2_mra2b")
 key = "shield_strength"
+icon = ExtResource("1_mra2b")
 max_level = 8
 metadata/_custom_type_script = "uid://bd3b7pbajamv4"
