@@ -64,6 +64,7 @@ func update_amount() -> void:
 	_update_visibility()
 
 
+# called from build selectoin makes the cell move in a directoin
 func move(direction: int, tween_time: float) -> void:
 	if direction == 0:
 		return

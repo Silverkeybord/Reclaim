@@ -78,14 +78,14 @@ font = ExtResource("4_irus0")
 font_size = 14
 font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 
-[node name="pause_menu" type="CanvasLayer" unique_id=774636245 node_paths=PackedStringArray("sensitivity_slider", "sensitivity_line_edit", "input_tips_texture_rect", "fps_texture_rect", "delete_timer", "delete_lable")]
+[node name="pause_menu" type="CanvasLayer" unique_id=774636245 node_paths=PackedStringArray("sensitivity_slider", "sensitivity_line_edit", "action_bars_texture_rect", "fps_texture_rect", "delete_timer", "delete_lable")]
 process_mode = 3
 layer = 3
 visible = false
 script = ExtResource("1_yasr7")
 sensitivity_slider = NodePath("Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity/HSlider")
 sensitivity_line_edit = NodePath("Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity/LineEdit")
-input_tips_texture_rect = NodePath("Control/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_input_tips/HBoxContainer/TextureRect")
+action_bars_texture_rect = NodePath("Control/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_action_bar/HBoxContainer/TextureRect")
 fps_texture_rect = NodePath("Control/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_show_fps/HBoxContainer/TextureRect")
 delete_timer = NodePath("delete_timer")
 delete_lable = NodePath("Control/delete_save/delete_lable")
@@ -253,7 +253,7 @@ custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 theme_override_constants/separation = 33
 
-[node name="toggle_input_tips" type="Button" parent="Control/PanelContainer/MarginContainer/VBoxContainer/toggles" unique_id=1774345277]
+[node name="toggle_action_bar" type="Button" parent="Control/PanelContainer/MarginContainer/VBoxContainer/toggles" unique_id=1774345277]
 custom_minimum_size = Vector2(148, 0)
 custom_maximum_size = Vector2(148, -1)
 layout_mode = 2
@@ -262,7 +262,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_57qmd")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_75gvq")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_iv7aa")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_input_tips" unique_id=299864477]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_action_bar" unique_id=299864477]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -271,15 +271,15 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 8
 
-[node name="TextureRect" type="TextureRect" parent="Control/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_input_tips/HBoxContainer" unique_id=826611641]
+[node name="TextureRect" type="TextureRect" parent="Control/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_action_bar/HBoxContainer" unique_id=826611641]
 texture_filter = 1
 layout_mode = 2
 texture = ExtResource("6_w0kvp")
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="Control/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_input_tips/HBoxContainer" unique_id=316319980]
+[node name="Label" type="Label" parent="Control/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_action_bar/HBoxContainer" unique_id=316319980]
 layout_mode = 2
-text = "Input Tips"
+text = "Action Bar"
 label_settings = SubResource("LabelSettings_iv7aa")
 
 [node name="toggle_show_fps" type="Button" parent="Control/PanelContainer/MarginContainer/VBoxContainer/toggles" unique_id=1972113380]
@@ -403,7 +403,7 @@ wait_time = 5.0
 [connection signal="mouse_exited" from="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/exit_button" to="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/exit_button" method="_on_mouse_exited"]
 [connection signal="pressed" from="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/exit_button" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/exit_button" to="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/exit_button" method="_on_pressed"]
-[connection signal="pressed" from="Control/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_input_tips" to="." method="_on_toggle_input_tips_pressed"]
+[connection signal="pressed" from="Control/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_action_bar" to="." method="_on_toggle_input_tips_pressed"]
 [connection signal="pressed" from="Control/PanelContainer/MarginContainer/VBoxContainer/toggles/toggle_show_fps" to="." method="_on_toggle_show_fps_pressed"]
 [connection signal="drag_ended" from="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity/HSlider" to="." method="_on_h_slider_drag_ended"]
 [connection signal="drag_started" from="Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity/HSlider" to="." method="_on_h_slider_drag_started"]

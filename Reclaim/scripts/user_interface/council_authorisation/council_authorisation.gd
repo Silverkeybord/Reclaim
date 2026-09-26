@@ -39,6 +39,11 @@ func _ready() -> void:
 		selection_vbox.add_child(new_selection_cell)
 
 
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed(UserInterfaceMenu.CLOSE_UI_INPUT):
+		close_ui()
+
+
 # Opening and Closing Control ------------------------------------------------
 func open_ui() -> void:
 	if move_tween_playing:
@@ -46,7 +51,7 @@ func open_ui() -> void:
 	
 	_set_open_or_close(true)
 
-
+	
 func close_ui() -> void:
 	if move_tween_playing:
 		return
@@ -76,5 +81,3 @@ func show_authorisation_details(authorisation_data : AuthorisationData) -> void:
 	authorisation_icon.texture = authorisation_data.get_icon()
 	var authority_level = Global.council_authorisations[authorisation_data.key]
 	level_change_label.text = LEVEL_CANGE_TEXT % [authority_level, authority_level + 1]
-	
-	

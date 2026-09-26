@@ -35,9 +35,6 @@ const ABILITY_LABEL_PREFIX := "Ability : "
 const AMOUNT_LABEL_PREFIX := "Amount: "
 const CRAFT_TIME_LABEL_PREFIX := "Craft Time: "
 
-# Input names
-const CLOSE_UI_INPUT := &"close_ui"
-
 const RECIPE_PIN_NORMAL_COLOR := Color(0.743, 0.743, 0.743, 1.0)
 const RECIPE_PIN_PINED_COLOR := Color(0.58, 1.0, 0.5, 1.0)
 

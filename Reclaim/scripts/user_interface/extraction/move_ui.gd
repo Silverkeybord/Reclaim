@@ -41,8 +41,6 @@ const ITEM_TIER := "tier"
 const ITEM_VALUE := "value"
 const ITEM_WEIGHT := "weight"
 
-const CLOSE_UI_INPUT := "close_ui"
-
 const WEIGHT_FORMAT := "--- Weight %s/%s kg ---"
 
 # Tween Pram

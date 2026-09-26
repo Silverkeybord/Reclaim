@@ -152,7 +152,7 @@ _data = {
 &"build_placed": SubResource("Animation_ugbui")
 }
 
-[node name="player" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "hit_overlay", "aim_ray", "build_ray", "shooting_timer", "pick_up_area", "arm_pivot", "gun_pivot", "hammer_pivot", "wrench_pivot", "canvas_root", "build_overlay", "build_label", "input_tip", "building_selection", "user_interface_animations", "item_notif_controller", "fps_lable", "input_tips_panel") groups=["player"]]
+[node name="player" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "hit_overlay", "aim_ray", "build_ray", "shooting_timer", "pick_up_area", "arm_pivot", "gun_pivot", "hammer_pivot", "wrench_pivot", "canvas_root", "build_overlay", "build_label", "action_bar", "building_selection", "user_interface_animations", "item_notif_controller", "fps_lable", "action_bars_panel") groups=["player"]]
 collision_layer = 2
 collision_mask = 79
 script = ExtResource("1_eo61r")
@@ -170,12 +170,12 @@ turret_holagram_scene = ExtResource("2_6upyo")
 canvas_root = NodePath("canvas_root")
 build_overlay = NodePath("canvas_root/build_overlay")
 build_label = NodePath("canvas_root/build_overlay/Label")
-input_tip = NodePath("canvas_root/input_tips/MarginContainer/input_tip")
+action_bar = NodePath("canvas_root/action_bar/MarginContainer/action_bar")
 building_selection = NodePath("canvas_root/build_selection")
 user_interface_animations = NodePath("canvas_root/UI_animations")
 item_notif_controller = NodePath("canvas_root/item_notif_controller")
 fps_lable = NodePath("canvas_root/FPS counter")
-input_tips_panel = NodePath("canvas_root/input_tips")
+action_bars_panel = NodePath("canvas_root/action_bar")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=125637870]
 shape = SubResource("BoxShape3D_e41v5")
@@ -304,7 +304,7 @@ offset_left = 5.0
 offset_right = 45.0
 label_settings = ExtResource("8_5gtgg")
 
-[node name="input_tips" type="PanelContainer" parent="canvas_root" unique_id=1946409334]
+[node name="action_bar" type="PanelContainer" parent="canvas_root" unique_id=1946409334]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -314,14 +314,14 @@ grow_vertical = 0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
 
-[node name="MarginContainer" type="MarginContainer" parent="canvas_root/input_tips" unique_id=1312460894]
+[node name="MarginContainer" type="MarginContainer" parent="canvas_root/action_bar" unique_id=1312460894]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 5
 
-[node name="input_tip" type="Label" parent="canvas_root/input_tips/MarginContainer" unique_id=1361217528]
+[node name="action_bar" type="Label" parent="canvas_root/action_bar/MarginContainer" unique_id=1361217528]
 layout_mode = 2
 label_settings = ExtResource("8_5gtgg")
 

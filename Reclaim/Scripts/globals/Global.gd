@@ -7,19 +7,17 @@ enum SHOT_TYPE {
 	HITSCAN,
 	PROJECTILE
 }
-enum BUILD_MODES {
-	TURRET,
-	BASE
-}
 enum BUILD_TYPES {
 	TURRET,
-	BASE
+	BASE,
+	TRAP
 }
 enum ITEM_TYPES {
 	MODULE,
 	TURRET,
 	BASE,
-	RESOURCES
+	RESOURCES,
+	TRAP
 }
 enum PLAYER_MODES {
 	WEAPON,
@@ -62,7 +60,7 @@ const SAVE_TURRET_SLOTS_KEY := "level_turret_slots"
 const SAVE_SETTINGS_KEY: String = "settings"
 const SAVE_SENSIVITY_KEY: String = "sensitivity"
 const SAVE_SHOW_FPS_TOGGLE: String = "show_fps"
-const SAVE_SHOW_INPUT_TIP_TOGGLE: String = "show_input_tip"
+const SAVE_SHOW_INPUT_TIP_TOGGLE: String = "show_action_bar"
 
 # TUTORIAL
 const SAVE_TUTORIAL: String = "tutorial"
@@ -171,7 +169,6 @@ const MAX_SPHERES: int = 300
 
 # LOGIC --------------------------------------------------------------------
 var player_mode := PLAYER_MODES.WEAPON
-var current_build_mode := BUILD_MODES.TURRET
 var at_ship := true
 var mouse_captured := true
 var major_animation_playing := false
@@ -216,7 +213,7 @@ var deploy_storage: Dictionary = HelperFunctions.get_clean_storage()
 # SETTINGS -------------------------------------------------------------------
 ## Goes from 0.05 to 2 as a multiplyer of the base sensitivity
 var sensitivity: float = 1.0
-var show_input_tip: bool = true
+var show_action_bar: bool = true
 var show_fps: bool = false
 
 
@@ -278,7 +275,7 @@ func save_game() -> void:
 		SAVE_SETTINGS_KEY: {
 			SAVE_SENSIVITY_KEY: sensitivity,
 			SAVE_SHOW_FPS_TOGGLE: show_fps,
-			SAVE_SHOW_INPUT_TIP_TOGGLE: show_input_tip
+			SAVE_SHOW_INPUT_TIP_TOGGLE: show_action_bar
 		},
 		SAVE_TUTORIAL: {
 			SAVE_TUTORIAL_STAGE : tutorial_stage,
@@ -330,7 +327,7 @@ func load_game() -> void:
 	if typeof(settings) == TYPE_DICTIONARY:
 		sensitivity = settings.get(SAVE_SENSIVITY_KEY, sensitivity)
 		show_fps = settings.get(SAVE_SHOW_FPS_TOGGLE, show_fps)
-		show_input_tip = settings.get(SAVE_SHOW_INPUT_TIP_TOGGLE, show_input_tip)
+		show_action_bar = settings.get(SAVE_SHOW_INPUT_TIP_TOGGLE, show_action_bar)
 	
 	await get_tree().create_timer(SAVE_AND_LOAD_BUFFER).timeout
 	return

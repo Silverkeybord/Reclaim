@@ -15,7 +15,7 @@ const DELETE_PRESSES_TEXT := {
 
 @export var sensitivity_slider : HSlider
 @export var sensitivity_line_edit : LineEdit
-@export var input_tips_texture_rect : TextureRect
+@export var action_bars_texture_rect : TextureRect
 @export var fps_texture_rect : TextureRect
 @export var delete_timer : Timer
 @export var delete_lable : Label
@@ -37,7 +37,7 @@ func _ready() -> void:
 	sensitivity_slider.max_value = MAX_SENSITIVITY_MULT
 	sensitivity_slider.value = Global.sensitivity
 	sensitivity_line_edit.text = str(Global.sensitivity)
-	input_tips_texture_rect.texture = toggled_lookup_textures[Global.show_input_tip]
+	action_bars_texture_rect.texture = toggled_lookup_textures[Global.show_action_bar]
 	fps_texture_rect.texture = toggled_lookup_textures[Global.show_fps]
 
 
@@ -101,9 +101,9 @@ func _on_exit_button_pressed() -> void:
 
 
 # toggles pressed -------------------------------------------------------------
-func _on_toggle_input_tips_pressed() -> void:
-	Global.show_input_tip = not Global.show_input_tip
-	input_tips_texture_rect.texture = toggled_lookup_textures[Global.show_input_tip]
+func _on_toggle_action_bars_pressed() -> void:
+	Global.show_action_bar = not Global.show_action_bar
+	action_bars_texture_rect.texture = toggled_lookup_textures[Global.show_action_bar]
 
 
 func _on_toggle_show_fps_pressed() -> void:

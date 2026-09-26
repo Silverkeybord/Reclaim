@@ -1,6 +1,7 @@
 class_name UserInterfaceMenu
 extends Node
 
+const CLOSE_UI_INPUT: StringName = &"close_ui"
 const UI_MENU_OPEN_TIMESCALE := 0.3
 const PROP_POSITION := "position"
 const TWEEN_IN_TIME := 0.5
@@ -31,6 +32,7 @@ func hide_or_show_tween(
 	target_pos : Vector2, 
 	is_show : bool
 ) -> void:
+	
 	move_tween_playing = true
 	
 	if is_show:

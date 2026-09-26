@@ -7,7 +7,6 @@ const MIN_SCROLL: int = 0
 
 const PROP_EXTRACTION_UI := &"extraction_ui"
 const INTERACT_INPUT: StringName = &"interact"
-const CLOSE_UI_INPUT: StringName = &"close_ui"
 const METHOD_UPDATE_AMOUNT: StringName = &"update_amount"
 
 const ERR_MISSING_CELL_PARENT: String = "Storage UI item parent is missing."
@@ -31,7 +30,7 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed(CLOSE_UI_INPUT):
+	if Input.is_action_just_pressed(UserInterfaceMenu.CLOSE_UI_INPUT):
 		close_ui()
 
 
@@ -123,5 +122,4 @@ func _set_open_or_close(toggle: bool) -> void:
 	
 	Global.ui_open = toggle
 	Global.storage_open = toggle
-	set_open_timescale(toggle)
 	set_process(toggle)

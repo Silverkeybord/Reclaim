@@ -34,6 +34,23 @@ const METHOD_INTERACT : StringName = &"interact"
 const METHOD_TOGGLE_BUILD_MODE : StringName = &"_toggle_build_mode"
 const METHOD_PRIME_PICK_UP : StringName = &"prime_pick_up"
 
+# Building Related Properties
+const BUILD_PROP_ORIGIN_POINT: StringName = &"turret_origin_point"
+const BUILD_PROP_TURRET: StringName = &"turret"
+const BUILD_PROP_BASE: StringName = &"base"
+const BUILD_PROP_SLOT: StringName = &"slot"
+const BUILD_PROP_UNLOCKED: StringName = &"unlocked"
+const BUILD_PROP_BUILD_TYPE: StringName = &"build_type"
+const BUILD_PROP_CAN_PLACE_TURRET: StringName = &"can_place_turret"
+const BUILD_PROP_CAN_PLACE_BASE: StringName = &"can_place_base"
+const BUILD_PROP_CURRENT_ITEM_TYPE: StringName = &"current_item_type"
+
+# Node Methods
+const METHOD_PICK_UP: StringName = &"pick_up"
+const METHOD_BASE_REMOVED: StringName = &"base_removed"
+const METHOD_PLACE_TURRET: StringName = &"place_selected_turret"
+const METHOD_BUILD_BASE: StringName = &"build_base"
+
 # Animation Keys & Defaults
 const PLACE_ANIMATION_KEY : StringName = &"build_placed"
 const DEFAULT_WEAPON_NAME : String = "pistol"
@@ -42,9 +59,10 @@ const DEFAULT_WEAPON_NAME : String = "pistol"
 const WEAPON_MODE_INPUT : String = "1 - Weapon"
 const BUILD_MODE_INPUT : String = "2 - Building"
 const INSTALL_MODE_INPUT : String = "3 - Installation"
-const BUILDING_INPUTS : String = "F - Change Builds\nM2 - Pick up Builds\nScroll - Selection"
+const BUILDING_INPUTS : String = "M2 - Pick up Builds\nScroll - Selection"
 const INTERACT_INPUT : String = "E - Interact"
 const SHOW_PINNED_INPUT : String = "TAB - Pinned"
+const PAUSE_INPUT : String = "esc - Pause"
 
 const PICK_UP_TEXT : String = "CLICK TO PICK UP"
 const PLACE_TEXT : String = "CLICK TO PLACE"
@@ -86,19 +104,18 @@ const ZERO_FLOAT : float = 0.0
 @export_group("Turrets & Building")
 @export var turret_holagram_scene: PackedScene
 @export var turret_grid: Node3D
-@export var selected_turret: String = ""
-@export var selected_base: String = ""
+@export var selected_build : String = ""
 
 @export_group("2D UI Elements")
 @export var canvas_root : CanvasLayer
 @export var build_overlay: Control
 @export var build_label: Label
-@export var input_tip: Label
+@export var action_bar: Label
 @export var building_selection: CanvasLayer
 @export var user_interface_animations: AnimationPlayer
 @export var item_notif_controller : ItemNotifController
 @export var fps_lable : Label
-@export var input_tips_panel : PanelContainer
+@export var action_bars_panel : PanelContainer
 
 # =============================================================================
 # VARIABLES
@@ -148,10 +165,17 @@ func _process(_delta: float) -> void:
 	
 	_shoot_control()
 	_player_mode_handling()
-	_input_tip_updating()
+	_action_bar_updating()
 	_overlay_settings_updating()
 	
 	var ray_collider: Node = aim_ray.get_collider() if aim_ray else null
+	
+	# When major animaiton is playing returns to weapon mode to remove ui
+	if Global.major_animation_playing:
+		if Global.player_mode != Global.PLAYER_MODES.WEAPON:
+			force_weapon_mode()
+		
+		return
 	
 	# bassed on the player mode will do certain things
 	match Global.player_mode:
@@ -178,35 +202,45 @@ func _overlay_settings_updating() -> void:
 	if Global.show_fps != fps_lable.visible:
 		fps_lable.visible = Global.show_fps
 	
-	if Global.show_input_tip != input_tips_panel.visible:
-		input_tips_panel.visible = Global.show_input_tip
+	if Global.show_action_bar != action_bars_panel.visible:
+		action_bars_panel.visible = Global.show_action_bar
 
 
-# Updates the input tip text based on what the player can do
-func _input_tip_updating() -> void:
-	if input_tip == null:
+# Updates the action text based on what the player can do
+func _action_bar_updating() -> void:
+	if action_bar == null:
 		return
 	
-	var input_tip_output: Array[String] = []
+	# hides action bar when UI open
+	if Global.ui_open:
+		action_bars_panel.visible = false
+		return
+	
+	if action_bars_panel.visible == false:
+		action_bars_panel.visible = true
+	
+	var action_bar_output: Array[String] = []
 	
 	if Global.player_mode == Global.PLAYER_MODES.BUILDING:
-		input_tip_output.append(BUILDING_INPUTS)
+		action_bar_output.append(BUILDING_INPUTS)
 	
 	if not Global.at_ship:
 		if Global.player_mode != Global.PLAYER_MODES.WEAPON:
-			input_tip_output.append(WEAPON_MODE_INPUT)
+			action_bar_output.append(WEAPON_MODE_INPUT)
 		if Global.player_mode != Global.PLAYER_MODES.BUILDING:
-			input_tip_output.append(BUILD_MODE_INPUT)
+			action_bar_output.append(BUILD_MODE_INPUT)
 		if Global.player_mode != Global.PLAYER_MODES.INSTALLING:
-			input_tip_output.append(INSTALL_MODE_INPUT)
+			action_bar_output.append(INSTALL_MODE_INPUT)
 	
 	if Global.player_mode != Global.PLAYER_MODES.BUILDING:
-		input_tip_output.append(INTERACT_INPUT)
+		action_bar_output.append(INTERACT_INPUT)
 	
 	if Global.pined_crafts:
-		input_tip_output.append(SHOW_PINNED_INPUT)
+		action_bar_output.append(SHOW_PINNED_INPUT)
 	
-	input_tip.text = "\n".join(input_tip_output)
+	action_bar_output.append(PAUSE_INPUT)
+	
+	action_bar.text = "\n".join(action_bar_output)
 
 
 # Checks if the object the player is looking at is interactable and distance
@@ -240,6 +274,7 @@ func _item_pinning_handeling() -> void:
 
 # Bassed on inputs changes the player mode to shooting, building, installation
 func _player_mode_handling() -> void:
+	# Weapon mode
 	if (
 		Input.is_action_just_pressed(ACTION_WEAPON_MODE)
 		and Global.player_mode != Global.PLAYER_MODES.WEAPON
@@ -248,6 +283,7 @@ func _player_mode_handling() -> void:
 		_remove_hologram(true)
 		toggle_player_mode_item(gun_pivot)
 	
+	# Build mode
 	if (
 		Input.is_action_just_pressed(ACTION_BUILD_MODE)
 		and not Global.at_ship
@@ -262,6 +298,7 @@ func _player_mode_handling() -> void:
 			turret_grid._toggle_build_mode(true)
 		toggle_player_mode_item(hammer_pivot)
 	
+	# Installatoin mode
 	if (
 		Input.is_action_just_pressed(ACTION_INSTALL_MODE)
 		and not Global.at_ship
@@ -285,8 +322,15 @@ func toggle_player_mode_item(pivot: Node3D) -> void:
 		pivot.visible = true
 
 
+# Called when in build or installatoin mode when in forced extraction to hide ui interfaces
+func force_weapon_mode() -> void:
+	Global.player_mode = Global.PLAYER_MODES.WEAPON
+	_remove_hologram(true)
+	toggle_player_mode_item(gun_pivot)
+
+
 # =============================================================================
-# BUILDING - PLACING, PICKINGUP, CHANGING MODES
+# BUILDING - PLACING, PICKINGUP
 # =============================================================================
 
 # Handles all building logic
@@ -295,9 +339,8 @@ func _build_mode_handling(ray_collider: Node) -> void:
 		return
 	
 	_check_holagram()
-	_handle_build_mode_toggle()
 	
-	var current_selection: String = _get_current_build_selection()
+	var current_selection: String = selected_build
 	
 	_update_hologram_and_ui(ray_collider, current_selection)
 	_handle_placement(ray_collider, current_selection)
@@ -319,39 +362,21 @@ func _check_holagram() -> void:
 		add_sibling(turret_holagram)
 
 
-func _handle_build_mode_toggle() -> void:
-	if not Input.is_action_just_pressed(ACTION_CHANGE_BUILD_MODE):
-		return
-	
-	var build_modes: int = Global.BUILD_MODES.size()
-	Global.current_build_mode = (Global.current_build_mode + 1) % build_modes as Global.BUILD_MODES
-	
-	if building_selection:
-		building_selection.change_build_mode()
-
-
-func _get_current_build_selection() -> String:
-	match Global.current_build_mode:
-		Global.BUILD_MODES.TURRET:
-			return selected_turret if not selected_turret.is_empty() else ""
-		Global.BUILD_MODES.BASE:
-			return selected_base if not selected_base.is_empty() else ""
-	
-	return ""
-
-
 func _update_hologram_and_ui(ray_collider: Node, current_selection: String) -> void:
 	if not turret_holagram:
 		return
 	
-	if current_selection.is_empty():
+	if current_selection.is_empty() or not DataRegistry.items.has(current_selection):
 		turret_holagram.visible = false
 		if build_overlay:
 			build_overlay.visible = false
 		return
 	
-	if _check_valid_placement(ray_collider):
-		_snap_hologram_to_grid(ray_collider)
+	var item_type: int = DataRegistry.items[current_selection].type
+	turret_holagram.set(BUILD_PROP_CURRENT_ITEM_TYPE, item_type)
+	
+	if _check_valid_placement(ray_collider, current_selection):
+		_snap_hologram_to_grid(ray_collider, current_selection)
 		_update_hologram_validity(ray_collider)
 		if build_overlay:
 			build_overlay.visible = true
@@ -362,25 +387,31 @@ func _update_hologram_and_ui(ray_collider: Node, current_selection: String) -> v
 			build_overlay.visible = false
 
 
-func _snap_hologram_to_grid(ray_collider: Node) -> void:
+func _snap_hologram_to_grid(ray_collider: Node, current_selection: String) -> void:
 	var preexisting_build: bool = false
 	turret_holagram.visible = true
 	
-	match Global.current_build_mode:
-		Global.BUILD_MODES.TURRET:
-			if ray_collider.get("turret_origin_point"):
+	if not DataRegistry.items.has(current_selection):
+		return
+		
+	var item_type: int = DataRegistry.items[current_selection].type
+	
+	match item_type:
+		Global.ITEM_TYPES.TURRET:
+			if ray_collider.get(BUILD_PROP_ORIGIN_POINT):
 				turret_holagram.global_position = ray_collider.turret_origin_point.global_position
-			if ray_collider.get("turret"):
+			if ray_collider.get(BUILD_PROP_TURRET):
 				preexisting_build = true
-		Global.BUILD_MODES.BASE:
+		Global.ITEM_TYPES.BASE:
 			turret_holagram.global_position = ray_collider.global_position
-			if ray_collider.get("base"):
+			if ray_collider.get(BUILD_PROP_BASE):
 				preexisting_build = true
 	
 	if build_label:
 		build_label.text = REPLACE_TEXT if preexisting_build else PLACE_TEXT
 
 
+# Checks if the holagram is in a valid position
 func _update_hologram_validity(ray_collider: Node) -> void:
 	var dist: float = global_position.distance_to(ray_collider.global_position)
 	
@@ -392,6 +423,7 @@ func _update_hologram_validity(ray_collider: Node) -> void:
 			build_label.text = MOVE_CLOSER_TEXT
 
 
+# Just moves the holagram to where the player is looking
 func _move_hologram_to_aim() -> void:
 	if aim_ray and aim_ray.is_colliding():
 		turret_holagram.global_position = aim_ray.get_collision_point()
@@ -400,11 +432,13 @@ func _move_hologram_to_aim() -> void:
 		turret_holagram.visible = false
 
 
+# Depending on the type of the build that is selected base or turret 
+# will call different methods after some safety checks
 func _handle_placement(ray_collider: Node, current_selection: String) -> void:
 	if current_selection.is_empty() or not Input.is_action_just_pressed(ACTION_PLACE):
 		return
 	
-	if not _check_valid_placement(ray_collider):
+	if not _check_valid_placement(ray_collider, current_selection):
 		return
 		
 	if global_position.distance_to(ray_collider.global_position) >= BUILD_RANGE:
@@ -419,14 +453,14 @@ func _handle_placement(ray_collider: Node, current_selection: String) -> void:
 		
 	var can_place: bool = false
 	
-	match Global.current_build_mode:
-		Global.BUILD_MODES.TURRET:
-			if ray_collider.get("can_place_turret") and ray_collider.can_place_turret:
+	match item.type:
+		Global.ITEM_TYPES.TURRET:
+			if ray_collider.get(BUILD_PROP_CAN_PLACE_TURRET) and ray_collider.can_place_turret:
 				can_place = ray_collider.place_selected_turret(current_selection)
-		Global.BUILD_MODES.BASE:
-			if ray_collider.get("can_place_base") and ray_collider.can_place_base:
+		Global.ITEM_TYPES.BASE:
+			if ray_collider.get(BUILD_PROP_CAN_PLACE_BASE) and ray_collider.can_place_base:
 				can_place = ray_collider.build_base(current_selection)
-				
+	
 	if can_place:
 		if user_interface_animations:
 			user_interface_animations.play(PLACE_ANIMATION_KEY)
@@ -447,14 +481,14 @@ func _handle_pickup() -> void:
 		
 	can_remove_build = false
 	
-	if build_ray_collider.has_method("pick_up"):
+	if build_ray_collider.has_method(METHOD_PICK_UP):
 		build_ray_collider.pick_up()
 		
 	if building_selection:
 		building_selection.load_selection()
 		
-	if build_ray_collider.get("build_type") == Global.BUILD_TYPES.BASE:
-		if build_ray_collider.get("slot"):
+	if build_ray_collider.get(BUILD_PROP_BUILD_TYPE) == Global.BUILD_TYPES.BASE:
+		if build_ray_collider.get(BUILD_PROP_SLOT):
 			build_ray_collider.slot.base_removed()
 			
 	var tree := get_tree()
@@ -465,19 +499,25 @@ func _handle_pickup() -> void:
 
 
 # Returns true if the current ray collider is a valid unlocked turret slot
-func _check_valid_placement(ray_collider: Node) -> bool:
+func _check_valid_placement(ray_collider: Node, current_selection: String) -> bool:
 	if (
 		ray_collider == null
 		or not ray_collider.is_in_group(GROUP_TURRET_SLOTS)
-		or not ray_collider.unlocked
+		or not ray_collider.get(BUILD_PROP_UNLOCKED)
 	):
 		return false
 	
-	match Global.current_build_mode:
-		Global.BUILD_MODES.TURRET:
-			return ray_collider.base != null
-		Global.BUILD_MODES.BASE:
+	if current_selection.is_empty() or not DataRegistry.items.has(current_selection):
+		return false
+		
+	var item_type: int = DataRegistry.items[current_selection].type
+	
+	match item_type:
+		Global.ITEM_TYPES.TURRET:
+			return ray_collider.get(BUILD_PROP_BASE) != null
+		Global.ITEM_TYPES.BASE:
 			return true
+	
 	return false
 
 

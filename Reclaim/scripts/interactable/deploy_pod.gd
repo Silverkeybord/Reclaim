@@ -11,7 +11,8 @@ const PROP_MODULATE : String = "modulate"
 
 
 func interact() -> void:
-	if Global.first_play or HelperFunctions.check_storage_empty():
+	print(Global.first_play)
+	if Global.first_play:
 		if Global.first_play:
 			Global.first_play = false
 		deploy()
