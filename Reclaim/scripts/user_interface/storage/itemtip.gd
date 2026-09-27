@@ -2,6 +2,7 @@ extends CanvasLayer
 
 const ITEMTIP_OFFSET := Vector2(16, -16)
 
+# Text formatting
 const AMOUNT_TEXT := "Amount : "
 const VALUE_TEXT := "Value : "
 const WEIGHT_TEXT := "Weight : "
@@ -63,7 +64,7 @@ func _ready() -> void:
 func show_itemtip(item : ItemData, amount : int, type : int) -> void:
 	set_process(true)
 	match type:
-		Global.ITEM_TYPES.RESOURCES:
+		Global.ItemType.RESOURCES:
 			current_tip = resources_tip
 			resources_tip.visible = true
 			resource_name_label.text = HelperFunctions.get_display_name(item.key)
@@ -71,7 +72,7 @@ func show_itemtip(item : ItemData, amount : int, type : int) -> void:
 			resource_weight_label.text = WEIGHT_TEXT + str(item.weight)
 			resource_amount_label.text = AMOUNT_TEXT + HelperFunctions.comma_number(amount) + X_TEXT
 			
-		Global.ITEM_TYPES.TURRET:
+		Global.ItemType.TURRET:
 			current_tip = turrets_tip
 			turrets_tip.visible = true
 			turret_name_label.text = BUILD_NAME_FORMAT % HelperFunctions.get_display_name(item.key)
@@ -93,7 +94,7 @@ func show_itemtip(item : ItemData, amount : int, type : int) -> void:
 			turret_range_label.text = (
 				RANGE_TEXT + str(round(turret_info.turret_range)) + METERS_TEXT)
 			
-		Global.ITEM_TYPES.MODULE:
+		Global.ItemType.MODULE:
 			current_tip = moduels_tip
 			moduels_tip.visible = true
 			module_name_label.text = BUILD_NAME_FORMAT % HelperFunctions.get_display_name(item.key)
@@ -103,7 +104,7 @@ func show_itemtip(item : ItemData, amount : int, type : int) -> void:
 			module_weight_label.text = WEIGHT_TEXT + str(item.weight)
 			module_tier_label.text = TIER_TEXT + str(item.tier)
 		
-		Global.ITEM_TYPES.BASE:
+		Global.ItemType.BASE:
 			current_tip = base_tip
 			base_tip.visible = true
 			base_name_label.text = HelperFunctions.get_display_name(item.key)

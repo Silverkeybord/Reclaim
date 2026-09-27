@@ -1,11 +1,11 @@
 class_name SpawnSection
 extends Resource
 
-## the time when this spawning pattern will start
-@export var time := 0
+## the amount of time enemys will spawn for
+@export var duration := 0
 
 ## The time before the spawning starts
-@export var breathing_room := 10
+@export var breathing_room := 20
 
 ## time inbetween each spawn
 @export var spawn_interval : float = 5.0

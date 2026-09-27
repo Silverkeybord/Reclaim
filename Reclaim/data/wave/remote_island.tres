@@ -58,6 +58,7 @@ metadata/_custom_type_script = "uid://bkm3t85heyp8m"
 
 [sub_resource type="Resource" id="Resource_dwcul"]
 script = ExtResource("3_b8akh")
+duration = 100
 breathing_room = 5
 spawn_interval = 6.0
 spawn_amount = 4
@@ -93,8 +94,7 @@ metadata/_custom_type_script = "uid://bkm3t85heyp8m"
 
 [sub_resource type="Resource" id="Resource_j8ufc"]
 script = ExtResource("3_b8akh")
-time = 100
-breathing_room = 15
+duration = 60
 spawn_interval = 2.5
 spawn_amount = 4
 swarm = true
@@ -136,7 +136,7 @@ metadata/_custom_type_script = "uid://bkm3t85heyp8m"
 
 [sub_resource type="Resource" id="Resource_iiq5p"]
 script = ExtResource("3_b8akh")
-time = 125
+duration = 60
 spawn_amount = 4
 commanders = true
 end_spawn_rate = 4.0
@@ -160,7 +160,7 @@ metadata/_custom_type_script = "uid://bkm3t85heyp8m"
 
 [sub_resource type="Resource" id="Resource_h7h5h"]
 script = ExtResource("3_b8akh")
-time = 250
+duration = 60
 spawn_interval = 4.0
 spawn_amount = 6
 commanders = true
@@ -215,7 +215,7 @@ metadata/_custom_type_script = "uid://bkm3t85heyp8m"
 
 [sub_resource type="Resource" id="Resource_3tyhh"]
 script = ExtResource("3_b8akh")
-time = 350
+duration = 60
 spawn_amount = 6
 commanders = true
 end_spawn_rate = 3.0
@@ -234,6 +234,5 @@ metadata/_custom_type_script = "uid://qok4oe3yk4b1"
 script = ExtResource("1_rvc1w")
 key = "remote_island"
 spawning = Array[ExtResource("3_b8akh")]([SubResource("Resource_dwcul"), SubResource("Resource_j8ufc"), SubResource("Resource_iiq5p"), SubResource("Resource_h7h5h"), SubResource("Resource_3tyhh")])
-end_time = 400.0
 clear_spawning = SubResource("Resource_b8akh")
 metadata/_custom_type_script = "uid://ebuopgthqly1"

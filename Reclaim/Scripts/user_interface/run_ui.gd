@@ -1,6 +1,14 @@
 extends Control
 
-# Tween Properties & Animations
+# Wave State Enum
+enum WaveState {
+	SPAWNING,
+	CLEARING,
+	BREATHING,
+	SECTOR_CLEARED
+}
+
+# Animation
 const ANIM_OVERDRIVE: StringName = &"extraction_overdrive"
 
 # Dictionary & Lookup Keys
@@ -12,9 +20,14 @@ const DAMAGE_PREFIX: String = "-"
 const HEAL_PREFIX: String = "+"
 const ENEMIES_IN_FORMAT: String = "Enemies in : %d"
 const WAVE_END_FORMAT: String = "Wave Ends in : %d"
+const ENEMIES_LEFT_FORMAT: String = "Enemies left : %d"
+const SECTOR_CLEARED_FORMAT: String = "Sector Cleared"
 const EXTRACTING_FORMAT: String = "extracting in : %d"
-const RUN_TIME_FORMAT: String = "Run time : %d"
+const WAVE_FORMAT: String = "Wave : %d"
 const SHIELD_HEALTH_FORMAT: String = "%d / %d hp"
+
+# Methods
+const METHOD_SETUP := &"setup"
 
 # Visual Tweens & Flash Timing
 const PROP_MODULATE: String = "modulate"
@@ -51,16 +64,14 @@ const EMPTY_TALL_SEGMENT: CompressedTexture2D = preload(
 	"res://2d_assets/shield/empty_tall_segment.png"
 	)
 
-
 # Exports ---------------------------------------------------------------------
 @export var shield: SectorShield
 
 @export_group("Labels & Timers")
-@export var run_time_label: Label
+@export var wave_label: Label
 @export var shield_health_label: Label
 @export var extraction_timer_label: Label
 @export var wave_stage_label: Label
-@export var wave_stage_timer: Timer
 
 @export_group("Indicators")
 @export var health_change_indicator: PackedScene
@@ -88,11 +99,12 @@ var texture_rect_percentage_lookup: Dictionary = {
 	0.2: {},
 	0.1: {},
 }
-# This value is set by enemy_spawner trough sector elements as that is where
-# the sectors wave data is set
-var wave_stages : Array[Array]
-var stage_index := 0
-var wave_stage_format : String = ENEMIES_IN_FORMAT
+
+# Wave state variables set by EnemySpawner
+var current_wave: int = 1
+var current_state: int = WaveState.BREATHING
+var phase_time_left: float = 0.0
+var enemies_left: int = 0
 
 
 func _ready() -> void:
@@ -111,12 +123,13 @@ func _ready() -> void:
 			}
 			child_index += 1
 
+
 func _process(_delta: float) -> void:
 	if shield == null:
 		return
 	
-	if run_time_label:
-		run_time_label.text = RUN_TIME_FORMAT % Global.sector_run_time
+	if wave_label and current_state != WaveState.SECTOR_CLEARED:
+		wave_label.text = WAVE_FORMAT % current_wave
 	
 	if shield_health_label:
 		shield_health_label.text = SHIELD_HEALTH_FORMAT % [
@@ -126,24 +139,17 @@ func _process(_delta: float) -> void:
 	if shield.shield_overdrive and extraction_timer_label and shield.overdrive_timer:
 		extraction_timer_label.text = EXTRACTING_FORMAT % shield.overdrive_timer.time_left
 	
-	if (
-		wave_stages[stage_index][WaveData.INDEX_TIME] < Global.sector_run_time and 
-		stage_index < wave_stages.size() - 1
-	):
-		var last_stage = wave_stages[stage_index]
-		stage_index += 1
-		var stage = wave_stages[stage_index]
-		
-		var wait_time = stage[WaveData.INDEX_TIME] - last_stage[WaveData.INDEX_TIME]
-		
-		if wave_stage_timer:
-			wave_stage_timer.start(wait_time)
-		
-		wave_stage_format = ENEMIES_IN_FORMAT
-		if wave_stages[stage_index][WaveData.INDEX_IS_BREATHING]:
-			wave_stage_format = WAVE_END_FORMAT
-	
-	wave_stage_label.text = wave_stage_format % wave_stage_timer.time_left
+	if wave_stage_label:
+		match current_state:
+			WaveState.BREATHING:
+				wave_stage_label.text = ENEMIES_IN_FORMAT % int(phase_time_left)
+			WaveState.SPAWNING:
+				wave_stage_label.text = WAVE_END_FORMAT % int(phase_time_left)
+			WaveState.CLEARING:
+				wave_stage_label.text = ENEMIES_LEFT_FORMAT % enemies_left
+			WaveState.SECTOR_CLEARED:
+				wave_stage_label.text = ENEMIES_LEFT_FORMAT % enemies_left
+				wave_label.text = SECTOR_CLEARED_FORMAT
 
 
 # Visual Updates -------------------------------------------------------------
@@ -185,7 +191,11 @@ func update_visuals(change: float, is_damage: bool = true) -> void:
 		for side in side_dict:
 			var segment_node:= side_dict[side] as TextureRect
 			if segment_node:
-				segment_node.texture = EMPTY_SMALL_SEGMENT if ratio < segment_decimal else SMALL_SEGMENT
+				segment_node.texture = (
+					EMPTY_SMALL_SEGMENT 
+					if ratio < segment_decimal else 
+					SMALL_SEGMENT
+					)
 	
 	if is_damage:
 		_hit_flash()
@@ -223,7 +233,9 @@ func _make_health_indicator(change: float, is_damage: bool = true) -> void:
 	if shield and shield.shield_overdrive:
 		return
 	
-	if health_change_indicator == null or min_indication_marker == null or max_indication_marker == null:
+	if (health_change_indicator == null or 
+	min_indication_marker == null or 
+	max_indication_marker == null):
 		return
 	
 	var new_indicator: Node = health_change_indicator.instantiate()
@@ -238,7 +250,7 @@ func _make_health_indicator(change: float, is_damage: bool = true) -> void:
 	var change_text: String = HelperFunctions.return_amount_shorthand(change)
 	var text: String = (DAMAGE_PREFIX if is_damage else HEAL_PREFIX) + change_text
 	
-	if new_indicator.has_method(&"setup"):
+	if new_indicator.has_method(METHOD_SETUP):
 		new_indicator.setup(text, is_damage)
 
 
@@ -248,7 +260,7 @@ func start_overdrive() -> void:
 	
 	if extraction_timer_label:
 		extraction_timer_label.visible = true
-	if run_time_label:
-		run_time_label.visible = false
+	if wave_label:
+		wave_label.visible = false
 	if shield_health_label:
 		shield_health_label.visible = false

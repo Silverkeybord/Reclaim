@@ -14,9 +14,45 @@
 [ext_resource type="Resource" uid="uid://ke1h4l1ko4bj" path="res://data/items/resources/tier1/basic_material.tres" id="8_gyv58"]
 [ext_resource type="Script" uid="uid://bd3b7pbajamv4" path="res://data/resource_scripts/authorisation_data.gd" id="9_yjvfa"]
 
+[sub_resource type="Resource" id="Resource_ag7gr"]
+script = ExtResource("2_fx25p")
+item = ExtResource("3_rpna7")
+amount = 10
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_s5rgg"]
+script = ExtResource("2_fx25p")
+item = ExtResource("4_36457")
+amount = 10
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_s7wpj"]
+script = ExtResource("2_fx25p")
+item = ExtResource("5_qk3uq")
+amount = 6
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_fx25p"]
+script = ExtResource("2_fx25p")
+item = ExtResource("6_cabxx")
+amount = 10
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_qk3uq"]
+script = ExtResource("2_fx25p")
+item = ExtResource("7_oycck")
+amount = 10
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_cabxx"]
+script = ExtResource("2_fx25p")
+item = ExtResource("8_gyv58")
+amount = 2
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
 [sub_resource type="Resource" id="Resource_ec332"]
 script = ExtResource("3_36457")
-unlock_type = "sector"
+unlock_type = 0
 unlock_data = ExtResource("4_qk3uq")
 metadata/_custom_type_script = "uid://cd702x671kf7o"
 
@@ -28,55 +64,8 @@ metadata/_custom_type_script = "uid://cd702x671kf7o"
 [sub_resource type="Resource" id="Resource_yoqii"]
 script = ExtResource("1_s7wpj")
 level = 1
+requirments = Array[ExtResource("2_fx25p")]([SubResource("Resource_ag7gr"), SubResource("Resource_s5rgg"), SubResource("Resource_s7wpj"), SubResource("Resource_fx25p"), SubResource("Resource_qk3uq"), SubResource("Resource_cabxx")])
 unlocks = Array[ExtResource("3_36457")]([SubResource("Resource_ec332"), SubResource("Resource_dnqs7")])
-metadata/_custom_type_script = "uid://bfg6owh4kyadi"
-
-[sub_resource type="Resource" id="Resource_mbwl8"]
-script = ExtResource("2_fx25p")
-item = ExtResource("3_rpna7")
-amount = 10
-metadata/_custom_type_script = "uid://c20f7di5awcc0"
-
-[sub_resource type="Resource" id="Resource_26xli"]
-script = ExtResource("2_fx25p")
-item = ExtResource("4_36457")
-amount = 10
-metadata/_custom_type_script = "uid://c20f7di5awcc0"
-
-[sub_resource type="Resource" id="Resource_bmcm4"]
-script = ExtResource("2_fx25p")
-item = ExtResource("5_qk3uq")
-amount = 4
-metadata/_custom_type_script = "uid://c20f7di5awcc0"
-
-[sub_resource type="Resource" id="Resource_87y0m"]
-script = ExtResource("2_fx25p")
-item = ExtResource("6_cabxx")
-amount = 10
-metadata/_custom_type_script = "uid://c20f7di5awcc0"
-
-[sub_resource type="Resource" id="Resource_3bqac"]
-script = ExtResource("2_fx25p")
-item = ExtResource("7_oycck")
-amount = 10
-metadata/_custom_type_script = "uid://c20f7di5awcc0"
-
-[sub_resource type="Resource" id="Resource_elrrk"]
-script = ExtResource("2_fx25p")
-item = ExtResource("8_gyv58")
-amount = 2
-metadata/_custom_type_script = "uid://c20f7di5awcc0"
-
-[sub_resource type="Resource" id="Resource_trkge"]
-script = ExtResource("3_36457")
-unlock_type = "sector"
-metadata/_custom_type_script = "uid://cd702x671kf7o"
-
-[sub_resource type="Resource" id="Resource_jugkx"]
-script = ExtResource("1_s7wpj")
-level = 2
-requirments = Array[ExtResource("2_fx25p")]([SubResource("Resource_mbwl8"), SubResource("Resource_26xli"), SubResource("Resource_bmcm4"), SubResource("Resource_87y0m"), SubResource("Resource_3bqac"), SubResource("Resource_elrrk")])
-unlocks = Array[ExtResource("3_36457")]([SubResource("Resource_trkge")])
 metadata/_custom_type_script = "uid://bfg6owh4kyadi"
 
 [resource]
@@ -84,5 +73,6 @@ script = ExtResource("9_yjvfa")
 key = "ship_tier"
 icon = ExtResource("1_qk3uq")
 max_level = 8
-levels = Array[ExtResource("1_s7wpj")]([SubResource("Resource_yoqii"), SubResource("Resource_jugkx"), null, null, null, null, null, null])
+levels = Array[ExtResource("1_s7wpj")]([SubResource("Resource_yoqii"), null, null, null, null, null, null])
+description = "Unlocks sectors by increasing deploy range. Authorises more destructive recipies."
 metadata/_custom_type_script = "uid://bd3b7pbajamv4"

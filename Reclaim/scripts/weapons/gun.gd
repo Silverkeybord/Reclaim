@@ -2,7 +2,7 @@ class_name BasicWeapon
 
 extends Node3D
 
-@export var shooting_type : Global.SHOT_TYPE
+@export var shooting_type : Global.ShotType
 @export var bullet_type : String
 @export var bullet_spawn : Marker3D
 

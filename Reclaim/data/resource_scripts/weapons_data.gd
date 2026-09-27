@@ -3,7 +3,7 @@ extends Resource
 
 @export var key : String
 ## bullet shooting type options (hitscan, projectile)
-@export var bullet_type : Global.SHOT_TYPE
+@export var bullet_type : Global.ShotType
 
 @export_group("Basic Stats")
 ## damage delt to enemies

@@ -3,27 +3,31 @@ extends Node
 # ENUMS
 # =============================================================================
 
-enum SHOT_TYPE {
+enum ShotType {
 	HITSCAN,
 	PROJECTILE
 }
-enum BUILD_TYPES {
+
+enum BuildType {
 	TURRET,
 	BASE,
 	TRAP
 }
-enum ITEM_TYPES {
+
+enum ItemType {
 	MODULE,
 	TURRET,
 	BASE,
 	RESOURCES,
 	TRAP
 }
-enum PLAYER_MODES {
+
+enum PlayerMode {
 	WEAPON,
 	BUILDING,
 	INSTALLING
 }
+
 
 
 # =============================================================================
@@ -168,7 +172,7 @@ const MAX_SPHERES: int = 300
 # =============================================================================
 
 # LOGIC --------------------------------------------------------------------
-var player_mode := PLAYER_MODES.WEAPON
+var player_mode := PlayerMode.WEAPON
 var at_ship := true
 var mouse_captured := true
 var major_animation_playing := false
@@ -193,7 +197,6 @@ var pined_crafts : Dictionary
 # SECTOR RELATED ------------------------------------------------------------
 var selected_sector : String
 var selected_sector_path : PackedScene = DEFAULT_SECTOR_PATH
-var sector_run_time : float
 var shield_overdrive : bool = false 
 var just_extracted : bool = false
 
@@ -211,7 +214,7 @@ var extraction_storage: Dictionary = HelperFunctions.get_clean_storage()
 var deploy_storage: Dictionary = HelperFunctions.get_clean_storage()
 
 # SETTINGS -------------------------------------------------------------------
-## Goes from 0.05 to 2 as a multiplyer of the base sensitivity
+## Goes from 0.05 to 5 as a multiplyer of the base sensitivity
 var sensitivity: float = 1.0
 var show_action_bar: bool = true
 var show_fps: bool = false

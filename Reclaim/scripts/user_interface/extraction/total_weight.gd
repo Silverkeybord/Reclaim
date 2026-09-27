@@ -53,13 +53,13 @@ func update_weight_label() -> void:
 				var item_weight : int = 0
 				
 				match item_data.type:
-					Global.ITEM_TYPES.RESOURCES:
+					Global.ItemType.RESOURCES:
 						if not resources_included:
 							continue
-					Global.ITEM_TYPES.TURRET, Global.ITEM_TYPES.BASE:
+					Global.ItemType.TURRET, Global.ItemType.BASE:
 						if not turrets_included:
 							continue
-					Global.ITEM_TYPES.MODULE:
+					Global.ItemType.MODULE:
 						if not modules_included:
 							continue
 				

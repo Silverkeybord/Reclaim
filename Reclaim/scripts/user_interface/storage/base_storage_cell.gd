@@ -33,11 +33,11 @@ func setup() -> void:
 	var texture : Texture
 	
 	match item_resource.type:
-		Global.ITEM_TYPES.RESOURCES:
+		Global.ItemType.RESOURCES:
 			texture = textures[RESOURCES_KEY]
-		Global.ITEM_TYPES.TURRET, Global.ITEM_TYPES.BASE:
+		Global.ItemType.TURRET, Global.ItemType.BASE:
 			texture = textures[TURRETS_KEY]
-		Global.ITEM_TYPES.MODULE:
+		Global.ItemType.MODULE:
 			texture = textures[MODULES_KEY]
 	
 	cell_texture.texture = texture
@@ -67,7 +67,7 @@ func _on_mouse_entered() -> void:
 	
 	item_tip.show_itemtip(item_resource, amount, item_resource.type)
 	
-	if item_resource.type == Global.ITEM_TYPES.RESOURCES:
+	if item_resource.type == Global.ItemType.RESOURCES:
 		resource_highlight_overlay.visible = true
 	else:
 		full_highlight_overlay.visible = true
@@ -80,7 +80,7 @@ func _on_mouse_exited() -> void:
 	mouse_in_cell = false
 	toggle_mouse_detection(mouse_in_cell)
 	
-	if item_resource.type == Global.ITEM_TYPES.RESOURCES:
+	if item_resource.type == Global.ItemType.RESOURCES:
 		resource_highlight_overlay.visible = false
 	else:
 		full_highlight_overlay.visible = false

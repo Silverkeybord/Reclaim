@@ -11,7 +11,6 @@ const PROP_MODULATE : String = "modulate"
 
 
 func interact() -> void:
-	print(Global.first_play)
 	if Global.first_play:
 		if Global.first_play:
 			Global.first_play = false

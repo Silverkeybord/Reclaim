@@ -1,0 +1,50 @@
+[gd_resource type="Resource" script_class="WaveData" format=3 uid="uid://d10gpaf5yhc84"]
+
+[ext_resource type="Script" uid="uid://bkm3t85heyp8m" path="res://scripts/resources/enemy_weight_resource.gd" id="1_ub2lu"]
+[ext_resource type="Script" uid="uid://qok4oe3yk4b1" path="res://scripts/enemies/spawn_section.gd" id="2_exlv2"]
+[ext_resource type="Script" uid="uid://ebuopgthqly1" path="res://data/resource_scripts/wave_data.gd" id="3_wyqye"]
+
+[sub_resource type="Resource" id="Resource_ub2lu"]
+script = ExtResource("1_ub2lu")
+enemy_name = "scrap"
+weight = 1
+metadata/_custom_type_script = "uid://bkm3t85heyp8m"
+
+[sub_resource type="Resource" id="Resource_exlv2"]
+script = ExtResource("2_exlv2")
+breathing_room = 5
+spawn_interval = 1.0
+spawn_amount = 3
+commanders = true
+swarm = true
+random_additional_enemies = 2
+spawn_sizes = {
+"big": 0,
+"gianormous": 0,
+"large": 0,
+"medium": 3,
+"small": 5,
+"very_small": 1
+}
+enemies = Array[ExtResource("1_ub2lu")]([SubResource("Resource_ub2lu")])
+metadata/_custom_type_script = "uid://qok4oe3yk4b1"
+
+[sub_resource type="Resource" id="Resource_lw17o"]
+script = ExtResource("1_ub2lu")
+enemy_name = "basic"
+weight = 1
+metadata/_custom_type_script = "uid://bkm3t85heyp8m"
+
+[sub_resource type="Resource" id="Resource_aup0e"]
+script = ExtResource("2_exlv2")
+duration = 5
+breathing_room = 5
+enemies = Array[ExtResource("1_ub2lu")]([SubResource("Resource_lw17o")])
+metadata/_custom_type_script = "uid://qok4oe3yk4b1"
+
+[resource]
+script = ExtResource("3_wyqye")
+key = "test"
+spawning = Array[ExtResource("2_exlv2")]([SubResource("Resource_aup0e")])
+clear_spawning = SubResource("Resource_exlv2")
+metadata/_custom_type_script = "uid://ebuopgthqly1"

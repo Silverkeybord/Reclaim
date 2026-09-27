@@ -15,7 +15,7 @@ const SLASH : String = "/"
 ## the tier from 1 - 5
 @export_range(1, 5) var tier : int = 1
 ## the type of item somthing is
-@export var type : Global.ITEM_TYPES = Global.ITEM_TYPES.RESOURCES
+@export var type : Global.ItemType = Global.ItemType.RESOURCES
 ## the item texture for ui elements
 @export var item_texture : Texture2D
 ## the material of the item in the 3D world

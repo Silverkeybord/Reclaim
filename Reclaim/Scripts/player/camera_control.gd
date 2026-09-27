@@ -51,7 +51,7 @@ func _input(event: InputEvent) -> void:
 		return
 	
 	if event is InputEventMouseButton:
-		if Global.player_mode != Global.PLAYER_MODES.BUILDING:
+		if Global.player_mode != Global.PlayerMode.BUILDING:
 			_zoom_in_out(event as InputEventMouseButton)
 	
 	if event.is_action_pressed(ACTION_TOGGLE_MOUSE_CAPTURE):

@@ -14,12 +14,12 @@ func _process(_delta: float) -> void:
 	var active_holagram: MeshInstance3D = null
 	
 	match current_item_type:
-		Global.ITEM_TYPES.TURRET:
+		Global.ItemType.TURRET:
 			active_holagram = turret_holagram
 			base_holagram.visible = false
 			turret_holagram.visible = true
 		
-		Global.ITEM_TYPES.BASE:
+		Global.ItemType.BASE:
 			active_holagram = base_holagram
 			base_holagram.visible = true
 			turret_holagram.visible = false

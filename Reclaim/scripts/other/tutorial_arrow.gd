@@ -13,7 +13,7 @@ const MIN_DISTANCE := 10.0
 func _process(delta: float) -> void:
 	if not is_instance_valid(player):
 		return
-		
+	
 	var target_transform := indicator.global_transform.looking_at(
 		player.global_position, 
 		Vector3.UP)

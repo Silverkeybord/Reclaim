@@ -22,6 +22,10 @@ const NO_TEXTURE_ICON := preload("res://2d_assets/council_authorisation/no_icon.
 @export var levels : Array[AuthorisationLevel]
 
 
+## The description of the data
+@export var description := ""
+
+
 func get_icon() -> Texture:
 	if icon:
 		return icon

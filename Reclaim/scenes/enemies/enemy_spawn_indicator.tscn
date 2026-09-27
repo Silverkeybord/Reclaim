@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://b4omt3c4e0r07"]
+
+[ext_resource type="Material" uid="uid://gnsp7g6ou1o" path="res://advanced_visuals/shaders/enemy_indicator.tres" id="1_b825h"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_g4v7s"]
+
+[node name="Node3D" type="Node3D" unique_id=1666174823]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1151794632]
+mesh = SubResource("CylinderMesh_g4v7s")
+surface_material_override/0 = ExtResource("1_b825h")

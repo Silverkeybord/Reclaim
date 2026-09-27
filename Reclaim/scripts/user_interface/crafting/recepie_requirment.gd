@@ -44,11 +44,15 @@ func update_value(craft_mult : int) -> void:
 		)
 
 
-func check_requirement(craft_mult : int) -> bool:
+func check_requirement(craft_mult := -1) -> bool:
 	if not HelperFunctions.is_valid_item(item_data):
 		have_enough = false
 	else:
-		have_enough = HelperFunctions.has_item_amount(item_data, amount_required * craft_mult)
+		if craft_mult == -1:
+			craft_mult = 1
+			have_enough = HelperFunctions.has_item_amount(item_data, amount_required)
+		else:
+			have_enough = HelperFunctions.has_item_amount(item_data, amount_required * craft_mult)
 	
 	have_indication.texture = HAVE_INDICATIONS[have_enough]
 	

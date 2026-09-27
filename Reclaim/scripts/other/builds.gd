@@ -2,7 +2,7 @@ class_name Builds
 extends Node
 
 @export var build : String 
-@export var build_type : Global.BUILD_TYPES
+@export var build_type : Global.BuildType
 
 
 func pick_up() -> void:

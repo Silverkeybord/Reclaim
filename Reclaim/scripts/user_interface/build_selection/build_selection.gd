@@ -110,7 +110,7 @@ func _ready() -> void:
 	for item_key: String in DataRegistry.items:
 		var item: ItemData = DataRegistry.items[item_key]
 		if HelperFunctions.is_valid_item(item) and (
-			item.type == Global.ITEM_TYPES.TURRET or item.type == Global.ITEM_TYPES.BASE
+			item.type == Global.ItemType.TURRET or item.type == Global.ItemType.BASE
 		):
 			var new_cell: BuildSelectionCell = (
 				build_cell_scene.instantiate() as BuildSelectionCell
@@ -138,11 +138,11 @@ func _process(_delta: float) -> void:
 			selected_name.text = selected_cell.item_resource.key
 		
 		match selected_cell.item_resource.type:
-			Global.ITEM_TYPES.BASE:
+			Global.ItemType.BASE:
 				build_type_label.text = BASE_BUILD_TEXT
-			Global.ITEM_TYPES.TURRET:
+			Global.ItemType.TURRET:
 				build_type_label.text = TURRET_BUILD_TEXT
-			Global.ITEM_TYPES.TRAP:
+			Global.ItemType.TRAP:
 				build_type_label.text = TRAP_BUILD_TEXT
 	else:
 		if selected_name:
@@ -152,13 +152,13 @@ func _process(_delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if Global.player_mode != Global.PLAYER_MODES.BUILDING:
+	if Global.player_mode != Global.PlayerMode.BUILDING:
 		visible = false
 		return
 	
 	if (
 		event is InputEventMouseButton and
-		Global.player_mode == Global.PLAYER_MODES.BUILDING and
+		Global.player_mode == Global.PlayerMode.BUILDING and
 		not moving_cells
 	):
 		scroll(event)
@@ -167,9 +167,9 @@ func _input(event: InputEvent) -> void:
 # Setup & Processes ------------------------------------------------------------
 func load_selection() -> void:
 	var available_turrets: Dictionary = HelperFunctions.get_items_from_type(
-		Global.ITEM_TYPES.TURRET
+		Global.ItemType.TURRET
 		)
-	var available_bases: Dictionary = HelperFunctions.get_items_from_type(Global.ITEM_TYPES.BASE)
+	var available_bases: Dictionary = HelperFunctions.get_items_from_type(Global.ItemType.BASE)
 	var pref_build: String = player.selected_build if player else EMPTY_SELECTION
 	
 	active_cells.clear()

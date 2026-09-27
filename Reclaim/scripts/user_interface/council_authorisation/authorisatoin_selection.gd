@@ -1,5 +1,5 @@
 class_name AuthorisationSelection
-extends Button
+extends ExpandButtons
 
 const NAME_FORMATTING := "-- %s --"
 
@@ -28,6 +28,6 @@ func _ready() -> void:
 		level_icon_hbox.add_child(new_level_cell)
 
 
-
 func _on_pressed() -> void:
+	play_press_sound()
 	council_authorisation.show_authorisation_details(authorisation_data)

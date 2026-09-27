@@ -21,6 +21,7 @@ const PROP_SEPARATION := "theme_override_constants/separation"
 
 @export var craft_pin_amount_scene : PackedScene
 @export var craft_data : CraftData
+@export var authorisation_data : AuthorisationData
 
 @export var item_panel_container : PanelContainer
 @export var item_amounts_hbox : HBoxContainer

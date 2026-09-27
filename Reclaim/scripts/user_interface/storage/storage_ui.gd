@@ -123,3 +123,4 @@ func _set_open_or_close(toggle: bool) -> void:
 	Global.ui_open = toggle
 	Global.storage_open = toggle
 	set_process(toggle)
+	HelperFunctions.set_mouse_captured(true, not toggle)

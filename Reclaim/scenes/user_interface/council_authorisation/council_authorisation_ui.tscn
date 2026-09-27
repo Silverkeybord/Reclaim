@@ -14,7 +14,6 @@
 [ext_resource type="Texture2D" uid="uid://ddwtebd0mb5j" path="res://2d_assets/council_authorisation/authorise_button.png" id="10_kp0me"]
 [ext_resource type="Script" uid="uid://clkeopwsevljj" path="res://scripts/user_interface/expand_buttons.gd" id="11_wgiry"]
 [ext_resource type="Texture2D" uid="uid://b7kmmgmk2jsdl" path="res://2d_assets/general/ui_menu_corner.png" id="12_bkr6g"]
-[ext_resource type="Texture2D" uid="uid://b6xcqs734mf5q" path="res://2d_assets/council_authorisation/ship_tier.png" id="12_d4blp"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g4v7s"]
 
@@ -215,6 +214,12 @@ text = "- Game Saves after every upgrade"
 label_settings = ExtResource("7_htm8a")
 autowrap_mode = 3
 
+[node name="Label4" type="Label" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer/VBoxContainer" unique_id=1139530122]
+layout_mode = 2
+text = "- Press tab to view pinned recipes"
+label_settings = ExtResource("7_htm8a")
+autowrap_mode = 3
+
 [node name="inventory_divider" type="Panel" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer" unique_id=340410859]
 custom_minimum_size = Vector2(0, 12)
 layout_mode = 2
@@ -319,6 +324,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_d58ik")
 [node name="authorisation_selection_vbox" type="VBoxContainer" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer" unique_id=1391371155]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/separation = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/authorisation_selection_vbox" unique_id=92939504]
 custom_minimum_size = Vector2(0, 130)
@@ -352,16 +358,12 @@ theme_override_constants/separation = 1
 [node name="level_diff" type="Label" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/authorisation_selection_vbox/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=2027894906]
 layout_mode = 2
 size_flags_vertical = 1
-text = "Level : 1 -> 2"
+text = "Level : NA"
 label_settings = SubResource("LabelSettings_g8omu")
 
 [node name="other_diff" type="Label" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/authorisation_selection_vbox/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=241759394]
 layout_mode = 2
 size_flags_vertical = 1
-text = "Sectors : Desert, Ravine
-Turrets : Dual, 
-Weapons : 
-Modules :"
 label_settings = SubResource("LabelSettings_g8omu")
 
 [node name="Control" type="Control" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/authorisation_selection_vbox/HBoxContainer" unique_id=270815309]
@@ -391,13 +393,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("12_d4blp")
 metadata/_edit_use_anchors_ = true
 
 [node name="description_title_margin" type="MarginContainer" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/authorisation_selection_vbox" unique_id=1630155497]
 layout_mode = 2
 theme_override_constants/margin_left = 9
-theme_override_constants/margin_top = -1
+theme_override_constants/margin_top = -6
 
 [node name="description_title" type="Label" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/authorisation_selection_vbox/description_title_margin" unique_id=1731300043]
 layout_mode = 2
@@ -408,14 +409,15 @@ label_settings = SubResource("LabelSettings_tyhds")
 layout_mode = 2
 theme_override_constants/margin_left = 26
 theme_override_constants/margin_top = -4
+theme_override_constants/margin_bottom = 4
 
 [node name="description" type="RichTextLabel" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/authorisation_selection_vbox/description_margin" unique_id=402368926]
-custom_minimum_size = Vector2(200, 40)
-custom_maximum_size = Vector2(-1, 40)
+custom_minimum_size = Vector2(200, 50)
+custom_maximum_size = Vector2(-1, 50)
 layout_mode = 2
 theme_override_colors/default_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 theme_override_fonts/normal_font = ExtResource("3_j2krl")
-theme_override_font_sizes/normal_font_size = 14
+theme_override_font_sizes/normal_font_size = 12
 theme_override_styles/normal = SubResource("StyleBoxEmpty_au2dp")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_pvlwq")
 text = "No description avaliable"
@@ -431,6 +433,7 @@ theme_override_constants/margin_right = 8
 
 [node name="requirments_panel" type="PanelContainer" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/authorisation_selection_vbox/requirments_margin" unique_id=1331828988]
 custom_minimum_size = Vector2(360, 140)
+custom_maximum_size = Vector2(360, 140)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_ghxxw")
@@ -469,12 +472,12 @@ script = ExtResource("11_wgiry")
 
 [node name="craft_button_overlay_margin" type="MarginContainer" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/craft_button_margin" unique_id=208485178]
 layout_mode = 2
-theme_override_constants/margin_left = 4
+theme_override_constants/margin_left = 9
 theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 2
+theme_override_constants/margin_right = 9
+theme_override_constants/margin_bottom = -1
 
-[node name="visual_craft_overlay" type="PanelContainer" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/craft_button_margin/craft_button_overlay_margin" unique_id=240205744]
+[node name="visual_auth_overlay" type="PanelContainer" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/craft_button_margin/craft_button_overlay_margin" unique_id=240205744]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_a707k")
 

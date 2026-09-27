@@ -26,7 +26,7 @@ const INACTIVE_RESOURCE_TAB := preload("res://2d_assets/crafting/inactive_resour
 # Groups
 const GROUP_CRAFT_CELLS := &"craft_cells"
 const GROUP_CRAFT_QUEUE := &"craft_queue_items"
-const GROUP_REQUIREMENT_CELLS := &"requirment_cells"
+const GROUP_CRAFTING_REQUIREMENT_CELLS := &"crafting_requirment_cells"
 const GROUP_PLAYER := &"player"
 
 # Text formatting
@@ -100,10 +100,10 @@ const AUTH_SHIP_TIER := preload("res://data/authorisation/ship_tier.tres")
 @export var resources_tab_scroll : ScrollContainer
 
 @onready var tab_vboxs : Dictionary = {
-	Global.ITEM_TYPES.TURRET : turrets_vbox,
-	Global.ITEM_TYPES.BASE : turrets_vbox,
-	Global.ITEM_TYPES.MODULE : modules_vbox,
-	Global.ITEM_TYPES.RESOURCES : resources_vbox
+	Global.ItemType.TURRET : turrets_vbox,
+	Global.ItemType.BASE : turrets_vbox,
+	Global.ItemType.MODULE : modules_vbox,
+	Global.ItemType.RESOURCES : resources_vbox
 }
 @onready var button_mults : Dictionary ={
 	one_times : CRAFT_ONE,
@@ -327,7 +327,8 @@ func update_crafting_display() -> void:
 		can_craft_current = false
 	
 	if can_craft_current:
-		for cell : RecipeRequirement in get_tree().get_nodes_in_group(GROUP_REQUIREMENT_CELLS):
+		var cells := get_tree().get_nodes_in_group(GROUP_CRAFTING_REQUIREMENT_CELLS)
+		for cell : RecipeRequirement in cells:
 			if not cell.check_requirement(craft_mult if craft_mult else max_mult):
 				craft_overlay.visible = true
 				can_craft_current = false
@@ -387,12 +388,12 @@ func display_requirements_for(craft_data : CraftData, can_craft : bool) -> void:
 	image_background.add_theme_stylebox_override(PANEL_OVERRIDE_KEY, style)
 	
 	match craft_data.crafted_item.type:
-		Global.ITEM_TYPES.RESOURCES:
+		Global.ItemType.RESOURCES:
 			show_stat_labels([amount_stat, craft_time_stat])
 			amount_stat.text = AMOUNT_LABEL_PREFIX + str(craft_data.craft_amount)
 			craft_time_stat.text = CRAFT_TIME_LABEL_PREFIX + str(craft_data.craft_time)
 			
-		Global.ITEM_TYPES.TURRET:
+		Global.ItemType.TURRET:
 			show_stat_labels([craft_time_stat, dps_stat, ability_stat])
 			amount_stat.text = AMOUNT_LABEL_PREFIX + str(craft_data.craft_amount)
 			craft_time_stat.text = CRAFT_TIME_LABEL_PREFIX + str(craft_data.craft_time)
@@ -402,14 +403,14 @@ func display_requirements_for(craft_data : CraftData, can_craft : bool) -> void:
 				)
 			ability_stat.text = ABILITY_LABEL_PREFIX + turret_data.ability
 			
-		Global.ITEM_TYPES.MODULE:
+		Global.ItemType.MODULE:
 			show_stat_labels([craft_time_stat])
 			pass
 	
 	description.text = craft_data.description
 	
-	for cell in get_tree().get_nodes_in_group(GROUP_REQUIREMENT_CELLS):
-		cell.remove_from_group(GROUP_REQUIREMENT_CELLS)
+	for cell in get_tree().get_nodes_in_group(GROUP_CRAFTING_REQUIREMENT_CELLS):
+		cell.remove_from_group(GROUP_CRAFTING_REQUIREMENT_CELLS)
 		cell.queue_free()
 	
 	# gets a sorted list of all requirments sorted from t1 - t5 then alphabetacally
@@ -431,7 +432,7 @@ func display_requirements_for(craft_data : CraftData, can_craft : bool) -> void:
 		new_requirment.amount_required = requirment.amount
 		new_requirment.check_requirement(craft_mult)
 		requirments_hflow.add_child(new_requirment)
-		new_requirment.add_to_group(GROUP_REQUIREMENT_CELLS)
+		new_requirment.add_to_group(GROUP_CRAFTING_REQUIREMENT_CELLS)
 	
 	can_craft_current = can_craft
 	

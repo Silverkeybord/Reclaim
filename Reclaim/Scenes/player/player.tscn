@@ -152,7 +152,7 @@ _data = {
 &"build_placed": SubResource("Animation_ugbui")
 }
 
-[node name="player" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "hit_overlay", "aim_ray", "build_ray", "shooting_timer", "pick_up_area", "arm_pivot", "gun_pivot", "hammer_pivot", "wrench_pivot", "canvas_root", "build_overlay", "build_label", "action_bar", "building_selection", "user_interface_animations", "item_notif_controller", "fps_lable", "action_bars_panel") groups=["player"]]
+[node name="player" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "hit_overlay", "aim_ray", "build_ray", "shooting_timer", "pick_up_area", "arm_pivot", "gun_pivot", "hammer_pivot", "wrench_pivot", "canvas_root", "build_overlay", "build_label", "action_bar", "building_selection", "user_interface_animations", "item_notif_controller", "fps_lable", "action_bar_panel") groups=["player"]]
 collision_layer = 2
 collision_mask = 79
 script = ExtResource("1_eo61r")
@@ -175,7 +175,7 @@ building_selection = NodePath("canvas_root/build_selection")
 user_interface_animations = NodePath("canvas_root/UI_animations")
 item_notif_controller = NodePath("canvas_root/item_notif_controller")
 fps_lable = NodePath("canvas_root/FPS counter")
-action_bars_panel = NodePath("canvas_root/action_bar")
+action_bar_panel = NodePath("canvas_root/action_bar")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=125637870]
 shape = SubResource("BoxShape3D_e41v5")
@@ -305,6 +305,7 @@ offset_right = 45.0
 label_settings = ExtResource("8_5gtgg")
 
 [node name="action_bar" type="PanelContainer" parent="canvas_root" unique_id=1946409334]
+visible = false
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0

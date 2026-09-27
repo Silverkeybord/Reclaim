@@ -4,6 +4,8 @@ extends Node3D
 const BASIC_ENEMY_FALLBACK : PackedScene = preload("res://scenes/enemies/enemy_scenes/basic.tscn")
 const ENEMY_SIZE_FALLBACK : float = 1
 
+const ERR_NO_CLEAR_SPAWNING := "No Clear Spawning : %s"
+
 const SPAWN_MARKERS_GROUP : String = "enemy_spawn_markers"
 
 const ENEMIES_SCENE_FOLDER := "res://scenes/enemies/enemy_scenes/"
@@ -13,9 +15,13 @@ const INVALID_SCENE_FOLDER := "Invalid Scene Folder"
 const INVALID_ENEMY_SCENE := "Invalid Enemy Scene"
 const INVALID_ENEMY_WEIGHTS := "Invalid Enemy Weights"
 
+const GROUP_ENEMYS := "enemys"
+
 const DEFAULT_SPAWN_RADIUS := 5.0
 
 const SPAWN_RADIUS_PROPERTY : StringName = &"spawn_radius"
+
+enum WaveState { SPAWNING, CLEARING, BREATHING, SECTOR_CLEARED }
 
 @export_group("In Scene")
 @export var spawn_timer : Timer
@@ -40,26 +46,54 @@ var enemy_scene : PackedScene
 
 var run_time := 0.0
 var current_spawn_section : SpawnSection
-var spawn_section_times : Array[float]
 var current_spawn_index : int = 0
-var clear_spawning := false
+
+# Wave management variables
+var wave_state: int = WaveState.BREATHING
+var phase_timer: float = 0.0
 
 @onready var enemy_scenes := get_enemy_scenes()
 
 
 func _ready() -> void:
 	set_process(false)
-	var first_section = wave_data.spawning[0]
-	current_spawn_section = first_section
-	
-	sector_elements.sector_shield.run_ui.wave_stages = wave_data.return_wave_stages()
-	spawn_section_times = wave_data.return_wave_times()
 
 
 # called from sector elements after animation is finished or skipped
 func start_sector() -> void:
-	spawn_timer.start(current_spawn_section.breathing_room)
-	set_process(true)
+	current_spawn_index = 0
+	if wave_data.spawning.size() > 0:
+		current_spawn_section = wave_data.spawning[current_spawn_index]
+		_start_breathing_phase()
+		set_process(true)
+
+
+func _start_breathing_phase() -> void:
+	wave_state = WaveState.BREATHING
+	phase_timer = current_spawn_section.breathing_room
+	spawn_timer.stop()
+
+
+func _start_spawning_phase() -> void:
+	wave_state = WaveState.SPAWNING
+	phase_timer = current_spawn_section.duration
+	spawn_timer.start(current_spawn_section.spawn_interval)
+	_on_spawn_timer_timeout() # Optional: Trigger first spawn immediately on phase start
+
+
+func _start_clearing_phase() -> void:
+	wave_state = WaveState.CLEARING
+	spawn_timer.stop()
+
+
+func _start_sector_cleared_phase() -> void:
+	wave_state = WaveState.SECTOR_CLEARED
+	if wave_data.clear_spawning:
+		current_spawn_section = wave_data.clear_spawning
+		spawn_timer.start(current_spawn_section.spawn_interval)
+	else:
+		push_error(ERR_NO_CLEAR_SPAWNING % wave_data.key)
+		set_process(false)
 
 
 func _process(delta: float) -> void:
@@ -67,16 +101,41 @@ func _process(delta: float) -> void:
 		return
 	
 	run_time += delta
-	Global.sector_run_time = run_time
 	
-	if run_time > wave_data.end_time:
-		set_process(false)
+	# Update the UI via Sector Shield Run UI reference
+	if sector_elements and sector_elements.sector_shield and sector_elements.sector_shield.run_ui:
+		var run_ui = sector_elements.sector_shield.run_ui
+		run_ui.current_wave = current_spawn_index + 1
+		run_ui.current_state = wave_state
+		run_ui.phase_time_left = phase_timer
+		
+		if wave_state == WaveState.CLEARING:
+			run_ui.enemies_left = get_tree().get_node_count_in_group(GROUP_ENEMYS)
 	
-	if spawn_section_times[current_spawn_index + 1] < run_time:
-		spawn_timer.stop()
-		current_spawn_index += 1
-		current_spawn_section = wave_data.spawning[current_spawn_index]
-		spawn_timer.start(current_spawn_section.breathing_room)
+	# Handle Wave State Machine
+	match wave_state:
+		WaveState.BREATHING:
+			phase_timer -= delta
+			if phase_timer <= 0:
+				_start_spawning_phase()
+				
+		WaveState.SPAWNING:
+			phase_timer -= delta
+			if phase_timer <= 0:
+				_start_clearing_phase()
+				
+		WaveState.CLEARING:
+			var enemies_alive = get_tree().get_node_count_in_group(GROUP_ENEMYS)
+			if enemies_alive == 0:
+				current_spawn_index += 1
+				if current_spawn_index < wave_data.spawning.size():
+					current_spawn_section = wave_data.spawning[current_spawn_index]
+					_start_breathing_phase()
+				else:
+					_start_sector_cleared_phase() # All waves finished, start trickling
+					
+		WaveState.SECTOR_CLEARED:
+			pass 
 
 
 # Enemy spawning =============================================================
@@ -120,7 +179,7 @@ func _on_spawn_timer_timeout() -> void:
 	
 	# Starting next spawn interval
 	if current_spawn_section.end_spawn_rate:
-		var interval_difference = current_spawn_section.end_spawn_rate - current_spawn_section.time
+		var interval_difference = current_spawn_section.end_spawn_rate - current_spawn_section.spawn_interval
 		var scaleing_spawn_interval = interval_difference * time_ratio
 		
 		spawn_timer.start(current_spawn_section.spawn_interval + scaleing_spawn_interval)
@@ -131,6 +190,7 @@ func _on_spawn_timer_timeout() -> void:
 func spawn_enemy(spawn_node : Node3D, is_commander := false) -> BaseEnemy:
 	var enemy := _get_enemy_type_scene().instantiate() as BaseEnemy
 	add_sibling(enemy)
+	enemy.add_to_group(GROUP_ENEMYS)
 	
 	# setting properties
 	enemy.extraction_pod = sector_elements.extraction_pod
@@ -215,10 +275,13 @@ func _get_enemy_size() -> float:
 
 
 func get_time_ratio() -> float:
-	if not spawn_section_times.has(current_spawn_index + 1):
+	# Keep the time ratio flat at 0 during the cleared trickle so spawn rate scaling doesn't break
+	if wave_state == WaveState.SECTOR_CLEARED:
 		return 0.0
-	
-	return (run_time - current_spawn_section.time) / spawn_section_times[current_spawn_index + 1]
+		
+	if current_spawn_section.duration <= 0:
+		return 1.0
+	return 1.0 - clampf(phase_timer / current_spawn_section.duration, 0.0, 1.0)
 
 
 # Helper function to calculate a random XZ position within a given radius

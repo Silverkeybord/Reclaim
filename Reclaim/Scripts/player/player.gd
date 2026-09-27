@@ -15,7 +15,7 @@ const ACTION_SHOOT : StringName = &"shoot"
 const ACTION_INTERACT : StringName = &"interact"
 const ACTION_WEAPON_MODE : StringName = &"weapon_mode"
 const ACTION_BUILD_MODE : StringName = &"build_mode"
-const ACTION_INSTALL_MODE : StringName = &"install_mode"
+# const ACTION_INSTALL_MODE : StringName = &"install_mode" # FUTURE DEV: Installation mode disabled
 const ACTION_CHANGE_BUILD_MODE : StringName = &"change_build_mode"
 const ACTION_PLACE : StringName = &"place"
 const ACTION_PICK_UP_BUILD : StringName = &"pick_up_build"
@@ -58,7 +58,7 @@ const DEFAULT_WEAPON_NAME : String = "pistol"
 # UI Display Strings
 const WEAPON_MODE_INPUT : String = "1 - Weapon"
 const BUILD_MODE_INPUT : String = "2 - Building"
-const INSTALL_MODE_INPUT : String = "3 - Installation"
+# const INSTALL_MODE_INPUT : String = "3 - Installation" # FUTURE DEV: Installation mode disabled
 const BUILDING_INPUTS : String = "M2 - Pick up Builds\nScroll - Selection"
 const INTERACT_INPUT : String = "E - Interact"
 const SHOW_PINNED_INPUT : String = "TAB - Pinned"
@@ -115,7 +115,7 @@ const ZERO_FLOAT : float = 0.0
 @export var user_interface_animations: AnimationPlayer
 @export var item_notif_controller : ItemNotifController
 @export var fps_lable : Label
-@export var action_bars_panel : PanelContainer
+@export var action_bar_panel : PanelContainer
 
 # =============================================================================
 # VARIABLES
@@ -159,7 +159,13 @@ func _physics_process(delta: float) -> void:
 func _process(_delta: float) -> void:
 	if Global.major_animation_playing:
 		canvas_root.visible = false
+		
+		# When major animaiton is playing returns to weapon mode to remove ui
+		if Global.player_mode != Global.PlayerMode.WEAPON:
+			force_weapon_mode()
+		
 		return
+	
 	if not canvas_root.visible:
 		canvas_root.visible = true
 	
@@ -170,25 +176,19 @@ func _process(_delta: float) -> void:
 	
 	var ray_collider: Node = aim_ray.get_collider() if aim_ray else null
 	
-	# When major animaiton is playing returns to weapon mode to remove ui
-	if Global.major_animation_playing:
-		if Global.player_mode != Global.PLAYER_MODES.WEAPON:
-			force_weapon_mode()
-		
-		return
-	
 	# bassed on the player mode will do certain things
 	match Global.player_mode:
-		Global.PLAYER_MODES.WEAPON:
+		Global.PlayerMode.WEAPON:
 			pass
-		Global.PLAYER_MODES.BUILDING:
+		Global.PlayerMode.BUILDING:
 			_build_mode_handling(ray_collider)
-		Global.PLAYER_MODES.INSTALLING:
-			pass
+		# FUTURE DEV: Installation mode disabled
+		# Global.PlayerMode.INSTALLING:
+		# 	pass
 	
 	if (
-		Global.player_mode != Global.PLAYER_MODES.BUILDING
-		and Global.player_mode != Global.PLAYER_MODES.INSTALLING
+		Global.player_mode != Global.PlayerMode.BUILDING
+		# and Global.player_mode != Global.PlayerMode.INSTALLING # FUTURE DEV: Installation mode disabled
 		and not Global.ui_open
 	):
 		_interaction_handling(ray_collider)
@@ -202,8 +202,19 @@ func _overlay_settings_updating() -> void:
 	if Global.show_fps != fps_lable.visible:
 		fps_lable.visible = Global.show_fps
 	
-	if Global.show_action_bar != action_bars_panel.visible:
-		action_bars_panel.visible = Global.show_action_bar
+	if action_bar == null:
+		return
+	
+	# hides action bar when UI open
+	if Global.ui_open:
+		action_bar_panel.visible = false
+		return
+	
+	if action_bar_panel.visible == false:
+		action_bar_panel.visible = true
+	
+	if Global.show_action_bar != action_bar_panel.visible:
+		action_bar_panel.visible = Global.show_action_bar
 
 
 # Updates the action text based on what the player can do
@@ -211,32 +222,26 @@ func _action_bar_updating() -> void:
 	if action_bar == null:
 		return
 	
-	# hides action bar when UI open
-	if Global.ui_open:
-		action_bars_panel.visible = false
-		return
-	
-	if action_bars_panel.visible == false:
-		action_bars_panel.visible = true
-	
 	var action_bar_output: Array[String] = []
 	
-	if Global.player_mode == Global.PLAYER_MODES.BUILDING:
+	if Global.player_mode == Global.PlayerMode.BUILDING:
 		action_bar_output.append(BUILDING_INPUTS)
 	
-	if not Global.at_ship:
-		if Global.player_mode != Global.PLAYER_MODES.WEAPON:
-			action_bar_output.append(WEAPON_MODE_INPUT)
-		if Global.player_mode != Global.PLAYER_MODES.BUILDING:
-			action_bar_output.append(BUILD_MODE_INPUT)
-		if Global.player_mode != Global.PLAYER_MODES.INSTALLING:
-			action_bar_output.append(INSTALL_MODE_INPUT)
 	
-	if Global.player_mode != Global.PLAYER_MODES.BUILDING:
+	if Global.player_mode != Global.PlayerMode.BUILDING:
 		action_bar_output.append(INTERACT_INPUT)
 	
 	if Global.pined_crafts:
 		action_bar_output.append(SHOW_PINNED_INPUT)
+	
+	if not Global.at_ship:
+		if Global.player_mode != Global.PlayerMode.WEAPON:
+			action_bar_output.append(WEAPON_MODE_INPUT)
+		if Global.player_mode != Global.PlayerMode.BUILDING:
+			action_bar_output.append(BUILD_MODE_INPUT)
+		# FUTURE DEV: Installation mode disabled
+		# if Global.player_mode != Global.PlayerMode.INSTALLING:
+		# 	action_bar_output.append(INSTALL_MODE_INPUT)
 	
 	action_bar_output.append(PAUSE_INPUT)
 	
@@ -277,9 +282,9 @@ func _player_mode_handling() -> void:
 	# Weapon mode
 	if (
 		Input.is_action_just_pressed(ACTION_WEAPON_MODE)
-		and Global.player_mode != Global.PLAYER_MODES.WEAPON
+		and Global.player_mode != Global.PlayerMode.WEAPON
 	):
-		Global.player_mode = Global.PLAYER_MODES.WEAPON
+		Global.player_mode = Global.PlayerMode.WEAPON
 		_remove_hologram(true)
 		toggle_player_mode_item(gun_pivot)
 	
@@ -287,9 +292,9 @@ func _player_mode_handling() -> void:
 	if (
 		Input.is_action_just_pressed(ACTION_BUILD_MODE)
 		and not Global.at_ship
-		and Global.player_mode != Global.PLAYER_MODES.BUILDING
+		and Global.player_mode != Global.PlayerMode.BUILDING
 	):
-		Global.player_mode = Global.PLAYER_MODES.BUILDING
+		Global.player_mode = Global.PlayerMode.BUILDING
 		if building_selection:
 			building_selection.visible = true
 			building_selection.load_selection()
@@ -298,15 +303,15 @@ func _player_mode_handling() -> void:
 			turret_grid._toggle_build_mode(true)
 		toggle_player_mode_item(hammer_pivot)
 	
-	# Installatoin mode
-	if (
-		Input.is_action_just_pressed(ACTION_INSTALL_MODE)
-		and not Global.at_ship
-		and Global.player_mode != Global.PLAYER_MODES.INSTALLING
-	):
-		Global.player_mode = Global.PLAYER_MODES.INSTALLING
-		_remove_hologram(true)
-		toggle_player_mode_item(wrench_pivot)
+	# FUTURE DEV: Installation mode disabled for now
+	# if (
+	# 	Input.is_action_just_pressed(ACTION_INSTALL_MODE)
+	# 	and not Global.at_ship
+	# 	and Global.player_mode != Global.PlayerMode.INSTALLING
+	# ):
+	# 	Global.player_mode = Global.PlayerMode.INSTALLING
+	# 	_remove_hologram(true)
+	# 	toggle_player_mode_item(wrench_pivot)
 
 
 # Hides all tool pivots then shows only the one passed in
@@ -322,11 +327,14 @@ func toggle_player_mode_item(pivot: Node3D) -> void:
 		pivot.visible = true
 
 
-# Called when in build or installatoin mode when in forced extraction to hide ui interfaces
+# Called when in build or installation mode when in forced extraction to hide ui interfaces
 func force_weapon_mode() -> void:
-	Global.player_mode = Global.PLAYER_MODES.WEAPON
+	Global.player_mode = Global.PlayerMode.WEAPON
 	_remove_hologram(true)
 	toggle_player_mode_item(gun_pivot)
+		
+	if building_selection.visible:
+		building_selection.visible = false
 
 
 # =============================================================================
@@ -335,7 +343,7 @@ func force_weapon_mode() -> void:
 
 # Handles all building logic
 func _build_mode_handling(ray_collider: Node) -> void:
-	if Global.player_mode != Global.PLAYER_MODES.BUILDING:
+	if Global.player_mode != Global.PlayerMode.BUILDING:
 		return
 	
 	_check_holagram()
@@ -454,10 +462,10 @@ func _handle_placement(ray_collider: Node, current_selection: String) -> void:
 	var can_place: bool = false
 	
 	match item.type:
-		Global.ITEM_TYPES.TURRET:
+		Global.ItemType.TURRET:
 			if ray_collider.get(BUILD_PROP_CAN_PLACE_TURRET) and ray_collider.can_place_turret:
 				can_place = ray_collider.place_selected_turret(current_selection)
-		Global.ITEM_TYPES.BASE:
+		Global.ItemType.BASE:
 			if ray_collider.get(BUILD_PROP_CAN_PLACE_BASE) and ray_collider.can_place_base:
 				can_place = ray_collider.build_base(current_selection)
 	
@@ -541,7 +549,7 @@ func _remove_hologram(change_mode: bool = false) -> void:
 # Checks if the player is allowed to shoot and starts the cooldown timer.
 func _shoot_control() -> void:
 	if (
-		Global.player_mode != Global.PLAYER_MODES.WEAPON
+		Global.player_mode != Global.PlayerMode.WEAPON
 		or weapon == null
 		or Global.crafting_open
 		or Global.extraction_open

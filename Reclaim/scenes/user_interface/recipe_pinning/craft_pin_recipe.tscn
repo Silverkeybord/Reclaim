@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://deh5kx6nh3gt4" path="res://scripts/user_interface/item_pinning/craft_pin_recipe.gd" id="1_gnb6g"]
 [ext_resource type="PackedScene" uid="uid://fymq5noabj16" path="res://scenes/user_interface/recipe_pinning/craft_pin_amount.tscn" id="2_wfrht"]
 [ext_resource type="StyleBox" uid="uid://x30xg8owly1s" path="res://other_assets/styles/crafting_styles/t1_style.tres" id="3_kvxnh"]
+[ext_resource type="Resource" uid="uid://du0hy78wnfmij" path="res://data/authorisation/ship_tier.tres" id="3_wq57s"]
 [ext_resource type="Texture2D" uid="uid://b7jm2ktv5ivse" path="res://2d_assets/items/resources/1/dirt.png" id="4_ix5xv"]
 [ext_resource type="FontFile" uid="uid://diyn7dgnn7yw2" path="res://other_assets/fonts/just_sans/JUST Sans ExBold.otf" id="5_tq1gw"]
 
@@ -22,6 +23,7 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_8gq7n")
 script = ExtResource("1_gnb6g")
 craft_pin_amount_scene = ExtResource("2_wfrht")
+authorisation_data = ExtResource("3_wq57s")
 item_panel_container = NodePath("HBoxContainer/PanelContainer")
 item_amounts_hbox = NodePath("HBoxContainer/item_amounts_hbox")
 item_craft_texture = NodePath("HBoxContainer/PanelContainer/MarginContainer/TextureRect")

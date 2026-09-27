@@ -281,7 +281,7 @@ autowrap_mode = 3
 
 [node name="Label2" type="Label" parent="ui_root/whole_ui/crafting/MarginContainer/crafting_vbox/header/help_icon/help_display/MarginContainer/VBoxContainer" unique_id=1335066210]
 layout_mode = 2
-text = "- You can speed up crafting with upgrades"
+text = "- You can speed up crafting with upgrades to 0.05s"
 label_settings = ExtResource("10_c5dtc")
 autowrap_mode = 3
 
@@ -291,9 +291,9 @@ text = "- Right click queued crafts to cancel"
 label_settings = ExtResource("10_c5dtc")
 autowrap_mode = 3
 
-[node name="Label4" type="Label" parent="ui_root/whole_ui/crafting/MarginContainer/crafting_vbox/header/help_icon/help_display/MarginContainer/VBoxContainer" unique_id=491095643]
+[node name="Label5" type="Label" parent="ui_root/whole_ui/crafting/MarginContainer/crafting_vbox/header/help_icon/help_display/MarginContainer/VBoxContainer" unique_id=1720252596]
 layout_mode = 2
-text = "- Max crafting speed is 0.05"
+text = "- Press tab to view pinned recipes"
 label_settings = ExtResource("10_c5dtc")
 autowrap_mode = 3
 
