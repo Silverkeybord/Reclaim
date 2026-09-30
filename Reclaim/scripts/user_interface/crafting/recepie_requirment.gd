@@ -3,6 +3,7 @@ extends PanelContainer
 
 const PANEL_NAME := "panel"
 const STYLE_KEY := "style"
+const LABEL_FORMAT := "%s/%s %s"
 const SLASH_TEXT := "/"
 const HAVE_INDICATIONS : Dictionary = {
 	false : preload("res://2d_assets/crafting/not_enough_resources.png"),
@@ -36,12 +37,11 @@ func update_value(craft_mult : int) -> void:
 		)
 	
 	item_image.texture = item_data.get_item_texture()
-	label.text = (
-		HelperFunctions.return_amount_shorthand(current_amount) + 
-		SLASH_TEXT + 
-		HelperFunctions.return_amount_shorthand(amount_required * craft_mult) + 
-		SPACE_TEXT + HelperFunctions.get_display_name(item_data.key)
-		)
+	label.text = LABEL_FORMAT % [
+		HelperFunctions.return_amount_shorthand(current_amount),
+		HelperFunctions.return_amount_shorthand(amount_required * craft_mult),
+		HelperFunctions.get_display_name(item_data.key)
+	]
 
 
 func check_requirement(craft_mult := -1) -> bool:

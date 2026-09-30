@@ -93,7 +93,7 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[node name="CouncilAuthorisation" type="CanvasLayer" unique_id=2078735524 node_paths=PackedStringArray("ui_root", "selection_vbox", "requirments_hflow", "level_change_label", "unlock_change_label", "authorisation_name", "description_box", "authorise_button", "authorisation_icon")]
+[node name="CouncilAuthorisation" type="CanvasLayer" unique_id=2078735524 node_paths=PackedStringArray("ui_root", "selection_vbox", "requirments_hflow", "level_change_label", "unlock_change_label", "authorisation_name", "description_box", "authorise_button", "authorisation_icon", "authorise_overlay")]
 layer = 2
 script = ExtResource("1_6ilwi")
 ui_root = NodePath("ui_root")
@@ -105,6 +105,7 @@ authorisation_name = NodePath("ui_root/PanelContainer/MarginContainer/VBoxContai
 description_box = NodePath("ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/authorisation_selection_vbox/description_margin/description")
 authorise_button = NodePath("ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/craft_button_margin/authorise_button")
 authorisation_icon = NodePath("ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/authorisation_selection_vbox/HBoxContainer/Control/details_icon")
+authorise_overlay = NodePath("ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/craft_button_margin/craft_button_overlay_margin/visual_auth_overlay")
 authorisation_selection_cell = ExtResource("2_j2krl")
 recipe_requirments_scene = ExtResource("3_4lsmu")
 

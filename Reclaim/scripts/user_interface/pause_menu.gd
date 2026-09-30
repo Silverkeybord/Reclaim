@@ -63,8 +63,9 @@ func _on_line_edit_text_submitted(new_text: String) -> void:
 			float(new_text),
 			MIN_SENSITIVITY_MULT,
 			MAX_SENSITIVITY_MULT
-		)
+			)
 	
+	sensitivity_slider.value = Global.sensitivity
 	sensitivity_line_edit.text = str(Global.sensitivity)
 
 

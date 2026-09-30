@@ -43,7 +43,7 @@ const MAX_CRAFT_QUEUE := 5
 const CRAFT_ONE := 1
 const CRAFT_FIVE := 5
 const CRAFT_TWENTY_FIVE := 25
-const CRAFT_MAX := -1
+const CRAFT_MAX := 0
 
 # Tween Pram
 const TWEEN_DURATION := 0.8
@@ -339,8 +339,8 @@ func update_crafting_display() -> void:
 	if not current_displayed_requirments:
 		craft_overlay.visible = true
 	
-	for cell : CraftCell in get_tree().get_nodes_in_group(GROUP_CRAFT_CELLS): 
-		cell.check_requirements()
+	#for cell : CraftCell in get_tree().get_nodes_in_group(GROUP_CRAFT_CELLS): 
+		#cell.check_requirements()
 
 
 # checks if the recipe is valid

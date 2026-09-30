@@ -33,6 +33,7 @@ const ADD_CHANGE_FORMAT := ", "
 @export var recipe_requirments_scene : PackedScene
 
 var current_displayed_authorisation : AuthorisationData
+var current_displayed_level : int
 var can_auth_current : bool = false
 
 
@@ -74,7 +75,7 @@ func _set_open_or_close(toggle : bool) -> void:
 	
 	
 	Global.ui_open = toggle
-	Global.crafting_open = toggle
+	Global.authorization_open = toggle
 	set_open_timescale(toggle)
 	set_process(toggle)
 	HelperFunctions.set_mouse_captured(true, not toggle)
@@ -97,8 +98,8 @@ func show_authorisation_details(authorisation_data : AuthorisationData) -> void:
 	var authorisation_unlocks : Array[String]
 	
 	# gets all the unlocks this level of the autorisation 	 gets
-	var current_auth_level = Global.council_authorisations.get(authorisation_data.key) - 1
-	var auth_level_details = authorisation_data.levels.get(current_auth_level)
+	current_displayed_level = Global.council_authorisations.get(authorisation_data.key) - 1
+	var auth_level_details = authorisation_data.levels.get(current_displayed_level)
 	if not auth_level_details:
 		return
 	
@@ -144,7 +145,7 @@ func show_authorisation_details(authorisation_data : AuthorisationData) -> void:
 		cell.queue_free()
 	
 	# gets a sorted list of all requirments sorted from t1 - t5 then alphabetacally
-	var auth_requirments := authorisation_data.levels[current_auth_level].requirments
+	var auth_requirments := authorisation_data.levels[current_displayed_level].requirments
 	var sorted_requirements = auth_requirments.duplicate()
 	sorted_requirements.sort_custom(func(a, b):
 		if a == null or b == null or a.item == null or b.item == null:
@@ -164,7 +165,7 @@ func show_authorisation_details(authorisation_data : AuthorisationData) -> void:
 		requirments_hflow.add_child(new_requirment)
 		new_requirment.add_to_group(GROUP_AUTH_REQUIREMENT_CELLS)
 	
-	#_update_authorisation_display()
+	_check_can_auth()
 
 
 func _append_unlock_text(unlock_list: Array, format_text: String, output_array: Array) -> void:
@@ -173,25 +174,25 @@ func _append_unlock_text(unlock_list: Array, format_text: String, output_array: 
 		output_array.append(format_text % whole_string)
 
 
-# gets everying to check their values
-#func _update_authorisation_display() -> void:
-	#if not Global.authorization_open:
-		#return
-	#
-	## gets all the cells to check if there is enough and highlights craft button
-	#can_auth_current = true
-	#
-	#var cells := get_tree().get_nodes_in_group(GROUP_AUTH_REQUIREMENT_CELLS)
-	#for cell : RecipeRequirement in cells:
-		#if not cell.check_requirement():
-			#authorise_overlay.visible = true
-			#can_auth_current = false
-	#
-	#authorise_overlay.visible = not can_auth_current
-	#authorise_button.disabled = not can_auth_current
-	#
-	#if not current_displayed_authorisation:
-		#authorise_overlay.visible = true
-	#
-	#for cell : CraftCell in get_tree().get_nodes_in_group(GROUP_AUTH_REQUIREMENT_CELLS): 
-		#cell.check_requirements()
+# gets everying to check their display and values 
+func _check_can_auth() -> void:
+	if not Global.authorization_open:
+		return
+	
+	# gets all the cells to check if there is enough and highlights craft button
+	can_auth_current = true
+	
+	var cells := get_tree().get_nodes_in_group(GROUP_AUTH_REQUIREMENT_CELLS)
+	for cell : RecipeRequirement in cells:
+		if not cell.check_requirement():
+			authorise_overlay.visible = true
+			can_auth_current = false
+	
+	authorise_overlay.visible = not can_auth_current
+	authorise_button.disabled = not can_auth_current
+	
+	if not current_displayed_authorisation:
+		authorise_overlay.visible = true
+	
+	for cell : RecipeRequirement in get_tree().get_nodes_in_group(GROUP_AUTH_REQUIREMENT_CELLS): 
+		cell.check_requirement()
