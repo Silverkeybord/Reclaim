@@ -6,33 +6,34 @@ extends CharacterBody3D
 # =============================================================================
 
 # Input Action Names
-const ACTION_LEFT : StringName = &"left"
-const ACTION_RIGHT : StringName = &"right"
-const ACTION_FORWARD : StringName = &"forward"
-const ACTION_BACK : StringName = &"back"
-const ACTION_JUMP : StringName = &"jump"
-const ACTION_SHOOT : StringName = &"shoot"
-const ACTION_INTERACT : StringName = &"interact"
-const ACTION_WEAPON_MODE : StringName = &"weapon_mode"
-const ACTION_BUILD_MODE : StringName = &"build_mode"
-# const ACTION_INSTALL_MODE : StringName = &"install_mode" # FUTURE DEV: Installation mode disabled
-const ACTION_CHANGE_BUILD_MODE : StringName = &"change_build_mode"
-const ACTION_PLACE : StringName = &"place"
-const ACTION_PICK_UP_BUILD : StringName = &"pick_up_build"
+const ACTION_LEFT: StringName = &"left"
+const ACTION_RIGHT: StringName = &"right"
+const ACTION_FORWARD: StringName = &"forward"
+const ACTION_BACK: StringName = &"back"
+const ACTION_JUMP: StringName = &"jump"
+const ACTION_SHOOT: StringName = &"shoot"
+const ACTION_INTERACT: StringName = &"interact"
+const ACTION_WEAPON_MODE: StringName = &"weapon_mode"
+const ACTION_BUILD_MODE: StringName = &"build_mode"
+# const ACTION_INSTALL_MODE: StringName = &"install_mode" # FUTURE DEV: Installation mode disabled
+const ACTION_CHANGE_BUILD_MODE: StringName = &"change_build_mode"
+const ACTION_PLACE: StringName = &"place"
+const ACTION_PICK_UP_BUILD: StringName = &"pick_up_build"
 
 # Groups & Metadata Tags
-const GROUP_INTERACTABLE : StringName = &"interactable"
-const GROUP_DROPS : StringName = &"drops"
-const GROUP_TURRET_SLOTS : StringName = &"turret_slots"
-const ENEMY_METADATA_TAG : StringName = &"enemy"
+const GROUP_INTERACTABLE: StringName = &"interactable"
+const GROUP_DROPS: StringName = &"drops"
+const GROUP_TURRET_SLOTS: StringName = &"turret_slots"
+const ENEMY_METADATA_TAG: StringName = &"enemy"
 
 # Dynamic Property & Method String Names
-const PROP_VALID : StringName = &"valid"
-const PROP_PLAYER : StringName = &"player"
-const PROP_BULLET_SPAWN : StringName = &"bullet_spawn"
-const METHOD_INTERACT : StringName = &"interact"
-const METHOD_TOGGLE_BUILD_MODE : StringName = &"_toggle_build_mode"
-const METHOD_PRIME_PICK_UP : StringName = &"prime_pick_up"
+const PROP_VALID: StringName = &"valid"
+const PROP_PLAYER: StringName = &"player"
+const PROP_BULLET_SPAWN: StringName = &"bullet_spawn"
+const METHOD_INTERACT: StringName = &"interact"
+const METHOD_HIT: StringName = &"hit"
+const METHOD_TOGGLE_BUILD_MODE: StringName = &"_toggle_build_mode"
+const METHOD_PRIME_PICK_UP: StringName = &"prime_pick_up"
 
 # Building Related Properties
 const BUILD_PROP_ORIGIN_POINT: StringName = &"turret_origin_point"
@@ -52,32 +53,32 @@ const METHOD_PLACE_TURRET: StringName = &"place_selected_turret"
 const METHOD_BUILD_BASE: StringName = &"build_base"
 
 # Animation Keys & Defaults
-const PLACE_ANIMATION_KEY : StringName = &"build_placed"
-const DEFAULT_WEAPON_NAME : String = "pistol"
+const PLACE_ANIMATION_KEY: StringName = &"build_placed"
+const DEFAULT_WEAPON_NAME: String = "pistol"
 
 # UI Display Strings
-const WEAPON_MODE_INPUT : String = "1 - Weapon"
-const BUILD_MODE_INPUT : String = "2 - Building"
-# const INSTALL_MODE_INPUT : String = "3 - Installation" # FUTURE DEV: Installation mode disabled
-const BUILDING_INPUTS : String = "M2 - Pick up Builds\nScroll - Selection"
-const INTERACT_INPUT : String = "E - Interact"
-const SHOW_PINNED_INPUT : String = "TAB - Pinned"
-const PAUSE_INPUT : String = "esc - Pause"
+const WEAPON_MODE_INPUT: String = "1 - Weapon"
+const BUILD_MODE_INPUT: String = "2 - Building"
+# const INSTALL_MODE_INPUT: String = "3 - Installation" # FUTURE DEV: Installation mode disabled
+const BUILDING_INPUTS: String = "M2 - Pick up Builds\nScroll - Selection"
+const INTERACT_INPUT: String = "E - Interact"
+const SHOW_PINNED_INPUT: String = "TAB - Pinned"
+const PAUSE_INPUT: String = "esc - Pause"
 
-const PICK_UP_TEXT : String = "CLICK TO PICK UP"
-const PLACE_TEXT : String = "CLICK TO PLACE"
-const REPLACE_TEXT : String = "CLICK TO REPLACE"
-const MOVE_CLOSER_TEXT : String = "MOVE CLOSER"
+const PICK_UP_TEXT: String = "CLICK TO PICK UP"
+const PLACE_TEXT: String = "CLICK TO PLACE"
+const REPLACE_TEXT: String = "CLICK TO REPLACE"
+const MOVE_CLOSER_TEXT: String = "MOVE CLOSER"
 
 # Physics & Interaction Parameters
-const GRAVITY : float = 40.0
-const INTERACT_DISTANCE : float = 5.0
-const BUILD_RANGE : float = 25.0
-const GUN_CHILD_INDEX : int = 0
-const REMOVE_BUILD_DELAY : float = 0.1
-const HIT_OVERLAY_TIME : float = 0.08
-const PICK_UP_COOLDOWN : float = 2.0
-const ZERO_FLOAT : float = 0.0
+const GRAVITY: float = 40.0
+const INTERACT_DISTANCE: float = 5.0
+const BUILD_RANGE: float = 25.0
+const GUN_CHILD_INDEX: int = 0
+const REMOVE_BUILD_DELAY: float = 0.1
+const HIT_OVERLAY_TIME: float = 0.08
+const PICK_UP_COOLDOWN: float = 2.0
+const ZERO_FLOAT: float = 0.0
 
 # =============================================================================
 # EXPORTS
@@ -104,18 +105,18 @@ const ZERO_FLOAT : float = 0.0
 @export_group("Turrets & Building")
 @export var turret_holagram_scene: PackedScene
 @export var turret_grid: Node3D
-@export var selected_build : String = ""
+@export var selected_build: String = ""
 
 @export_group("2D UI Elements")
-@export var canvas_root : CanvasLayer
+@export var canvas_root: CanvasLayer
 @export var build_overlay: Control
 @export var build_label: Label
 @export var action_bar: Label
-@export var building_selection: CanvasLayer
+@export var building_selection: BuildSelection
 @export var user_interface_animations: AnimationPlayer
-@export var item_notif_controller : ItemNotifController
-@export var fps_lable : Label
-@export var action_bar_panel : PanelContainer
+@export var item_notif_controller: ItemNotifController
+@export var fps_lable: Label
+@export var action_bar_panel: PanelContainer
 
 # =============================================================================
 # VARIABLES
@@ -158,7 +159,8 @@ func _physics_process(delta: float) -> void:
 
 func _process(_delta: float) -> void:
 	if Global.major_animation_playing:
-		canvas_root.visible = false
+		if canvas_root:
+			canvas_root.visible = false
 		
 		# When major animaiton is playing returns to weapon mode to remove ui
 		if Global.player_mode != Global.PlayerMode.WEAPON:
@@ -166,7 +168,7 @@ func _process(_delta: float) -> void:
 		
 		return
 	
-	if not canvas_root.visible:
+	if canvas_root and not canvas_root.visible:
 		canvas_root.visible = true
 	
 	_shoot_control()
@@ -199,10 +201,10 @@ func _process(_delta: float) -> void:
 # =============================================================================
 
 func _overlay_settings_updating() -> void:
-	if Global.show_fps != fps_lable.visible:
+	if fps_lable and Global.show_fps != fps_lable.visible:
 		fps_lable.visible = Global.show_fps
 	
-	if action_bar == null:
+	if action_bar == null or action_bar_panel == null:
 		return
 	
 	# hides action bar when UI open
@@ -263,7 +265,7 @@ func _interaction_handling(ray_collider: Node) -> void:
 			Input.is_action_just_pressed(ACTION_INTERACT) and
 			ray_collider.has_method(METHOD_INTERACT)
 		):
-			ray_collider.interact()
+			ray_collider.call(METHOD_INTERACT)
 	else:
 		interact_overlay.visible = false
 
@@ -300,7 +302,7 @@ func _player_mode_handling() -> void:
 			building_selection.load_selection()
 			building_selection.set_process(true)
 		if turret_grid and turret_grid.has_method(METHOD_TOGGLE_BUILD_MODE):
-			turret_grid._toggle_build_mode(true)
+			turret_grid.call(METHOD_TOGGLE_BUILD_MODE, true)
 		toggle_player_mode_item(hammer_pivot)
 	
 	# FUTURE DEV: Installation mode disabled for now
@@ -333,7 +335,7 @@ func force_weapon_mode() -> void:
 	_remove_hologram(true)
 	toggle_player_mode_item(gun_pivot)
 		
-	if building_selection.visible:
+	if building_selection and building_selection.visible:
 		building_selection.visible = false
 
 
@@ -440,7 +442,7 @@ func _move_hologram_to_aim() -> void:
 		turret_holagram.visible = false
 
 
-# Depending on the type of the build that is selected base or turret 
+# Depending on the type of the build that is selected base or turret
 # will call different methods after some safety checks
 func _handle_placement(ray_collider: Node, current_selection: String) -> void:
 	if current_selection.is_empty() or not Input.is_action_just_pressed(ACTION_PLACE):
@@ -463,11 +465,17 @@ func _handle_placement(ray_collider: Node, current_selection: String) -> void:
 	
 	match item.type:
 		Global.ItemType.TURRET:
-			if ray_collider.get(BUILD_PROP_CAN_PLACE_TURRET) and ray_collider.can_place_turret:
-				can_place = ray_collider.place_selected_turret(current_selection)
+			if (
+				ray_collider.get(BUILD_PROP_CAN_PLACE_TURRET)
+				and ray_collider.has_method(METHOD_PLACE_TURRET)
+			):
+				can_place = ray_collider.call(METHOD_PLACE_TURRET, current_selection)
 		Global.ItemType.BASE:
-			if ray_collider.get(BUILD_PROP_CAN_PLACE_BASE) and ray_collider.can_place_base:
-				can_place = ray_collider.build_base(current_selection)
+			if (
+				ray_collider.get(BUILD_PROP_CAN_PLACE_BASE)
+				and ray_collider.has_method(METHOD_BUILD_BASE)
+			):
+				can_place = ray_collider.call(METHOD_BUILD_BASE, current_selection)
 	
 	if can_place:
 		if user_interface_animations:
@@ -490,14 +498,15 @@ func _handle_pickup() -> void:
 	can_remove_build = false
 	
 	if build_ray_collider.has_method(METHOD_PICK_UP):
-		build_ray_collider.pick_up()
+		build_ray_collider.call(METHOD_PICK_UP)
 		
 	if building_selection:
 		building_selection.load_selection()
 		
 	if build_ray_collider.get(BUILD_PROP_BUILD_TYPE) == Global.BUILD_TYPES.BASE:
-		if build_ray_collider.get(BUILD_PROP_SLOT):
-			build_ray_collider.slot.base_removed()
+		var slot: Variant = build_ray_collider.get(BUILD_PROP_SLOT)
+		if slot is Node and (slot as Node).has_method(METHOD_BASE_REMOVED):
+			(slot as Node).call(METHOD_BASE_REMOVED)
 			
 	var tree := get_tree()
 	if tree:
@@ -539,7 +548,7 @@ func _remove_hologram(change_mode: bool = false) -> void:
 		build_overlay.visible = false
 	if change_mode and not Global.at_ship and turret_grid:
 		if turret_grid.has_method(METHOD_TOGGLE_BUILD_MODE):
-			turret_grid._toggle_build_mode(false)
+			turret_grid.call(METHOD_TOGGLE_BUILD_MODE, false)
 
 
 # =============================================================================
@@ -551,8 +560,7 @@ func _shoot_control() -> void:
 	if (
 		Global.player_mode != Global.PlayerMode.WEAPON
 		or weapon == null
-		or Global.crafting_open
-		or Global.extraction_open
+		or Global.ui_open
 	):
 		return
 	
@@ -560,6 +568,8 @@ func _shoot_control() -> void:
 		can_shoot = false
 		if shooting_timer:
 			shooting_timer.start()
+		else:
+			can_shoot = true
 		_shoot()
 
 
@@ -570,11 +580,15 @@ func _shoot() -> void:
 		to = aim_ray.get_collision_point()
 		var hit: Node = aim_ray.get_collider()
 		
-		if hit and hit.has_meta(ENEMY_METADATA_TAG):
+		if hit and hit.has_meta(ENEMY_METADATA_TAG) and hit.has_method(METHOD_HIT):
 			if weapon_resource and weapon_resource.get_critical():
-				hit.hit(weapon_resource.damage * weapon_resource.critical_multiplier, true)
+				hit.call(
+					METHOD_HIT,
+					weapon_resource.damage * weapon_resource.critical_multiplier,
+					true
+				)
 			elif weapon_resource:
-				hit.hit(weapon_resource.damage)
+				hit.call(METHOD_HIT, weapon_resource.damage)
 			
 			if hit_overlay:
 				hit_overlay.visible = true
@@ -601,8 +615,11 @@ func _shoot() -> void:
 		HelperFunctions.spawn_temp_sound(weapon_resource.shoot_resource, from)
 
 
-# sets the weapon of the player to the current weapon resource 
+# sets the weapon of the player to the current weapon resource
 func _set_new_weapon() -> void:
+	weapon = null
+	weapon_resource = null
+
 	if gun_pivot and gun_pivot.get_child_count() > GUN_CHILD_INDEX:
 		weapon = gun_pivot.get_child(GUN_CHILD_INDEX)
 		if DataRegistry.weapon.has(weapon_name):

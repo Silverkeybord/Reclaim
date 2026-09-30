@@ -47,8 +47,8 @@ const TEMP_SOUND_SCENE_3D: PackedScene = preload("res://scenes/other/temp_sound_
 const BULLET_TRAIL_SCENE: PackedScene = preload("res://scenes/turrets/bullet_trail.tscn")
 const DAMAGE_INDICATOR_SCENE: PackedScene = preload("res://scenes/other/damage_indicator.tscn")
 
-# Other 
-const TIERS := 5
+# Other
+const TIERS: int = 5
 
 # =============================================================================
 # STATIC STATE (shared counters)
@@ -59,7 +59,7 @@ static var damage_indications: int = 0
 
 
 ## Sets the mouse of the player to be unlocked or locked bassed on its last value
-static func set_mouse_captured(set_mode : bool = false, set_value : bool = false) -> void:
+static func set_mouse_captured(set_mode: bool = false, set_value: bool = false) -> void:
 	if set_mode:
 		Global.mouse_captured = set_value
 	else:
@@ -76,17 +76,20 @@ static func set_mouse_captured(set_mode : bool = false, set_value : bool = false
 # =============================================================================
 ## Adds the node to the root node of the current scene or the node that is in the group
 ## of root nodes in the current scene
-static func add_to_root_node(node: Node) -> void:
+static func add_to_root_node(node: Node) -> bool:
 	if node == null:
-		return
+		return false
 	
 	var tree := Engine.get_main_loop() as SceneTree
 	if tree == null:
-		return
+		return false
 	
 	var root_node := tree.get_first_node_in_group(ROOT_NODES_GROUP)
-	if root_node:
-		root_node.add_child(node)
+	if root_node == null:
+		return false
+
+	root_node.add_child(node)
+	return true
 
 
 ## spawns a sound at a position or a flat sound bassed on a position pramater
@@ -99,7 +102,11 @@ static func spawn_temp_sound(sound: SoundInfo, pos: Vector3 = Vector3.ZERO) -> v
 	if pos != Vector3.ZERO:
 		var new_sound: AudioStreamPlayer3D = TEMP_SOUND_SCENE_3D.instantiate()
 		new_sound.stream = sound.stream
-		add_to_root_node(new_sound)
+		if not add_to_root_node(new_sound):
+			new_sound.queue_free()
+			sounds = maxi(sounds - 1, 0)
+			return
+
 		new_sound.global_position = pos
 		new_sound.volume_db = sound.volume
 		new_sound.max_db = sound.max_db
@@ -108,7 +115,11 @@ static func spawn_temp_sound(sound: SoundInfo, pos: Vector3 = Vector3.ZERO) -> v
 	else:
 		var new_sound: AudioStreamPlayer = TEMP_SOUND_SCENE.instantiate()
 		new_sound.stream = sound.stream
-		add_to_root_node(new_sound)
+		if not add_to_root_node(new_sound):
+			new_sound.queue_free()
+			sounds = maxi(sounds - 1, 0)
+			return
+
 		new_sound.volume_db = sound.volume
 		new_sound.play()
 
@@ -126,7 +137,10 @@ static func create_bullet_trail(
 
 	var new_bullet_trail = BULLET_TRAIL_SCENE.instantiate()
 	new_bullet_trail.trail = trail
-	add_to_root_node(new_bullet_trail)
+	if not add_to_root_node(new_bullet_trail):
+		new_bullet_trail.queue_free()
+		return
+
 	new_bullet_trail.create_bullet_trail(from, to)
 
 
@@ -138,7 +152,11 @@ static func create_damage_indicator(pos: Vector3, damage: float, crit: bool) -> 
 	damage_indications += 1
 	var new_indication = DAMAGE_INDICATOR_SCENE.instantiate()
 	new_indication.damage = damage
-	add_to_root_node(new_indication)
+	if not add_to_root_node(new_indication):
+		new_indication.queue_free()
+		damage_indications = maxi(damage_indications - 1, 0)
+		return
+
 	new_indication.global_position = pos
 	new_indication.crit = crit
 	new_indication.init()
@@ -147,7 +165,7 @@ static func create_damage_indicator(pos: Vector3, damage: float, crit: bool) -> 
 # DISPLAY / UI HELPERS
 # =============================================================================
 
-## returns a shorthand version of the inputed number 
+## returns a shorthand version of the inputed number
 static func return_amount_shorthand(value: float) -> String:
 	if value <= 0:
 		return str(int(value))
@@ -195,7 +213,7 @@ static func get_display_name(input: String) -> String:
 
 ## puts commas every 3 numbers
 static func comma_number(num: int) -> String:
-	if num >= (ORDER_OF_MAGNITUDE ** MAX_SHORTHAND_MAGNITUDE):
+	if absi(num) >= (ORDER_OF_MAGNITUDE ** MAX_SHORTHAND_MAGNITUDE):
 		return MAX_TEXT
 	
 	var if_negetive := MINUS_SIGN if num < 0 else EMPTY_STRING
@@ -238,9 +256,13 @@ static func get_item_amount(item_resource: ItemData, storage: Dictionary = {}) -
 	
 	if not target_storage.has(item_resource.tier):
 		return DEFAULT_ITEM_AMOUNT
+
+	var tier_storage: Variant = target_storage[item_resource.tier]
+	if not (tier_storage is Dictionary):
+		return DEFAULT_ITEM_AMOUNT
 	
 	return max(
-		int(target_storage[item_resource.tier].get(item_resource.key, DEFAULT_ITEM_AMOUNT)),
+		int(tier_storage.get(item_resource.key, DEFAULT_ITEM_AMOUNT)),
 		DEFAULT_ITEM_AMOUNT
 	)
 
@@ -262,12 +284,16 @@ static func add_item_to_storage(
 	amount: int = DEFAULT_ITEM_CHANGE,
 	storage: Dictionary = {}
 ) -> bool:
-	if not is_valid_item(item_resource) or amount <= DEFAULT_ITEM_AMOUNT or storage.is_read_only():
+	if not is_valid_item(item_resource) or amount <= DEFAULT_ITEM_AMOUNT:
 		return false
 	
 	var target_storage := _get_storage(storage)
+	if target_storage.is_read_only():
+		return false
 	
-	if not target_storage.has(item_resource.tier):
+	if not target_storage.has(item_resource.tier) or not (
+		target_storage[item_resource.tier] is Dictionary
+	):
 		target_storage[item_resource.tier] = {}
 	
 	target_storage[item_resource.tier][item_resource.key] = (
@@ -288,6 +314,9 @@ static func remove_item_from_storage(
 		return false
 	
 	var target_storage := _get_storage(storage)
+	if target_storage.is_read_only():
+		return false
+
 	var remaining := get_item_amount(item_resource, target_storage) - amount
 	
 	if remaining > DEFAULT_ITEM_AMOUNT:
@@ -299,7 +328,7 @@ static func remove_item_from_storage(
 
 
 ## returns the current storage if the the inputed storage is empty
-static func _get_storage(storage : Dictionary) -> Dictionary:
+static func _get_storage(storage: Dictionary) -> Dictionary:
 	if storage.is_empty():
 		return get_current_storage()
 	return storage
@@ -307,10 +336,13 @@ static func _get_storage(storage : Dictionary) -> Dictionary:
 
 ## gets all items of a certain type with all their amounts
 static func get_items_from_type(item_type) -> Dictionary:
-	var current_storage = get_current_storage()
+	var current_storage: Dictionary = get_current_storage()
 	var items: Dictionary = {}
 	
 	for tier in current_storage:
+		if not (current_storage[tier] is Dictionary):
+			continue
+
 		items[tier] = {}
 		for item_key in current_storage[tier]:
 			if not DataRegistry.items.has(item_key):
@@ -323,13 +355,16 @@ static func get_items_from_type(item_type) -> Dictionary:
 
 
 ## returns item value pairs from a storage
-static func get_item_from_storage(storage : Dictionary) -> Dictionary:
+static func get_item_from_storage(storage: Dictionary) -> Dictionary:
 	if not storage:
 		storage = get_current_storage()
 	
-	var item_value_pairs : Dictionary
+	var item_value_pairs: Dictionary = {}
 	
 	for tier in storage:
+		if not (storage[tier] is Dictionary):
+			continue
+
 		for item_name in storage[tier]:
 			item_value_pairs[item_name] = storage[tier][item_name]
 	
@@ -338,7 +373,7 @@ static func get_item_from_storage(storage : Dictionary) -> Dictionary:
 
 ## returns a fresh editable/writable dictionary for when clearing storages
 static func get_clean_storage() -> Dictionary:
-	var storage : Dictionary
+	var storage: Dictionary = {}
 	for x in range(1, TIERS + 1):
 		storage[x] = {}
 	
@@ -347,18 +382,21 @@ static func get_clean_storage() -> Dictionary:
 
 ## returns the 2 inputed storages merged into one.
 static func merge_storage(first, second) -> Dictionary:
-	if not first or not second:
-		return {}
-	
 	if not first:
-		return second
+		return second.duplicate(true) if second else {}
 	
 	if not second:
-		return first
+		return first.duplicate(true)
 	
-	var merged : Dictionary = first
+	var merged: Dictionary = first.duplicate(true)
 	
 	for tier in second:
+		if not (second[tier] is Dictionary):
+			continue
+
+		if not merged.has(tier) or not (merged[tier] is Dictionary):
+			merged[tier] = {}
+
 		for item_name in second[tier]:
 			if item_name not in DataRegistry.items:
 				continue
@@ -376,6 +414,8 @@ static func check_storage_empty(storage: Dictionary = {}) -> bool:
 	if not storage:
 		storage = get_current_storage()
 	
-	if storage == get_clean_storage():
-		return true
-	return false
+	for tier in storage:
+		if not (storage[tier] is Dictionary) or not storage[tier].is_empty():
+			return false
+
+	return true

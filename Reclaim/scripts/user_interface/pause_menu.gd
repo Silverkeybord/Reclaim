@@ -102,7 +102,7 @@ func _on_exit_button_pressed() -> void:
 
 
 # toggles pressed -------------------------------------------------------------
-func _on_toggle_action_bars_pressed() -> void:
+func _on_toggle_action_bar_pressed() -> void:
 	Global.show_action_bar = not Global.show_action_bar
 	action_bars_texture_rect.texture = toggled_lookup_textures[Global.show_action_bar]
 
@@ -110,10 +110,6 @@ func _on_toggle_action_bars_pressed() -> void:
 func _on_toggle_show_fps_pressed() -> void:
 	Global.show_fps = not Global.show_fps
 	fps_texture_rect.texture = toggled_lookup_textures[Global.show_fps]
-
-
-func _on_h_slider_mouse_entered() -> void:
-	print("wuta;sdhfaniefa")
 
 
 

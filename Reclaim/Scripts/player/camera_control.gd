@@ -5,7 +5,7 @@ extends Node3D
 # CONSTANTS
 # =============================================================================
 
-const BASE_SENSITIVITY := 0.003
+const BASE_SENSITIVITY: float = 0.003
 
 # Input actions
 const ACTION_TOGGLE_MOUSE_CAPTURE: StringName = &"toggle_mouse_capture"
@@ -29,10 +29,10 @@ const THIRD_PERSON_Z_SPRING_LENGTH: float = 0.75
 @export var player: CharacterBody3D
 @export var arm_pivot: Node3D
 @export var xy_spring_arm: SpringArm3D
-@export var z_spring_arm : SpringArm3D
+@export var z_spring_arm: SpringArm3D
 
 var pitch: float = 0.0
-var zoom_value: float = 8
+var zoom_value: float = 8.0
 
 
 func _ready() -> void:
@@ -79,6 +79,9 @@ func _pan_and_pitch(event: InputEventMouseMotion) -> void:
 
 # controls zooming in and out
 func _zoom_in_out(event: InputEventMouseButton) -> void:
+	if xy_spring_arm == null or z_spring_arm == null:
+		return
+
 	if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 		zoom_value -= ZOOM_SPEED
 	elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:

@@ -86,14 +86,14 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a707k"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7k0v7"]
 bg_color = Color(0.18431373, 0.18431373, 0.18431373, 0.3764706)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[node name="CouncilAuthorisation" type="CanvasLayer" unique_id=2078735524 node_paths=PackedStringArray("ui_root", "selection_vbox", "requirments_hflow", "level_change_label", "unlock_change_label", "authorisation_name", "description_box", "authorise_button", "authorisation_icon", "authorise_overlay")]
+[node name="auth_button_margin" type="CanvasLayer" unique_id=2078735524 node_paths=PackedStringArray("ui_root", "selection_vbox", "requirments_hflow", "level_change_label", "unlock_change_label", "authorisation_name", "description_box", "authorise_button", "authorisation_icon", "authorise_overlay")]
 layer = 2
 script = ExtResource("1_6ilwi")
 ui_root = NodePath("ui_root")
@@ -103,9 +103,9 @@ level_change_label = NodePath("ui_root/PanelContainer/MarginContainer/VBoxContai
 unlock_change_label = NodePath("ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/authorisation_selection_vbox/HBoxContainer/PanelContainer/VBoxContainer/MarginContainer/VBoxContainer/other_diff")
 authorisation_name = NodePath("ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/requirment_header/authoriseation_name")
 description_box = NodePath("ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/authorisation_selection_vbox/description_margin/description")
-authorise_button = NodePath("ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/craft_button_margin/authorise_button")
+authorise_button = NodePath("ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/auth_button_margin/authorise_button")
 authorisation_icon = NodePath("ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/authorisation_selection_vbox/HBoxContainer/Control/details_icon")
-authorise_overlay = NodePath("ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/craft_button_margin/craft_button_overlay_margin/visual_auth_overlay")
+authorise_overlay = NodePath("ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/auth_button_margin/auth_button_overlay")
 authorisation_selection_cell = ExtResource("2_j2krl")
 recipe_requirments_scene = ExtResource("3_4lsmu")
 
@@ -156,7 +156,7 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_y2k84")
 
-[node name="crafting_title" type="Label" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/header" unique_id=1602374739]
+[node name="auth_title" type="Label" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/header" unique_id=1602374739]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_77e64")
@@ -255,7 +255,7 @@ theme_override_constants/separation = 8
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_tbl6n")
 
-[node name="craft_name" type="Label" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_selection/MarginContainer/VBoxContainer/requirment_header" unique_id=1434123220]
+[node name="auth_name" type="Label" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_selection/MarginContainer/VBoxContainer/requirment_header" unique_id=1434123220]
 layout_mode = 2
 text = "Selection"
 label_settings = SubResource("LabelSettings_eaxbq")
@@ -300,6 +300,8 @@ layout_mode = 2
 theme_override_constants/separation = 8
 
 [node name="requirment_header" type="PanelContainer" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer" unique_id=164417584]
+custom_minimum_size = Vector2(0, 31)
+custom_maximum_size = Vector2(-1, 31)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_tbl6n")
 
@@ -311,6 +313,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="divider_requirments_margin" type="MarginContainer" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer" unique_id=408992211]
+custom_minimum_size = Vector2(0, 2)
 layout_mode = 2
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = -8
@@ -397,6 +400,8 @@ grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="description_title_margin" type="MarginContainer" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/authorisation_selection_vbox" unique_id=1630155497]
+custom_minimum_size = Vector2(0, 15)
+custom_maximum_size = Vector2(-1, 15)
 layout_mode = 2
 theme_override_constants/margin_left = 9
 theme_override_constants/margin_top = -6
@@ -407,6 +412,8 @@ text = "Description"
 label_settings = SubResource("LabelSettings_tyhds")
 
 [node name="description_margin" type="MarginContainer" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/authorisation_selection_vbox" unique_id=1843658756]
+custom_minimum_size = Vector2(0, 50)
+custom_maximum_size = Vector2(-1, 50)
 layout_mode = 2
 theme_override_constants/margin_left = 26
 theme_override_constants/margin_top = -4
@@ -456,12 +463,16 @@ size_flags_vertical = 3
 theme_override_constants/h_separation = 6
 alignment = 1
 
-[node name="craft_button_margin" type="MarginContainer" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer" unique_id=1697656229]
+[node name="auth_button_margin" type="MarginContainer" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer" unique_id=1697656229]
+custom_minimum_size = Vector2(0, 60)
+custom_maximum_size = Vector2(-1, 60)
 layout_mode = 2
-theme_override_constants/margin_left = 100
-theme_override_constants/margin_right = 100
+theme_override_constants/margin_left = 111
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 112
+theme_override_constants/margin_bottom = 1
 
-[node name="authorise_button" type="Button" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/craft_button_margin" unique_id=695002677]
+[node name="authorise_button" type="Button" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/auth_button_margin" unique_id=695002677]
 layout_mode = 2
 offset_transform_enabled = true
 theme_override_colors/icon_normal_color = Color(0.9019608, 0.9019608, 0.9019608, 1)
@@ -471,16 +482,9 @@ flat = true
 icon_alignment = 1
 script = ExtResource("11_wgiry")
 
-[node name="craft_button_overlay_margin" type="MarginContainer" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/craft_button_margin" unique_id=208485178]
+[node name="auth_button_overlay" type="PanelContainer" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/auth_button_margin" unique_id=582962500]
 layout_mode = 2
-theme_override_constants/margin_left = 9
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 9
-theme_override_constants/margin_bottom = -1
-
-[node name="visual_auth_overlay" type="PanelContainer" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/craft_button_margin/craft_button_overlay_margin" unique_id=240205744]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_a707k")
+theme_override_styles/panel = SubResource("StyleBoxFlat_7k0v7")
 
 [node name="corner_wedge" type="TextureRect" parent="ui_root/PanelContainer" unique_id=896459906]
 texture_filter = 1
@@ -492,6 +496,7 @@ stretch_mode = 3
 
 [connection signal="mouse_entered" from="ui_root/PanelContainer/MarginContainer/VBoxContainer/header/help_icon" to="ui_root/PanelContainer/MarginContainer/VBoxContainer/header/help_icon" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="ui_root/PanelContainer/MarginContainer/VBoxContainer/header/help_icon" to="ui_root/PanelContainer/MarginContainer/VBoxContainer/header/help_icon" method="_on_mouse_exited"]
-[connection signal="mouse_entered" from="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/craft_button_margin/authorise_button" to="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/craft_button_margin/authorise_button" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/craft_button_margin/authorise_button" to="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/craft_button_margin/authorise_button" method="_on_mouse_exited"]
-[connection signal="pressed" from="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/craft_button_margin/authorise_button" to="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/craft_button_margin/authorise_button" method="_on_pressed"]
+[connection signal="mouse_entered" from="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/auth_button_margin/authorise_button" to="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/auth_button_margin/authorise_button" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/auth_button_margin/authorise_button" to="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/auth_button_margin/authorise_button" method="_on_mouse_exited"]
+[connection signal="pressed" from="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/auth_button_margin/authorise_button" to="." method="_on_authorise_button_pressed"]
+[connection signal="pressed" from="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/auth_button_margin/authorise_button" to="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/auth_button_margin/authorise_button" method="_on_pressed"]

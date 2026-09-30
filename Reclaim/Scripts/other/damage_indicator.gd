@@ -9,9 +9,6 @@ const FADE_OUT_ANIMATION_NAME := "fade_out"
 const MAGNITUDE_SCALE_MULT := 0.2
 const MAGNITUDE_POS_MULT := 0.5
 
-const MAX_TOTAL_SCALE := 10
-const MAX_TOTAL_POS := 10
-
 const MAX_RISE := 3.5
 const MIN_RISE := 2.0
 const HOZ_OFFSET := 3.0
@@ -20,27 +17,30 @@ const MIN_LIFE := 1
 const MIN_SCALE := 3
 const MAX_SCALE := 4
 
-@export var animation_player : AnimationPlayer
-@export var crit : bool
-@export var color : Color
-@export var damage : float
-
-@onready var player = get_tree().get_first_node_in_group("player")
+@export var animation_player: AnimationPlayer
+@export var crit: bool
+@export var color: Color
+@export var damage: float
 
 
 func init() -> void:
-	text = "-" + HelperFunctions.comma_number(round(damage))
+	if damage <= 0.0 or animation_player == null:
+		HelperFunctions.damage_indications = maxi(HelperFunctions.damage_indications - 1, 0)
+		queue_free()
+		return
+
+	text = "-" + HelperFunctions.comma_number(roundi(damage))
 	
-	var magnitude : int = (
-		floori(log(damage) / log(HelperFunctions.ORDER_OF_MAGNITUDE) 
+	var magnitude: int = (
+		floori(log(damage) / log(HelperFunctions.ORDER_OF_MAGNITUDE)
 		+ HelperFunctions.SHORT_HAND_NUDGE)
 		)
-	var life := randf_range(MIN_LIFE, MAX_LIFE)
+	var life: float = randf_range(MIN_LIFE, MAX_LIFE)
 	
 	var rise_tween := create_tween()
 	var end_pos := Vector3(
-		randf_range(-HOZ_OFFSET, HOZ_OFFSET), 
-		randf_range(MIN_RISE, MAX_RISE) + (magnitude * MAGNITUDE_POS_MULT), 
+		randf_range(-HOZ_OFFSET, HOZ_OFFSET),
+		randf_range(MIN_RISE, MAX_RISE) + (magnitude * MAGNITUDE_POS_MULT),
 		randf_range(-HOZ_OFFSET, HOZ_OFFSET)
 	)
 	rise_tween.set_ease(Tween.EASE_OUT)
@@ -55,8 +55,10 @@ func init() -> void:
 			modulate = NORMAL_COLOR
 	
 	# scale tweening =========================================================
-	var scale_tween = create_tween()
-	var end_scale = randf_range(MIN_SCALE, MAX_SCALE) + (magnitude * MAGNITUDE_SCALE_MULT)
+	var scale_tween := create_tween()
+	var end_scale: float = randf_range(MIN_SCALE, MAX_SCALE) + (
+		magnitude * MAGNITUDE_SCALE_MULT
+	)
 	scale_tween.set_ease(Tween.EASE_OUT)
 	scale_tween.tween_property(self, "scale", scale * end_scale, life)
 	
@@ -64,5 +66,5 @@ func init() -> void:
 	animation_player.play(FADE_OUT_ANIMATION_NAME)
 	
 	await animation_player.animation_finished
-	HelperFunctions.damage_indications -= 1
+	HelperFunctions.damage_indications = maxi(HelperFunctions.damage_indications - 1, 0)
 	queue_free()

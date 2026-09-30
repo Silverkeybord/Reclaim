@@ -1,8 +1,8 @@
 class_name Builds
 extends Node
 
-@export var build : String 
-@export var build_type : Global.BuildType
+@export var build: String
+@export var build_type: Global.BuildType
 
 
 func pick_up() -> void:
@@ -10,7 +10,7 @@ func pick_up() -> void:
 		push_error("Build item not found when picking up: %s" % build)
 		return
 	
-	var item_resource : ItemData = DataRegistry.items[build]
+	var item_resource: ItemData = DataRegistry.items[build]
 	if not HelperFunctions.add_item_to_storage(item_resource):
 		return
 	

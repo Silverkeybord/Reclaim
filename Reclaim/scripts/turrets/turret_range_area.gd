@@ -1,5 +1,4 @@
 class_name TurretRangeArea
-
 extends Area3D
 ## Tracks valid enemies inside a turret's range and returns a target
 
@@ -20,19 +19,19 @@ func get_valid_enemies() -> Array[BaseEnemy]:
 
 
 func get_target() -> BaseEnemy:
-	var target: BaseEnemy = null
-	
-	for enemy in in_range_enemies:
-		if target == null:
-			target = enemy
-			continue
-		
+	var valid_enemies := get_valid_enemies()
+	if valid_enemies.is_empty():
+		return null
+
+	var target: BaseEnemy = valid_enemies[0]
+	for i in range(1, valid_enemies.size()):
+		var enemy: BaseEnemy = valid_enemies[i]
 		var enemy_distance := global_position.distance_to(enemy.global_position)
 		var target_distance := global_position.distance_to(target.global_position)
-		
+
 		if enemy_distance < target_distance:
 			target = enemy
-	
+
 	return target
 
 

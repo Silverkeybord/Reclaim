@@ -2,5 +2,5 @@ extends AudioStreamPlayer
 
 
 func _on_finished() -> void:
-	HelperFunctions.sounds -= 1
+	HelperFunctions.sounds = maxi(HelperFunctions.sounds - 1, 0)
 	queue_free()

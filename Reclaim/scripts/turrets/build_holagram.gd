@@ -1,16 +1,21 @@
 extends Node3D
 
 const VALID_MAT := preload("res://textures_and_materials/building/valid_holagram_placement.tres")
-const INVALID_MAT := preload("res://textures_and_materials/building/invalid_holagram_placement.tres")
+const INVALID_MAT := preload(
+	"res://textures_and_materials/building/invalid_holagram_placement.tres"
+)
 
 @export var turret_holagram: MeshInstance3D
 @export var base_holagram: MeshInstance3D
 
-var valid_position := false
+var valid_position: bool = false
 var current_item_type: int = -1
 
 
 func _process(_delta: float) -> void:
+	if turret_holagram == null or base_holagram == null:
+		return
+
 	var active_holagram: MeshInstance3D = null
 	
 	match current_item_type:

@@ -18,6 +18,7 @@ size_flags_vertical = 8
 theme_override_styles/panel = ExtResource("1_1vaus")
 script = ExtResource("2_r6xhq")
 achieved_style = ExtResource("3_tjc3v")
+unachieved_style = ExtResource("1_1vaus")
 number_lable = NodePath("Label")
 
 [node name="Label" type="Label" parent="." unique_id=941322293]
