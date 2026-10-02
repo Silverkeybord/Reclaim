@@ -40,7 +40,12 @@ var amount: int = 0
 
 
 func setup() -> void:
-	if not HelperFunctions.is_valid_item(item_resource):
+	if (
+		not HelperFunctions.is_valid_item(item_resource)
+		or cell_texture == null
+		or item_texture == null
+		or amount_label == null
+	):
 		_hide_cell()
 		return
 	
@@ -53,7 +58,7 @@ func setup() -> void:
 
 
 func update_amount() -> void:
-	if not HelperFunctions.is_valid_item(item_resource):
+	if not HelperFunctions.is_valid_item(item_resource) or amount_label == null:
 		amount = MIN_AMOUNT
 		_hide_cell()
 		return
@@ -64,7 +69,7 @@ func update_amount() -> void:
 	_update_visibility()
 
 
-# called from build selectoin makes the cell move in a directoin
+# called from build selection makes the cell move in a direction
 func move(direction: int, tween_time: float) -> void:
 	if direction == 0:
 		return
@@ -78,8 +83,13 @@ func move(direction: int, tween_time: float) -> void:
 		return
 	
 	var properties: Dictionary = cell_properties[visual_index]
+	var marker: Marker2D = properties.get(MARKER_KEY) as Marker2D
+	if marker == null or not properties.has(SCALE_KEY) or not properties.has(MODULATE_KEY):
+		visible = false
+		return
+
 	var target_scale: Vector2 = properties[SCALE_KEY]
-	var target_position: Vector2 = properties[MARKER_KEY].position
+	var target_position: Vector2 = marker.position
 	var target_modulate: Color = properties[MODULATE_KEY]
 	
 	var should_be_visible := cell_position >= MIN_VISIBLE_POS and cell_position <= MAX_VISIBLE_POS
@@ -93,7 +103,7 @@ func move(direction: int, tween_time: float) -> void:
 
 func item_placed() -> void:
 	update_amount()
-	if amount <= 0:
+	if amount <= 0 and build_selection:
 		build_selection.remove_cell_in_place()
 
 
@@ -110,8 +120,4 @@ func _hide_cell() -> void:
 
 
 func _show_cell() -> void:
-	if amount > 0:
-		visible = true
-	if amount <= 0:
-		return
-	visible = true
+	visible = amount > 0

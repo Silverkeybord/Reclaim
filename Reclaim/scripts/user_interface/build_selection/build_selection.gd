@@ -129,7 +129,7 @@ func _ready() -> void:
 			add_child(new_cell)
 			new_cell.setup()
 			new_cell.visible = false
-			new_cell.scale = scale
+			new_cell.scale = Vector2.ONE
 
 
 func _process(_delta: float) -> void:
@@ -137,16 +137,19 @@ func _process(_delta: float) -> void:
 		if selected_name:
 			selected_name.text = selected_cell.item_resource.key
 		
-		match selected_cell.item_resource.type:
-			Global.ItemType.BASE:
-				build_type_label.text = BASE_BUILD_TEXT
-			Global.ItemType.TURRET:
-				build_type_label.text = TURRET_BUILD_TEXT
-			Global.ItemType.TRAP:
-				build_type_label.text = TRAP_BUILD_TEXT
+		if build_type_label:
+			match selected_cell.item_resource.type:
+				Global.ItemType.BASE:
+					build_type_label.text = BASE_BUILD_TEXT
+				Global.ItemType.TURRET:
+					build_type_label.text = TURRET_BUILD_TEXT
+				Global.ItemType.TRAP:
+					build_type_label.text = TRAP_BUILD_TEXT
 	else:
 		if selected_name:
 			selected_name.text = GOT_NOTHING
+		if build_type_label:
+			build_type_label.text = EMPTY_SELECTION
 		if player:
 			player.selected_build = EMPTY_SELECTION
 

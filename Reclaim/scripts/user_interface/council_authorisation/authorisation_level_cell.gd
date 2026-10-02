@@ -10,7 +10,8 @@ const PANEL_NAME := "panel"
 
 
 func _ready() -> void:
-	number_lable.text = str(number)
+	if number_lable:
+		number_lable.text = str(number)
 
 
 func set_achieved(achieved: bool) -> void:

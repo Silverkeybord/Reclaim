@@ -17,17 +17,19 @@ var level_cells : Array[Panel]
 
 
 func _ready() -> void:
-	if authorisation_data == null:
+	if authorisation_data == null or level_cell_scene == null:
 		disabled = true
 		return
 
 	var display_name = HelperFunctions.get_display_name(authorisation_data.key)
-	authorisation_name_lable.text = NAME_FORMATTING % display_name
-	authorisation_icon_texture_rect.texture = authorisation_data.get_icon()
+	if authorisation_name_lable:
+		authorisation_name_lable.text = NAME_FORMATTING % display_name
+	if authorisation_icon_texture_rect:
+		authorisation_icon_texture_rect.texture = authorisation_data.get_icon()
 	
-	for x in range(authorisation_data.max_level):
+	for level_index in range(authorisation_data.max_level):
 		var new_level_cell = level_cell_scene.instantiate()
-		new_level_cell.number = x + 1
+		new_level_cell.number = level_index + 1
 		level_cells.append(new_level_cell)
 		level_icon_hbox.add_child(new_level_cell)
 

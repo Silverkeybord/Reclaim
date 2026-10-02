@@ -333,6 +333,7 @@ func load_game() -> void:
 		show_action_bar = settings.get(SAVE_SHOW_INPUT_TIP_TOGGLE, show_action_bar)
 	
 	await get_tree().create_timer(SAVE_AND_LOAD_BUFFER).timeout
+	
 	return
 
 

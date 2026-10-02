@@ -20,7 +20,7 @@ font_size = 14
 script = ExtResource("1_irgbf")
 build_cell_scene = ExtResource("4_irgbf")
 selected_name = NodePath("selected_name")
-build_type_label = NodePath("build_mode_label")
+build_type_label = NodePath("build_type_label")
 position_negative_3 = NodePath("-3")
 position_negative_2 = NodePath("-2")
 position_negative_1 = NodePath("-1")
@@ -93,7 +93,7 @@ label_settings = SubResource("LabelSettings_g4v7s")
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="build_mode_label" type="Label" parent="." unique_id=1701242637]
+[node name="build_type_label" type="Label" parent="." unique_id=1701242637]
 anchors_preset = -1
 anchor_top = 0.67291665
 anchor_right = 1.0

@@ -1,8 +1,6 @@
 class_name CraftingSelection
 extends PanelContainer
 
-const TIER_TEXT := "Tier "
-const DASH := "-"
 const BORDER_THICKNESS := 4
 const TIER_LABEL_FORMAT := "Tier - %d -"
 const STYLE_KEY := "style"
@@ -16,6 +14,9 @@ const PANEL_OVERRIDE_KEY := "panel"
 
 
 func set_up() -> void: 
+	if tier_label == null:
+		return
+	
 	tier_label.text = TIER_LABEL_FORMAT % tier
 	var style : StyleBoxFlat = Global.TIER_CONFIG[tier][STYLE_KEY].duplicate()
 	style.border_width_bottom = BORDER_THICKNESS

@@ -130,11 +130,10 @@ func show_authorisation_details(authorisation_data : AuthorisationData) -> void:
 	var sector_unlocks : Array[String]
 	var turret_unlocks : Array[String]
 	var module_unlocks : Array[String]
-	#var weapon_unlocks : Array[String]
 	var resource_unlocks : Array[String]
 	var authorisation_unlocks : Array[String]
 	
-	# gets all the unlocks this level of the autorisation 	 gets
+	# gets all the unlocks this level of the authorisation gives
 	current_displayed_level = authority_level - 1
 	var auth_level_details := _get_next_level_details(authorisation_data)
 	if not auth_level_details:

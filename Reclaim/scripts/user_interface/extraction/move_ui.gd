@@ -78,10 +78,6 @@ const EXTRACTION_BAR_COLOR_RATIOS := {
 @export var sector_hflow : HFlowContainer
 @export var extraction_hflow : HFlowContainer
 
-var from_storage_lookup := {
-	false : Global.sector_storage,
-	true : Global.ship_storage
-}
 var to_storage_lookup := {
 	false : Global.extraction_storage,
 	true : Global.deploy_storage
@@ -135,11 +131,16 @@ func close_ui(forced = false) -> void:
 	if move_tween_playing and not forced:
 		return
 	
-	# puts all the items in the to storage to the from storage
-	from_storage_lookup[Global.at_ship] = HelperFunctions.merge_storage(
-		from_storage_lookup[Global.at_ship],
-		to_storage_lookup[Global.at_ship]
-	)
+	if Global.at_ship:
+		Global.ship_storage = HelperFunctions.merge_storage(
+			_get_from_storage(),
+			_get_to_storage()
+			)
+	else:
+		Global.sector_storage = HelperFunctions.merge_storage(
+			_get_from_storage(),
+			_get_to_storage()
+			)
 	
 	_set_open_or_close(false)
 
@@ -148,24 +149,26 @@ func open_ui() -> void:
 	if move_tween_playing:
 		return
 	
-	for tier in to_storage_lookup[Global.at_ship]:
-		for item_name in to_storage_lookup[Global.at_ship][tier]:
+	var to_storage: Dictionary = _get_to_storage()
+	var from_storage: Dictionary = _get_from_storage()
+	
+	for tier in to_storage:
+		if not from_storage.has(tier):
+			from_storage[tier] = {}
+			
+		for item_name in to_storage[tier]:
+			var requested_amount: int = to_storage[tier][item_name]
+			var available_amount: int = from_storage[tier].get(item_name, 0)
+			
 			if not HelperFunctions.has_item_amount(
 				DataRegistry.items[item_name],
-				to_storage_lookup[Global.at_ship][tier][item_name],
-				from_storage_lookup[Global.at_ship]
+				requested_amount,
+				from_storage
 			):
-				
-				to_storage_lookup[Global.at_ship][tier][item_name] = (
-					from_storage_lookup[Global.at_ship][tier][item_name]
-					)
-				from_storage_lookup[Global.at_ship][tier][item_name] = 0
-				
+				to_storage[tier][item_name] = available_amount
+				from_storage[tier][item_name] = 0
 			else:
-				
-				from_storage_lookup[Global.at_ship][tier][item_name] -= (
-					to_storage_lookup[Global.at_ship][tier][item_name]
-					)
+				from_storage[tier][item_name] = available_amount - requested_amount
 	
 	_set_open_or_close(true)
 	load_extraction_cells()
@@ -186,10 +189,17 @@ func _set_open_or_close(toggle : bool) -> void:
 
 
 func load_extraction_cells() -> void:
-	var sector_storage_items = HelperFunctions.get_item_from_storage(
-		from_storage_lookup[Global.at_ship]
+	print("\n  ----  ")
+	print(Global.at_ship)
+	print(Global.sector_storage)
+	print(_get_from_storage())
+	var storage_items = HelperFunctions.get_item_from_storage(
+		_get_from_storage()
 		)
-	for item in sector_storage_items:
+	
+	print(storage_items)
+	
+	for item in storage_items:
 		if item in DataRegistry.items:
 			storage_cells[item].update_amount()
 		else:
@@ -221,12 +231,14 @@ func move_item(in_storage : bool, move_amount : int, item : ItemData) -> void:
 	if not item:
 		return
 	
-	var item_amount : int
+	var storage_dict: Dictionary = _get_from_storage() if in_storage else _get_to_storage()
+	var tier_dict: Dictionary = storage_dict.get(item.tier, {})
+	var item_amount = tier_dict.get(item.key, 0)
 	
 	if in_storage:
-		item_amount = from_storage_lookup[Global.at_ship][item.tier].get(item.key)
+		item_amount = _get_from_storage()[item.tier].get(item.key)
 	else:
-		item_amount = to_storage_lookup[Global.at_ship][item.tier].get(item.key)
+		item_amount = _get_to_storage()[item.tier].get(item.key)
 	
 	if move_amount > item_amount:
 		move_amount = item_amount
@@ -246,12 +258,12 @@ func move_item(in_storage : bool, move_amount : int, item : ItemData) -> void:
 			HelperFunctions.add_item_to_storage(
 				item, 
 				move_amount, 
-				to_storage_lookup[Global.at_ship]
+				_get_to_storage()
 				)
 			HelperFunctions.remove_item_from_storage(
 				item,
 				move_amount, 
-				from_storage_lookup[Global.at_ship]
+				_get_from_storage()
 				)
 			storage_cells[item.key].update_amount()
 			extraction_cells[item.key].update_amount()
@@ -261,12 +273,12 @@ func move_item(in_storage : bool, move_amount : int, item : ItemData) -> void:
 		HelperFunctions.add_item_to_storage(
 			item, 
 			move_amount, 
-			from_storage_lookup[Global.at_ship]
+			_get_from_storage()
 			)
 		HelperFunctions.remove_item_from_storage(
 			item, 
 			move_amount, 
-			to_storage_lookup[Global.at_ship]
+			_get_to_storage()
 			)
 		storage_cells[item.key].update_amount()
 		extraction_cells[item.key].update_amount()
@@ -275,7 +287,7 @@ func move_item(in_storage : bool, move_amount : int, item : ItemData) -> void:
 	weight_label.text = WEIGHT_FORMAT % [int(extraction_bar.value), int(extraction_bar.max_value)]
 
 
-# Presets --------------------------------------------------------------------
+# Preset buttons --------------------------------------------------------------
 func _on_most_valuable_preset_pressed() -> void:
 	var remaining_storage = extraction_bar.max_value - extraction_bar.value
 	if not remaining_storage:
@@ -316,13 +328,13 @@ func _on_best_value_pressed() -> void:
 
 
 func _on_clear_selection_pressed() -> void:
-	var items = HelperFunctions.get_item_from_storage(to_storage_lookup[Global.at_ship])
+	var items = HelperFunctions.get_item_from_storage(_get_to_storage())
 	for item in items:
-		move_item(false, 0, DataRegistry.items[item])
+		move_item(false, MAX_MOVE_AMOUNT_NUMBER, DataRegistry.items[item])
 
 
 func get_item_array() -> Array[Dictionary]:
-	var sector_items = HelperFunctions.get_item_from_storage(from_storage_lookup[Global.at_ship])
+	var sector_items = HelperFunctions.get_item_from_storage(_get_from_storage())
 	var item_list : Array[Dictionary]
 	for item in sector_items:
 		var item_data : ItemData = DataRegistry.items[item]
@@ -343,23 +355,22 @@ func sort_value_then_tier(item_1, item_2) -> bool:
 	return item_1[ITEM_TIER] > item_2[ITEM_TIER]
 
 
-# sorts to the highest tier and then value
+# Highest tier first, then highest value
 func sort_tier_then_value(item_1, item_2) -> bool:
-	# Highest tier first, then highest value
 	if item_1[ITEM_TIER] != item_2[ITEM_TIER]:
 		return item_1[ITEM_TIER] > item_2[ITEM_TIER]
 	return item_1[ITEM_VALUE] > item_2[ITEM_VALUE]
 
 
+# lightest items first then highest value
 func sort_least_weight_then_value(item_1, item_2) -> bool:
-	# lightest items first then highest value
 	if item_1[ITEM_WEIGHT] != item_2[ITEM_WEIGHT]:
 		return item_1[ITEM_WEIGHT] < item_2[ITEM_WEIGHT]
 	return item_1[ITEM_VALUE] > item_2[ITEM_VALUE]
 
 
+# best value per weight first, then highest tier
 func sort_ratio_then_tier(item_1, item_2) -> bool:
-	# best value per weight first, then highest tier
 	var ratio_one = item_1[ITEM_VALUE] / item_1[ITEM_WEIGHT]
 	var ratio_two = item_2[ITEM_VALUE] / item_2[ITEM_WEIGHT]
 	
@@ -368,6 +379,7 @@ func sort_ratio_then_tier(item_1, item_2) -> bool:
 	return item_1[ITEM_TIER] > item_2[ITEM_TIER]
 
 
+# Moves over all items in an array generated by the preset functions
 func move_over_items(item_array : Array[Dictionary]) -> void:
 	var remaining_weight : int = int(extraction_bar.max_value - extraction_bar.value)
 	for item_values in item_array:
@@ -389,9 +401,19 @@ func move_over_items(item_array : Array[Dictionary]) -> void:
 		HelperFunctions.add_item_to_storage(
 			item_data, 
 			fit_items, 
-			to_storage_lookup[Global.at_ship]
+			_get_to_storage()
 			)
 		storage_cells[item_data.key].update_amount()
 		extraction_cells[item_data.key].update_amount()
 	
 	weight_label.text = WEIGHT_FORMAT % [int(extraction_bar.value), int(extraction_bar.max_value)]
+
+
+# Storage Aquistion ---------------------------------------------------------
+# Returns the correct and accurate storage bassed on where the game is
+func _get_from_storage() -> Dictionary:
+	return Global.ship_storage if Global.at_ship else Global.sector_storage
+
+
+func _get_to_storage() -> Dictionary:
+	return Global.deploy_storage if Global.at_ship else Global.extraction_storage

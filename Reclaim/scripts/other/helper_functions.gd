@@ -362,11 +362,15 @@ static func get_item_from_storage(storage: Dictionary) -> Dictionary:
 	var item_value_pairs: Dictionary = {}
 	
 	for tier in storage:
+		print("loop tier -------- ")
 		if not (storage[tier] is Dictionary):
+			print("not dict continuing")
 			continue
-
+		
 		for item_name in storage[tier]:
+			print("adding : ", item_name)
 			item_value_pairs[item_name] = storage[tier][item_name]
+	
 	
 	return item_value_pairs
 

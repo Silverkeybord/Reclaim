@@ -130,7 +130,6 @@ var can_remove_build: bool = true
 
 
 func _ready() -> void:
-	Global.set_random_storage()
 	_set_new_weapon()
 
 

@@ -14,3 +14,4 @@ func _move_extract_storage_to_ship() -> void:
 		)
 	
 	Global.extraction_storage = HelperFunctions.get_clean_storage()
+	Global.sector_storage = HelperFunctions.get_clean_storage()

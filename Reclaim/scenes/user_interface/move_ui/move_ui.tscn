@@ -288,10 +288,8 @@ sector_hflow = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContaine
 extraction_hflow = NodePath("ui_root/extraction_backing/MarginContainer/VBoxContainer/storages/HBoxContainer/extraction_storage/MarginContainer/VBoxContainer/ScrollContainer/extraction_hflow")
 
 [node name="itemtip" parent="." unique_id=854836766 instance=ExtResource("2_m3m1d")]
-layer = 3
 
 [node name="ui_root" type="MarginContainer" parent="." unique_id=1259262818]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -340,7 +338,7 @@ layout_mode = 0
 offset_left = 44.0
 offset_top = -1.0
 offset_right = 284.0
-offset_bottom = 416.0
+offset_bottom = 307.0
 theme_override_styles/panel = ExtResource("5_oep5y")
 
 [node name="MarginContainer" type="MarginContainer" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display" unique_id=704225997]
@@ -395,12 +393,6 @@ theme_override_constants/separation = 7
 [node name="Label2" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer" unique_id=1725794731]
 layout_mode = 2
 text = "This preset chooses the most amout of value to ratio of weight"
-label_settings = SubResource("LabelSettings_13jd1")
-autowrap_mode = 3
-
-[node name="Label3" type="Label" parent="ui_root/extraction_backing/MarginContainer/VBoxContainer/header/help_icon/help_display/MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer" unique_id=1735739213]
-layout_mode = 2
-text = "If your selection is empty or half empty the best value preset will automatically applied when forced to extract"
 label_settings = SubResource("LabelSettings_13jd1")
 autowrap_mode = 3
 

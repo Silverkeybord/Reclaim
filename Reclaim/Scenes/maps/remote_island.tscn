@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dh6oadn2aghxi"]
 
-[ext_resource type="Resource" uid="uid://d10gpaf5yhc84" path="res://data/wave/test_spawning.tres" id="2_b0un0"]
+[ext_resource type="Resource" uid="uid://wwsm4m2783l4" path="res://data/wave/remote_island.tres" id="2_b0un0"]
 [ext_resource type="Texture2D" uid="uid://cd60ogaogyo3n" path="res://textures_and_materials/maps/4 blur.png" id="2_cm411"]
 [ext_resource type="PackedScene" uid="uid://bpkvltlrs2rr1" path="res://scenes/sector_elements.tscn" id="3_lr34o"]
 [ext_resource type="Script" uid="uid://dsjhqsu8dk601" path="res://scripts/enemies/spawn_marker.gd" id="4_b0un0"]
@@ -75,7 +75,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.963074, 0)
 visible = false
 collision_layer = 64
 collision_mask = 0
-metadata/_edit_lock_ = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="consistant/player_barrier" unique_id=108042571]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)

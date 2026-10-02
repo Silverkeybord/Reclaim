@@ -11,7 +11,7 @@ const COLOR_KEY := "color"
 const PANEL_OVERRIDE_KEY := "panel"
 
 # Error messages
-const ERR_INVALID_RECIPE := "Invalid crafting recipe skipped: %s" 
+const ERR_INVALID_RECIPE := "Invalid crafting recipe skipped: %s"
 const ERR_INVALID_SHIP_TIER := "Crafting recipe has invalid ship level: %s"
 const ERR_MISSING_AUTHORITY := "Missing Authority: %s"
 
@@ -194,6 +194,8 @@ func craft(from_cell = false) -> void:
 	
 	if not can_craft_current or not current_displayed_requirments:
 		return
+	if player == null or player.item_notif_controller == null:
+		return
 	
 	var resulting_craft_mult : int
 	
@@ -228,7 +230,7 @@ func _queue_craft(craft_data : CraftData, craft_amount : int) -> void:
 		if last_item and last_item.craft_data == craft_data:
 			if not last_item.is_queued_for_deletion():
 				last_item.amount += craft_amount
-				last_item._set_amount_label()
+				last_item.set_amount_label()
 				return
 	
 	var new_queue_item: CraftQueueItem = craft_queue_scene.instantiate()
@@ -247,16 +249,16 @@ func _queue_craft(craft_data : CraftData, craft_amount : int) -> void:
 
 # Checks if the removed or finished item is in first slot and then starts the next if there is one
 func queue_next() -> void:
-	var queued_items = get_tree().get_nodes_in_group(GROUP_CRAFT_QUEUE)
+	var queued_items : Array = get_tree().get_nodes_in_group(GROUP_CRAFT_QUEUE)
 	
 	update_crafting_display()
 	
-	if queued_items.size() == 0:
+	if queued_items.is_empty():
 		return
 	
 	var first_queued_item : CraftQueueItem = queued_items[0]
 	
-	if first_queued_item.craft_timer.is_stopped():
+	if first_queued_item.craft_timer and first_queued_item.craft_timer.is_stopped():
 		first_queued_item.start_craft()
 
 
@@ -281,8 +283,8 @@ func load_crafting() -> void:
 				var tab_vbox = tab_vboxs[item_type]
 				var section : CraftingSelection
 				
-				
-				if tab_vbox.selection_sections[recipe.crafted_item.tier]:
+				if tab_vbox.selection_sections.has(recipe.crafted_item.tier) \
+						and tab_vbox.selection_sections[recipe.crafted_item.tier]:
 					section = tab_vbox.selection_sections[recipe.crafted_item.tier]
 					
 				else:
@@ -338,9 +340,6 @@ func update_crafting_display() -> void:
 	
 	if not current_displayed_requirments:
 		craft_overlay.visible = true
-	
-	#for cell : CraftCell in get_tree().get_nodes_in_group(GROUP_CRAFT_CELLS): 
-		#cell.check_requirements()
 
 
 # checks if the recipe is valid
