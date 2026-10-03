@@ -104,6 +104,9 @@ func start_animation(animation_name : StringName) -> void:
 	if animation_name == RESET_ANIMATION:
 		return
 	
+	if Global.player_mode != Global.PlayerMode.WEAPON:
+		player.force_weapon_mode()
+	
 	Global.major_animation_playing = true
 	skip_label.visible = true
 	sector_shield.run_ui.visible = false

@@ -1,5 +1,7 @@
 shader_type spatial;
 
+// AI GENERATED
+
 // Blend with background using standard alpha mixing (required for transparency)
 // Render both front and back faces (essential for shield bubbles - visible from inside)
 // Write to depth buffer as opaque to prevent sorting issues with other transparent objects

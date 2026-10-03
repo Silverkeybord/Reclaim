@@ -56,7 +56,7 @@ length = 0.001
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("canvas_root/build_overlay/interact_reticle:scale:x")
+tracks/0/path = NodePath("canvas_root/reticle_root/build_overlay/interact_reticle:scale:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -67,7 +67,7 @@ tracks/0/keys = {
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("canvas_root/build_overlay/interact_reticle:scale:y")
+tracks/1/path = NodePath("canvas_root/reticle_root/build_overlay/interact_reticle:scale:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -78,7 +78,7 @@ tracks/1/keys = {
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("canvas_root/build_overlay/interact_reticle2:scale:x")
+tracks/2/path = NodePath("canvas_root/reticle_root/build_overlay/interact_reticle2:scale:x")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -89,7 +89,7 @@ tracks/2/keys = {
 tracks/3/type = "bezier"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("canvas_root/build_overlay/interact_reticle2:scale:y")
+tracks/3/path = NodePath("canvas_root/reticle_root/build_overlay/interact_reticle2:scale:y")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -104,7 +104,7 @@ length = 0.2
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("canvas_root/build_overlay/interact_reticle:scale:x")
+tracks/0/path = NodePath("canvas_root/reticle_root/build_overlay/interact_reticle:scale:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -115,7 +115,7 @@ tracks/0/keys = {
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("canvas_root/build_overlay/interact_reticle:scale:y")
+tracks/1/path = NodePath("canvas_root/reticle_root/build_overlay/interact_reticle:scale:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -126,7 +126,7 @@ tracks/1/keys = {
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("canvas_root/build_overlay/interact_reticle2:scale:x")
+tracks/2/path = NodePath("canvas_root/reticle_root/build_overlay/interact_reticle2:scale:x")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -137,7 +137,7 @@ tracks/2/keys = {
 tracks/3/type = "bezier"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("canvas_root/build_overlay/interact_reticle2:scale:y")
+tracks/3/path = NodePath("canvas_root/reticle_root/build_overlay/interact_reticle2:scale:y")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -152,24 +152,26 @@ _data = {
 &"build_placed": SubResource("Animation_ugbui")
 }
 
-[node name="player" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "hit_overlay", "aim_ray", "build_ray", "shooting_timer", "pick_up_area", "arm_pivot", "gun_pivot", "hammer_pivot", "wrench_pivot", "canvas_root", "build_overlay", "build_label", "action_bar", "building_selection", "user_interface_animations", "item_notif_controller", "fps_lable", "action_bar_panel") groups=["player"]]
+[node name="player" type="CharacterBody3D" unique_id=961430667 node_paths=PackedStringArray("interact_overlay", "hit_overlay", "aim_ray", "build_ray", "shooting_timer", "pick_up_area", "normal_camera", "reticle_root", "arm_pivot", "gun_pivot", "hammer_pivot", "wrench_pivot", "canvas_root", "build_overlay", "build_label", "action_bar", "building_selection", "user_interface_animations", "item_notif_controller", "fps_lable", "action_bar_panel") groups=["player"]]
 collision_layer = 2
 collision_mask = 79
 script = ExtResource("1_eo61r")
-interact_overlay = NodePath("canvas_root/interact_overlay")
-hit_overlay = NodePath("canvas_root/hit_overlay")
+interact_overlay = NodePath("canvas_root/reticle_root/interact_overlay")
+hit_overlay = NodePath("canvas_root/reticle_root/hit_overlay")
 aim_ray = NodePath("spring_arm_piviot/camera_follow/aim_ray")
 build_ray = NodePath("spring_arm_piviot/camera_follow/build_ray")
 shooting_timer = NodePath("arm_piviot/gun_piviot/shoot_timer")
 pick_up_area = NodePath("pick_up_area")
+normal_camera = NodePath("spring_arm_piviot/camera_follow/normal_camera")
+reticle_root = NodePath("canvas_root/reticle_root")
 arm_pivot = NodePath("arm_piviot")
 gun_pivot = NodePath("arm_piviot/gun_piviot")
 hammer_pivot = NodePath("arm_piviot/hammer_piviot")
 wrench_pivot = NodePath("arm_piviot/wrench_piviot")
 turret_holagram_scene = ExtResource("2_6upyo")
 canvas_root = NodePath("canvas_root")
-build_overlay = NodePath("canvas_root/build_overlay")
-build_label = NodePath("canvas_root/build_overlay/Label")
+build_overlay = NodePath("canvas_root/reticle_root/build_overlay")
+build_label = NodePath("canvas_root/reticle_root/build_overlay/Label")
 action_bar = NodePath("canvas_root/action_bar/MarginContainer/action_bar")
 building_selection = NodePath("canvas_root/build_selection")
 user_interface_animations = NodePath("canvas_root/UI_animations")
@@ -210,7 +212,7 @@ xy_camera_marker = NodePath("../xy_axis_spring_arm/xy_camera_marker")
 z_camera_marker = NodePath("../z_axis_spring_arm/z_camera_marker")
 lerp_power = 14.0
 
-[node name="Third person" type="Camera3D" parent="spring_arm_piviot/camera_follow" unique_id=918761004]
+[node name="normal_camera" type="Camera3D" parent="spring_arm_piviot/camera_follow" unique_id=918761004]
 visible = false
 current = true
 
@@ -282,7 +284,18 @@ layer = 0
 visible = false
 player = NodePath("../..")
 
-[node name="normal_reticle" type="TextureRect" parent="canvas_root" unique_id=1247984658]
+[node name="reticle_root" type="Control" parent="canvas_root" unique_id=1642081181]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="normal_reticle" type="TextureRect" parent="canvas_root/reticle_root" unique_id=1247984658]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -296,6 +309,144 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("5_xxarj")
+stretch_mode = 3
+
+[node name="interact_overlay" type="Control" parent="canvas_root/reticle_root" unique_id=828996024]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="interact_reticle" type="TextureRect" parent="canvas_root/reticle_root/interact_overlay" unique_id=608260650]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.5
+offset_top = -23.0
+offset_right = 25.5
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("3_mxepk")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="canvas_root/reticle_root/interact_overlay" unique_id=1453697848]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -54.5
+offset_top = 21.5
+offset_right = 54.5
+offset_bottom = 44.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_ca0mu")
+text = "E to interact"
+label_settings = ExtResource("8_5gtgg")
+horizontal_alignment = 1
+
+[node name="build_overlay" type="Control" parent="canvas_root/reticle_root" unique_id=159735907]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="interact_reticle" type="TextureRect" parent="canvas_root/reticle_root/build_overlay" unique_id=1375775932]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.5
+offset_top = -23.0
+offset_right = 25.5
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.7853982
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("3_mxepk")
+stretch_mode = 3
+
+[node name="interact_reticle2" type="TextureRect" parent="canvas_root/reticle_root/build_overlay" unique_id=1711736982]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.5
+offset_top = -23.0
+offset_right = 25.5
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.7853982
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("3_mxepk")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="canvas_root/reticle_root/build_overlay" unique_id=370554443]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -41.5
+offset_top = 20.5
+offset_right = 41.5
+offset_bottom = 43.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_ca0mu")
+text = "click to Place"
+label_settings = ExtResource("8_5gtgg")
+
+[node name="hit_overlay" type="Control" parent="canvas_root/reticle_root" unique_id=601068581]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="hit_texture" type="TextureRect" parent="canvas_root/reticle_root/hit_overlay" unique_id=784218117]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.5
+offset_top = -23.0
+offset_right = 25.5
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("8_6k3cy")
 stretch_mode = 3
 
 [node name="FPS counter" parent="canvas_root" unique_id=1336845062 instance=ExtResource("10_h17s1")]
@@ -325,144 +476,6 @@ theme_override_constants/margin_bottom = 5
 [node name="action_bar" type="Label" parent="canvas_root/action_bar/MarginContainer" unique_id=1361217528]
 layout_mode = 2
 label_settings = ExtResource("8_5gtgg")
-
-[node name="interact_overlay" type="Control" parent="canvas_root" unique_id=828996024]
-visible = false
-layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="interact_reticle" type="TextureRect" parent="canvas_root/interact_overlay" unique_id=608260650]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -25.5
-offset_top = -23.0
-offset_right = 25.5
-offset_bottom = 23.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("3_mxepk")
-stretch_mode = 3
-
-[node name="Label" type="Label" parent="canvas_root/interact_overlay" unique_id=1453697848]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -54.5
-offset_top = 21.5
-offset_right = 54.5
-offset_bottom = 44.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("5_ca0mu")
-text = "E to interact"
-label_settings = ExtResource("8_5gtgg")
-horizontal_alignment = 1
-
-[node name="build_overlay" type="Control" parent="canvas_root" unique_id=159735907]
-visible = false
-layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="interact_reticle" type="TextureRect" parent="canvas_root/build_overlay" unique_id=1375775932]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -25.5
-offset_top = -23.0
-offset_right = 25.5
-offset_bottom = 23.0
-grow_horizontal = 2
-grow_vertical = 2
-rotation = 0.7853982
-pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("3_mxepk")
-stretch_mode = 3
-
-[node name="interact_reticle2" type="TextureRect" parent="canvas_root/build_overlay" unique_id=1711736982]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -25.5
-offset_top = -23.0
-offset_right = 25.5
-offset_bottom = 23.0
-grow_horizontal = 2
-grow_vertical = 2
-rotation = -0.7853982
-pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("3_mxepk")
-stretch_mode = 3
-
-[node name="Label" type="Label" parent="canvas_root/build_overlay" unique_id=370554443]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -41.5
-offset_top = 20.5
-offset_right = 41.5
-offset_bottom = 43.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("5_ca0mu")
-text = "click to Place"
-label_settings = ExtResource("8_5gtgg")
-
-[node name="hit_overlay" type="Control" parent="canvas_root" unique_id=601068581]
-visible = false
-layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="remove_overlay" type="TextureRect" parent="canvas_root/hit_overlay" unique_id=784218117]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -25.5
-offset_top = -23.0
-offset_right = 25.5
-offset_bottom = 23.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("8_6k3cy")
-stretch_mode = 3
 
 [node name="item_notif_controller" parent="canvas_root" unique_id=1202289325 node_paths=PackedStringArray("build_selection") instance=ExtResource("13_gx1jg")]
 build_selection = NodePath("../build_selection")

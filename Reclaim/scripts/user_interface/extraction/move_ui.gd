@@ -189,15 +189,9 @@ func _set_open_or_close(toggle : bool) -> void:
 
 
 func load_extraction_cells() -> void:
-	print("\n  ----  ")
-	print(Global.at_ship)
-	print(Global.sector_storage)
-	print(_get_from_storage())
 	var storage_items = HelperFunctions.get_item_from_storage(
 		_get_from_storage()
 		)
-	
-	print(storage_items)
 	
 	for item in storage_items:
 		if item in DataRegistry.items:

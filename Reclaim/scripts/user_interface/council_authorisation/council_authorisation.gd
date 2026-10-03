@@ -304,7 +304,7 @@ func _get_next_level_details(authorisation_data: AuthorisationData) -> Authorisa
 	if current_level >= authorisation_data.max_level:
 		return null
 	
-	return authorisation_data.levels.get(current_level - 1) as AuthorisationLevel
+	return authorisation_data.levels.get(current_level) as AuthorisationLevel
 
 
 func _has_configured_levels(authorisation_data: AuthorisationData) -> bool:

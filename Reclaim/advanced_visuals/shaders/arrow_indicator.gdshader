@@ -1,5 +1,7 @@
 shader_type spatial;
 
+// AI GENERATED 
+
 render_mode blend_add, unshaded, shadows_disabled, vertex_lighting;
 
 uniform vec4 arrow_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);

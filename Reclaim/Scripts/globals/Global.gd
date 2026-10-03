@@ -176,6 +176,7 @@ var player_mode := PlayerMode.WEAPON
 var at_ship := true
 var mouse_captured := true
 var major_animation_playing := false
+var top_down_build_view: bool = false
 
 # TUTORIAL RELATED ---------------------------------------------------------
 var tutorial_stage := 1

@@ -1,6 +1,6 @@
 extends Control
 
-const AUTHORISATION_STARTING_LEVEL := 1
+const AUTHORISATION_STARTING_LEVEL := 0
 
 var finished_loading: bool = false
 

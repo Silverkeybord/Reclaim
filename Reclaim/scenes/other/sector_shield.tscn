@@ -16,17 +16,28 @@ height = 52.0
 radial_segments = 32
 rings = 16
 
+[sub_resource type="BoxMesh" id="BoxMesh_g4v7s"]
+size = Vector3(55, 24, 55)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_57qmd"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+albedo_color = Color(1, 1, 1, 0)
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_yf5fn"]
 radius = 26.15
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_g4v7s"]
 radius = 26.5
 
-[node name="sector_sheild" type="Node3D" unique_id=911350069 node_paths=PackedStringArray("run_ui", "overdrive_timer", "heal_timer")]
+[node name="sector_sheild" type="Node3D" unique_id=911350069 node_paths=PackedStringArray("run_ui", "overdrive_timer", "heal_timer", "outter_cutoff", "inner_cutoff")]
 script = ExtResource("1_n3gv3")
 run_ui = NodePath("run_ui/run_ui_control")
 overdrive_timer = NodePath("overdrive_timer")
 heal_timer = NodePath("heal_timer")
+outter_cutoff = NodePath("outter/top_build_cutoff2")
+inner_cutoff = NodePath("outter/inner/top_build_cutoff")
 
 [node name="outter" type="CSGMesh3D" parent="." unique_id=270756843]
 mesh = SubResource("SphereMesh_g4v7s")
@@ -36,6 +47,20 @@ material = ExtResource("2_68m1w")
 operation = 2
 mesh = SubResource("SphereMesh_yf5fn")
 material = ExtResource("2_68m1w")
+
+[node name="top_build_cutoff" type="CSGMesh3D" parent="outter/inner" unique_id=1913904998]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 18, 0)
+visible = false
+operation = 2
+mesh = SubResource("BoxMesh_g4v7s")
+material = SubResource("StandardMaterial3D_57qmd")
+
+[node name="top_build_cutoff2" type="CSGMesh3D" parent="outter" unique_id=662456172]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 18, 0)
+visible = false
+operation = 2
+mesh = SubResource("BoxMesh_g4v7s")
+material = SubResource("StandardMaterial3D_57qmd")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=132398147]
 collision_layer = 160

@@ -9,4 +9,5 @@ script = ExtResource("2_gvcph")
 key = "crafting_efficiency"
 icon = ExtResource("1_gvcph")
 max_level = 5
+levels = Array[ExtResource("1_tciku")]([null, null, null, null, null])
 metadata/_custom_type_script = "uid://bd3b7pbajamv4"

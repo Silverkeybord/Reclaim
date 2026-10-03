@@ -41,7 +41,7 @@ func _ready() -> void:
 
 # takes all inputs and turns them into camera movement
 func _input(event: InputEvent) -> void:
-	if Global.ui_open or Global.major_animation_playing:
+	if Global.ui_open or Global.major_animation_playing or Global.top_down_build_view:
 		return
 	
 	if event is InputEventMouseMotion and Global.mouse_captured:

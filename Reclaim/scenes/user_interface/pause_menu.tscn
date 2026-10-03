@@ -80,7 +80,7 @@ font_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 
 [node name="pause_menu" type="CanvasLayer" unique_id=774636245 node_paths=PackedStringArray("sensitivity_slider", "sensitivity_line_edit", "action_bars_texture_rect", "fps_texture_rect", "delete_timer", "delete_lable")]
 process_mode = 3
-layer = 3
+layer = 5
 visible = false
 script = ExtResource("1_yasr7")
 sensitivity_slider = NodePath("Control/PanelContainer/MarginContainer/VBoxContainer/MarginContainer2/sensitivity/HSlider")

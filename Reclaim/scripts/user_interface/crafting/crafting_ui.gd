@@ -264,6 +264,7 @@ func queue_next() -> void:
 
 ## loads all crafting UI bassed on ship level
 func load_crafting() -> void:
+	print(Global.council_authorisations)
 	if not Global.council_authorisations.get(AUTH_SHIP_TIER.key, {}):
 		push_error(ERR_MISSING_AUTHORITY % AUTH_SHIP_TIER.key)
 		return

@@ -290,6 +290,7 @@ extraction_hflow = NodePath("ui_root/extraction_backing/MarginContainer/VBoxCont
 [node name="itemtip" parent="." unique_id=854836766 instance=ExtResource("2_m3m1d")]
 
 [node name="ui_root" type="MarginContainer" parent="." unique_id=1259262818]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

@@ -3,6 +3,7 @@ extends Node3D
 const TURRET_SLOTS_AUTHORISATION: AuthorisationData = preload(
 	"res://data/authorisation/turret_slots.tres"
 	)
+const PROP_UNLOCKED: StringName = &"unlocked"
 
 
 func _ready() -> void:
@@ -14,12 +15,11 @@ func _check_turret_slots() -> void:
 	var slot_level: int = int(
 		Global.council_authorisations.get(TURRET_SLOTS_AUTHORISATION.key, 0)
 	)
-	if slot_level <= 0:
+	if slot_level < 0:
 		return
 	
-	
 	for turret_level_node in turrets_level_nodes:
-		if slot_level <= 0:
+		if slot_level < 0:
 			break
 
 		if turret_level_node is not Node3D:
@@ -29,7 +29,7 @@ func _check_turret_slots() -> void:
 		
 		var turret_slots := turret_level_node.get_children()
 		for slot in turret_slots:
-			slot.set(&"unlocked", true)
+			slot.set(PROP_UNLOCKED, true)
 		slot_level -= 1
 
 

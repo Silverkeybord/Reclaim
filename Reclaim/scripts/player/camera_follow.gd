@@ -6,9 +6,9 @@ extends Node3D
 
 
 func _process(delta: float) -> void:
-	if xy_camera_marker == null or z_camera_marker == null:
+	if xy_camera_marker == null or z_camera_marker == null or Global.top_down_build_view:
 		return
-
+	
 	var lerp_weight := clampf(delta * lerp_power, 0.0, 1.0)
 	position = lerp(
 		position,

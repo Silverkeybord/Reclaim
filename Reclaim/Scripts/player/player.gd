@@ -16,7 +16,7 @@ const ACTION_INTERACT: StringName = &"interact"
 const ACTION_WEAPON_MODE: StringName = &"weapon_mode"
 const ACTION_BUILD_MODE: StringName = &"build_mode"
 # const ACTION_INSTALL_MODE: StringName = &"install_mode" # FUTURE DEV: Installation mode disabled
-const ACTION_CHANGE_BUILD_MODE: StringName = &"change_build_mode"
+const ACTION_CHANGE_BUILD_VIEW: StringName = &"change_build_view"
 const ACTION_PLACE: StringName = &"place"
 const ACTION_PICK_UP_BUILD: StringName = &"pick_up_build"
 
@@ -60,7 +60,7 @@ const DEFAULT_WEAPON_NAME: String = "pistol"
 const WEAPON_MODE_INPUT: String = "1 - Weapon"
 const BUILD_MODE_INPUT: String = "2 - Building"
 # const INSTALL_MODE_INPUT: String = "3 - Installation" # FUTURE DEV: Installation mode disabled
-const BUILDING_INPUTS: String = "M2 - Pick up Builds\nScroll - Selection"
+const BUILDING_INPUTS: String = "M2 - Pick up Builds\nScroll - Selection\nF - Build View"
 const INTERACT_INPUT: String = "E - Interact"
 const SHOW_PINNED_INPUT: String = "TAB - Pinned"
 const PAUSE_INPUT: String = "esc - Pause"
@@ -79,6 +79,8 @@ const REMOVE_BUILD_DELAY: float = 0.1
 const HIT_OVERLAY_TIME: float = 0.08
 const PICK_UP_COOLDOWN: float = 2.0
 const ZERO_FLOAT: float = 0.0
+const BUILD_RAY_LENGTH: float = 150.0
+
 
 # =============================================================================
 # EXPORTS
@@ -95,6 +97,8 @@ const ZERO_FLOAT: float = 0.0
 @export var build_ray: RayCast3D
 @export var shooting_timer: Timer
 @export var pick_up_area: Area3D
+@export var normal_camera: Camera3D
+@export var reticle_root: Control
 
 @export_subgroup("Pivots")
 @export var arm_pivot: Node3D
@@ -106,6 +110,9 @@ const ZERO_FLOAT: float = 0.0
 @export var turret_holagram_scene: PackedScene
 @export var turret_grid: Node3D
 @export var selected_build: String = ""
+@export var build_camera: Camera3D
+@export var top_down_build_ray: RayCast3D
+@export var top_down_shader: ColorRect
 
 @export_group("2D UI Elements")
 @export var canvas_root: CanvasLayer
@@ -117,6 +124,7 @@ const ZERO_FLOAT: float = 0.0
 @export var item_notif_controller: ItemNotifController
 @export var fps_lable: Label
 @export var action_bar_panel: PanelContainer
+
 
 # =============================================================================
 # VARIABLES
@@ -130,6 +138,7 @@ var can_remove_build: bool = true
 
 
 func _ready() -> void:
+	Global.set_random_storage()
 	_set_new_weapon()
 
 
@@ -143,11 +152,21 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.y = ZERO_FLOAT
 	
-	if not Global.crafting_open and not Global.extraction_open:
-		var input_dir := Input.get_vector(ACTION_LEFT, ACTION_RIGHT, ACTION_FORWARD, ACTION_BACK)
-		var direction := (global_basis * Vector3(input_dir.x, ZERO_FLOAT, input_dir.y)).normalized()
+	if not Global.ui_open and not Global.top_down_build_view:
+		var input_dir := Input.get_vector(
+			ACTION_LEFT,
+			ACTION_RIGHT,
+			ACTION_FORWARD,
+			ACTION_BACK
+		)
+		
+		var direction := (
+			global_basis * Vector3(input_dir.x, ZERO_FLOAT, input_dir.y)
+		).normalized()
+		
 		velocity.x = direction.x * move_speed
 		velocity.z = direction.z * move_speed
+		
 		if Input.is_action_pressed(ACTION_JUMP) and is_on_floor():
 			velocity.y = jump_velocity
 	else:
@@ -161,10 +180,6 @@ func _process(_delta: float) -> void:
 		if canvas_root:
 			canvas_root.visible = false
 		
-		# When major animaiton is playing returns to weapon mode to remove ui
-		if Global.player_mode != Global.PlayerMode.WEAPON:
-			force_weapon_mode()
-		
 		return
 	
 	if canvas_root and not canvas_root.visible:
@@ -177,7 +192,7 @@ func _process(_delta: float) -> void:
 	
 	var ray_collider: Node = aim_ray.get_collider() if aim_ray else null
 	
-	# bassed on the player mode will do certain things
+	# based on the player mode will do certain things
 	match Global.player_mode:
 		Global.PlayerMode.WEAPON:
 			pass
@@ -185,7 +200,7 @@ func _process(_delta: float) -> void:
 			_build_mode_handling(ray_collider)
 		# FUTURE DEV: Installation mode disabled
 		# Global.PlayerMode.INSTALLING:
-		# 	pass
+		# pass
 	
 	if (
 		Global.player_mode != Global.PlayerMode.BUILDING
@@ -228,7 +243,6 @@ func _action_bar_updating() -> void:
 	if Global.player_mode == Global.PlayerMode.BUILDING:
 		action_bar_output.append(BUILDING_INPUTS)
 	
-	
 	if Global.player_mode != Global.PlayerMode.BUILDING:
 		action_bar_output.append(INTERACT_INPUT)
 	
@@ -243,8 +257,6 @@ func _action_bar_updating() -> void:
 		# FUTURE DEV: Installation mode disabled
 		# if Global.player_mode != Global.PlayerMode.INSTALLING:
 		# 	action_bar_output.append(INSTALL_MODE_INPUT)
-	
-	action_bar_output.append(PAUSE_INPUT)
 	
 	action_bar.text = "\n".join(action_bar_output)
 
@@ -286,8 +298,7 @@ func _player_mode_handling() -> void:
 		and Global.player_mode != Global.PlayerMode.WEAPON
 	):
 		Global.player_mode = Global.PlayerMode.WEAPON
-		_remove_hologram(true)
-		toggle_player_mode_item(gun_pivot)
+		_disable_building(gun_pivot)
 	
 	# Build mode
 	if (
@@ -311,8 +322,7 @@ func _player_mode_handling() -> void:
 	# 	and Global.player_mode != Global.PlayerMode.INSTALLING
 	# ):
 	# 	Global.player_mode = Global.PlayerMode.INSTALLING
-	# 	_remove_hologram(true)
-	# 	toggle_player_mode_item(wrench_pivot)
+	# 	_disable_building(wrench_pivot)
 
 
 # Hides all tool pivots then shows only the one passed in
@@ -332,8 +342,8 @@ func toggle_player_mode_item(pivot: Node3D) -> void:
 func force_weapon_mode() -> void:
 	Global.player_mode = Global.PlayerMode.WEAPON
 	_remove_hologram(true)
-	toggle_player_mode_item(gun_pivot)
-		
+	_disable_building(gun_pivot)
+	
 	if building_selection and building_selection.visible:
 		building_selection.visible = false
 
@@ -346,6 +356,20 @@ func force_weapon_mode() -> void:
 func _build_mode_handling(ray_collider: Node) -> void:
 	if Global.player_mode != Global.PlayerMode.BUILDING:
 		return
+	
+	if Input.is_action_just_pressed(ACTION_CHANGE_BUILD_VIEW):
+		_toggle_build_view()
+		
+	if Global.top_down_build_view:
+		_update_top_down_build_ray()
+	
+	# Assign ray_collider dynamically based on current view
+	if Global.top_down_build_view and top_down_build_ray:
+		ray_collider = top_down_build_ray.get_collider()
+	elif build_ray:
+		ray_collider = build_ray.get_collider()
+	else:
+		ray_collider = null
 	
 	_check_holagram()
 	
@@ -406,12 +430,12 @@ func _snap_hologram_to_grid(ray_collider: Node, current_selection: String) -> vo
 	var item_type: int = DataRegistry.items[current_selection].type
 	
 	match item_type:
-		Global.ITEM_TYPES.TURRET:
+		Global.ItemType.TURRET:
 			if ray_collider.get(BUILD_PROP_ORIGIN_POINT):
 				turret_holagram.global_position = ray_collider.turret_origin_point.global_position
 			if ray_collider.get(BUILD_PROP_TURRET):
 				preexisting_build = true
-		Global.ITEM_TYPES.BASE:
+		Global.ItemType.BASE:
 			turret_holagram.global_position = ray_collider.global_position
 			if ray_collider.get(BUILD_PROP_BASE):
 				preexisting_build = true
@@ -434,8 +458,10 @@ func _update_hologram_validity(ray_collider: Node) -> void:
 
 # Just moves the holagram to where the player is looking
 func _move_hologram_to_aim() -> void:
-	if aim_ray and aim_ray.is_colliding():
-		turret_holagram.global_position = aim_ray.get_collision_point()
+	var active_ray: RayCast3D = top_down_build_ray if Global.top_down_build_view else aim_ray
+	
+	if active_ray and active_ray.is_colliding():
+		turret_holagram.global_position = active_ray.get_collision_point()
 		turret_holagram.visible = true
 	else:
 		turret_holagram.visible = false
@@ -487,7 +513,12 @@ func _handle_pickup() -> void:
 	if not Input.is_action_just_pressed(ACTION_PICK_UP_BUILD) or not can_remove_build:
 		return
 		
-	var build_ray_collider: Node = build_ray.get_collider() if build_ray else null
+	var build_ray_collider: Node = null
+	if Global.top_down_build_view and top_down_build_ray:
+		build_ray_collider = top_down_build_ray.get_collider()
+	elif build_ray:
+		build_ray_collider = build_ray.get_collider()
+		
 	if not build_ray_collider:
 		return
 		
@@ -529,9 +560,9 @@ func _check_valid_placement(ray_collider: Node, current_selection: String) -> bo
 	var item_type: int = DataRegistry.items[current_selection].type
 	
 	match item_type:
-		Global.ITEM_TYPES.TURRET:
+		Global.ItemType.TURRET:
 			return ray_collider.get(BUILD_PROP_BASE) != null
-		Global.ITEM_TYPES.BASE:
+		Global.ItemType.BASE:
 			return true
 	
 	return false
@@ -550,9 +581,64 @@ func _remove_hologram(change_mode: bool = false) -> void:
 			turret_grid.call(METHOD_TOGGLE_BUILD_MODE, false)
 
 
+# updats the postion of the build ray to where the mouse is 
+func _update_top_down_build_ray() -> void:
+	if not Global.top_down_build_view:
+		return
+	
+	if not build_camera or not top_down_build_ray:
+		return
+	
+	var mouse_position := get_viewport().get_mouse_position()
+	
+	var ray_origin := build_camera.global_position
+	var ray_direction := build_camera.project_ray_normal(mouse_position)
+	
+	var ray_end := ray_origin + (ray_direction * BUILD_RAY_LENGTH)
+	
+	if reticle_root:
+		reticle_root.position = mouse_position
+	if build_overlay:
+		build_overlay.position = mouse_position
+	
+	top_down_build_ray.global_position = ray_origin
+	
+	# Fix: In Godot 4, target_position is local. to_local gives us the correct local vector length and direction.
+	top_down_build_ray.target_position = top_down_build_ray.to_local(ray_end)
+	
+	top_down_build_ray.force_raycast_update()
+
+
+func _toggle_build_view() -> void:
+	Global.top_down_build_view = not Global.top_down_build_view
+		
+	if Global.top_down_build_view:
+		top_down_shader.visible = true
+		build_camera.current = true
+		normal_camera.current = false
+		
+	else:
+		top_down_shader.visible = false
+		if reticle_root:
+			reticle_root.position = get_viewport().get_visible_rect().size / 2
+		build_camera.current = false
+		normal_camera.current = true
+		
+	HelperFunctions.set_mouse_captured(true, not Global.top_down_build_view)
+
+
+func _disable_building(piviot_item : Node3D) -> void:
+	_remove_hologram(true)
+	toggle_player_mode_item(piviot_item)
+	
+	if Global.top_down_build_view:
+		_toggle_build_view()
+
+
 # =============================================================================
 # COMBAT & SHOOTING
 # =============================================================================
+
 
 # Checks if the player is allowed to shoot and starts the cooldown timer.
 func _shoot_control() -> void:
@@ -618,7 +704,7 @@ func _shoot() -> void:
 func _set_new_weapon() -> void:
 	weapon = null
 	weapon_resource = null
-
+	
 	if gun_pivot and gun_pivot.get_child_count() > GUN_CHILD_INDEX:
 		weapon = gun_pivot.get_child(GUN_CHILD_INDEX)
 		if DataRegistry.weapon.has(weapon_name):

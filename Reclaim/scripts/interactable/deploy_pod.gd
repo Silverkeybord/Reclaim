@@ -9,8 +9,13 @@ const PROP_MODULATE : String = "modulate"
 @export var color_rect : ColorRect
 @export var deploy_ui : MoveUI
 
+var deploying: bool = false
+
 
 func interact() -> void:
+	if deploying:
+		return
+	
 	if Global.first_play:
 		if Global.first_play:
 			Global.first_play = false
@@ -20,6 +25,7 @@ func interact() -> void:
 
 
 func deploy() -> void:
+	deploying = true
 	color_rect.visible = true
 	var fade_in_tween = create_tween()
 	fade_in_tween.tween_property(color_rect, PROP_MODULATE, NORMAL_MODULATE, FADE_TIME)

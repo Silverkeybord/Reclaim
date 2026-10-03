@@ -23,11 +23,23 @@ const BASE_HEAL_INTERVAL := 2.5
 @export var heal_amount : float = BASE_HEAL_AMOUNT
 @export var heal_timer : Timer
 
+@export_group("Top View Build Cutoff")
+@export var outter_cutoff : CSGMesh3D
+@export var inner_cutoff : CSGMesh3D
+
 var shield_overdrive := false
+var last_top_view := false
 
 
 func _ready() -> void:
 	heal_timer.wait_time = heal_interval
+
+
+func _process(_delta: float) -> void:
+	if last_top_view != Global.top_down_build_view:
+		toggle_cutoff()
+	
+	last_top_view = Global.top_down_build_view
 
 
 func hit_shield(damage : float) -> void:
@@ -97,3 +109,13 @@ func _on_overdrive_timer_timeout() -> void:
 	extraction_pod.extraction_ui._on_best_value_pressed()
 	if extraction_pod:
 		extraction_pod.extract()
+
+
+# called from player
+func toggle_cutoff() -> void:
+	if Global.top_down_build_view:
+		inner_cutoff.visible = true
+		outter_cutoff.visible = true
+	else:
+		inner_cutoff.visible = false
+		outter_cutoff.visible = false
