@@ -50,9 +50,6 @@ const TWEEN_DURATION := 0.8
 const SHOW_POS := Vector2(0, 0)
 const HIDE_POS := Vector2(0, -720)
 
-# Important authorisations
-const AUTH_SHIP_TIER := preload("res://data/authorisation/ship_tier.tres")
-
 @export var ui_root : MarginContainer
 @export var craft_queue_vbox : VBoxContainer
 
@@ -99,6 +96,10 @@ const AUTH_SHIP_TIER := preload("res://data/authorisation/ship_tier.tres")
 @export var modules_tab_scroll : ScrollContainer
 @export var resources_tab_scroll : ScrollContainer
 
+@export_group("Authorisations")
+@export var auth_ship_tier : AuthorisationData
+
+
 @onready var tab_vboxs : Dictionary = {
 	Global.ItemType.TURRET : turrets_vbox,
 	Global.ItemType.BASE : turrets_vbox,
@@ -117,7 +118,8 @@ const AUTH_SHIP_TIER := preload("res://data/authorisation/ship_tier.tres")
 var can_craft_current : bool = false
 var craft_mult : int = 1
 var max_mult : int = 0
-var current_tab = TABS.TURRETS
+var current_tab = TABS.RESOURCES
+var current_ship_tier_displayed := 0
 var ship_tier_requirments : Dictionary = {
 	1 : {},
 	2 : {},
@@ -133,21 +135,6 @@ var ship_tier_requirments : Dictionary = {
 func _ready() -> void:
 	set_process(false)
 	description.get_v_scroll_bar().visible = false
-	
-	for recipe_key : String in DataRegistry.crafting:
-		var recipe : CraftData = DataRegistry.crafting[recipe_key]
-		if not _is_valid_recipe(recipe):
-			push_error(ERR_INVALID_RECIPE % recipe_key)
-			continue
-		
-		var item_key = recipe.crafted_item.key
-		var level = recipe.required_ship_tier
-		if not ship_tier_requirments.has(level):
-			push_error(ERR_INVALID_SHIP_TIER % recipe_key)
-			continue
-		
-		ship_tier_requirments[level][item_key] = recipe
-	
 	load_crafting()
 
 
@@ -262,54 +249,61 @@ func queue_next() -> void:
 		first_queued_item.start_craft()
 
 
-## loads all crafting UI bassed on ship level
+## Loads all crafting cells and populates requirements with cell references.
 func load_crafting() -> void:
-	print(Global.council_authorisations)
-	if not Global.council_authorisations.get(AUTH_SHIP_TIER.key, {}):
-		push_error(ERR_MISSING_AUTHORITY % AUTH_SHIP_TIER.key)
+	if Global.council_authorisations.get(auth_ship_tier.key) == null:
+		push_error(ERR_MISSING_AUTHORITY % auth_ship_tier.key)
 		return
-	
-	# For all the levels in ship_tier will make the cells visible 
-	for ship_tier in range(1, AUTH_SHIP_TIER.max_level):
-		if ship_tier > Global.council_authorisations[AUTH_SHIP_TIER.key]:
-			break
+
+	for recipe_key : String in DataRegistry.crafting:
+		var recipe : CraftData = DataRegistry.crafting[recipe_key]
 		
+		if not _is_valid_recipe(recipe):
+			push_error(ERR_INVALID_RECIPE % recipe_key)
+			continue
+		
+		var level = recipe.required_ship_tier
+		if not ship_tier_requirments.has(level):
+			push_error(ERR_INVALID_SHIP_TIER % recipe_key)
+			continue
+			
+		if level >= auth_ship_tier.max_level:
+			continue
+			
+		var item_type = recipe.crafted_item.type
+		if not tab_vboxs.has(item_type):
+			continue
+		
+		var item_tier = recipe.crafted_item.tier
+		var tab_vbox = tab_vboxs[item_type]
+		var section : CraftingSelection
+		
+		if tab_vbox.selection_sections.has(item_tier) and tab_vbox.selection_sections[item_tier]:
+			section = tab_vbox.selection_sections[item_tier]
 		else:
-			for recipe_key : String in ship_tier_requirments[ship_tier]:
-				var recipe : CraftData = ship_tier_requirments[ship_tier][recipe_key]
-				var item_type = recipe.crafted_item.type
-				if not tab_vboxs.has(item_type):
-					continue
-				
-				var tab_vbox = tab_vboxs[item_type]
-				var section : CraftingSelection
-				
-				if tab_vbox.selection_sections.has(recipe.crafted_item.tier) \
-						and tab_vbox.selection_sections[recipe.crafted_item.tier]:
-					section = tab_vbox.selection_sections[recipe.crafted_item.tier]
-					
-				else:
-					var new_selection_section : CraftingSelection = (
-						section_selection_scene.instantiate()
-						)
-					new_selection_section.tier = recipe.crafted_item.tier
-					tab_vbox.selection_sections[recipe.crafted_item.tier] = new_selection_section
-					tab_vbox.add_child(new_selection_section)
-					
-					section = new_selection_section
-					section.set_up()
-				
-				var new_craft_cell : CraftCell = craft_cell_scene.instantiate()
-				new_craft_cell.craft_data = recipe
-				new_craft_cell.add_to_group(GROUP_CRAFT_CELLS)
-				new_craft_cell.crafting_menu = self
-				section.hflow.add_child(new_craft_cell)
+			section = section_selection_scene.instantiate()
+			section.tier = item_tier
+			tab_vbox.selection_sections[item_tier] = section
+			tab_vbox.add_child(section)
+			section.set_up()
+		
+		var new_craft_cell : CraftCell = craft_cell_scene.instantiate()
+		new_craft_cell.craft_data = recipe
+		new_craft_cell.add_to_group(GROUP_CRAFT_CELLS)
+		new_craft_cell.crafting_menu = self
+		section.hflow.add_child(new_craft_cell)
+		
+		ship_tier_requirments[level][recipe.crafted_item.key] = new_craft_cell
+	
+	_update_craft_cell_visibility()
 
 
 # gets everying to check their values
 func update_crafting_display() -> void:
 	if not Global.crafting_open:
 		return
+	
+	_update_craft_cell_visibility()
 	
 	var craft_requirments : Array[RequirementsTemplate]
 	var max_crafting_amounts : Array[int]
@@ -331,8 +325,8 @@ func update_crafting_display() -> void:
 	
 	if can_craft_current:
 		var cells := get_tree().get_nodes_in_group(GROUP_CRAFTING_REQUIREMENT_CELLS)
-		for cell : RecipeRequirement in cells:
-			if not cell.check_requirement(craft_mult if craft_mult else max_mult):
+		for requirment_cell : RecipeRequirement in cells:
+			if not requirment_cell.check_requirement(craft_mult if craft_mult else max_mult):
 				craft_overlay.visible = true
 				can_craft_current = false
 	
@@ -341,6 +335,10 @@ func update_crafting_display() -> void:
 	
 	if not current_displayed_requirments:
 		craft_overlay.visible = true
+		
+	var all_craft_cells := get_tree().get_nodes_in_group(GROUP_CRAFT_CELLS)
+	for cell : CraftCell in all_craft_cells:
+		cell.check_requirements()
 
 
 # checks if the recipe is valid
@@ -404,7 +402,7 @@ func display_requirements_for(craft_data : CraftData, can_craft : bool) -> void:
 			ability_stat.text = ABILITY_LABEL_PREFIX + turret_data.ability
 			
 		Global.ItemType.MODULE:
-			show_stat_labels([craft_time_stat])
+			# Modules disabled for future development
 			pass
 	
 	description.text = craft_data.description
@@ -504,8 +502,8 @@ func _change_to_tab(new_tab : TABS) -> void:
 			turrets_tab_scroll.visible = true
 			
 		TABS.MODULES:
-			modules_tab.icon = ACTIVE_MODULES_TAB
-			modules_tab_scroll.visible = true
+			# Modules disabled for future development
+			pass
 		
 		TABS.RESOURCES:
 			resources_tab.icon = ACTIVE_RESOURCE_TAB
@@ -517,7 +515,8 @@ func _on_turret_tab_button_pressed() -> void:
 
 
 func _on_modules_tab_button_pressed() -> void:
-	_change_to_tab(TABS.MODULES)
+	# Modules disabled for future development
+	pass
 
 
 func _on_resourses_tab_button_pressed() -> void:
@@ -533,3 +532,28 @@ func _on_pin_recpie_pressed() -> void:
 		craft_pin_texture.modulate = RECIPE_PIN_PINED_COLOR
 	else:
 		craft_pin_texture.modulate = RECIPE_PIN_NORMAL_COLOR
+
+
+# Council Auth Checking ===================================================
+func _update_craft_cell_visibility() -> void:
+	if current_ship_tier_displayed != Global.council_authorisations[auth_ship_tier.key]:
+		current_ship_tier_displayed = Global.council_authorisations[auth_ship_tier.key]
+		
+		for ship_teir in ship_tier_requirments:
+			if ship_teir > current_ship_tier_displayed:
+				break
+			
+			for craft_cell_name in ship_tier_requirments[ship_teir]:
+				var craft_cell : CraftCell = ship_tier_requirments[ship_teir][craft_cell_name]
+				craft_cell.visible = true
+	
+	_check_selection_visibility(turrets_vbox)
+	_check_selection_visibility(modules_vbox)
+	_check_selection_visibility(resources_vbox)
+
+
+func _check_selection_visibility(vbox : VBoxContainer) -> void:
+	var crafting_selection_sections = vbox.get_children()
+	
+	for section : CraftingSelection in crafting_selection_sections:
+		section.check_visibility()

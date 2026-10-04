@@ -533,7 +533,7 @@ func _handle_pickup() -> void:
 	if building_selection:
 		building_selection.load_selection()
 		
-	if build_ray_collider.get(BUILD_PROP_BUILD_TYPE) == Global.BUILD_TYPES.BASE:
+	if build_ray_collider.get(BUILD_PROP_BUILD_TYPE) == Global.BuildTypes.BASE:
 		var slot: Variant = build_ray_collider.get(BUILD_PROP_SLOT)
 		if slot is Node and (slot as Node).has_method(METHOD_BASE_REMOVED):
 			(slot as Node).call(METHOD_BASE_REMOVED)

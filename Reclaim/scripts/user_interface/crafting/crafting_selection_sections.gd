@@ -24,3 +24,18 @@ func set_up() -> void:
 	style.border_width_left = BORDER_THICKNESS
 	style.border_width_right = BORDER_THICKNESS
 	add_theme_stylebox_override(PANEL_OVERRIDE_KEY, style)
+
+
+## checks if any of its children are visible and if so makes it visible
+func check_visibility() -> void:
+	var craft_cells = hflow.get_children()
+	var resulting_visibility: bool = false
+	print(craft_cells)
+	
+	for craft_cell in craft_cells:
+		if craft_cell.visible == true:
+			resulting_visibility = true
+			break
+	
+	visible = resulting_visibility
+	

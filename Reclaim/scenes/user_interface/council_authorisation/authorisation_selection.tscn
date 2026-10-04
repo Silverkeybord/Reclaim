@@ -35,6 +35,7 @@ custom_minimum_size = Vector2(410, 100)
 custom_maximum_size = Vector2(410, 100)
 offset_right = 400.0
 offset_bottom = 100.0
+focus_mode = 0
 theme_override_styles/normal = SubResource("StyleBoxFlat_yf5fn")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_yf5fn")
 theme_override_styles/hover = SubResource("StyleBoxFlat_yf5fn")

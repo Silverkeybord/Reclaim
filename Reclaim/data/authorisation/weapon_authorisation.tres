@@ -9,4 +9,6 @@ script = ExtResource("2_pb4vy")
 key = "weapon_authorisation"
 icon = ExtResource("1_pb4vy")
 max_level = 3
+description = "Authorises "
+required_ship_tier = 3
 metadata/_custom_type_script = "uid://bd3b7pbajamv4"

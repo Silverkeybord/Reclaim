@@ -50,7 +50,7 @@ func _ready() -> void:
 	set_process(false)
 	_clear_authorisation_details()
 	var authorisation_keys := DataRegistry.authorisation.keys()
-	authorisation_keys.sort()
+	authorisation_keys.sort() #sort_custom(_sort_auth_by_ship_tier)
 	
 	for authorisation_key in authorisation_keys:
 		var authorisation_data := DataRegistry.authorisation[authorisation_key] as AuthorisationData
@@ -65,9 +65,6 @@ func _ready() -> void:
 	
 		if current_displayed_authorisation == null:
 			current_displayed_authorisation = authorisation_data
-	
-	if current_displayed_authorisation:
-		call_deferred("show_authorisation_details", current_displayed_authorisation)
 
 
 func _process(_delta: float) -> void:
@@ -111,14 +108,14 @@ func show_authorisation_details(authorisation_data : AuthorisationData) -> void:
 	if authorisation_data == null or authorisation_data.key.is_empty():
 		_clear_authorisation_details()
 		return
-
+	
 	current_displayed_authorisation = authorisation_data
 	authorisation_name.text = HelperFunctions.get_display_name(authorisation_data.key)
 	authorisation_icon.texture = authorisation_data.get_icon()
 	var authority_level := int(Global.council_authorisations.get(authorisation_data.key, 1))
 	Global.council_authorisations[authorisation_data.key] = authority_level
 	_clear_requirement_cells()
-
+	
 	if authority_level >= authorisation_data.max_level:
 		level_change_label.text = MAX_LEVEL_TEXT
 		unlock_change_label.text = NO_UNLOCKS_TEXT
@@ -345,3 +342,11 @@ func _refresh_selection_cells() -> void:
 		GROUP_AUTH_SELECTION_CELLS
 		):
 		selection_cell.refresh_level_display()
+
+
+#func _sort_auth_by_ship_tier(a, b) -> bool:
+	#return false
+#
+#
+#func _check_authoirsation_unlocks() -> void:
+	#pass

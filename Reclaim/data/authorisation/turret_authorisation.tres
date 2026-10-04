@@ -10,4 +10,6 @@ key = "turret_authorisation"
 upgrade_type = "crafting_unlock"
 icon = ExtResource("1_ndj7v")
 max_level = 5
+description = "Authorises more powerful turret recipies"
+required_ship_tier = 4
 metadata/_custom_type_script = "uid://bd3b7pbajamv4"

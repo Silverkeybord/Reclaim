@@ -21,9 +21,11 @@ const NO_TEXTURE_ICON := preload("res://2d_assets/council_authorisation/no_icon.
 ## An array that holds all the levels and requirments using authorisation level template
 @export var levels : Array[AuthorisationLevel]
 
-
 ## The description of the data
 @export var description := ""
+
+## The required ship tier to unlock this authorisation
+@export_range(0, 8) var required_ship_tier : int = 0
 
 
 func get_icon() -> Texture:

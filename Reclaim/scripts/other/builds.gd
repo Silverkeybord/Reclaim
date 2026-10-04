@@ -14,7 +14,7 @@ func pick_up() -> void:
 	if not HelperFunctions.add_item_to_storage(item_resource):
 		return
 	
-	if build_type == Global.BUILD_TYPES.BASE:
+	if build_type == Global.BuildTypes.BASE:
 		check_for_turret()
 	
 	queue_free()

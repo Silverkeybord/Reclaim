@@ -11,4 +11,6 @@ upgrade_type = "crafting_unlock"
 icon = ExtResource("1_3gmo1")
 max_level = 8
 levels = Array[ExtResource("1_lscrx")]([null, null, null, null, null, null, null, null])
+description = "Increases the amout of turret slots"
+required_ship_tier = 1
 metadata/_custom_type_script = "uid://bd3b7pbajamv4"

@@ -4,13 +4,15 @@ class_name UnlockTemplate
 enum UnlockType {
 	SECTOR,
 	RECIPE,
-	AUTHORISATION
+	AUTHORISATION,
+	STAT_INCREASE
 }
 
 const ENUM_STRING_LOOKUP := {
 	UnlockType.SECTOR : "sector",
 	UnlockType.RECIPE : "recipe",
 	UnlockType.AUTHORISATION : "authorisation",
+	UnlockType.STAT_INCREASE : "stat_increase"
 }
 
 ## The type of unlock from sectors, crafting recipe, ect
@@ -21,3 +23,6 @@ const ENUM_STRING_LOOKUP := {
 
 ## the level of the authorisation needed
 @export var authorisation_level : int
+
+## Stat value if is start type
+@export var stat_value : float

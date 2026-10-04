@@ -3,10 +3,44 @@
 [ext_resource type="Texture2D" uid="uid://dph3mfdoj1utd" path="res://2d_assets/council_authorisation/extraction_capacity.png" id="1_ginos"]
 [ext_resource type="Script" uid="uid://bfg6owh4kyadi" path="res://scripts/resources/authorisation_level.gd" id="1_l7oyt"]
 [ext_resource type="Script" uid="uid://bd3b7pbajamv4" path="res://data/resource_scripts/authorisation_data.gd" id="2_ginos"]
+[ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="3_rkv8v"]
+[ext_resource type="Script" uid="uid://cd702x671kf7o" path="res://scripts/resources/unlock_template.gd" id="4_4m2sr"]
+
+[sub_resource type="Resource" id="Resource_40won"]
+script = ExtResource("1_l7oyt")
+level = 1
+metadata/_custom_type_script = "uid://bfg6owh4kyadi"
+
+[sub_resource type="Resource" id="Resource_esveq"]
+script = ExtResource("1_l7oyt")
+level = 2
+metadata/_custom_type_script = "uid://bfg6owh4kyadi"
+
+[sub_resource type="Resource" id="Resource_k31nn"]
+script = ExtResource("1_l7oyt")
+level = 3
+metadata/_custom_type_script = "uid://bfg6owh4kyadi"
+
+[sub_resource type="Resource" id="Resource_2j33r"]
+script = ExtResource("1_l7oyt")
+level = 4
+metadata/_custom_type_script = "uid://bfg6owh4kyadi"
+
+[sub_resource type="Resource" id="Resource_jvq8m"]
+script = ExtResource("1_l7oyt")
+level = 5
+metadata/_custom_type_script = "uid://bfg6owh4kyadi"
+
+[sub_resource type="Resource" id="Resource_8ld8s"]
+script = ExtResource("1_l7oyt")
+metadata/_custom_type_script = "uid://bfg6owh4kyadi"
 
 [resource]
 script = ExtResource("2_ginos")
 key = "extraction_capacity"
 icon = ExtResource("1_ginos")
 max_level = 5
+levels = Array[ExtResource("1_l7oyt")]([SubResource("Resource_40won"), SubResource("Resource_esveq"), SubResource("Resource_k31nn"), SubResource("Resource_2j33r"), SubResource("Resource_jvq8m"), SubResource("Resource_8ld8s")])
+description = "Increases the amout of resources you can bring back to your ship"
+required_ship_tier = 1
 metadata/_custom_type_script = "uid://bd3b7pbajamv4"

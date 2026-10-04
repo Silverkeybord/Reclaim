@@ -3,10 +3,69 @@
 [ext_resource type="Texture2D" uid="uid://c4rtsoakegi6h" path="res://2d_assets/council_authorisation/shield_strength.png" id="1_mra2b"]
 [ext_resource type="Script" uid="uid://bfg6owh4kyadi" path="res://scripts/resources/authorisation_level.gd" id="1_y6qvl"]
 [ext_resource type="Script" uid="uid://bd3b7pbajamv4" path="res://data/resource_scripts/authorisation_data.gd" id="2_mra2b"]
+[ext_resource type="Script" uid="uid://c20f7di5awcc0" path="res://scripts/other/requirment_template.gd" id="3_examv"]
+[ext_resource type="Resource" uid="uid://ke1h4l1ko4bj" path="res://data/items/resources/tier1/basic_material.tres" id="4_wnj0x"]
+[ext_resource type="Resource" uid="uid://dm10222fpo58l" path="res://data/items/resources/tier1/rock.tres" id="5_ppmgj"]
+[ext_resource type="Script" uid="uid://cd702x671kf7o" path="res://scripts/resources/unlock_template.gd" id="6_vlp8k"]
+
+[sub_resource type="Resource" id="Resource_pt7en"]
+script = ExtResource("3_examv")
+item = ExtResource("4_wnj0x")
+amount = 10
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_vqvx6"]
+script = ExtResource("3_examv")
+item = ExtResource("5_ppmgj")
+amount = 5
+metadata/_custom_type_script = "uid://c20f7di5awcc0"
+
+[sub_resource type="Resource" id="Resource_0x1ws"]
+script = ExtResource("6_vlp8k")
+unlock_type = 3
+stat_value = 100.0
+metadata/_custom_type_script = "uid://cd702x671kf7o"
+
+[sub_resource type="Resource" id="Resource_d7j28"]
+script = ExtResource("1_y6qvl")
+requirments = Array[ExtResource("3_examv")]([SubResource("Resource_pt7en"), SubResource("Resource_vqvx6")])
+unlocks = Array[ExtResource("6_vlp8k")]([SubResource("Resource_0x1ws")])
+metadata/_custom_type_script = "uid://bfg6owh4kyadi"
+
+[sub_resource type="Resource" id="Resource_avkna"]
+script = ExtResource("1_y6qvl")
+metadata/_custom_type_script = "uid://bfg6owh4kyadi"
+
+[sub_resource type="Resource" id="Resource_k3g5x"]
+script = ExtResource("1_y6qvl")
+metadata/_custom_type_script = "uid://bfg6owh4kyadi"
+
+[sub_resource type="Resource" id="Resource_tiasp"]
+script = ExtResource("1_y6qvl")
+metadata/_custom_type_script = "uid://bfg6owh4kyadi"
+
+[sub_resource type="Resource" id="Resource_3mmf5"]
+script = ExtResource("1_y6qvl")
+metadata/_custom_type_script = "uid://bfg6owh4kyadi"
+
+[sub_resource type="Resource" id="Resource_ark3f"]
+script = ExtResource("1_y6qvl")
+metadata/_custom_type_script = "uid://bfg6owh4kyadi"
+
+[sub_resource type="Resource" id="Resource_nf4es"]
+script = ExtResource("1_y6qvl")
+metadata/_custom_type_script = "uid://bfg6owh4kyadi"
+
+[sub_resource type="Resource" id="Resource_gi7q4"]
+script = ExtResource("1_y6qvl")
+metadata/_custom_type_script = "uid://bfg6owh4kyadi"
 
 [resource]
 script = ExtResource("2_mra2b")
 key = "shield_strength"
 icon = ExtResource("1_mra2b")
 max_level = 8
+levels = Array[ExtResource("1_y6qvl")]([SubResource("Resource_d7j28"), SubResource("Resource_avkna"), SubResource("Resource_k3g5x"), SubResource("Resource_tiasp"), SubResource("Resource_3mmf5"), SubResource("Resource_ark3f"), SubResource("Resource_nf4es"), SubResource("Resource_gi7q4")])
+description = "Increases the strength of the shield"
+required_ship_tier = 1
 metadata/_custom_type_script = "uid://bd3b7pbajamv4"

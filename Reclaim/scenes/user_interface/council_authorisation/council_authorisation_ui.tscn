@@ -297,7 +297,7 @@ theme_override_constants/margin_bottom = 14
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer" unique_id=515479540]
 layout_mode = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 6
 
 [node name="requirment_header" type="PanelContainer" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer" unique_id=164417584]
 custom_minimum_size = Vector2(0, 31)
@@ -388,7 +388,6 @@ size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_g4v7s")
 
 [node name="details_icon" type="TextureRect" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/authorisation_selection_vbox/HBoxContainer/Control" unique_id=1156556837]
-texture_filter = 1
 custom_minimum_size = Vector2(112, 112)
 custom_maximum_size = Vector2(112, 112)
 layout_mode = 1
@@ -400,14 +399,16 @@ grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="description_title_margin" type="MarginContainer" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/authorisation_selection_vbox" unique_id=1630155497]
-custom_minimum_size = Vector2(0, 15)
-custom_maximum_size = Vector2(-1, 15)
+custom_minimum_size = Vector2(0, 22)
+custom_maximum_size = Vector2(-1, 22)
 layout_mode = 2
 theme_override_constants/margin_left = 9
-theme_override_constants/margin_top = -6
+theme_override_constants/margin_top = -2
+theme_override_constants/margin_bottom = -2
 
 [node name="description_title" type="Label" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/authorisation_selection_vbox/description_title_margin" unique_id=1731300043]
 layout_mode = 2
+size_flags_vertical = 1
 text = "Description"
 label_settings = SubResource("LabelSettings_tyhds")
 
@@ -416,12 +417,10 @@ custom_minimum_size = Vector2(0, 50)
 custom_maximum_size = Vector2(-1, 50)
 layout_mode = 2
 theme_override_constants/margin_left = 26
-theme_override_constants/margin_top = -4
-theme_override_constants/margin_bottom = 4
 
 [node name="description" type="RichTextLabel" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/authorisation_selection_vbox/description_margin" unique_id=402368926]
-custom_minimum_size = Vector2(200, 50)
-custom_maximum_size = Vector2(-1, 50)
+custom_minimum_size = Vector2(200, 45)
+custom_maximum_size = Vector2(-1, 45)
 layout_mode = 2
 theme_override_colors/default_color = Color(0.2901961, 0.3019608, 0.31764707, 1)
 theme_override_fonts/normal_font = ExtResource("3_j2krl")
@@ -475,6 +474,7 @@ theme_override_constants/margin_bottom = 1
 [node name="authorise_button" type="Button" parent="ui_root/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/authorisation_details/MarginContainer/VBoxContainer/auth_button_margin" unique_id=695002677]
 layout_mode = 2
 offset_transform_enabled = true
+focus_mode = 0
 theme_override_colors/icon_normal_color = Color(0.9019608, 0.9019608, 0.9019608, 1)
 theme_override_colors/icon_pressed_color = Color(1, 1, 1, 0.8627451)
 icon = ExtResource("10_kp0me")

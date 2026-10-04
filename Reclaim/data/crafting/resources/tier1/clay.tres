@@ -19,7 +19,6 @@ amount = 1
 [resource]
 script = ExtResource("script")
 key = "clay"
-required_ship_level = 4
 requirements = Array[ExtResource("req_script")]([SubResource("req_0"), SubResource("req_1")])
 crafted_item = ExtResource("crafted")
 craft_amount = 35

@@ -9,4 +9,6 @@ script = ExtResource("12_gn7u2")
 key = "ship_capacity"
 icon = ExtResource("1_o6a1u")
 max_level = 5
+description = "Increases the amout of weight the ship can hold"
+required_ship_tier = 3
 metadata/_custom_type_script = "uid://bd3b7pbajamv4"
