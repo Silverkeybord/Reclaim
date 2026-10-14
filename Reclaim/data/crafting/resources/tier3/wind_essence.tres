@@ -25,7 +25,7 @@ amount = 2
 [resource]
 script = ExtResource("script")
 key = "wind_essence"
-required_ship_level = 4
+required_ship_tier = 4
 requirements = Array[ExtResource("req_script")]([SubResource("req_0"), SubResource("req_1"), SubResource("req_2")])
 crafted_item = ExtResource("crafted")
 description = "If left unattended it will blow everying away."

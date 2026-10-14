@@ -19,7 +19,7 @@ amount = 10
 [resource]
 script = ExtResource("script")
 key = "antimatter"
-required_ship_level = 7
+required_ship_tier = 7
 requirements = Array[ExtResource("req_script")]([SubResource("req_0"), SubResource("req_1")])
 crafted_item = ExtResource("crafted")
 description = "Antimatter = Cubits yippe. Used to fule the most powerful of weapons"

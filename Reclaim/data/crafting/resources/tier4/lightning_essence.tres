@@ -21,7 +21,7 @@ metadata/_custom_type_script = "uid://c20f7di5awcc0"
 [resource]
 script = ExtResource("5_s4grh")
 key = "lightning_essence"
-required_ship_level = 6
+required_ship_tier = 6
 requirements = Array[ExtResource("2_mnve6")]([SubResource("Resource_1ob13"), SubResource("Resource_cxsxf")])
 crafted_item = ExtResource("1_2mu6e")
 description = "This might be shocking"

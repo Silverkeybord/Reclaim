@@ -42,7 +42,7 @@ metadata/_custom_type_script = "uid://c20f7di5awcc0"
 [resource]
 script = ExtResource("8_jr77r")
 key = "dual"
-required_ship_level = 2
+required_ship_tier = 2
 requirements = Array[ExtResource("2_pt4uh")]([SubResource("Resource_wyyet"), SubResource("Resource_0gl0l"), SubResource("Resource_mu1jm"), SubResource("Resource_2xj8l"), SubResource("Resource_ypebh")])
 crafted_item = ExtResource("1_v3bs5")
 description = "This turret goes pew pew. but x2"

@@ -26,7 +26,7 @@ metadata/_custom_type_script = "uid://c20f7di5awcc0"
 [resource]
 script = ExtResource("script")
 key = "glass"
-required_ship_level = 2
+required_ship_tier = 2
 requirements = Array[ExtResource("req_script")]([SubResource("req_0"), SubResource("req_1"), SubResource("Resource_3m36u")])
 crafted_item = ExtResource("crafted")
 description = "Hurts when it shatters. Also you can see through it"

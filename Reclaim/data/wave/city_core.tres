@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="WaveData" format=3 uid="uid://3bak42gdf4mp"]
+
+[ext_resource type="Script" uid="uid://ebuopgthqly1" path="res://data/resource_scripts/wave_data.gd" id="1_mmwax"]
+[ext_resource type="Script" uid="uid://qok4oe3yk4b1" path="res://scripts/enemies/spawn_section.gd" id="2_1wt2w"]
+
+[resource]
+script = ExtResource("1_mmwax")
+key = "city_core"
+metadata/_custom_type_script = "uid://ebuopgthqly1"

@@ -7,7 +7,6 @@
 [ext_resource type="Resource" uid="uid://drghxojuhxfnn" path="res://data/items/resources/tier1/clay.tres" id="3_rpna7"]
 [ext_resource type="Resource" uid="uid://sp02wx0d0gfn" path="res://data/items/resources/tier1/dirt.tres" id="4_36457"]
 [ext_resource type="Resource" uid="uid://wwsm4m2783l4" path="res://data/wave/remote_island.tres" id="4_qk3uq"]
-[ext_resource type="Resource" uid="uid://c48tssl3ncgj5" path="res://data/crafting/turrets/tier1/single.tres" id="5_cabxx"]
 [ext_resource type="Resource" uid="uid://c6k8hue261trj" path="res://data/items/resources/tier2/flint.tres" id="5_qk3uq"]
 [ext_resource type="Resource" uid="uid://dm10222fpo58l" path="res://data/items/resources/tier1/rock.tres" id="6_cabxx"]
 [ext_resource type="Resource" uid="uid://dmc0tsryqmh28" path="res://data/items/resources/tier1/sand.tres" id="7_oycck"]
@@ -56,16 +55,34 @@ unlock_type = 0
 unlock_data = ExtResource("4_qk3uq")
 metadata/_custom_type_script = "uid://cd702x671kf7o"
 
-[sub_resource type="Resource" id="Resource_dnqs7"]
-script = ExtResource("3_36457")
-unlock_data = ExtResource("5_cabxx")
-metadata/_custom_type_script = "uid://cd702x671kf7o"
-
 [sub_resource type="Resource" id="Resource_yoqii"]
 script = ExtResource("1_s7wpj")
-level = 1
 requirments = Array[ExtResource("2_fx25p")]([SubResource("Resource_ag7gr"), SubResource("Resource_s5rgg"), SubResource("Resource_s7wpj"), SubResource("Resource_fx25p"), SubResource("Resource_qk3uq"), SubResource("Resource_cabxx")])
-unlocks = Array[ExtResource("3_36457")]([SubResource("Resource_ec332"), SubResource("Resource_dnqs7")])
+unlocks = Array[ExtResource("3_36457")]([SubResource("Resource_ec332")])
+metadata/_custom_type_script = "uid://bfg6owh4kyadi"
+
+[sub_resource type="Resource" id="Resource_4o5rn"]
+script = ExtResource("1_s7wpj")
+metadata/_custom_type_script = "uid://bfg6owh4kyadi"
+
+[sub_resource type="Resource" id="Resource_5unbd"]
+script = ExtResource("1_s7wpj")
+metadata/_custom_type_script = "uid://bfg6owh4kyadi"
+
+[sub_resource type="Resource" id="Resource_bkyn4"]
+script = ExtResource("1_s7wpj")
+metadata/_custom_type_script = "uid://bfg6owh4kyadi"
+
+[sub_resource type="Resource" id="Resource_2xbqp"]
+script = ExtResource("1_s7wpj")
+metadata/_custom_type_script = "uid://bfg6owh4kyadi"
+
+[sub_resource type="Resource" id="Resource_vigvl"]
+script = ExtResource("1_s7wpj")
+metadata/_custom_type_script = "uid://bfg6owh4kyadi"
+
+[sub_resource type="Resource" id="Resource_dymvy"]
+script = ExtResource("1_s7wpj")
 metadata/_custom_type_script = "uid://bfg6owh4kyadi"
 
 [resource]
@@ -73,6 +90,6 @@ script = ExtResource("9_yjvfa")
 key = "ship_tier"
 icon = ExtResource("1_qk3uq")
 max_level = 8
-levels = Array[ExtResource("1_s7wpj")]([SubResource("Resource_yoqii"), null, null, null, null, null, null])
+levels = Array[ExtResource("1_s7wpj")]([SubResource("Resource_yoqii"), SubResource("Resource_4o5rn"), SubResource("Resource_5unbd"), SubResource("Resource_bkyn4"), SubResource("Resource_2xbqp"), SubResource("Resource_vigvl"), SubResource("Resource_dymvy")])
 description = "Unlocks sectors by increasing deploy range. Authorises more destructive recipies."
 metadata/_custom_type_script = "uid://bd3b7pbajamv4"

@@ -19,7 +19,7 @@ amount = 10
 [resource]
 script = ExtResource("script")
 key = "gear"
-required_ship_level = 3
+required_ship_tier = 3
 requirements = Array[ExtResource("req_script")]([SubResource("req_0"), SubResource("req_1")])
 crafted_item = ExtResource("crafted")
 description = "Rotating your gears with more gears."

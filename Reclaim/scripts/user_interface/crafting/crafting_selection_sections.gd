@@ -30,7 +30,6 @@ func set_up() -> void:
 func check_visibility() -> void:
 	var craft_cells = hflow.get_children()
 	var resulting_visibility: bool = false
-	print(craft_cells)
 	
 	for craft_cell in craft_cells:
 		if craft_cell.visible == true:
