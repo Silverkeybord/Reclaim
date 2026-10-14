@@ -32,7 +32,7 @@ metadata/_custom_type_script = "uid://c20f7di5awcc0"
 [resource]
 script = ExtResource("script")
 key = "light_essence"
-required_ship_tier = 7
+required_ship_level = 7
 requirements = Array[ExtResource("req_script")]([SubResource("req_0"), SubResource("req_1"), SubResource("req_2"), SubResource("Resource_8d6t8")])
 crafted_item = ExtResource("crafted")
 description = "Very bright. dont look at it. Quite powerful too"

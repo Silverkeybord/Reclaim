@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="WaveData" format=3 uid="uid://rlqpbmqu2nbo"]
-
-[ext_resource type="Script" uid="uid://ebuopgthqly1" path="res://data/resource_scripts/wave_data.gd" id="1_4sdmg"]
-[ext_resource type="Script" uid="uid://qok4oe3yk4b1" path="res://scripts/enemies/spawn_section.gd" id="2_nchwd"]
-
-[resource]
-script = ExtResource("1_4sdmg")
-key = "spawn_cave"
-metadata/_custom_type_script = "uid://ebuopgthqly1"

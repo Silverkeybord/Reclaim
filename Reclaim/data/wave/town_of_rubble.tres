@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="WaveData" format=3 uid="uid://jnlk01i0vqn3"]
-
-[ext_resource type="Script" uid="uid://ebuopgthqly1" path="res://data/resource_scripts/wave_data.gd" id="1_33sos"]
-[ext_resource type="Script" uid="uid://qok4oe3yk4b1" path="res://scripts/enemies/spawn_section.gd" id="2_awc3u"]
-
-[resource]
-script = ExtResource("1_33sos")
-key = "town_of_rubble"
-metadata/_custom_type_script = "uid://ebuopgthqly1"

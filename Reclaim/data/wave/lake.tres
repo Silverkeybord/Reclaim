@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="WaveData" format=3 uid="uid://cyhafwg4m062t"]
-
-[ext_resource type="Script" uid="uid://ebuopgthqly1" path="res://data/resource_scripts/wave_data.gd" id="1_22x81"]
-[ext_resource type="Script" uid="uid://qok4oe3yk4b1" path="res://scripts/enemies/spawn_section.gd" id="2_ish7q"]
-
-[resource]
-script = ExtResource("1_22x81")
-key = "lake"
-metadata/_custom_type_script = "uid://ebuopgthqly1"

@@ -31,7 +31,7 @@ amount = 5
 [resource]
 script = ExtResource("script")
 key = "fire_essence"
-required_ship_tier = 5
+required_ship_level = 5
 requirements = Array[ExtResource("req_script")]([SubResource("req_0"), SubResource("req_1"), SubResource("req_2"), SubResource("req_3")])
 crafted_item = ExtResource("crafted")
 description = "HOT HOT HOT. does burn stuff and is HOT."

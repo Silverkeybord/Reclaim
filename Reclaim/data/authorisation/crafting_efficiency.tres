@@ -12,23 +12,28 @@ metadata/_custom_type_script = "uid://c20f7di5awcc0"
 
 [sub_resource type="Resource" id="Resource_gvcph"]
 script = ExtResource("1_tciku")
+level = 1
 requirments = Array[ExtResource("3_l42wx")]([SubResource("Resource_5o1xi"), null])
 metadata/_custom_type_script = "uid://bfg6owh4kyadi"
 
 [sub_resource type="Resource" id="Resource_gv7cp"]
 script = ExtResource("1_tciku")
+level = 2
 metadata/_custom_type_script = "uid://bfg6owh4kyadi"
 
 [sub_resource type="Resource" id="Resource_l42wx"]
 script = ExtResource("1_tciku")
+level = 3
 metadata/_custom_type_script = "uid://bfg6owh4kyadi"
 
 [sub_resource type="Resource" id="Resource_lpwqo"]
 script = ExtResource("1_tciku")
+level = 4
 metadata/_custom_type_script = "uid://bfg6owh4kyadi"
 
 [sub_resource type="Resource" id="Resource_b8jfn"]
 script = ExtResource("1_tciku")
+level = 5
 metadata/_custom_type_script = "uid://bfg6owh4kyadi"
 
 [resource]

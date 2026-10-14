@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="WaveData" format=3 uid="uid://chj1ni52ke0x5"]
-
-[ext_resource type="Script" uid="uid://qok4oe3yk4b1" path="res://scripts/enemies/spawn_section.gd" id="2_tekib"]
-[ext_resource type="Script" uid="uid://ebuopgthqly1" path="res://data/resource_scripts/wave_data.gd" id="3_qto5m"]
-
-[resource]
-script = ExtResource("3_qto5m")
-key = "beach_landing"
-metadata/_custom_type_script = "uid://ebuopgthqly1"

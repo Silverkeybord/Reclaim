@@ -31,7 +31,7 @@ amount = 5
 [resource]
 script = ExtResource("script")
 key = "uranium"
-required_ship_tier = 6
+required_ship_level = 7
 requirements = Array[ExtResource("req_script")]([SubResource("req_0"), SubResource("req_1"), SubResource("req_2"), SubResource("req_3")])
 crafted_item = ExtResource("crafted")
 craft_amount = 5

@@ -31,7 +31,7 @@ amount = 10
 [resource]
 script = ExtResource("script")
 key = "earth_essence"
-required_ship_tier = 5
+required_ship_level = 5
 requirements = Array[ExtResource("req_script")]([SubResource("req_0"), SubResource("req_1"), SubResource("req_2"), SubResource("req_3")])
 crafted_item = ExtResource("crafted")
 description = "It's comprized of dirt and some other magic."
